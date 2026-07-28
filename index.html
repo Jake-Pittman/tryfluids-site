@@ -6629,27 +6629,29 @@
     }
     async function loadHomeFunctionMenu() {
       if (homeFunctionMenuLoaded) return;
-      try {
-        const data=await fetchJsonOrThrow(
-          "/api/standard-blend",
-          "The standard function blend menu could not be loaded."
-        );
+      const renderLoadedMenu=data=>{
         renderHomeFunctionMenu(data.function_lanes || data.population_standard_blends || []);
         homeFunctionMenuLoaded=true;
-      } catch (error) {
+      };
+      try {
+        const fallback=await fetchStaticJsonOrThrow(
+          "/assets/fluids/standard_blends_static.json",
+          "The standard function blend menu could not be loaded."
+        );
+        renderLoadedMenu(fallback);
+      } catch (staticError) {
         try {
-          const fallback=await fetchStaticJsonOrThrow(
-            "/assets/fluids/standard_blends_static.json",
+          const data=await fetchJsonOrThrow(
+            "/api/standard-blend",
             "The standard function blend menu could not be loaded."
           );
-          renderHomeFunctionMenu(fallback.function_lanes || fallback.population_standard_blends || []);
-          homeFunctionMenuLoaded=true;
-        } catch (fallbackError) {
+          renderLoadedMenu(data);
+        } catch (apiError) {
           const grid=document.getElementById("homeFunctionGrid");
           if (grid) {
             grid.textContent="";
             const empty=document.createElement("div"); empty.className="home-function-empty";
-            empty.textContent=fallbackError.message || error.message || "The standard function blend menu could not be loaded.";
+            empty.textContent=apiError.message || staticError.message || "The standard function blend menu could not be loaded.";
             grid.appendChild(empty);
           }
         }
