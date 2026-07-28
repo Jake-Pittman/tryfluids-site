@@ -4301,7 +4301,16 @@
           item.classList.toggle("done", itemIndex < index);
         });
         requestAnimationFrame(resizeVectorMatrices);
-        window.scrollTo({top:0,behavior:"smooth"});
+        if (name === "results") {
+          requestAnimationFrame(()=>{
+            document.getElementById("results")?.scrollIntoView({
+              behavior:"smooth",
+              block:"start"
+            });
+          });
+        } else {
+          window.scrollTo({top:0,behavior:"smooth"});
+        }
       };
       if (document.startViewTransition && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         document.startViewTransition(apply);
