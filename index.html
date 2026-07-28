@@ -4347,11 +4347,11 @@
         : "/api/waitlist"
     );
     const productionApiHost = ["tryfluids.com","www.tryfluids.com"].includes(window.location.hostname);
-    const liveRunpodApiBase = "https://i2ysjjtc22rddl-8888.proxy.runpod.net";
-    if (productionApiHost && (!window.FLUIDS_API_BASE || window.FLUIDS_API_BASE === "https://api.tryfluids.com")) {
-      window.FLUIDS_API_BASE = liveRunpodApiBase;
+    const liveApiBase = "https://api.tryfluids.com";
+    if (productionApiHost && !window.FLUIDS_API_BASE) {
+      window.FLUIDS_API_BASE = liveApiBase;
       window.FLUIDS_API_MODE = window.FLUIDS_API_MODE || "jobs";
-      window.FLUIDS_ANALYTICS_ENDPOINT = `${liveRunpodApiBase}/api/events`;
+      window.FLUIDS_ANALYTICS_ENDPOINT = `${liveApiBase}/api/events`;
     }
     const configuredApiBase = String(
       window.FLUIDS_API_BASE ||
