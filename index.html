@@ -3645,6 +3645,24 @@
       margin-top:0;
       scroll-margin-top:86px;
     }
+    #results .results-head,
+    #results #customBlendHero {
+      display:none !important;
+    }
+    #results .jump-nav {
+      margin-top:0;
+      margin-bottom:18px;
+      border-radius:28px;
+      padding:8px;
+      scroll-margin-top:86px;
+    }
+    #results .kpis {
+      margin-top:0;
+      margin-bottom:14px;
+    }
+    #results .age-score-panel {
+      margin:14px 0 20px;
+    }
     .portfolio-layout {
       display:block;
       margin-top:18px;
@@ -4166,17 +4184,17 @@
     </div>
 
     <section class="results app-view" id="results">
-      <div class="results-head">
-        <div><div class="eyebrow">Personalized nutrition vector</div><h2>Here’s the nutrient direction we found.</h2></div>
-        <p class="section-copy" id="recommendationStatus"></p>
-      </div>
-      <div class="custom-blend-hero section-anchor" id="customBlendHero"></div>
-      <nav class="jump-nav" aria-label="Results sections">
+      <nav class="jump-nav results-top-nav" id="resultsTopNav" aria-label="Results sections">
         <button type="button" class="jump-button active" data-scroll-target="results">Nutrient vector</button>
         <button type="button" class="jump-button" data-scroll-target="personalPortfolioSection">Formula blend</button>
         <button type="button" class="jump-button" data-scroll-target="nutrientStrategySection">Full vector</button>
         <button type="button" class="jump-button" data-scroll-target="archetypeReportPanel">Function lane</button>
       </nav>
+      <div class="results-head">
+        <div><div class="eyebrow">Personalized nutrition vector</div><h2>Here’s the nutrient direction we found.</h2></div>
+        <p class="section-copy" id="recommendationStatus"></p>
+      </div>
+      <div class="custom-blend-hero section-anchor" id="customBlendHero"></div>
       <div class="kpis">
         <div class="kpi"><small id="bioAgeLabel">Age score</small><strong id="bioAge">—</strong></div>
         <div class="kpi"><small>Chronological age</small><strong id="chronoAge">—</strong></div>
@@ -4829,7 +4847,7 @@
         requestAnimationFrame(resizeVectorMatrices);
         if (name === "results") {
           requestAnimationFrame(()=>{
-	        document.getElementById("results")?.scrollIntoView({
+	        (document.getElementById("resultsTopNav") || document.getElementById("results"))?.scrollIntoView({
 	          behavior:"smooth",
 	          block:"start"
 	        });
