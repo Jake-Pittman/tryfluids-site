@@ -129,6 +129,18 @@
         color: var(--ink);
       }
 
+      .button.light {
+        border-color: rgba(255, 255, 255, .72);
+        background: #fffaf3;
+        color: var(--ink);
+      }
+
+      .button.small {
+        min-height: 38px;
+        padding: 9px 12px;
+        font-size: 13px;
+      }
+
       .hero {
         position: relative;
         display: grid;
@@ -204,6 +216,72 @@
       .proof-strip .hero-proof {
         max-width: 920px;
         margin-top: 0;
+      }
+
+      .offer-band {
+        padding: clamp(48px, 7vw, 86px) clamp(20px, 5vw, 64px);
+        background: var(--navy);
+        color: #fff;
+      }
+
+      .offer-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(300px, .68fr);
+        gap: clamp(26px, 5vw, 72px);
+        align-items: center;
+        width: min(1180px, 100%);
+        margin: 0 auto;
+      }
+
+      .offer-inner h2 {
+        max-width: 780px;
+        font-size: clamp(38px, 5vw, 74px);
+      }
+
+      .offer-inner p {
+        max-width: 680px;
+        color: rgba(255, 255, 255, .72);
+        font-size: clamp(17px, 1.7vw, 21px);
+      }
+
+      .offer-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 26px;
+      }
+
+      .profile-card {
+        padding: 24px;
+        border: 1px solid rgba(255, 255, 255, .16);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, .06);
+      }
+
+      .profile-card strong {
+        display: block;
+        margin-bottom: 16px;
+        font-size: 18px;
+      }
+
+      .profile-step {
+        display: grid;
+        grid-template-columns: 34px 1fr;
+        gap: 12px;
+        padding: 14px 0;
+        border-top: 1px solid rgba(255, 255, 255, .12);
+        color: rgba(255, 255, 255, .72);
+      }
+
+      .profile-step span {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .12);
+        color: #fff;
+        font-weight: 800;
       }
 
       .proof {
@@ -342,12 +420,24 @@
         border-radius: 8px;
         background: rgba(255, 255, 255, .62);
         text-align: left;
+      }
+
+      .blend-card[aria-current="true"] {
+        border-color: var(--raspberry);
+        box-shadow: inset 0 0 0 1px var(--raspberry);
+      }
+
+      .blend-select {
+        all: unset;
+        display: block;
         cursor: pointer;
       }
 
-      .blend-card[aria-pressed="true"] {
-        border-color: var(--raspberry);
-        box-shadow: inset 0 0 0 1px var(--raspberry);
+      .blend-select:focus-visible,
+      .text-button:focus-visible,
+      .button:focus-visible {
+        outline: 3px solid rgba(198, 43, 83, .28);
+        outline-offset: 3px;
       }
 
       .blend-card span {
@@ -367,6 +457,23 @@
         margin: 0;
         color: var(--muted);
         font-size: 14px;
+      }
+
+      .blend-card-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .text-button {
+        min-height: 38px;
+        padding: 8px 0;
+        border: 0;
+        background: transparent;
+        color: var(--ink);
+        font-weight: 800;
+        cursor: pointer;
       }
 
       .vector-panel {
@@ -476,6 +583,88 @@
         color: rgba(255, 255, 255, .68);
       }
 
+      .blend-details {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .blend-detail {
+        scroll-margin-top: 96px;
+        padding: clamp(22px, 3vw, 32px);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fffaf3;
+      }
+
+      .blend-detail header {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 22px;
+      }
+
+      .blend-detail .formula {
+        color: #986f3e;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+      }
+
+      .blend-detail h3 {
+        font-size: clamp(30px, 4vw, 48px);
+      }
+
+      .blend-detail p {
+        color: var(--muted);
+      }
+
+      .signal-list {
+        display: grid;
+        gap: 10px;
+        margin: 18px 0 22px;
+        padding: 0;
+        list-style: none;
+      }
+
+      .signal-list li {
+        display: grid;
+        grid-template-columns: 10px 1fr;
+        gap: 10px;
+        align-items: baseline;
+        color: #3c4742;
+      }
+
+      .signal-list li::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--raspberry);
+      }
+
+      .detail-vector {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .detail-row {
+        display: grid;
+        grid-template-columns: 112px 1fr 36px;
+        gap: 10px;
+        align-items: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .detail-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 24px;
+      }
+
       .insights {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -565,6 +754,7 @@
       @media (max-width: 980px) {
         .hero,
         .blend-stage,
+        .offer-inner,
         .pheno,
         .cta {
           grid-template-columns: 1fr;
@@ -584,7 +774,8 @@
         }
 
         .insights,
-        .steps {
+        .steps,
+        .blend-details {
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
       }
@@ -613,6 +804,7 @@
 
         .hero-proof,
         .blend-list,
+        .blend-details,
         .insights,
         .steps {
           grid-template-columns: 1fr;
@@ -649,11 +841,12 @@
           <img src="assets/fluids_wordmark_primary_transparent.png" alt="Fluids">
         </a>
         <nav class="nav-links">
+          <a href="#custom-profile">Free profile</a>
           <a href="#how">How it works</a>
           <a href="#blends">Functions</a>
           <a href="#science">Science</a>
           <a href="https://www.linkedin.com/company/tryfluids/">LinkedIn</a>
-          <a class="button" href="mailto:jakepittman2@gmail.com?subject=Fluids%20beta%20access">Join beta</a>
+          <a class="button" href="mailto:jakepittman2@gmail.com?subject=Fluids%20free%20custom%20blend%20profile">Claim profile</a>
         </nav>
       </header>
 
@@ -664,8 +857,8 @@
             <h1>Personal nutrition from your bloodwork.</h1>
             <p class="lead">Fluids reads routine lab patterns and turns them into standard or custom whole-food drink mixes built around your nutrient vector.</p>
             <div class="hero-actions">
-              <a class="button" href="mailto:jakepittman2@gmail.com?subject=Fluids%20beta%20access">Request beta access</a>
-              <a class="button secondary" href="https://docs.google.com/presentation/d/1c6AnwFJ2hYToNroNpqrz714Gh45rmueWAoes1EU7R2k/edit?usp=sharing">View investor deck</a>
+              <a class="button" href="#custom-profile">Claim free custom profile</a>
+              <a class="button secondary" href="#blends">Shop function blends</a>
             </div>
           </div>
 
@@ -693,6 +886,35 @@
                 <span>daily drink mix designed around lab-informed nutrition</span>
               </div>
             </div>
+        </section>
+
+        <section class="offer-band" id="custom-profile">
+          <div class="offer-inner">
+            <div>
+              <p class="eyebrow">Limited time</p>
+              <h2>Free custom blend profile from your blood test.</h2>
+              <p>Upload routine labs and we will map your nutrient vector, explain the biggest product opportunities in plain English, and show whether you fit one of the eight function blends or need a custom formula.</p>
+              <div class="offer-actions">
+                <a class="button light" href="mailto:jakepittman2@gmail.com?subject=Fluids%20free%20custom%20blend%20profile&body=Hi%20Jake%2C%20I%20want%20to%20claim%20a%20free%20custom%20blend%20profile.%20Please%20send%20me%20the%20secure%20upload%20link.">Claim your free profile</a>
+                <a class="button secondary light" href="#blends">Browse standard blends</a>
+              </div>
+            </div>
+            <div class="profile-card" aria-label="Free custom profile steps">
+              <strong>What you get</strong>
+              <div class="profile-step">
+                <span>1</span>
+                <div>Request a secure upload link for a recent blood test.</div>
+              </div>
+              <div class="profile-step">
+                <span>2</span>
+                <div>We turn your lab pattern into a nutrient vector and blend fit.</div>
+              </div>
+              <div class="profile-step">
+                <span>3</span>
+                <div>You get a clear profile, standard blend match, or custom blend direction.</div>
+              </div>
+            </div>
+          </div>
         </section>
 
         <section class="section" id="how">
@@ -724,8 +946,8 @@
         <section class="section" id="blends">
           <div class="section-inner">
             <div class="section-head">
-              <h2>Eight function blends</h2>
-              <p>Custom outputs clustered into recurring product families. Explore each function to see the consumer-facing job and nutrient vector shape.</p>
+              <h2>Shop the eight function blends</h2>
+              <p>Custom outputs clustered into recurring product families. Pick a standard blend, explore the nutrient vector, or go deeper before buying.</p>
             </div>
             <div class="blend-stage">
               <div class="blend-list" id="blendList"></div>
@@ -743,6 +965,16 @@
                 <div class="bar-list" id="barList"></div>
               </aside>
             </div>
+          </div>
+        </section>
+
+        <section class="section" id="blend-details">
+          <div class="section-inner">
+            <div class="section-head">
+              <h2>Blend explainers</h2>
+              <p>Each function blend has a specific job, flavor system, and nutrient vector shape. Buy now opens the deeper product logic before someone requests the blend.</p>
+            </div>
+            <div class="blend-details" id="blendDetails"></div>
           </div>
         </section>
 
@@ -788,11 +1020,11 @@
           <div class="section-inner cta">
             <div>
               <p class="eyebrow">Beta access</p>
-              <h2>Want in early?</h2>
-              <p>We are opening Fluids to a small beta group for bloodwork-guided blend recommendations, product feedback, and pilot testing.</p>
+              <h2>Want your profile first?</h2>
+              <p>For a limited time, we are giving early visitors a free custom blend profile from their blood test. You will see your standard blend fit or custom blend direction before ordering.</p>
             </div>
             <div class="hero-actions">
-              <a class="button" href="mailto:jakepittman2@gmail.com?subject=Fluids%20beta%20access">Join beta</a>
+              <a class="button" href="mailto:jakepittman2@gmail.com?subject=Fluids%20free%20custom%20blend%20profile&body=Hi%20Jake%2C%20I%20want%20to%20claim%20a%20free%20custom%20blend%20profile.%20Please%20send%20me%20the%20secure%20upload%20link.">Claim free profile</a>
               <a class="button secondary" href="https://www.linkedin.com/company/tryfluids/">Follow on LinkedIn</a>
             </div>
           </div>
@@ -818,6 +1050,9 @@
           name: "Daily Vitality",
           formula: "Lemon Raspberry Beet",
           description: "Broad daily micronutrient support with citrus, berry, and beet.",
+          buyer: "The everyday entry blend for someone who wants broad nutrient coverage without overcomplicating the routine.",
+          detail: "Daily Vitality is the widest standard lane. It is built for nutrient vectors that call for vitamin D, vitamin A, vitamin C, magnesium, and light fiber support in a drink that still feels like a daily beverage.",
+          signals: ["Broad vitamin coverage", "Clean daily flavor profile", "Strong first match for general wellness vectors"],
           nutrients: [["Vitamin D", 96], ["Vitamin A", 84], ["Vitamin C", 76], ["Magnesium", 66], ["Fiber", 38]],
           nodes: [.92, .84, .76, .66, .38]
         },
@@ -826,6 +1061,9 @@
           name: "Heart + Flow",
           formula: "Beet Raspberry Strawberry",
           description: "Beet and berry polyphenol support for heart, circulation, and healthy metabolic balance.",
+          buyer: "For people whose vector leans toward circulation, heart-health positioning, and berry-forward antioxidant support.",
+          detail: "Heart + Flow centers beet and berry ingredients because this lane showed up when formulas needed a stronger vascular and polyphenol shape while still keeping familiar daily nutrition coverage.",
+          signals: ["Beet-forward product logic", "Polyphenol and vitamin C emphasis", "Built around heart, flow, and metabolic balance"],
           nutrients: [["Vitamin C", 84], ["Magnesium", 70], ["Fiber", 62], ["Vitamin A", 54], ["Polyphenols", 88]],
           nodes: [.54, .84, .42, .7, .62]
         },
@@ -834,6 +1072,9 @@
           name: "Metabolic Lift",
           formula: "Lemon Beet Mango",
           description: "A citrus-root-tropical blend for healthy glucose metabolism, daily energy, and broad vitamin coverage.",
+          buyer: "For the person who wants a brighter daily blend with metabolic support and an energy-forward feel.",
+          detail: "Metabolic Lift is built for vectors that need vitamin A and D support with a more active, citrus-tropical product story. It is the standard lane for people who want healthy energy and metabolic steadiness in one blend.",
+          signals: ["Vitamin A and D led vector", "Citrus and mango taste direction", "Healthy glucose metabolism and daily energy story"],
           nutrients: [["Vitamin A", 88], ["Vitamin D", 82], ["Vitamin C", 72], ["Magnesium", 64], ["Fiber", 48]],
           nodes: [.88, .72, .82, .64, .48]
         },
@@ -842,6 +1083,9 @@
           name: "Antioxidant Minerals",
           formula: "Blueberry Beet Raspberry",
           description: "A berry-forward mineral and antioxidant lane for daily cellular resilience.",
+          buyer: "For people whose vector calls for mineral support and a deeper berry antioxidant profile.",
+          detail: "Antioxidant Minerals exists because a meaningful group of custom outputs pulled harder on magnesium, berry polyphenols, and antioxidant positioning than the broad daily blends.",
+          signals: ["Magnesium-led mineral shape", "Blueberry and beet product base", "Cellular resilience and antioxidant story"],
           nutrients: [["Magnesium", 92], ["Vitamin A", 74], ["Vitamin C", 68], ["Copper", 52], ["Fiber", 44]],
           nodes: [.74, .68, .36, .92, .52]
         },
@@ -850,6 +1094,9 @@
           name: "Liver Vitality",
           formula: "Carrot Lemon Beet",
           description: "Carrot, citrus, and beet support for liver function, vitamin A status, and everyday vitality.",
+          buyer: "For consumers looking for a cleaner liver-support lane that still reads like food, not a cleanse.",
+          detail: "Liver Vitality uses carrot, lemon, and beet to make the vitamin A and root-ingredient signal consumer-readable. It is positioned around liver function, everyday vitality, and whole-food color.",
+          signals: ["Carrot-led vitamin A support", "Root and citrus formula logic", "Liver vitality without cleanse language"],
           nutrients: [["Vitamin A", 94], ["Vitamin C", 70], ["Magnesium", 58], ["Fiber", 48], ["Potassium", 42]],
           nodes: [.94, .7, .34, .58, .48]
         },
@@ -858,6 +1105,9 @@
           name: "Cellular Defense",
           formula: "Blueberry Lemon Beet",
           description: "Blueberry and citrus support for antioxidant defense, healthy aging signals, and daily micronutrient coverage.",
+          buyer: "For people who want an antioxidant and healthy-aging blend with a crisp blueberry-citrus profile.",
+          detail: "Cellular Defense is the higher antioxidant lane. The nutrient vector still covers the core vitamins, but the product story leans toward cellular defense, healthy aging signals, and blueberry-based polyphenols.",
+          signals: ["Vitamin D and C emphasis", "Blueberry antioxidant direction", "Healthy aging and cellular defense positioning"],
           nutrients: [["Vitamin D", 90], ["Vitamin C", 84], ["Vitamin A", 66], ["Magnesium", 56], ["Polyphenols", 78]],
           nodes: [.66, .84, .9, .56, .78]
         },
@@ -866,6 +1116,9 @@
           name: "Metabolic Resilience",
           formula: "Carrot Beet Raspberry",
           description: "A root-berry blend for metabolic resilience, healthy inflammatory balance, and mineral support.",
+          buyer: "For people whose profile suggests they need a stronger root-berry blend for metabolic balance.",
+          detail: "Metabolic Resilience is more grounded than Metabolic Lift. It keeps the carrot and beet logic up front, with raspberry for taste and antioxidant support, and it speaks to steady long-term metabolic health.",
+          signals: ["Root and berry nutrient vector", "Vitamin A and C coverage", "Metabolic balance and resilience story"],
           nutrients: [["Vitamin A", 88], ["Vitamin C", 78], ["Magnesium", 68], ["Vitamin E", 52], ["Copper", 46]],
           nodes: [.88, .78, .52, .68, .46]
         },
@@ -874,24 +1127,69 @@
           name: "Recovery Balance",
           formula: "Lemon Beet Tart Cherry",
           description: "Tart cherry, citrus, and beet support for recovery, hydration, and healthy metabolic balance.",
+          buyer: "For active people who want recovery support without moving into a sports-drink identity.",
+          detail: "Recovery Balance is the recovery and hydration lane. Tart cherry gives the blend a clear function, while lemon and beet keep it inside the broader Fluids nutrient-vector system.",
+          signals: ["Tart cherry recovery cue", "Vitamin D and C support", "Hydration, recovery, and metabolic balance"],
           nutrients: [["Vitamin D", 86], ["Vitamin C", 78], ["Vitamin A", 64], ["Magnesium", 56], ["Potassium", 44]],
           nodes: [.64, .78, .86, .56, .44]
         }
       ];
 
       const blendList = document.querySelector("#blendList");
+      const blendDetails = document.querySelector("#blendDetails");
       const barList = document.querySelector("#barList");
       const vectorTitle = document.querySelector("#vectorTitle");
       const vectorText = document.querySelector("#vectorText");
       const nodeIds = ["nodeA", "nodeB", "nodeC", "nodeD", "nodeE"];
 
+      function blendMailto(blend) {
+        const subject = encodeURIComponent(`Fluids ${blend.name} interest`);
+        const body = encodeURIComponent(`Hi Jake, I am interested in ${blend.name}. Please send me the next step for buying or checking whether this is the right standard blend for me.`);
+        return `mailto:jakepittman2@gmail.com?subject=${subject}&body=${body}`;
+      }
+
       function renderCards() {
         blendList.innerHTML = blends.map((blend, index) => `
-          <button class="blend-card" type="button" data-index="${index}" aria-pressed="${index === 0}">
-            <span>${blend.formula}</span>
-            <strong>${blend.name}</strong>
-            <p>${blend.description}</p>
-          </button>
+          <article class="blend-card" data-index="${index}" aria-current="${index === 0}">
+            <button class="blend-select" type="button" data-select-index="${index}" aria-pressed="${index === 0}">
+              <span>${blend.formula}</span>
+              <strong>${blend.name}</strong>
+              <p>${blend.description}</p>
+            </button>
+            <div class="blend-card-actions">
+              <a class="button small" href="#blend-${blend.id}">Buy now</a>
+              <button class="text-button" type="button" data-select-index="${index}">Explore vector</button>
+            </div>
+          </article>
+        `).join("");
+      }
+
+      function renderDetails() {
+        blendDetails.innerHTML = blends.map(blend => `
+          <article class="blend-detail" id="blend-${blend.id}">
+            <header>
+              <span class="formula">${blend.formula}</span>
+              <h3>${blend.name}</h3>
+              <p>${blend.buyer}</p>
+            </header>
+            <p>${blend.detail}</p>
+            <ul class="signal-list">
+              ${blend.signals.map(signal => `<li>${signal}</li>`).join("")}
+            </ul>
+            <div class="detail-vector" aria-label="${blend.name} nutrient vector">
+              ${blend.nutrients.map(([label, value]) => `
+                <div class="detail-row">
+                  <span>${label}</span>
+                  <span class="bar-track"><span class="bar-fill" style="--value: ${value}%"></span></span>
+                  <strong>${value}</strong>
+                </div>
+              `).join("")}
+            </div>
+            <div class="detail-actions">
+              <a class="button small" href="${blendMailto(blend)}">Request this blend</a>
+              <a class="button secondary small" href="#custom-profile">Check custom fit</a>
+            </div>
+          </article>
         `).join("");
       }
 
@@ -911,16 +1209,20 @@
           node.style.setProperty("--size", blend.nodes[nodeIndex]);
         });
         document.querySelectorAll(".blend-card").forEach((card, cardIndex) => {
+          card.setAttribute("aria-current", String(cardIndex === index));
+        });
+        document.querySelectorAll(".blend-select").forEach((card, cardIndex) => {
           card.setAttribute("aria-pressed", String(cardIndex === index));
         });
       }
 
       renderCards();
+      renderDetails();
       selectBlend(0);
       blendList.addEventListener("click", event => {
-        const card = event.target.closest(".blend-card");
-        if (!card) return;
-        selectBlend(Number(card.dataset.index));
+        const control = event.target.closest("[data-select-index]");
+        if (!control) return;
+        selectBlend(Number(control.dataset.selectIndex));
       });
     </script>
   </body>
