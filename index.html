@@ -3472,9 +3472,12 @@
           <span id="waitlistBlendName">Custom blend profile</span>
           <span>FLUIDS100</span>
         </div>
-        <form class="waitlist-form" id="waitlistForm">
+        <form class="waitlist-form" id="waitlistForm" action="https://formsubmit.co/jakepittman2@gmail.com" method="POST">
           <input type="hidden" id="waitlistBlendId" name="blend_id" value="custom">
           <input type="hidden" id="waitlistDiscountCode" name="discount_code" value="FLUIDS100">
+          <input type="hidden" name="_subject" value="New Fluids waitlist lead">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
           <div class="waitlist-field">
             <label for="waitlistEmail">Email</label>
             <input id="waitlistEmail" name="email" type="email" autocomplete="email" placeholder="you@email.com" required>
@@ -3951,7 +3954,12 @@
     let lastHomeVectorModalTrigger = null;
     let lastWaitlistModalTrigger = null;
     const launchDiscountCode = "FLUIDS100";
-    const waitlistEndpoint = window.FLUIDS_WAITLIST_ENDPOINT || "/api/waitlist";
+    const publicWaitlistEndpoint = "https://formsubmit.co/ajax/jakepittman2@gmail.com";
+    const waitlistEndpoint = window.FLUIDS_WAITLIST_ENDPOINT || (
+      ["tryfluids.com","www.tryfluids.com"].includes(window.location.hostname)
+        ? publicWaitlistEndpoint
+        : "/api/waitlist"
+    );
     let discoveryLoaded = false;
     let discoveryCache = null;
     let substitutionBlendCache = [];
@@ -6180,7 +6188,7 @@
       const blendId=String(document.getElementById("waitlistBlendId")?.value || "custom").trim();
       const blendName=String(document.getElementById("waitlistBlendName")?.textContent || "Custom blend profile").trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        if (status) status.textContent="Drop in a valid email and I will hold your code.";
+        if (status) status.textContent="Drop in a valid email and we will hold your code.";
         return;
       }
       const lead={
@@ -6191,7 +6199,12 @@
         blend_name:blendName,
         discount_code:launchDiscountCode,
         email,
-        name
+        name,
+        _subject:"New Fluids waitlist lead",
+        _template:"table",
+        _captcha:"false",
+        _replyto:email,
+        message:`New waitlist request for ${blendName} with ${launchDiscountCode}.`
       };
       saveWaitlistLeadLocally(lead);
       if (submit) {
@@ -6202,10 +6215,16 @@
       try {
         const response=await fetch(waitlistEndpoint,{
           method:"POST",
-          headers:{"Content-Type":"application/json"},
+          headers:{"Content-Type":"application/json","Accept":"application/json"},
           body:JSON.stringify(lead)
         });
-        remoteSaved=response.ok;
+        let payload={};
+        try {
+          payload=await response.json();
+        } catch (parseError) {
+          payload={};
+        }
+        remoteSaved=response.ok && payload.success !== false;
       } catch (error) {
         remoteSaved=false;
       }
