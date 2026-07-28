@@ -3936,6 +3936,7 @@
       Personalized and population optimization recommendations for formulation development.
     </footer>
   </div>
+  <script src="/assets/fluids/runtime-config.js"></script>
   <script>
     const fieldOrder = ["albumin","creatinine","fasting_glucose","crp","lymphocyte_percent","mcv","rdw","alp","wbc","hba1c","alt","ggt","bun","potassium","egfr"];
     const dropZone = document.getElementById("dropZone");
@@ -3960,6 +3961,26 @@
         ? publicWaitlistEndpoint
         : "/api/waitlist"
     );
+    const configuredApiBase = String(
+      window.FLUIDS_API_BASE ||
+      document.querySelector('meta[name="fluids-api-base"]')?.content ||
+      ""
+    ).replace(/\/+$/,"");
+    const configuredApiMode = String(
+      window.FLUIDS_API_MODE ||
+      document.querySelector('meta[name="fluids-api-mode"]')?.content ||
+      "auto"
+    ).toLowerCase();
+    const useAnalysisJobs = configuredApiMode === "jobs" || (
+      configuredApiMode === "auto" && Boolean(configuredApiBase)
+    );
+    function apiUrl(path) {
+      if (!path || /^https?:\/\//i.test(path)) return path;
+      return path.startsWith("/api/") ? `${configuredApiBase}${path}` : path;
+    }
+    function wait(ms) {
+      return new Promise(resolve => window.setTimeout(resolve, ms));
+    }
     let discoveryLoaded = false;
     let discoveryCache = null;
     let substitutionBlendCache = [];
@@ -4296,7 +4317,7 @@
     dropZone.addEventListener("drop", e => selectFile(e.dataTransfer.files[0]));
 
     async function loadSpecs() {
-      const response = await fetch("/api/specs");
+      const response = await fetch(apiUrl("/api/specs"));
       const data = await response.json();
       data.labs.forEach(item => specs[item.key] = item);
     }
@@ -4364,7 +4385,7 @@
       if (!selectedFile) return;
       showError(""); extractBtn.disabled = true; setLoading("extractLoader", true);
       try {
-        const response = await fetch("/api/extract", {
+        const response = await fetch(apiUrl("/api/extract"), {
           method:"POST",
           headers:{
             "Content-Type": selectedFile.type || "application/pdf",
@@ -4425,12 +4446,7 @@
         steroid_medication:document.getElementById("steroidMedication").checked
       };
       try {
-        const response = await fetch("/api/analyze", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(payload)});
-        const data = await response.json();
-        if (!response.ok || !data.ok) {
-          const missing = data.missing ? ` Missing: ${data.missing.map(k => specs[k]?.label || k).join(", ")}.` : "";
-          throw new Error((data.message || "Analysis could not be completed.") + missing);
-        }
+        const data = await runCustomBlendAnalysis(payload);
         if (data.app_revision && !String(data.app_revision).includes("product-layer")) {
           console.warn("App revision changed while this page was open.", data.app_revision);
         }
@@ -4438,6 +4454,68 @@
       } catch (error) { showError(error.message); window.scrollTo({top:0,behavior:"smooth"}); }
       finally { analyzeBtn.disabled = false; setLoading("analysisLoader", false); stopScienceRunner(); }
     });
+    async function runCustomBlendAnalysis(payload) {
+      if (useAnalysisJobs) return runCustomBlendAnalysisJob(payload);
+      const response = await fetch(apiUrl("/api/analyze"), {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify(payload)
+      });
+      const data = await response.json();
+      if (!response.ok || !data.ok) throwAnalysisError(data);
+      return data;
+    }
+    function throwAnalysisError(data) {
+      const missing = data && data.missing ? ` Missing: ${data.missing.map(k => specs[k]?.label || k).join(", ")}.` : "";
+      throw new Error(((data && data.message) || "Analysis could not be completed.") + missing);
+    }
+    async function runCustomBlendAnalysisJob(payload) {
+      const createResponse = await fetch(apiUrl("/api/jobs/analyze"), {
+        method:"POST",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body:JSON.stringify(payload)
+      });
+      const created = await createResponse.json();
+      if (!createResponse.ok || !created.ok) throwAnalysisError(created);
+      const jobId = created.job_id;
+      const pollMs = Math.max(1200, Number(created.poll_interval_seconds || 2) * 1000);
+      updateAnalysisJobReadout({status:"queued",message:"Queued for cloud analysis."});
+      for (let attempt = 0; attempt < 240; attempt += 1) {
+        await wait(pollMs);
+        const statusResponse = await fetch(apiUrl(`/api/jobs/${encodeURIComponent(jobId)}`), {
+          headers:{"Accept":"application/json"}
+        });
+        const job = await statusResponse.json();
+        if (!statusResponse.ok || !job.ok) throwAnalysisError(job);
+        updateAnalysisJobReadout(job);
+        if (job.status === "completed") {
+          if (!job.result || !job.result.ok) throwAnalysisError(job.result || job);
+          return job.result;
+        }
+        if (job.status === "failed") throwAnalysisError(job.result || job);
+      }
+      throw new Error("The cloud model is still running. Try again in a minute.");
+    }
+    function updateAnalysisJobReadout(job) {
+      const readout=document.getElementById("scienceRunnerReadout");
+      if (readout) {
+        const elapsed=Number.isFinite(Number(job.elapsed_seconds)) ? ` · ${Number(job.elapsed_seconds).toFixed(0)}s` : "";
+        readout.textContent=`${job.status || "running"}${elapsed}`;
+      }
+      const title=document.getElementById("scienceRunnerTitle");
+      const body=document.getElementById("scienceRunnerBody");
+      if (!title || !body) return;
+      if (job.status === "queued") {
+        title.textContent="Queued for cloud analysis.";
+        body.textContent="Your reviewed bloodwork is waiting for the Fluids model worker.";
+      } else if (job.status === "running") {
+        title.textContent="Cloud model is building your blend.";
+        body.textContent=job.message || "The nutrient vector, product constraints, and custom blend options are being generated.";
+      } else if (job.status === "completed") {
+        title.textContent="Custom blend complete.";
+        body.textContent="Your nutrient vector and blend options are ready.";
+      }
+    }
     function optimizationFitPercent(rawValue) {
       const reward=Number(rawValue);
       if (!Number.isFinite(reward)) return null;
@@ -5976,7 +6054,7 @@
       return Number.isFinite(number) ? `${number>=0 ? "+" : ""}${number.toFixed(digits)}` : "—";
     }
     async function fetchJsonOrThrow(url,fallbackMessage) {
-      const response=await fetch(url);
+      const response=await fetch(apiUrl(url));
       const text=await response.text();
       let data=null;
       try {
@@ -6213,7 +6291,7 @@
       }
       let remoteSaved=false;
       try {
-        const response=await fetch(waitlistEndpoint,{
+        const response=await fetch(apiUrl(waitlistEndpoint),{
           method:"POST",
           headers:{"Content-Type":"application/json","Accept":"application/json"},
           body:JSON.stringify(lead)
@@ -6914,7 +6992,7 @@
       button.disabled=true;
       status.textContent="Evaluating custom blend against the NHANES-trained model…";
       try {
-        const response=await fetch("/api/evaluate-blend", {
+        const response=await fetch(apiUrl("/api/evaluate-blend"), {
           method:"POST",
           headers:{"Content-Type":"application/json"},
           body:JSON.stringify({name:"Founder custom blend", ingredients})
