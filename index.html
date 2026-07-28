@@ -4846,12 +4846,16 @@
       const target=document.getElementById("resultsTopNav") || document.getElementById("results");
       const snap=()=>{
         if (!target) return;
-        target.scrollIntoView({behavior:"auto",block:"start"});
+        const top=Math.max(0,target.getBoundingClientRect().top + window.pageYOffset - 86);
+        window.scrollTo({top,behavior:"auto"});
+        document.documentElement.scrollTop=top;
+        document.body.scrollTop=top;
       };
       snap();
       requestAnimationFrame(snap);
       setTimeout(snap,80);
       setTimeout(snap,320);
+      setTimeout(snap,720);
     }
     function showView(name) {
       const apply=()=>{
@@ -4890,7 +4894,10 @@
         }
       };
       if (document.startViewTransition && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        document.startViewTransition(apply);
+        const transition=document.startViewTransition(apply);
+        if (name === "results") {
+          transition.finished.then(forceResultsTopScroll).catch(()=>forceResultsTopScroll());
+        }
       } else {
         apply();
       }
@@ -5657,6 +5664,13 @@
       appendSummaryLine(panel,"Model signal",signalText);
       const formulaText=option?.blend_summary || "";
       appendSummaryLine(panel,"Formula shape",formulaText);
+      if (option?.recommended) {
+        appendSummaryLine(
+          panel,
+          "Why this one",
+          "It ranked first on the strongest mix of bloodwork fit, nutrient-vector alignment, and product-realistic formulation."
+        );
+      }
       appendSummaryLine(panel,"PhenoAge",phenoAgeProjectionText(option?.predicted_age_effect));
       const tags=option?.function_lane?.support_tags || [];
       if (Array.isArray(tags) && tags.length) {
@@ -6027,14 +6041,17 @@
 	    function renderBlendOption(option,parent,settings={}) {
 	      const append=Boolean(settings.append);
 	      if (!append) parent.textContent="";
+	      const optionIndex=Number(settings.index || 0);
+	      const isRecommended=append && optionIndex === 0;
+	      option.recommended=isRecommended;
 	      const card=document.createElement("article");
-	      card.className=`blend-option-card${Number(settings.index || 0) === 0 ? " primary" : ""}`;
+	      card.className=`blend-option-card${isRecommended ? " primary" : ""}`;
 	      const head=document.createElement("div"); head.className="blend-title";
 	      const title=document.createElement("div");
 	      const displayName=option.name?.replace(/^Blend 1 · /,"Custom blend · ") || "Custom blend";
-	      const variantLabel=append ? `Formula option ${Number(settings.index || 0) + 1}` : "Formula option";
+	      const variantLabel=isRecommended ? "Recommended custom blend" : append ? `Formula option ${optionIndex + 1}` : "Formula option";
 	      title.innerHTML=`<div class="eyebrow">${variantLabel}</div><h3>${displayName}</h3><p class="section-copy">A personalized juice-powder blend built to deliver the nutrient vector below.</p>`;
-	      const badge=document.createElement("div"); badge.className="score-badge"; badge.textContent=`${formatOptimizationFit(option.final_exploratory_reward ?? option.predicted_reward,{includeLevel:true})} fit`;
+	      const badge=document.createElement("div"); badge.className="score-badge"; badge.textContent=`${isRecommended ? "Recommended · " : ""}${formatOptimizationFit(option.final_exploratory_reward ?? option.predicted_reward,{includeLevel:true})} fit`;
 	      head.append(title,badge); card.appendChild(head);
 	      appendFormulaSummary(option,card);
 	      const list=document.createElement("div"); list.className="ingredient-list";
