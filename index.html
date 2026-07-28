@@ -27,7 +27,28 @@
         var(--paper);
       font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
-    .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto 80px; }
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto 80px;
+      display:flex;
+      flex-direction:column;
+    }
+    header { order:0; }
+    #uploadHero,
+    #launchOffer {
+      display:none !important;
+    }
+    #vectorStory {
+      order:1;
+      margin-top:16px;
+    }
+    #homepageFlowIntro { order:2; }
+    #flowProgress { order:3; }
+    #wizardStage { order:4; }
+    #homeFunctionMenu { order:5; }
+    #standardView { order:6; }
+    #discoveryView { order:7; }
+    footer { order:99; }
     header { display:flex; justify-content:space-between; align-items:center; padding:26px 0 14px; }
     .brand { font-weight:850; letter-spacing:-.04em; font-size:1.18rem; }
     .brand .brand-mark { color:white; }
@@ -1525,6 +1546,28 @@
       background:linear-gradient(135deg,var(--raspberry),var(--carrot));
       box-shadow:0 18px 34px rgba(198,43,79,.20);
     }
+    .home-function-code-note {
+      display:grid;
+      gap:4px;
+      align-content:center;
+      min-height:64px;
+      padding:13px 16px;
+      border:1px solid rgba(198,43,79,.18);
+      border-radius:18px;
+      color:#8a3a49;
+      background:rgba(255,253,248,.76);
+      box-shadow:0 16px 30px rgba(13,27,42,.055);
+    }
+    .home-function-code-note span {
+      font-size:.68rem;
+      font-weight:950;
+      letter-spacing:.11em;
+    }
+    .home-function-code-note b {
+      color:#203445;
+      font-size:.8rem;
+      line-height:1.2;
+    }
     .home-function-grid {
       display:grid;
       grid-template-columns:repeat(4,minmax(0,1fr));
@@ -1699,7 +1742,7 @@
     .home-vector-modal-panel,
     .waitlist-modal-panel {
       position:relative;
-      width:min(760px,100%);
+      width:min(960px,100%);
       max-height:min(860px,calc(100vh - 44px));
       overflow:auto;
       padding:24px;
@@ -1852,6 +1895,40 @@
       margin-top:5px;
       color:#203445;
       font-size:.95rem;
+    }
+    .home-vector-explain {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(220px,.55fr);
+      gap:12px;
+      align-items:stretch;
+      margin:0 0 16px;
+    }
+    .home-vector-explain-card {
+      padding:14px 15px;
+      border:1px solid rgba(157,111,67,.13);
+      border-radius:18px;
+      background:
+        radial-gradient(circle at 100% 0,rgba(242,190,55,.13),transparent 12rem),
+        rgba(255,255,255,.62);
+    }
+    .home-vector-explain-card strong {
+      display:block;
+      margin-bottom:6px;
+      color:#203445;
+      font-size:.92rem;
+    }
+    .home-vector-explain-card span {
+      display:block;
+      color:#67625d;
+      font-size:.82rem;
+      line-height:1.48;
+    }
+    .home-vector-modal-matrix {
+      margin:0 0 16px;
+    }
+    .home-vector-modal-matrix .vector-matrix-stage {
+      min-height:380px;
+      border-radius:24px;
     }
     .home-vector-modal-body {
       display:grid;
@@ -2806,6 +2883,8 @@
       .home-function-head { grid-template-columns:1fr; align-items:start; }
       .home-function-head h2 { font-size:2.9rem; }
       .home-function-cta { width:100%; min-width:0; }
+      .home-vector-explain,
+      .home-vector-modal-body { grid-template-columns:1fr; }
       .custom-product-reveal { grid-template-columns:1fr; }
       .custom-product-reveal img { display:none; }
       .homepage-flow-intro { grid-template-columns:1fr; }
@@ -2890,6 +2969,7 @@
       .waitlist-modal { padding:12px; align-items:end; }
       .home-vector-modal-panel,
       .waitlist-modal-panel { max-height:calc(100vh - 24px); padding:20px; border-radius:24px 24px 0 0; }
+      .home-vector-modal-matrix .vector-matrix-stage { min-height:320px; }
       .home-vector-modal-close,
       .waitlist-modal-close { top:12px; right:12px; }
       .home-vector-modal-kicker,
@@ -3397,7 +3477,7 @@
         <h1>Eight daily blends. One custom path.</h1>
         <p class="lead">Pick the function you want now. Use launch code FLUIDS100 when you want your labs translated into a custom nutrient vector.</p>
         <div class="consumer-hero-actions">
-          <button type="button" data-open-waitlist data-blend-id="custom" data-blend-name="Custom blend profile">Claim free custom profile</button>
+          <button type="button" data-quick-mode="upload">Start custom profile</button>
           <button type="button" class="secondary" data-quick-mode="upload">Generate custom blend</button>
         </div>
         <div class="consumer-proof-row" aria-label="Product promises">
@@ -3434,7 +3514,10 @@
           <h2>Start with the function that fits your day.</h2>
           <p>Eight standard blends, each with a distinct nutrient vector and a simple path into custom personalization.</p>
         </div>
-        <button type="button" class="home-function-cta" data-open-waitlist data-blend-id="custom" data-blend-name="Custom blend profile">Claim launch code</button>
+        <div class="home-function-cta home-function-code-note" aria-label="Launch code offer">
+          <span>FLUIDS100</span>
+          <b>Free custom profile for early access</b>
+        </div>
       </div>
       <div class="home-function-grid" id="homeFunctionGrid">
         <div class="home-function-empty">Loading the standard function blends…</div>
@@ -3448,6 +3531,8 @@
         <h3 id="homeVectorModalTitle">Nutrient vector</h3>
         <p id="homeVectorModalDescription"></p>
         <div class="home-vector-modal-meta" id="homeVectorModalMeta"></div>
+        <div class="home-vector-explain" id="homeVectorModalExplain"></div>
+        <div class="home-vector-modal-matrix" id="homeVectorModalMatrix"></div>
         <div class="home-vector-modal-body">
           <div class="home-vector-modal-section">
             <h4>Vector priorities</h4>
@@ -3482,10 +3567,6 @@
             <label for="waitlistEmail">Email</label>
             <input id="waitlistEmail" name="email" type="email" autocomplete="email" placeholder="you@email.com" required>
           </div>
-          <div class="waitlist-field">
-            <label for="waitlistName">Name</label>
-            <input id="waitlistName" name="name" type="text" autocomplete="name" placeholder="Optional">
-          </div>
           <button type="submit" class="waitlist-submit">Join waitlist</button>
           <p class="waitlist-status" id="waitlistStatus" aria-live="polite"></p>
           <a class="waitlist-mail-link" id="waitlistMailLink" href="mailto:jakepittman2@gmail.com">Send request email</a>
@@ -3519,7 +3600,7 @@
     <section class="homepage-flow-intro" id="homepageFlowIntro" aria-label="Build your blend workflow">
       <div>
         <div class="eyebrow">Start here</div>
-        <h2>Build your custom blend in four steps.</h2>
+        <h2>Start your custom blend in four steps.</h2>
         <p>Upload your bloodwork, review the extracted markers, answer a short context questionnaire, then see the nutrient vector and the powder formula designed around it.</p>
       </div>
       <button type="button" data-quick-mode="upload">Upload blood test</button>
@@ -4228,10 +4309,29 @@
         apply();
       }
     }
+    function setHeaderMode(mode) {
+      document.querySelectorAll("[data-app-mode]").forEach(item=>{
+        item.classList.toggle("active",item.dataset.appMode === mode);
+      });
+    }
+    function showHomepageThenScroll(targetId,mode,control) {
+      showView("upload");
+      setHeaderMode(mode);
+      window.setTimeout(()=>{
+        setHeaderMode(mode);
+        scrollToTarget(targetId,control);
+      },180);
+    }
     document.querySelectorAll("[data-app-mode]").forEach(item=>item.addEventListener("click",()=>{
-      if (item.dataset.appMode === "standard") loadStandardBlend();
-      else if (item.dataset.appMode === "discovery") loadV7Discovery();
-      else showView(personalizedView);
+      const mode=item.dataset.appMode;
+      if (mode === "standard") {
+        loadHomeFunctionMenu().catch(() => {});
+        showHomepageThenScroll("homeFunctionMenu",mode,item);
+      } else if (mode === "discovery") {
+        showHomepageThenScroll("vectorStory",mode,item);
+      } else {
+        showHomepageThenScroll("homepageFlowIntro",mode,item);
+      }
     }));
     document.querySelectorAll("[data-quick-mode]").forEach(item=>item.addEventListener("click",()=>{
       if (item.dataset.quickMode === "standard") loadStandardBlend();
@@ -5500,7 +5600,7 @@
       const setActiveDom=index=>{
         const item=data[index] || data[0];
         activeTitle.textContent=item.label;
-        activeDetail.textContent=`${item.amountLabel} · ${item.category}`;
+        activeDetail.textContent=`${item.amountLabel} · ${item.note}`;
         chips.forEach((chip,chipIndex)=>chip.classList.toggle("active",chipIndex===index));
         stage.style.setProperty("--matrix-active-color",item.color);
       };
@@ -5581,6 +5681,7 @@
         mesh.scale.setScalar(scale);
         mesh.position.copy(position);
         mesh.userData.baseScale=scale;
+        mesh.userData.matrixIndex=index;
         root.add(mesh);
         const halo=new THREE.Mesh(
           new THREE.SphereGeometry(1,24,12),
@@ -5629,11 +5730,32 @@
         setActiveDom(activeIndex);
       };
       stage.__setMatrixActive=setActive;
-      canvas.addEventListener("click",()=>setActive(activeIndex+1));
-      stage.addEventListener("pointermove",event=>{
+      const raycaster=new THREE.Raycaster();
+      const mouse=new THREE.Vector2();
+      const updatePointer=event=>{
         const rect=stage.getBoundingClientRect();
-        pointerX=((event.clientX-rect.left)/Math.max(rect.width,1)-.5)*2;
-        pointerY=((event.clientY-rect.top)/Math.max(rect.height,1)-.5)*2;
+        const x=(event.clientX-rect.left)/Math.max(rect.width,1);
+        const y=(event.clientY-rect.top)/Math.max(rect.height,1);
+        pointerX=(x-.5)*2;
+        pointerY=(y-.5)*2;
+        mouse.x=x*2-1;
+        mouse.y=-(y*2-1);
+      };
+      const focusedNode=()=>{
+        raycaster.setFromCamera(mouse,camera);
+        return raycaster.intersectObjects(nodes.map(node=>node.mesh),false)[0]?.object || null;
+      };
+      canvas.addEventListener("click",event=>{
+        updatePointer(event);
+        const hit=focusedNode();
+        if (hit && Number.isInteger(hit.userData.matrixIndex)) setActive(hit.userData.matrixIndex);
+        else setActive(activeIndex+1);
+      });
+      stage.addEventListener("pointermove",event=>{
+        updatePointer(event);
+        const hit=focusedNode();
+        canvas.style.cursor=hit ? "pointer" : "grab";
+        if (hit && Number.isInteger(hit.userData.matrixIndex)) setActive(hit.userData.matrixIndex);
       });
       function resize() {
         const rect=stage.getBoundingClientRect();
@@ -5700,7 +5822,7 @@
         {nutrient:"potassium_mg",amount:380,unit:"mg",share:72,matrix_note:"Coconut water, carrot, beet"},
         {nutrient:"folate_dfe_mcg",amount:90,unit:"mcg",share:46,matrix_note:"Leafy, citrus, fruit matrix"},
         {nutrient:"fiber_g",amount:4.2,unit:"g",share:58,matrix_note:"Berry and root powder structure"}
-      ],mount,{stageClass:"hero-matrix",kicker:"Example vector",title:"Nutrients move as a connected matrix"});
+      ],mount,{stageClass:"hero-matrix",kicker:"Interactive example",title:"Hover or tap a nutrient signal"});
     }
     function initScienceRunnerMatrix() {
       const canvas=document.getElementById("scienceRunnerCanvas");
@@ -6068,6 +6190,15 @@
       if (!response.ok || !data.ok) throw new Error(data.message || fallbackMessage);
       return data;
     }
+    async function fetchStaticJsonOrThrow(url,fallbackMessage) {
+      const response=await fetch(apiUrl(url));
+      if (!response.ok) throw new Error(fallbackMessage);
+      try {
+        return await response.json();
+      } catch (error) {
+        throw new Error(fallbackMessage);
+      }
+    }
     function lanePalette(index) {
       const palettes=[
         ["#c62b4f","#f2be37","#6f8f33"],
@@ -6099,14 +6230,54 @@
           ? lane.nutrient_vector_preview
           : [];
       if (direct.length) {
-        return direct.map(item=>({
+        return direct.map((item,index)=>({
           nutrient:item.nutrient || item.label || item.name || "Nutrient",
-          share:Number(item.share ?? item.weight ?? item.value ?? 50)
+          share:Number(item.share ?? item.weight ?? item.value ?? 50),
+          amount:item.amount,
+          unit:item.unit,
+          matrix_note:item.matrix_note || item.source_note || item.explanation || nutrientPlainMeaning(item.nutrient || item.label || item.name)
         }));
       }
       return (lane.support_tags || lane.function_focus || [])
         .slice(0,5)
-        .map((name,index)=>({nutrient:name,share:[88,72,58,44,36][index] || 35}));
+        .map((name,index)=>({nutrient:name,share:[88,72,58,44,36][index] || 35,matrix_note:"function signal"}));
+    }
+    function standardDisplayName(lane) {
+      const raw=String(lane?.function_name || lane?.name || "Standard function").trim();
+      return raw
+        .replace("Heart + Flow","Heart Flow")
+        .replace("Antioxidant Minerals","Antiox Minerals");
+    }
+    function nutrientPlainMeaning(value) {
+      const key=String(value || "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g,"_")
+        .replace(/^_|_$/g,"");
+      const meanings={
+        vitamin_c:"immune, collagen, and antioxidant support",
+        vitamin_c_mg:"immune, collagen, and antioxidant support",
+        vitamin_d:"immune and metabolic health signal",
+        vitamin_d_mcg:"immune and metabolic health signal",
+        vitamin_a:"cellular defense and epithelial support",
+        vitamin_a_rae_mcg:"cellular defense and epithelial support",
+        magnesium:"muscle, glucose, and energy metabolism support",
+        magnesium_mg:"muscle, glucose, and energy metabolism support",
+        potassium:"fluid balance and cardiovascular support",
+        potassium_mg:"fluid balance and cardiovascular support",
+        folate:"cell renewal and methylation support",
+        folate_dfe_mcg:"cell renewal and methylation support",
+        fiber:"gut, glucose, and fullness support",
+        fiber_g:"gut, glucose, and fullness support",
+        calcium:"mineral structure and muscle signaling",
+        calcium_mg:"mineral structure and muscle signaling",
+        copper:"mineral cofactor and antioxidant enzyme support",
+        copper_mg:"mineral cofactor and antioxidant enzyme support",
+        iron:"oxygen transport and energy support",
+        iron_mg:"oxygen transport and energy support",
+        vitamin_e:"cell membrane antioxidant support",
+        vitamin_e_mg:"cell membrane antioxidant support"
+      };
+      return meanings[key] || "supporting signal in this nutrition direction";
     }
     function addHomeVectorMeta(parent,label,value) {
       const item=document.createElement("div");
@@ -6128,14 +6299,19 @@
       const description=document.getElementById("homeVectorModalDescription");
       const kicker=document.getElementById("homeVectorModalKicker");
       const meta=document.getElementById("homeVectorModalMeta");
+      const explain=document.getElementById("homeVectorModalExplain");
+      const matrix=document.getElementById("homeVectorModalMatrix");
       const list=document.getElementById("homeVectorModalList");
       const ingredients=document.getElementById("homeVectorModalIngredients");
       const rationale=document.getElementById("homeVectorModalRationale");
-      if (title) title.textContent=lane.function_name || lane.name || "Standard function";
+      if (title) title.textContent=standardDisplayName(lane);
       if (description) description.textContent=lane.customer_description || lane.description || lane.positioning || "";
       if (kicker) {
         kicker.textContent="";
-        [lane.id || `S${(index || 0)+1}`, lane.formula_descriptor || lane.formula_name || "Standard blend"].forEach(value=>{
+        [
+          lane.formula_descriptor || lane.formula_name || "Standard blend",
+          Number.isFinite(population) ? `${percentText(population,1)} population family` : "population-derived function"
+        ].forEach(value=>{
           const item=document.createElement("span");
           item.textContent=value;
           kicker.appendChild(item);
@@ -6150,6 +6326,46 @@
         addHomeVectorMeta(meta,"Lead powder",topPowder ? `${topPowder.item} ${percentText(Number(topPowder.blend_percent),1)}` : "Formula ready");
       }
       const vectorItems=laneVectorItems(lane);
+      const topVectorLabels=vectorItems.slice(0,3).map(item=>nutrientLabel(item.nutrient).toLowerCase());
+      const topIngredients=(lane.ingredients || [])
+        .filter(item=>Number(item.blend_percent)>0)
+        .slice(0,3)
+        .map(item=>item.item);
+      if (explain) {
+        explain.textContent="";
+        [
+          [
+            "What this means",
+            `${standardDisplayName(lane)} is tuned toward ${topVectorLabels.length ? topVectorLabels.join(", ") : "a balanced nutrient direction"}. The goal is a coordinated nutrition pattern, not a single magic ingredient.`
+          ],
+          [
+            "How to read the matrix",
+            "Larger, brighter nodes are the stronger nutrition signals. Click a node or chip to see which nutrient the blend is emphasizing and why it matters in plain language."
+          ],
+          [
+            "How it becomes a drink",
+            topIngredients.length ? `${topIngredients.join(", ")} and the supporting powders carry that vector into a daily juice-powder format.` : "The powder blend is selected to deliver the vector while still feeling like a drink."
+          ]
+        ].forEach(([heading,copy])=>{
+          const card=document.createElement("div"); card.className="home-vector-explain-card";
+          const strong=document.createElement("strong"); strong.textContent=heading;
+          const span=document.createElement("span"); span.textContent=copy;
+          card.append(strong,span);
+          explain.appendChild(card);
+        });
+      }
+      if (matrix) {
+        matrix.textContent="";
+        renderVectorMatrix(
+          vectorItems.slice(0,8),
+          matrix,
+          {
+            stageClass:"modal-matrix",
+            kicker:"Interactive nutrient vector",
+            title:"Click the matrix to explore this blend"
+          }
+        );
+      }
       if (list) {
         list.textContent="";
         vectorItems.slice(0,8).forEach(item=>{
@@ -6205,12 +6421,21 @@
       modal.style.setProperty("--lane-b",palette[1]);
       modal.style.setProperty("--lane-c",palette[2]);
       const blendId=lane?.id || "custom";
-      const blendName=lane?.function_name || lane?.name || "Custom blend profile";
+      const blendName=blendId === "custom" ? "Custom blend profile" : standardDisplayName(lane);
       const blendNameEl=document.getElementById("waitlistBlendName");
       const blendIdEl=document.getElementById("waitlistBlendId");
       const codeEl=document.getElementById("waitlistDiscountCode");
+      const title=document.getElementById("waitlistModalTitle");
+      const description=document.getElementById("waitlistModalDescription");
       const status=document.getElementById("waitlistStatus");
       const mailLink=document.getElementById("waitlistMailLink");
+      const isCustom=blendId === "custom";
+      if (title) title.textContent=isCustom ? "Get your free custom blend profile." : `Join ${blendName}.`;
+      if (description) {
+        description.textContent=isCustom
+          ? `Drop your email and we will save ${launchDiscountCode} for a free bloodwork-based analysis and custom blend profile.`
+          : `Drop your email to join the early list for ${blendName}. ${launchDiscountCode} stays attached for your free custom profile.`;
+      }
       if (blendNameEl) blendNameEl.textContent=blendName;
       if (blendIdEl) blendIdEl.value=blendId;
       if (codeEl) codeEl.value=launchDiscountCode;
@@ -6222,6 +6447,23 @@
       modal.hidden=false;
       document.body.classList.add("waitlist-modal-open");
       setTimeout(()=>document.getElementById("waitlistEmail")?.focus({preventScroll:true}),60);
+    }
+    function maybeOpenLaunchCodeModal() {
+      try {
+        if (sessionStorage.getItem("fluidsLaunchCodeModalSeen") === "1") return;
+        sessionStorage.setItem("fluidsLaunchCodeModalSeen","1");
+      } catch (error) {
+        console.warn("Launch modal session tracking skipped",error);
+      }
+      window.setTimeout(()=>{
+        const waitlist=document.getElementById("waitlistModal");
+        const vector=document.getElementById("homeVectorModal");
+        if (!waitlist || !waitlist.hidden || (vector && !vector.hidden)) return;
+        openWaitlistModal({
+          id:"custom",
+          function_name:"Free custom blend profile"
+        },0,null);
+      },900);
     }
     function closeWaitlistModal() {
       const modal=document.getElementById("waitlistModal");
@@ -6341,11 +6583,11 @@
         card.style.setProperty("--lane-b",palette[1]);
         card.style.setProperty("--lane-c",palette[2]);
         const population=lanePopulationShare(lane);
+        const title=document.createElement("h3"); title.textContent=standardDisplayName(lane);
         const kicker=document.createElement("div"); kicker.className="home-function-kicker";
-        const id=document.createElement("span"); id.textContent=lane.id || `S${index+1}`;
-        const share=document.createElement("span"); share.textContent=Number.isFinite(population) ? `${population.toFixed(1)}% family` : "standard";
-        kicker.append(id,share);
-        const title=document.createElement("h3"); title.textContent=lane.function_name || lane.name || "Standard function";
+        const share=document.createElement("span"); share.textContent=Number.isFinite(population) ? `${population.toFixed(1)}% population family` : "standard function";
+        const descriptor=document.createElement("span"); descriptor.textContent=lane.formula_descriptor || lane.formula_name || "nutrient vector";
+        kicker.append(share,descriptor);
         const copy=document.createElement("p"); copy.textContent=conciseText(lane.customer_description || lane.description || lane.positioning || "");
         const visual=document.createElement("div"); visual.className="home-function-visual";
         const orb=document.createElement("div"); orb.className="home-vector-orb";
@@ -6377,11 +6619,11 @@
         waitlistButton.addEventListener("click",()=>openWaitlistModal(lane,index,waitlistButton));
         const button=document.createElement("button");
         button.type="button";
-        button.textContent="Explore nutrient vector";
+        button.textContent="Explore nutrient vectors";
         button.className="home-function-vector-button";
         button.addEventListener("click",()=>openHomeVectorModal(lane,index,button));
         actions.append(waitlistButton,button);
-        card.append(kicker,title,copy,visual,ingredients,actions);
+        card.append(title,kicker,copy,visual,ingredients,actions);
         grid.appendChild(card);
       });
     }
@@ -6396,7 +6638,7 @@
         homeFunctionMenuLoaded=true;
       } catch (error) {
         try {
-          const fallback=await fetchJsonOrThrow(
+          const fallback=await fetchStaticJsonOrThrow(
             "/assets/fluids/standard_blends_static.json",
             "The standard function blend menu could not be loaded."
           );
@@ -7221,7 +7463,8 @@
     initPremiumExperience();
     initHomeVectorMatrix();
     loadHomeFunctionMenu().catch(() => {});
-    loadSpecs().catch(() => showError("The local application could not load its laboratory schema."));
+    maybeOpenLaunchCodeModal();
+    loadSpecs().catch(error => console.warn("Lab schema unavailable until the custom blend API is reachable.",error));
   </script>
 </body>
 </html>
