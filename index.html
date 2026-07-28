@@ -446,6 +446,33 @@
     .blend-summary.function-summary p { margin:0; }
     .blend-summary .function-reason-list li { color:var(--muted); background:#fff; border-color:var(--line); }
     .blend-summary .function-tag { color:#075866; background:#dff2f4; }
+    .formula-summary {
+      display:grid;
+      gap:10px;
+      padding:18px 20px;
+      background:linear-gradient(135deg,#edf8fa,#fbfefe);
+    }
+    .formula-summary h4 {
+      margin:0;
+      color:var(--ink);
+      font-size:1rem;
+    }
+    .formula-summary p {
+      margin:0;
+      color:var(--muted);
+      font-size:.92rem;
+      line-height:1.52;
+    }
+    .formula-summary b {
+      color:var(--ink);
+    }
+    .formula-summary-meta {
+      margin-top:2px;
+      color:#7a6f65;
+      font-size:.76rem;
+      font-weight:800;
+      line-height:1.45;
+    }
     .age-breakdown { margin:14px 0 18px; padding:16px 18px; border:1px solid var(--line); border-radius:18px; background:#fbfefe; }
     .age-breakdown-head { display:flex; justify-content:space-between; gap:16px; align-items:end; margin-bottom:12px; }
     .age-breakdown-head strong { color:var(--ink); font-size:.95rem; }
@@ -4815,6 +4842,17 @@
       requestAnimationFrame(render);
     }
 
+    function forceResultsTopScroll() {
+      const target=document.getElementById("resultsTopNav") || document.getElementById("results");
+      const snap=()=>{
+        if (!target) return;
+        target.scrollIntoView({behavior:"auto",block:"start"});
+      };
+      snap();
+      requestAnimationFrame(snap);
+      setTimeout(snap,80);
+      setTimeout(snap,320);
+    }
     function showView(name) {
       const apply=()=>{
         if (!["standard","discovery"].includes(name)) personalizedView = name;
@@ -4846,12 +4884,7 @@
         trackEvent("view_changed",{view:name});
         requestAnimationFrame(resizeVectorMatrices);
         if (name === "results") {
-          requestAnimationFrame(()=>{
-	        (document.getElementById("resultsTopNav") || document.getElementById("results"))?.scrollIntoView({
-	          behavior:"smooth",
-	          block:"start"
-	        });
-	      });
+          forceResultsTopScroll();
         } else {
           window.scrollTo({top:0,behavior:"smooth"});
         }
@@ -5580,6 +5613,60 @@
       if (hero) panel.append(copy,side); else panel.append(copy,side);
       parent.appendChild(panel);
     }
+    function phenoAgeProjectionText(effect) {
+      const rows=(effect?.breakdown || []).filter(row=>{
+        if (!row) return false;
+        const label=String(row.label || row.target || "").toLowerCase();
+        return label.includes("phenoage") || label.includes("pheno age");
+      });
+      const row=rows.find(item=>item.primary) || rows[0];
+      if (!row) return "";
+      const value=formatAgeBreakdownValue(row);
+      if (!value || value === "—") return "";
+      return `Projected PhenoAge signal: ${value}.`;
+    }
+    function cleanSentence(value) {
+      const text=String(value || "").trim();
+      if (!text) return "";
+      return /[.!?]$/.test(text) ? text : `${text}.`;
+    }
+    function appendSummaryLine(parent,label,text) {
+      const body=cleanSentence(text);
+      if (!body) return;
+      const row=document.createElement("p");
+      const strong=document.createElement("b");
+      strong.textContent=`${label}:`;
+      row.append(strong,document.createTextNode(` ${body}`));
+      parent.appendChild(row);
+    }
+    function appendFormulaSummary(option,parent) {
+      const panel=document.createElement("div");
+      panel.className="blend-summary formula-summary";
+      const title=document.createElement("h4");
+      title.textContent="Formula summary";
+      panel.appendChild(title);
+      const displayName=customFunctionName(option);
+      const functionCopy=option?.function_summary || option?.function_description || "";
+      appendSummaryLine(
+        panel,
+        displayName || "Function",
+        functionCopy || "This formula is tuned to the nutrient pattern and bloodwork priorities from this upload."
+      );
+      const reasons=Array.isArray(option?.function_reasons) ? option.function_reasons : [];
+      const signalText=reasons.slice(0,2).map(cleanSentence).join(" ");
+      appendSummaryLine(panel,"Model signal",signalText);
+      const formulaText=option?.blend_summary || "";
+      appendSummaryLine(panel,"Formula shape",formulaText);
+      appendSummaryLine(panel,"PhenoAge",phenoAgeProjectionText(option?.predicted_age_effect));
+      const tags=option?.function_lane?.support_tags || [];
+      if (Array.isArray(tags) && tags.length) {
+        const meta=document.createElement("div");
+        meta.className="formula-summary-meta";
+        meta.textContent=`Function lane signals: ${tags.slice(0,4).join(", ")}.`;
+        panel.appendChild(meta);
+      }
+      parent.appendChild(panel);
+    }
     function renderCustomBlendHero(option,data) {
       const hero=document.getElementById("customBlendHero");
       hero.textContent="";
@@ -5949,20 +6036,7 @@
 	      title.innerHTML=`<div class="eyebrow">${variantLabel}</div><h3>${displayName}</h3><p class="section-copy">A personalized juice-powder blend built to deliver the nutrient vector below.</p>`;
 	      const badge=document.createElement("div"); badge.className="score-badge"; badge.textContent=`${formatOptimizationFit(option.final_exploratory_reward ?? option.predicted_reward,{includeLevel:true})} fit`;
 	      head.append(title,badge); card.appendChild(head);
-	      appendCustomFunctionPanel(option,card);
-	      if (option.blend_summary) {
-	        const summary=document.createElement("div"); summary.className="blend-summary";
-	        summary.innerHTML=`<strong>What this formula is solving</strong>${option.blend_summary}`;
-	        card.appendChild(summary);
-	      }
-	      if (option.predicted_age_effect?.available) {
-	        const ageEffect=document.createElement("div"); ageEffect.className="blend-summary";
-	        const checkpoint=ageTimelineCheckpoint(option.predicted_age_effect);
-	        ageEffect.innerHTML=`<strong>Projected combined age drop</strong>${formatModeledAgeEffect(option.predicted_age_effect)}. ${checkpoint ? `${formatTimelineAgeEffect(checkpoint,{includeWeek:true})} on the 4-week adjustment curve. ` : ""}${modeledAgeEffectDetail(option.predicted_age_effect)}`;
-	        card.appendChild(ageEffect);
-	        const timeline=renderAgeAdjustmentTimeline(option.predicted_age_effect);
-	        if (timeline) card.appendChild(timeline);
-	      }
+	      appendFormulaSummary(option,card);
 	      const list=document.createElement("div"); list.className="ingredient-list";
       (option.ingredients || []).forEach(ingredient=>{
         const row=document.createElement("div"); row.className="ingredient-row";
