@@ -4496,13 +4496,11 @@
     let lastWaitlistModalTrigger = null;
     const launchDiscountCode = "FLUIDS100";
     const publicWaitlistEndpoint = "https://formsubmit.co/ajax/jakepittman2@gmail.com";
-    const waitlistEndpoint = window.FLUIDS_WAITLIST_ENDPOINT || (
-      ["tryfluids.com","www.tryfluids.com"].includes(window.location.hostname)
-        ? publicWaitlistEndpoint
-        : "/api/waitlist"
-    );
     const productionApiHost = ["tryfluids.com","www.tryfluids.com"].includes(window.location.hostname);
     const liveApiBase = "https://api.tryfluids.com";
+    const waitlistEndpoint = window.FLUIDS_WAITLIST_ENDPOINT || (
+      productionApiHost ? `${liveApiBase}/api/waitlist` : "/api/waitlist"
+    );
     if (productionApiHost && !window.FLUIDS_API_BASE) {
       window.FLUIDS_API_BASE = liveApiBase;
       window.FLUIDS_API_MODE = window.FLUIDS_API_MODE || "jobs";
@@ -4917,6 +4915,7 @@
     }
     document.querySelectorAll("[data-app-mode]").forEach(item=>item.addEventListener("click",()=>{
       const mode=item.dataset.appMode;
+      trackEvent("nav_tab_clicked",{mode});
       if (mode === "standard") {
         loadHomeFunctionMenu().catch(() => {});
         showHomepageThenScroll("homeFunctionMenu",mode,item);
@@ -4927,8 +4926,10 @@
       }
     }));
     document.querySelectorAll("[data-quick-mode]").forEach(item=>item.addEventListener("click",()=>{
-      if (item.dataset.quickMode === "standard") loadStandardBlend();
-      else if (item.dataset.quickMode === "discovery") loadV7Discovery();
+      const mode=item.dataset.quickMode || "personalized";
+      trackEvent("cta_clicked",{cta:"quick_mode",mode});
+      if (mode === "standard") loadStandardBlend();
+      else if (mode === "discovery") loadV7Discovery();
       else {
         showView("upload");
         setTimeout(()=>scrollToTarget("uploadView"),140);
@@ -4943,8 +4944,18 @@
         nav.querySelectorAll("[data-scroll-target]").forEach(item=>item.classList.toggle("active",item===control));
       }
     }
-    document.querySelectorAll("[data-scroll-target]").forEach(item=>item.addEventListener("click",()=>scrollToTarget(item.dataset.scrollTarget,item)));
-    document.querySelectorAll("[data-open-waitlist]").forEach(item=>item.addEventListener("click",()=>openWaitlistModalFromTrigger(item)));
+    document.querySelectorAll("[data-scroll-target]").forEach(item=>item.addEventListener("click",()=>{
+      trackEvent("section_jump_clicked",{target:item.dataset.scrollTarget || ""});
+      scrollToTarget(item.dataset.scrollTarget,item);
+    }));
+    document.querySelectorAll("[data-open-waitlist]").forEach(item=>item.addEventListener("click",()=>{
+      trackEvent("cta_clicked",{
+        cta:"open_waitlist",
+        blend_id:item.dataset.blendId || "custom",
+        blend_name:item.dataset.blendName || "Custom blend profile"
+      });
+      openWaitlistModalFromTrigger(item);
+    }));
     function showQuestion(index) {
       currentQuestion = Math.max(0,Math.min(3,index));
       const labels=["Basics","Lifestyle","Nutrition","Health"];
@@ -5220,6 +5231,7 @@
       };
       trackEvent("custom_blend_started",{
         lab_count:Object.keys(labs).length,
+        phenoage_input_count:Object.keys(labs).filter(key=>specs[key]?.phenoage_required).length,
         use_jobs:useAnalysisJobs
       });
       try {
@@ -5229,14 +5241,11 @@
         }
         renderResults(data);
         const firstBlend=(data.blend_options || [])[0] || {};
-        const archetype=data.archetype_report || {};
-        trackEvent("custom_blend_completed",{
+        trackEvent("custom_blend_completed",customBlendAnalyticsMetadata(data,firstBlend,{
           analysis_seconds:Number(data.analysis_seconds) || Number(((performance.now()-analysisStartedAt)/1000).toFixed(1)),
-          analysis_timing:data.analysis_timing || {},
-          blend_count:(data.blend_options || []).length,
-          top_function:customFunctionName(firstBlend) || firstBlend.function_name || firstBlend.name || firstBlend.formula_name || "",
-          top_archetype:archetype.name || archetype.primary_archetype || archetype.archetype_name || archetype.label || ""
-        });
+          lab_count:Object.keys(labs).length,
+          runtime_source:useAnalysisJobs ? "job" : "direct"
+        }));
       } catch (error) {
         trackEvent("custom_blend_failed",{
           lab_count:Object.keys(labs).length,
@@ -5562,12 +5571,15 @@
         data.nutrient_action_map || [],
         data.substitution_actions || []
       );
-	      const reasons = document.getElementById("reasons");
-	      if (reasons) {
-	        reasons.textContent = "";
-	        Object.entries(data.priority_reasons || {}).forEach(([key,text]) => addCard(reasons, specs[key]?.label || key.replaceAll("_"," "), text, ""));
-	      }
-	      showView("results");
+      const reasons = document.getElementById("reasons");
+      if (reasons) {
+        reasons.textContent = "";
+        Object.entries(data.priority_reasons || {}).forEach(([key,text]) => addCard(reasons, specs[key]?.label || key.replaceAll("_"," "), text, ""));
+      }
+      trackEvent("results_viewed",customBlendAnalyticsMetadata(data,blendOptions[0] || {},{
+        result_option_count:blendOptions.length
+      }));
+      showView("results");
 	    }
     function nutrientContributionShares(opportunities) {
       const contributions=opportunities.map((item,index)=>{
@@ -5582,6 +5594,36 @@
       if (option.custom_function_name) return option.custom_function_name;
       if (option.function_name) return `Custom ${option.function_name}`;
       return "";
+    }
+    function customBlendAnalyticsMetadata(data={},option={},extra={}) {
+      const archetype=data.archetype_report || {};
+      const reward=Number(
+        option.final_exploratory_reward
+        ?? option.predicted_reward
+        ?? data.model_metrics?.final_exploratory_reward
+        ?? data.model_metrics?.predicted_reward
+      );
+      const functionLane=option.function_lane || {};
+      const topNutrients=(option.nutrient_opportunities || [])
+        .slice(0,4)
+        .map(item=>nutrientLabel(item.nutrient || item.label || item.name || "Nutrient"));
+      const leadIngredients=(option.ingredients || [])
+        .slice(0,4)
+        .map(item=>item.item || item.name || "Ingredient");
+      return {
+        analysis_seconds:Number(data.analysis_seconds) || undefined,
+        analysis_timing:data.analysis_timing || {},
+        blend_count:(data.blend_options || []).length,
+        top_function:customFunctionName(option) || option.function_name || option.name || option.formula_name || "",
+        function_lane:functionLane.function_name || option.function_name || "",
+        top_archetype:archetype.name || archetype.primary_archetype || archetype.archetype_name || archetype.label || "",
+        top_nutrients:topNutrients,
+        lead_ingredients:leadIngredients,
+        optimization_fit_percent:optimizationFitPercent(reward),
+        optimization_fit_level:optimizationFitLevel(optimizationFitPercent(reward)),
+        product_concept:option.product_concept || option.formula_name || "",
+        ...extra
+      };
     }
     function appendCustomFunctionPanel(option,parent,{hero=false}={}) {
       const displayName=customFunctionName(option);
@@ -5759,11 +5801,20 @@
       body.append(vector,solve); hero.appendChild(body);
       const actions=document.createElement("div"); actions.className="custom-blend-actions";
       const blendButton=document.createElement("button"); blendButton.type="button"; blendButton.textContent="See custom blend details";
-      blendButton.addEventListener("click",()=>scrollToTarget("personalPortfolioSection"));
+      blendButton.addEventListener("click",()=>{
+        trackEvent("result_detail_clicked",{detail:"formula_blend",top_function:displayFunction});
+        scrollToTarget("personalPortfolioSection");
+      });
       const vectorButton=document.createElement("button"); vectorButton.type="button"; vectorButton.textContent="View full nutrient vector"; vectorButton.className="secondary";
-      vectorButton.addEventListener("click",()=>scrollToTarget("nutrientStrategySection"));
+      vectorButton.addEventListener("click",()=>{
+        trackEvent("result_detail_clicked",{detail:"full_nutrient_vector",top_function:displayFunction});
+        scrollToTarget("nutrientStrategySection");
+      });
       const archetypeButton=document.createElement("button"); archetypeButton.type="button"; archetypeButton.textContent="Compare function lane"; archetypeButton.className="secondary";
-      archetypeButton.addEventListener("click",()=>scrollToTarget("archetypeReportPanel"));
+      archetypeButton.addEventListener("click",()=>{
+        trackEvent("result_detail_clicked",{detail:"function_lane",top_function:displayFunction});
+        scrollToTarget("archetypeReportPanel");
+      });
       actions.append(blendButton,vectorButton,archetypeButton); hero.appendChild(actions);
     }
     const graphTypeOrder=["profile","biomarker","finding","function","nutrient","blend","concept","synergy","ingredient"];
@@ -7266,6 +7317,13 @@
       if (rationale) {
         rationale.textContent=lane.data_rationale || "This standard blend is a population-derived nutrient lane from the NHANES custom-blend run.";
       }
+      trackEvent("home_vector_modal_opened",{
+        blend_id:lane.id || "",
+        blend_name:standardDisplayName(lane),
+        population_share_pct:Number.isFinite(population) ? Number(population.toFixed(1)) : undefined,
+        top_nutrients:topVectorLabels.map(label=>label.replace(/\b\w/g,letter=>letter.toUpperCase())),
+        lead_ingredients:topIngredients
+      });
       modal.hidden=false;
       document.body.classList.add("vector-modal-open");
       modal.querySelector(".home-vector-modal-close")?.focus({preventScroll:true});
@@ -7275,6 +7333,7 @@
       if (!modal || modal.hidden) return;
       modal.hidden=true;
       document.body.classList.remove("vector-modal-open");
+      trackEvent("home_vector_modal_closed",{modal:"standard_blend_vector"});
       lastHomeVectorModalTrigger?.focus?.({preventScroll:true});
       lastHomeVectorModalTrigger=null;
     }
@@ -7322,6 +7381,12 @@
       }
       modal.hidden=false;
       document.body.classList.add("waitlist-modal-open");
+      trackEvent("waitlist_modal_opened",{
+        blend_id:blendId,
+        blend_name:blendName,
+        modal_source:trigger ? "user_cta" : "auto_launch",
+        is_custom:isCustom
+      });
       setTimeout(()=>document.getElementById("waitlistEmail")?.focus({preventScroll:true}),60);
     }
     function maybeOpenLaunchCodeModal() {
@@ -7344,8 +7409,16 @@
     function closeWaitlistModal() {
       const modal=document.getElementById("waitlistModal");
       if (!modal || modal.hidden) return;
+      const blendId=String(document.getElementById("waitlistBlendId")?.value || "custom");
+      const blendName=String(document.getElementById("waitlistBlendName")?.textContent || "Custom blend profile");
+      const emailStarted=Boolean(String(document.getElementById("waitlistEmail")?.value || "").trim());
       modal.hidden=true;
       document.body.classList.remove("waitlist-modal-open");
+      trackEvent("waitlist_modal_closed",{
+        blend_id:blendId,
+        blend_name:blendName,
+        email_started:emailStarted
+      });
       lastWaitlistModalTrigger?.focus?.({preventScroll:true});
       lastWaitlistModalTrigger=null;
     }
@@ -7384,6 +7457,7 @@
       const blendId=String(document.getElementById("waitlistBlendId")?.value || "custom").trim();
       const blendName=String(document.getElementById("waitlistBlendName")?.textContent || "Custom blend profile").trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        trackEvent("waitlist_invalid_email",{blend_id:blendId,blend_name:blendName});
         if (status) status.textContent="Drop in a valid email and we will hold your code.";
         return;
       }
@@ -7391,6 +7465,7 @@
         lead_id:`lead_${Date.now()}_${Math.random().toString(36).slice(2,8)}`,
         created_at:new Date().toISOString(),
         source:"website_waitlist",
+        analytics_session_id:analyticsSessionId,
         blend_id:blendId,
         blend_name:blendName,
         discount_code:launchDiscountCode,
@@ -7429,14 +7504,39 @@
       } catch (error) {
         remoteSaved=false;
       }
+      if (!remoteSaved && waitlistEndpoint !== publicWaitlistEndpoint) {
+        try {
+          const fallbackResponse=await fetch(publicWaitlistEndpoint,{
+            method:"POST",
+            headers:{"Content-Type":"application/json","Accept":"application/json"},
+            body:JSON.stringify(lead)
+          });
+          let fallbackPayload={};
+          try {
+            fallbackPayload=await fallbackResponse.json();
+          } catch (parseError) {
+            fallbackPayload={};
+          }
+          remoteSaved=fallbackResponse.ok && fallbackPayload.success !== false;
+          trackEvent("waitlist_fallback_saved",{
+            blend_id:blendId,
+            blend_name:blendName,
+            remote_saved:remoteSaved
+          });
+        } catch (error) {
+          trackEvent("waitlist_fallback_failed",{blend_id:blendId,blend_name:blendName});
+        }
+      }
       trackEvent("waitlist_saved",{
         blend_id:blendId,
+        blend_name:blendName,
         remote_saved:remoteSaved
       });
       if (remoteSaved) {
         if (status) status.textContent=`You are on the early list. ${launchDiscountCode} is saved for your free custom profile.`;
         if (mailLink) mailLink.classList.remove("active");
       } else {
+        trackEvent("waitlist_save_failed",{blend_id:blendId,blend_name:blendName});
         const href=waitlistMailHref(lead);
         if (mailLink) {
           mailLink.href=href;
@@ -7501,12 +7601,24 @@
         waitlistButton.type="button";
         waitlistButton.textContent="Join waitlist";
         waitlistButton.className="home-function-waitlist-button";
-        waitlistButton.addEventListener("click",()=>openWaitlistModal(lane,index,waitlistButton));
+        waitlistButton.addEventListener("click",()=>{
+          trackEvent("standard_blend_waitlist_clicked",{
+            blend_id:lane.id || "",
+            blend_name:standardDisplayName(lane)
+          });
+          openWaitlistModal(lane,index,waitlistButton);
+        });
         const button=document.createElement("button");
         button.type="button";
         button.textContent="Explore nutrient vectors";
         button.className="home-function-vector-button";
-        button.addEventListener("click",()=>openHomeVectorModal(lane,index,button));
+        button.addEventListener("click",()=>{
+          trackEvent("standard_blend_vector_explored",{
+            blend_id:lane.id || "",
+            blend_name:standardDisplayName(lane)
+          });
+          openHomeVectorModal(lane,index,button);
+        });
         actions.append(waitlistButton,button);
         card.append(title,kicker,copy,visual,ingredients,actions);
         grid.appendChild(card);
@@ -7515,8 +7627,10 @@
     async function loadHomeFunctionMenu() {
       if (homeFunctionMenuLoaded) return;
       const renderLoadedMenu=data=>{
-        renderHomeFunctionMenu(data.function_lanes || data.population_standard_blends || []);
+        const lanes=data.function_lanes || data.population_standard_blends || [];
+        renderHomeFunctionMenu(lanes);
         homeFunctionMenuLoaded=true;
+        trackEvent("standard_blend_menu_loaded",{blend_count:lanes.length});
       };
       try {
         const fallback=await fetchStaticJsonOrThrow(
