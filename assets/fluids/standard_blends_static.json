@@ -75,12 +75,6 @@
           "prototype_grams_15g": 0.675
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Daily Vitality",
       "nutrient_focus": [
         "daily micronutrients",
@@ -191,12 +185,6 @@
           "prototype_grams_15g": 0.525
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Heart + Flow",
       "nutrient_focus": [
         "heart and flow",
@@ -307,12 +295,6 @@
           "prototype_grams_15g": 0.75
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Metabolic Lift",
       "nutrient_focus": [
         "glucose metabolism",
@@ -423,12 +405,6 @@
           "prototype_grams_15g": 0.525
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Antioxidant Minerals",
       "nutrient_focus": [
         "antioxidants",
@@ -539,12 +515,6 @@
           "prototype_grams_15g": 0.75
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Liver Vitality",
       "nutrient_focus": [
         "liver support",
@@ -655,12 +625,6 @@
           "prototype_grams_15g": 0.675
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Cellular Defense",
       "nutrient_focus": [
         "antioxidant defense",
@@ -771,12 +735,6 @@
           "prototype_grams_15g": 0.975
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Metabolic Resilience",
       "nutrient_focus": [
         "metabolic resilience",
@@ -895,12 +853,6 @@
           "prototype_grams_15g": 0.9
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Recovery Balance",
       "nutrient_focus": [
         "recovery",
@@ -1018,12 +970,6 @@
           "prototype_grams_15g": 0.675
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Daily Vitality",
       "nutrient_focus": [
         "daily micronutrients",
@@ -1134,12 +1080,6 @@
           "prototype_grams_15g": 0.525
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Heart + Flow",
       "nutrient_focus": [
         "heart and flow",
@@ -1250,12 +1190,6 @@
           "prototype_grams_15g": 0.75
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Metabolic Lift",
       "nutrient_focus": [
         "glucose metabolism",
@@ -1366,12 +1300,6 @@
           "prototype_grams_15g": 0.525
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Antioxidant Minerals",
       "nutrient_focus": [
         "antioxidants",
@@ -1482,12 +1410,6 @@
           "prototype_grams_15g": 0.75
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Liver Vitality",
       "nutrient_focus": [
         "liver support",
@@ -1598,12 +1520,6 @@
           "prototype_grams_15g": 0.675
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Cellular Defense",
       "nutrient_focus": [
         "antioxidant defense",
@@ -1714,12 +1630,6 @@
           "prototype_grams_15g": 0.975
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Metabolic Resilience",
       "nutrient_focus": [
         "metabolic resilience",
@@ -1838,12 +1748,6 @@
           "prototype_grams_15g": 0.9
         }
       ],
-      "model_source": {
-        "formula_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/population_derived_standard_blends.json",
-        "function_name_artifact": "/Users/jake.pittman/Desktop/Nutrition Science - FLUIDS/out/v10_population_derived_standard_blends/k8_standard_function_names.csv",
-        "primary": "v10_depth8_app_faithful_custom_blend_population_run",
-        "selection": "survey_weighted_kmeans_k8_centroid_productization"
-      },
       "name": "Recovery Balance",
       "nutrient_focus": [
         "recovery",
@@ -1884,5 +1788,5 @@
       ]
     }
   ],
-  "source": "static_github_pages_fallback"
+  "source": "public_static_function_blends"
 }

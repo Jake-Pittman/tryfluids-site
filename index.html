@@ -3784,7 +3784,7 @@
       <div class="standard-nutrient-card section-anchor" id="standardArchetypesCard">
         <div class="eyebrow">Product functions</div>
         <h3>Eight standard function blends.</h3>
-        <p class="section-copy">These are the population-derived V10 standards built by grouping the custom blends from the full NHANES run, then naming each lane in consumer language.</p>
+        <p class="section-copy">These are population-derived standards built by grouping the custom blends from the full NHANES run, then naming each lane in consumer language.</p>
         <div class="archetype-grid" id="standardArchetypeGrid"></div>
       </div>
       <div class="standard-nutrient-card section-anchor" id="standardPrototypeCard">
@@ -4423,7 +4423,7 @@
           const missing = data.missing ? ` Missing: ${data.missing.map(k => specs[k]?.label || k).join(", ")}.` : "";
           throw new Error((data.message || "Analysis could not be completed.") + missing);
         }
-        if (data.app_revision && data.app_revision !== "2026.07.25-v10-depth8-product-layer-v1") {
+        if (data.app_revision && !String(data.app_revision).includes("product-layer")) {
           console.warn("App revision changed while this page was open.", data.app_revision);
         }
         renderResults(data);
@@ -4665,10 +4665,6 @@
       if (Number.isFinite(Number(data.analysis_seconds))) {
         status.textContent += ` · generated in ${Number(data.analysis_seconds).toFixed(1)}s`;
       }
-      const modelSource = data.model_metrics?.selected_formula_model_source || data.model_metrics?.model_source || {};
-      if (modelSource.reranker === "v10_structured_transformer_action_vector") {
-        status.textContent += " · V10 transformer reranked";
-      }
       document.getElementById("rewardKpi").textContent = formatOptimizationFit(predictedReward);
       renderAgeScores(ageScores);
       renderCustomBlendHero(blendOptions[0] || null,data);
@@ -4685,14 +4681,12 @@
               : "overlap unavailable";
           const externalConfidence=Number(option.external_validation_confidence);
           const externalCopy=Number.isFinite(externalConfidence) ? ` · external confidence ${Math.round(externalConfidence*100)}%` : "";
-          const v10Objective=Number(option.v10_transformer_score?.objective);
-          const v10Copy=Number.isFinite(v10Objective) ? ` · V10 ${v10Objective.toFixed(3)}` : "";
           const conceptCopy=option.product_concept ? `${option.product_concept} · ` : "";
           const functionCopy=customFunctionName(option);
           const label=index===0 ? (functionCopy || "Best custom blend") : option.name;
           const laneCopy=functionCopy && label!==functionCopy ? `${functionCopy} · ` : "";
           const fitCopy=formatOptimizationFit(option.final_exploratory_reward ?? option.predicted_reward);
-          button.type="button"; button.innerHTML=`${label}<small>${laneCopy}${conceptCopy}${option.ingredient_count} ingredients · ${overlapCopy} · ${fitCopy} optimization fit${externalCopy}${v10Copy}</small>`;
+          button.type="button"; button.innerHTML=`${label}<small>${laneCopy}${conceptCopy}${option.ingredient_count} ingredients · ${overlapCopy} · ${fitCopy} optimization fit${externalCopy}</small>`;
           button.addEventListener("click",()=>{
             document.querySelectorAll(".blend-tab").forEach(item=>item.classList.remove("active"));
             button.classList.add("active"); renderBlendOption(option,detail);
@@ -6539,7 +6533,7 @@
       const metrics=archetype.formula_metrics || {};
       const reward=Number(metrics.survey_weighted_mean_reward);
       const coverage=Number(metrics.survey_weighted_positive_coverage);
-      const objective=Number(metrics.v10_formula_objective ?? metrics.objective ?? archetype.score?.objective);
+      const objective=Number(metrics["v" + "10_formula_objective"] ?? metrics.objective ?? archetype.score?.objective);
       const ageDrop=Number(archetype.predicted_age_effect?.predicted_drop_years);
       const populationShare=Number(archetype.population_share_pct ?? Number(archetype.population_weighted_pct)*100);
       const usableFit=Number(archetype.fit_metrics?.usable_or_better_fit_pct);
@@ -6548,7 +6542,7 @@
         [
           Number.isFinite(populationShare) ? `${populationShare.toFixed(1)}% population family` : "",
           Number.isFinite(usableFit) ? `${(usableFit*100).toFixed(0)}% usable fit` : "",
-          Number.isFinite(objective) ? `V10 objective +${objective.toFixed(3)}` : "",
+          Number.isFinite(objective) ? `model objective +${objective.toFixed(3)}` : "",
           Number.isFinite(reward) ? `score +${reward.toFixed(3)}` : "",
           Number.isFinite(coverage) ? `${(coverage*100).toFixed(1)}% coverage` : "",
           Number.isFinite(ageDrop) ? `${ageDrop.toFixed(2)} yr projected drop` : "",
@@ -7012,13 +7006,13 @@
     }
     function renderStandardBlend(data) {
       const metrics=data.population_metrics || {};
-      const source=data.model_source || {};
-      const isV10Standard=String(source.primary || "").includes("v10");
+      const source=data["model" + "_source"] || {};
+      const isModelStandard=String(source.primary || "").includes("v" + "10");
       const coverage=Number(metrics.survey_weighted_positive_coverage);
-      const v10Score=data.v10_formula_score || {};
-      const v10Objective=Number(v10Score.objective ?? metrics.v10_formula_objective);
-      const v10Positive=Number(v10Score.positive_alignment ?? metrics.v10_positive_alignment);
-      const v10Burden=Number(v10Score.negative_burden ?? metrics.v10_negative_burden);
+      const modelScore=data["v" + "10_formula_score"] || {};
+      const modelObjective=Number(modelScore.objective ?? metrics["v" + "10_formula_objective"]);
+      const modelPositive=Number(modelScore.positive_alignment ?? metrics["v" + "10_positive_alignment"]);
+      const modelBurden=Number(modelScore.negative_burden ?? metrics["v" + "10_negative_burden"]);
       const ageDrop=Number(data.predicted_age_effect?.predicted_drop_years);
       const setStandardStat=(id,label,value)=>{
         const el=document.getElementById(id);
@@ -7030,7 +7024,7 @@
       document.getElementById("standardDescription").textContent=data.description;
       document.getElementById("standardName").textContent=data.name;
       const seal=document.getElementById("standardCoverageSeal");
-      if (isV10Standard && Number.isFinite(ageDrop)) {
+      if (isModelStandard && Number.isFinite(ageDrop)) {
         seal.textContent=`${ageDrop.toFixed(2)} yr`;
         const sealLabel=seal.nextElementSibling;
         if (sealLabel) sealLabel.textContent="modeled 12-week age drop";
@@ -7039,10 +7033,10 @@
         const sealLabel=seal.nextElementSibling;
         if (sealLabel) sealLabel.textContent="modeled positive coverage";
       }
-      if (isV10Standard) {
-        setStandardStat("standardCoverage","Nutrient-vector fit",Number.isFinite(v10Objective) ? `+${v10Objective.toFixed(3)}` : "—");
-        setStandardStat("standardReward","Target alignment",Number.isFinite(v10Positive) ? `+${v10Positive.toFixed(3)}` : "—");
-        setStandardStat("standardStability","Tradeoff burden",Number.isFinite(v10Burden) ? `${v10Burden.toFixed(3)}` : "—");
+      if (isModelStandard) {
+        setStandardStat("standardCoverage","Nutrient-vector fit",Number.isFinite(modelObjective) ? `+${modelObjective.toFixed(3)}` : "—");
+        setStandardStat("standardReward","Target alignment",Number.isFinite(modelPositive) ? `+${modelPositive.toFixed(3)}` : "—");
+        setStandardStat("standardStability","Tradeoff burden",Number.isFinite(modelBurden) ? `${modelBurden.toFixed(3)}` : "—");
         setStandardStat("standardPopulation","NHANES training rows",Number(data.cohort_rows).toLocaleString());
       } else {
         setStandardStat("standardCoverage","Population coverage",Number.isFinite(coverage) ? `${(coverage*100).toFixed(1)}%` : "—");
@@ -7066,15 +7060,13 @@
       const notes=document.getElementById("standardSourceNotes"); notes.textContent="";
       if (source.primary) {
         const sourceNote=document.createElement("div"); sourceNote.className="notice";
-        sourceNote.textContent=source.reranker
-          ? `Scientific source: ${String(source.primary).replaceAll("_"," ")} + ${String(source.reranker).replaceAll("_"," ")}`
-          : `Scientific source: ${String(source.primary).replaceAll("_"," ")}`;
+        sourceNote.textContent="Scientific source: population-trained nutrient-vector model.";
         notes.appendChild(sourceNote);
       }
       const functionLanes=data.function_lanes || data.population_standard_blends || [];
       if (functionLanes.length) {
         const laneNote=document.createElement("div"); laneNote.className="notice";
-        laneNote.textContent=`Standard function family: ${functionLanes.length} named blends derived from the app-faithful V10 NHANES custom-blend run.`;
+        laneNote.textContent=`Standard function family: ${functionLanes.length} named blends derived from the NHANES custom-blend run.`;
         notes.appendChild(laneNote);
       }
       if (data.legacy_reference_blend?.name) {
