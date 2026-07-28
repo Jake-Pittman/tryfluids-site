@@ -3440,13 +3440,323 @@
       .product-voyage { display:none; }
       .hero-field-readout { display:none; }
     }
+    /* Custom-blend flow refinements */
+    body.analysis-running {
+      overflow:hidden;
+    }
+    body.analysis-running header,
+    body.analysis-running #flowProgress,
+    body.analysis-running #globalError {
+      visibility:hidden;
+    }
+    .science-runner.active {
+      position:fixed;
+      inset:0;
+      z-index:2500;
+      display:grid;
+      grid-template-columns:minmax(0,1.18fr) minmax(320px,.82fr);
+      grid-template-rows:minmax(0,1fr) auto;
+      gap:clamp(16px,3vw,34px);
+      margin:0;
+      padding:clamp(18px,4vw,56px);
+      border:0;
+      border-radius:0;
+      box-shadow:none;
+      background:
+        radial-gradient(circle at 18% 22%,rgba(67,197,197,.24),transparent 25rem),
+        radial-gradient(circle at 74% 14%,rgba(242,190,55,.20),transparent 23rem),
+        radial-gradient(circle at 82% 78%,rgba(198,43,79,.22),transparent 24rem),
+        linear-gradient(135deg,#06141e,#152b3a 48%,#071620);
+      animation:modelRunnerEnter .42s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .science-runner.active::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),
+        linear-gradient(0deg,rgba(255,255,255,.03) 1px,transparent 1px);
+      background-size:42px 42px;
+      mask-image:radial-gradient(circle at 48% 46%,black,transparent 72%);
+      animation:matrixGridDrift 16s linear infinite;
+    }
+    .science-runner.active::after {
+      content:"";
+      position:absolute;
+      inset:-22% -12%;
+      pointer-events:none;
+      background:linear-gradient(110deg,transparent 42%,rgba(255,255,255,.08) 49%,transparent 57%);
+      animation:analysisSweep 4.8s ease-in-out infinite;
+    }
+    .science-runner.active > * {
+      position:relative;
+      z-index:1;
+    }
+    .science-runner.active .science-visual {
+      min-height:clamp(320px,64vh,720px);
+      border-radius:32px;
+      border-color:rgba(255,253,248,.16);
+      background:
+        radial-gradient(circle at 50% 48%,rgba(113,216,220,.22),transparent 16rem),
+        linear-gradient(135deg,rgba(255,253,248,.09),rgba(255,255,255,.018));
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04),0 30px 80px rgba(0,0,0,.22);
+    }
+    .science-runner.active .science-copy {
+      align-self:center;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      min-height:100%;
+      padding:min(3vw,28px) 0;
+    }
+    .science-runner.active .science-copy h3 {
+      max-width:780px;
+      font-size:clamp(2.15rem,4.6vw,5.8rem);
+      line-height:.93;
+      letter-spacing:0;
+    }
+    .science-runner.active .science-copy p {
+      max-width:650px;
+      font-size:clamp(.95rem,1.25vw,1.18rem);
+      color:#d9edf0;
+    }
+    .science-runner.active .science-progress {
+      max-width:520px;
+      height:10px;
+      margin-top:24px;
+    }
+    .science-runner.active .science-step-grid {
+      align-self:end;
+      grid-column:1 / -1;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+    }
+    .science-runner.active .science-step {
+      min-height:104px;
+      border-radius:20px;
+      backdrop-filter:blur(16px);
+    }
+    .science-runner.active .science-model-readout {
+      left:18px;
+      right:18px;
+      bottom:18px;
+    }
+    @keyframes modelRunnerEnter {
+      from { opacity:0; transform:scale(.985); }
+      to { opacity:1; transform:scale(1); }
+    }
+    @keyframes matrixGridDrift {
+      to { background-position:84px 42px; }
+    }
+    @keyframes analysisSweep {
+      0%,100% { transform:translateX(-18%) rotate(0deg); opacity:.22; }
+      50% { transform:translateX(18%) rotate(0deg); opacity:.55; }
+    }
+    #results {
+      margin-top:0;
+      scroll-margin-top:86px;
+    }
+    .portfolio-layout {
+      display:block;
+      margin-top:18px;
+    }
+    .portfolio-nav {
+      display:none !important;
+    }
+    .blend-detail.blend-detail-flow {
+      display:grid;
+      gap:18px;
+      min-height:0;
+      padding:0;
+      border:0;
+      background:transparent;
+      border-radius:0;
+    }
+    .blend-option-card {
+      padding:clamp(20px,3vw,30px);
+      border:1px solid var(--line);
+      border-radius:24px;
+      background:linear-gradient(180deg,#fffdf8,#ffffff);
+      box-shadow:0 16px 38px rgba(8,47,59,.07);
+    }
+    .blend-option-card.primary {
+      border-color:rgba(67,197,197,.44);
+      box-shadow:0 20px 48px rgba(8,47,59,.10);
+    }
+    .blend-option-card .blend-title {
+      margin-bottom:18px;
+    }
+    .graph-panel {
+      overflow:hidden;
+    }
+    .graph-head {
+      align-items:flex-start;
+    }
+    .graph-head .section-copy {
+      max-width:720px;
+    }
+    .graph-shell {
+      grid-template-columns:minmax(0,1fr) minmax(290px,.34fr);
+    }
+    .graph-stage {
+      position:relative;
+      min-height:560px;
+      background:
+        radial-gradient(circle at 17% 19%,rgba(67,197,197,.16),transparent 20rem),
+        radial-gradient(circle at 84% 70%,rgba(242,190,55,.12),transparent 18rem),
+        #f8fcfd;
+    }
+    .graph-stage::before {
+      content:"Bloodwork signal to nutrient vector to powder blend";
+      position:absolute;
+      left:18px;
+      top:14px;
+      z-index:1;
+      color:#6a7d84;
+      font-size:.66rem;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      pointer-events:none;
+    }
+    .graph-edge {
+      fill:none;
+      stroke-linecap:round;
+      stroke-width:1.35;
+    }
+    .graph-edge.active {
+      stroke-width:2.6;
+    }
+    .graph-edge.flowing {
+      stroke-dasharray:8 14;
+      animation:graphFlow 1.6s linear infinite;
+    }
+    .graph-lane-label {
+      fill:#6a7d84;
+      font-size:10px;
+      font-weight:950;
+      letter-spacing:.08em;
+      text-anchor:middle;
+      text-transform:uppercase;
+    }
+    .graph-node-card rect {
+      fill:#fff;
+      stroke:rgba(194,215,219,.95);
+      stroke-width:1.3;
+      filter:drop-shadow(0 10px 14px rgba(8,47,59,.09));
+    }
+    .graph-node-card .graph-color-dot {
+      fill:var(--graph-color);
+    }
+    .graph-node-card.active rect {
+      stroke:#0d6975;
+      stroke-width:2.5;
+      fill:#f3fbfc;
+    }
+    .graph-node-card.dimmed {
+      opacity:.22;
+    }
+    .graph-node-card text {
+      fill:#07313b;
+      font-size:10.5px;
+      font-weight:900;
+      text-anchor:middle;
+      pointer-events:none;
+    }
+    .graph-node-card .graph-node-subtitle {
+      fill:#6f8790;
+      font-size:8.2px;
+      font-weight:760;
+    }
+    .graph-path-hint {
+      display:grid;
+      gap:8px;
+      margin:12px 0;
+      padding:12px;
+      border:1px solid rgba(194,215,219,.75);
+      border-radius:15px;
+      background:#f8fcfd;
+    }
+    .graph-path-hint span {
+      color:var(--muted);
+      font-size:.66rem;
+      line-height:1.35;
+    }
+    .graph-detail-row {
+      align-items:flex-start;
+    }
+    .graph-detail-row strong {
+      text-align:right;
+      max-width:165px;
+    }
+    @keyframes graphFlow {
+      to { stroke-dashoffset:-22; }
+    }
+	    @media (max-width:860px) {
+	      .science-runner.active {
+	        display:flex;
+	        flex-direction:column;
+	        overflow:auto;
+	        padding:18px;
+	        gap:14px;
+	      }
+	      .science-runner.active .science-visual {
+	        order:2;
+	        width:100%;
+	        min-height:min(42vh,350px);
+	        flex:0 0 min(42vh,350px);
+	        border-radius:24px;
+	      }
+	      .science-runner.active .science-copy {
+	        order:1;
+	        align-self:stretch;
+	        flex:0 0 auto;
+	        min-height:0;
+	        overflow:visible;
+	        padding:0;
+	      }
+	      .science-runner.active .science-copy h3 {
+	        font-size:clamp(2.15rem,11vw,3.4rem);
+	        line-height:.96;
+	        margin:6px 0 8px;
+	      }
+	      .science-runner.active .science-copy p {
+	        font-size:.92rem;
+	      }
+	      .science-runner.active .science-step-grid {
+	        order:3;
+	        align-self:stretch;
+	        width:100%;
+	        grid-template-columns:1fr;
+	      }
+      .science-runner.active .science-step {
+        min-height:auto;
+      }
+      .graph-shell {
+        display:grid;
+        grid-template-columns:1fr;
+      }
+      .graph-stage,
+      .graph-stage svg {
+        min-height:470px;
+      }
+      .graph-details {
+        margin-top:0;
+      }
+      .blend-title,
+      .age-timeline-head,
+      .timeline-hero {
+        grid-template-columns:1fr;
+      }
+    }
     @media (prefers-reduced-motion:reduce) {
       .hero > div:first-child::before,
       .constellation-node,
       .matrix-orb-wrap,
       .matrix-orb-wrap img,
       .product-voyage img,
-      .consumer-product-card,.calibration-card,.matrix-showcase,.product-voyage,.panel,.standard-card {
+      .consumer-product-card,.calibration-card,.matrix-showcase,.product-voyage,.panel,.standard-card,
+      .science-runner.active::before,.science-runner.active::after,.graph-edge.flowing {
         animation:none !important;
       }
       .consumer-hero-product-card {
@@ -3716,15 +4026,15 @@
           </div>
           <div class="science-copy">
             <div class="eyebrow">Custom blend engine</div>
-            <h3 id="scienceRunnerTitle">Reading your biomarker pattern.</h3>
+            <h3 id="scienceRunnerTitle">Reading the bloodwork signal.</h3>
             <p id="scienceRunnerBody">We are turning the reviewed blood markers and questionnaire context into a model-ready health profile.</p>
             <div class="science-progress" aria-hidden="true"><i id="scienceRunnerProgress"></i></div>
           </div>
           <div class="science-step-grid" id="scienceStepGrid">
-            <div class="science-step active"><b>1</b><strong>Bloodwork</strong><span>Normalize markers and context.</span></div>
-            <div class="science-step"><b>2</b><strong>Age signal</strong><span>Estimate PhenoAge-style direction.</span></div>
-            <div class="science-step"><b>3</b><strong>Nutrients</strong><span>Search feasible nutrient increases.</span></div>
-            <div class="science-step"><b>4</b><strong>Powders</strong><span>Match nutrients to juice powders.</span></div>
+            <div class="science-step active"><b>1</b><strong>Signals</strong><span>Clean bloodwork and context.</span></div>
+            <div class="science-step"><b>2</b><strong>Direction</strong><span>Find the health vector.</span></div>
+            <div class="science-step"><b>3</b><strong>Vector</strong><span>Search feasible nutrients.</span></div>
+            <div class="science-step"><b>4</b><strong>Powders</strong><span>Match nutrients to real powders.</span></div>
             <div class="science-step"><b>5</b><strong>Formula</strong><span>Rank blend candidates.</span></div>
           </div>
         </div>
@@ -3801,12 +4111,6 @@
         <h3>What we are trying to improve nutritionally</h3>
         <p class="section-copy">This expands the priority nutrient direction behind the custom blend and shows the broader increase, substitution, or deprioritization logic.</p>
         <div id="nutrientActionMap" class="action-map-grid"></div>
-      </div>
-      <div class="result-lower" style="grid-template-columns:1fr">
-        <div class="diagnostic-card">
-          <h3>Why this direction</h3>
-          <div id="reasons" class="recommendations"></div>
-        </div>
       </div>
     </section>
 
@@ -4062,37 +4366,118 @@
     function wait(ms) {
       return new Promise(resolve => window.setTimeout(resolve, ms));
     }
+    const analyticsSessionId = (() => {
+      const key = "fluids_analytics_session";
+      try {
+        let value = window.localStorage.getItem(key);
+        if (!value) {
+          value = `sess_${Date.now()}_${Math.random().toString(36).slice(2,10)}`;
+          window.localStorage.setItem(key,value);
+        }
+        return value;
+      } catch (error) {
+        return `sess_${Date.now()}_${Math.random().toString(36).slice(2,10)}`;
+      }
+    })();
+    const analyticsEndpoint = window.FLUIDS_ANALYTICS_ENDPOINT || apiUrl("/api/events");
+    function analyticsReferrerDomain() {
+      if (!document.referrer) return "";
+      try { return new URL(document.referrer).hostname; } catch (error) { return ""; }
+    }
+    function analyticsDeviceType() {
+      const width = window.innerWidth || 0;
+      if (width < 700) return "mobile";
+      if (width < 1040) return "tablet";
+      return "desktop";
+    }
+    function cleanAnalyticsMetadata(metadata={}) {
+      const clean = {};
+      Object.entries(metadata || {}).slice(0,32).forEach(([key,value]) => {
+        const lowerKey=String(key || "").toLowerCase();
+        if (
+          !key ||
+          ["email","phone","name","labs","lab_values"].includes(lowerKey) ||
+          /file_name|filename|pdf_text|raw/i.test(key)
+        ) return;
+        if (value === undefined) return;
+        if (Array.isArray(value)) {
+          clean[key] = value.slice(0,12).map(item => typeof item === "string" ? item.slice(0,120) : item);
+        } else if (value && typeof value === "object") {
+          clean[key] = Object.fromEntries(Object.entries(value).slice(0,12).map(([nestedKey,nestedValue]) => [
+            nestedKey,
+            typeof nestedValue === "string" ? nestedValue.slice(0,120) : nestedValue
+          ]));
+        } else {
+          clean[key] = typeof value === "string" ? value.slice(0,160) : value;
+        }
+      });
+      return clean;
+    }
+    function trackEvent(eventName, metadata={}) {
+      if (!analyticsEndpoint || window.FLUIDS_ANALYTICS_DISABLED === true) return;
+      const payload = {
+        event:eventName,
+        session_id:analyticsSessionId,
+        source:"web_app",
+        path:`${window.location.pathname}${window.location.search}`,
+        metadata:cleanAnalyticsMetadata({
+          device:analyticsDeviceType(),
+          referrer_domain:analyticsReferrerDomain(),
+          ...metadata
+        })
+      };
+      const body = JSON.stringify(payload);
+      try {
+        if (navigator.sendBeacon) {
+          const sent = navigator.sendBeacon(analyticsEndpoint,new Blob([body],{type:"application/json"}));
+          if (sent) return;
+        }
+      } catch (error) {}
+      fetch(analyticsEndpoint,{
+        method:"POST",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body,
+        keepalive:true
+      }).catch(() => {});
+    }
+    trackEvent("page_view",{title:document.title});
     let discoveryLoaded = false;
     let discoveryCache = null;
     let substitutionBlendCache = [];
     let builderIngredientOptions = [];
     let builderRowsState = [];
     let builderInitialized = false;
-    let personalizedView = "upload";
-    let scienceRunnerTimer = null;
-    let scienceRunnerStep = 0;
-    const scienceRunnerStages = [
-      {
-        title:"Reading your biomarker pattern.",
-        body:"We are turning the reviewed blood markers and questionnaire context into a model-ready health profile."
-      },
-      {
-        title:"Estimating the age and marker direction.",
-        body:"The engine compares your profile against learned NHANES biomarker patterns to identify the direction associated with better PhenoAge-style and blood-marker signals."
-      },
-      {
-        title:"Searching for a nutrient vector.",
-        body:"Instead of jumping straight to ingredients, the model first asks which product-feasible nutrient increases look most favorable for your profile."
-      },
-      {
-        title:"Matching nutrients to juice powders.",
-        body:"The optimizer maps that nutrient vector onto real fruit, vegetable, citrus, root, and mineral-carrier powder profiles."
-      },
-      {
-        title:"Ranking candidate blends.",
-        body:"Candidate formulas are scored for predicted reward, ingredient balance, product fit, and how well the finished blend delivers the selected nutrient vector."
-      }
-    ];
+	    let personalizedView = "upload";
+	    let scienceRunnerTimer = null;
+	    let scienceRunnerStep = 0;
+	    let scienceRunnerPlaceholder = null;
+	    const scienceRunnerStages = [
+	      {
+	        title:"Reading the bloodwork signal.",
+	        body:"The app turns the reviewed markers and questionnaire context into a clean health profile the model can reason over.",
+	        readout:"bloodwork signal"
+	      },
+	      {
+	        title:"Finding the health direction.",
+	        body:"The model compares the profile against learned biomarker patterns to find the direction associated with better PhenoAge-style and blood-marker signals.",
+	        readout:"marker alignment"
+	      },
+	      {
+	        title:"Searching nutrient-vector space.",
+	        body:"Instead of jumping straight to ingredients, the model searches which product-feasible nutrient increases look most useful for this profile.",
+	        readout:"vector search"
+	      },
+	      {
+	        title:"Mapping nutrients to real powders.",
+	        body:"The optimizer maps the nutrient vector onto real fruit, vegetable, citrus, root, and mineral-carrier powder profiles.",
+	        readout:"powder mapping"
+	      },
+	      {
+	        title:"Ranking candidate blends.",
+	        body:"Candidate formulas are scored for fit, ingredient balance, product realism, and how well the finished blend delivers the selected nutrient vector.",
+	        readout:"blend ranking"
+	      }
+	    ];
 
     function initPremiumExperience() {
       initHeroShader();
@@ -4290,8 +4675,8 @@
         if (homepageFlowIntro) homepageFlowIntro.style.display = name === "upload" ? "grid" : "none";
         const experienceLab=document.getElementById("experienceLab");
         if (experienceLab) experienceLab.style.display = name === "upload" ? "grid" : "none";
-        document.getElementById("flowProgress").style.display = ["standard","discovery"].includes(name) ? "none" : "";
-        document.getElementById("wizardStage").style.display = ["standard","discovery"].includes(name) ? "none" : "";
+	        document.getElementById("flowProgress").style.display = ["standard","discovery","results"].includes(name) ? "none" : "";
+	        document.getElementById("wizardStage").style.display = ["standard","discovery","results"].includes(name) ? "none" : "";
         document.querySelectorAll("[data-app-mode]").forEach(item=>{
           const mode = ["standard","discovery"].includes(name) ? name : "personalized";
           item.classList.toggle("active",item.dataset.appMode === mode);
@@ -4300,14 +4685,15 @@
           item.classList.toggle("active", itemIndex === index);
           item.classList.toggle("done", itemIndex < index);
         });
+        trackEvent("view_changed",{view:name});
         requestAnimationFrame(resizeVectorMatrices);
         if (name === "results") {
           requestAnimationFrame(()=>{
-            document.getElementById("results")?.scrollIntoView({
-              behavior:"smooth",
-              block:"start"
-            });
-          });
+	        document.getElementById("results")?.scrollIntoView({
+	          behavior:"smooth",
+	          block:"start"
+	        });
+	      });
         } else {
           window.scrollTo({top:0,behavior:"smooth"});
         }
@@ -4387,18 +4773,25 @@
       document.getElementById("scienceRunnerBody").textContent=stage.body;
       document.getElementById("scienceRunnerProgress").style.width=`${((normalized+1)/scienceRunnerStages.length*100).toFixed(1)}%`;
       const readout=document.getElementById("scienceRunnerReadout");
-      if (readout) readout.textContent=`pass ${normalized+1} of ${scienceRunnerStages.length}`;
+	      if (readout) readout.textContent=`${stage.readout || "model pass"} · pass ${normalized+1} of ${scienceRunnerStages.length}`;
       document.querySelectorAll(".science-step").forEach((item,itemIndex)=>{
         item.classList.toggle("active",itemIndex===normalized);
       });
     }
-    function startScienceRunner() {
-      const runner=document.getElementById("scienceRunner");
-      if (!runner) return;
-      clearInterval(scienceRunnerTimer);
-      scienceRunnerStep=0;
-      renderScienceRunnerStep(scienceRunnerStep);
-      runner.classList.add("active");
+	    function startScienceRunner() {
+	      const runner=document.getElementById("scienceRunner");
+	      if (!runner) return;
+	      clearInterval(scienceRunnerTimer);
+	      scienceRunnerStep=0;
+	      renderScienceRunnerStep(scienceRunnerStep);
+	      if (!scienceRunnerPlaceholder && runner.parentNode !== document.body) {
+	        scienceRunnerPlaceholder=document.createComment("science-runner-home");
+	        runner.parentNode.insertBefore(scienceRunnerPlaceholder,runner);
+	        document.body.appendChild(runner);
+	      }
+	      document.body.classList.add("analysis-running");
+	      runner.setAttribute("aria-busy","true");
+	      runner.classList.add("active");
       initScienceRunnerMatrix();
       requestAnimationFrame(resizeVectorMatrices);
       scienceRunnerTimer=setInterval(()=>{
@@ -4409,9 +4802,18 @@
     function stopScienceRunner() {
       clearInterval(scienceRunnerTimer);
       scienceRunnerTimer=null;
-      const runner=document.getElementById("scienceRunner");
-      if (runner) runner.classList.remove("active");
-    }
+	      const runner=document.getElementById("scienceRunner");
+	      document.body.classList.remove("analysis-running");
+	      if (runner) {
+	        runner.classList.remove("active");
+	        runner.removeAttribute("aria-busy");
+	        if (scienceRunnerPlaceholder?.parentNode) {
+	          scienceRunnerPlaceholder.parentNode.insertBefore(runner,scienceRunnerPlaceholder);
+	          scienceRunnerPlaceholder.remove();
+	          scienceRunnerPlaceholder=null;
+	        }
+	      }
+	    }
     function numberOrNull(id) { const v = document.getElementById(id).value; return v === "" ? null : Number(v); }
     function selectFile(file) {
       if (!file) return;
@@ -4419,6 +4821,10 @@
       document.getElementById("fileLabel").textContent = file.name;
       extractBtn.disabled = false;
       showError("");
+      trackEvent("upload_selected",{
+        file_type:file.type || "application/pdf",
+        file_size_kb:Math.round((file.size || 0) / 1024)
+      });
     }
     pdfInput.addEventListener("change", e => selectFile(e.target.files[0]));
     ["dragenter","dragover"].forEach(name => dropZone.addEventListener(name, e => { e.preventDefault(); dropZone.classList.add("drag"); }));
@@ -4493,12 +4899,17 @@
     extractBtn.addEventListener("click", async () => {
       if (!selectedFile) return;
       showError(""); extractBtn.disabled = true; setLoading("extractLoader", true);
+      trackEvent("pdf_extract_started",{
+        file_type:selectedFile.type || "application/pdf",
+        file_size_kb:Math.round((selectedFile.size || 0) / 1024)
+      });
       try {
         const response = await fetch(apiUrl("/api/extract"), {
           method:"POST",
           headers:{
             "Content-Type": selectedFile.type || "application/pdf",
-            "X-File-Name": encodeURIComponent(selectedFile.name)
+            "X-File-Name": encodeURIComponent(selectedFile.name),
+            "X-Fluids-Session": analyticsSessionId
           },
           body:selectedFile
         });
@@ -4506,11 +4917,25 @@
         if (!response.ok || !data.ok) throw new Error(data.message || "Extraction failed.");
         renderLabs(data.labs);
         document.getElementById("extractMeta").textContent = `${data.method === "local_ocr" ? "Local OCR" : "Embedded text"} · ${Object.keys(data.labs).length} markers found`;
+        trackEvent("pdf_extract_success",{
+          method:data.method || "unknown",
+          marker_count:Object.keys(data.labs || {}).length
+        });
         showView("review");
-      } catch (error) { showError(error.message); }
+      } catch (error) {
+        trackEvent("pdf_extract_failed",{error:"extract_failed"});
+        showError(error.message);
+      }
       finally { extractBtn.disabled = false; setLoading("extractLoader", false); }
     });
-    reviewContinueBtn.addEventListener("click",()=>{ showView("questionnaire"); showQuestion(0); });
+    reviewContinueBtn.addEventListener("click",()=>{
+      const ready=fieldOrder.filter(key=>{
+        const input=document.getElementById(`lab-${key}`);
+        return input && input.value !== "";
+      });
+      trackEvent("questionnaire_started",{lab_count:ready.length});
+      showView("questionnaire"); showQuestion(0);
+    });
     questionBack.addEventListener("click",()=>{
       if (currentQuestion === 0) showView("review"); else showQuestion(currentQuestion - 1);
     });
@@ -4519,7 +4944,9 @@
     analyzeBtn.addEventListener("click", async () => {
       showError(""); analyzeBtn.disabled = true; setLoading("analysisLoader", true); startScienceRunner();
       const labs = {}; fieldOrder.forEach(key => { const input = document.getElementById(`lab-${key}`); if (input && input.value !== "") labs[key] = Number(input.value); });
+      const analysisStartedAt = performance.now();
       const payload = {
+        analytics_session_id:analyticsSessionId,
         age:numberOrNull("age"), sex:document.getElementById("sex").value, bmi:numberOrNull("bmi"),
         race_ethnicity_code:numberOrNull("raceEthnicity"), waist_cm:numberOrNull("waist"), labs,
         kidney_or_potassium_risk:document.getElementById("kidneyRisk").checked,
@@ -4554,13 +4981,32 @@
         diuretic_medication:document.getElementById("diureticMedication").checked,
         steroid_medication:document.getElementById("steroidMedication").checked
       };
+      trackEvent("custom_blend_started",{
+        lab_count:Object.keys(labs).length,
+        use_jobs:useAnalysisJobs
+      });
       try {
         const data = await runCustomBlendAnalysis(payload);
         if (data.app_revision && !String(data.app_revision).includes("product-layer")) {
           console.warn("App revision changed while this page was open.", data.app_revision);
         }
         renderResults(data);
-      } catch (error) { showError(error.message); window.scrollTo({top:0,behavior:"smooth"}); }
+        const firstBlend=(data.blend_options || [])[0] || {};
+        const archetype=data.archetype_report || {};
+        trackEvent("custom_blend_completed",{
+          analysis_seconds:Number(data.analysis_seconds) || Number(((performance.now()-analysisStartedAt)/1000).toFixed(1)),
+          blend_count:(data.blend_options || []).length,
+          top_function:customFunctionName(firstBlend) || firstBlend.function_name || firstBlend.name || firstBlend.formula_name || "",
+          top_archetype:archetype.name || archetype.primary_archetype || archetype.archetype_name || archetype.label || ""
+        });
+      } catch (error) {
+        trackEvent("custom_blend_failed",{
+          lab_count:Object.keys(labs).length,
+          use_jobs:useAnalysisJobs,
+          error:"analysis_failed"
+        });
+        showError(error.message); window.scrollTo({top:0,behavior:"smooth"});
+      }
       finally { analyzeBtn.disabled = false; setLoading("analysisLoader", false); stopScienceRunner(); }
     });
     async function runCustomBlendAnalysis(payload) {
@@ -4588,6 +5034,7 @@
       if (!createResponse.ok || !created.ok) throwAnalysisError(created);
       const jobId = created.job_id;
       const pollMs = Math.max(1200, Number(created.poll_interval_seconds || 2) * 1000);
+      trackEvent("custom_blend_job_queued",{poll_interval_seconds:Number(created.poll_interval_seconds || 2)});
       updateAnalysisJobReadout({status:"queued",message:"Queued for cloud analysis."});
       for (let attempt = 0; attempt < 240; attempt += 1) {
         await wait(pollMs);
@@ -4863,43 +5310,32 @@
       document.getElementById("rewardKpi").textContent = formatOptimizationFit(predictedReward);
       renderAgeScores(ageScores);
       renderCustomBlendHero(blendOptions[0] || null,data);
-      const nav = document.getElementById("portfolioNav"); nav.textContent = "";
-      const detail = document.getElementById("blendDetail"); detail.textContent = "";
-      if (blendOptions.length) {
-        blendOptions.forEach((option,index) => {
-          const button=document.createElement("button"); button.className=`blend-tab${index===0 ? " active" : ""}`;
-          const overlap=Number(option.ingredient_overlap_with_primary);
-          const overlapCopy=index===0
-            ? "reference blend"
-            : Number.isFinite(overlap)
-              ? `${Math.round(overlap*100)}% ingredient overlap`
-              : "overlap unavailable";
-          const externalConfidence=Number(option.external_validation_confidence);
-          const externalCopy=Number.isFinite(externalConfidence) ? ` · external confidence ${Math.round(externalConfidence*100)}%` : "";
-          const conceptCopy=option.product_concept ? `${option.product_concept} · ` : "";
-          const functionCopy=customFunctionName(option);
-          const label=index===0 ? (functionCopy || "Best custom blend") : option.name;
-          const laneCopy=functionCopy && label!==functionCopy ? `${functionCopy} · ` : "";
-          const fitCopy=formatOptimizationFit(option.final_exploratory_reward ?? option.predicted_reward);
-          button.type="button"; button.innerHTML=`${label}<small>${laneCopy}${conceptCopy}${option.ingredient_count} ingredients · ${overlapCopy} · ${fitCopy} optimization fit${externalCopy}</small>`;
-          button.addEventListener("click",()=>{
-            document.querySelectorAll(".blend-tab").forEach(item=>item.classList.remove("active"));
-            button.classList.add("active"); renderBlendOption(option,detail);
-          });
-          nav.appendChild(button);
-        });
-        renderBlendOption(blendOptions[0],detail);
-      } else detail.innerHTML="<p>No custom blend was returned.</p>";
+	      const nav = document.getElementById("portfolioNav");
+	      if (nav) {
+	        nav.textContent = "";
+	        nav.hidden = true;
+	      }
+	      const detail = document.getElementById("blendDetail");
+	      detail.textContent = "";
+	      detail.classList.add("blend-detail-flow");
+	      if (blendOptions.length) {
+	        blendOptions.slice(0,4).forEach((option,index) => {
+	          renderBlendOption(option,detail,{append:true,index});
+	        });
+	      } else detail.innerHTML="<p>No custom blend was returned.</p>";
       renderRecommendationGraph(data.recommendation_graph || {});
       renderArchetypeReport(data.archetype_report || {});
       renderNutrientActionMap(
         data.nutrient_action_map || [],
         data.substitution_actions || []
       );
-      const reasons = document.getElementById("reasons"); reasons.textContent = "";
-      Object.entries(data.priority_reasons || {}).forEach(([key,text]) => addCard(reasons, specs[key]?.label || key.replaceAll("_"," "), text, ""));
-      showView("results");
-    }
+	      const reasons = document.getElementById("reasons");
+	      if (reasons) {
+	        reasons.textContent = "";
+	        Object.entries(data.priority_reasons || {}).forEach(([key,text]) => addCard(reasons, specs[key]?.label || key.replaceAll("_"," "), text, ""));
+	      }
+	      showView("results");
+	    }
     function nutrientContributionShares(opportunities) {
       const contributions=opportunities.map((item,index)=>{
         const contribution=Number(item.conditional_reward_contribution ?? item.population_objective_contribution);
@@ -5062,13 +5498,39 @@
         filters.appendChild(button);
       });
       function visible(node) { return activeTypes.has(node.type); }
-      function truncate(text,max=18) {
-        const value=String(text || "");
-        return value.length>max ? `${value.slice(0,max-1)}…` : value;
-      }
-      function nodeRadius(type) {
-        return {profile:23,blend:20,concept:17,synergy:16,nutrient:16,function:15,biomarker:14,finding:14,ingredient:12}[type] || 13;
-      }
+	      function truncate(text,max=18) {
+	        const value=String(text || "");
+	        return value.length>max ? `${value.slice(0,max-3)}...` : value;
+	      }
+	      function activeTypeList() {
+	        return graphTypeOrder.filter(type=>nodes.some(node=>node.type===type && activeTypes.has(type)));
+	      }
+	      function nodeCardSize(type) {
+	        return {
+	          profile:[112,48],
+	          biomarker:[120,50],
+	          finding:[120,50],
+	          function:[126,52],
+	          nutrient:[120,50],
+	          blend:[128,52],
+	          concept:[120,50],
+	          synergy:[120,50],
+	          ingredient:[116,48]
+	        }[type] || [116,48];
+	      }
+	      function typeExplanation(type) {
+	        return {
+	          profile:"The starting point for this run.",
+	          biomarker:"A bloodwork marker or user context signal the model used.",
+	          finding:"A simplified interpretation of the bloodwork signal.",
+	          function:"The consumer-facing job the blend is trying to support.",
+	          nutrient:"A nutrient target the model wants the blend to move.",
+	          blend:"A candidate formula built from the nutrient vector.",
+	          concept:"The product idea attached to the blend.",
+	          synergy:"A modeled interaction between nutrients or ingredients.",
+	          ingredient:"A real powder used to deliver the nutrient vector."
+	        }[type] || "A recommendation signal used by the model.";
+	      }
       function nodeSubtitle(node) {
         if (node.type==="blend" && node.score!=null) return `+${Number(node.score).toFixed(3)}`;
         if (node.type==="synergy" && node.score!=null) return `${Number(node.score)>=0?"+":""}${Number(node.score).toFixed(3)}`;
@@ -5078,107 +5540,183 @@
         if (node.type==="concept" && node.score!=null) return `${Math.round(Number(node.score)*100)}% fit`;
         return graphTypeLabels[node.type] || node.type;
       }
-      function layoutNodes() {
-        const columns={};
-        graphTypeOrder.forEach((type,index)=>columns[type]={x:70 + index*150, nodes:[]});
-        nodes.filter(visible).forEach(node=>(columns[node.type] || columns.profile).nodes.push(node));
-        const coords={};
-        Object.values(columns).forEach(column=>{
-          const sorted=column.nodes.sort((a,b)=>{
-            if (a.type==="blend") return String(a.label).localeCompare(String(b.label));
-            return String(a.label).localeCompare(String(b.label));
-          });
-          const count=sorted.length;
-          sorted.forEach((node,index)=>{
-            const top=60, bottom=560;
-            const y=count<=1 ? 310 : top + index*((bottom-top)/(count-1));
-            coords[node.id]={x:column.x,y};
-          });
-        });
-        return coords;
-      }
-      function neighborIds(id) {
-        const neighbors=new Set([id]);
-        edges.forEach(edge=>{
-          if (edge.source===id) neighbors.add(edge.target);
-          if (edge.target===id) neighbors.add(edge.source);
-        });
-        return neighbors;
-      }
-      function formatDetailValue(value) {
-        if (Array.isArray(value)) return value.join(", ");
-        if (value && typeof value==="object") return Object.entries(value).slice(0,4).map(([key,val])=>`${key}: ${val}`).join(" · ");
-        if (typeof value==="number") return Math.abs(value)>=10 ? value.toFixed(1) : value.toPrecision(3);
-        return value == null || value === "" ? "—" : String(value);
-      }
-      function renderGraphDetails(node, neighbors) {
-        details.textContent="";
-        const title=document.createElement("h4"); title.textContent=node?.label || "Recommendation graph";
-        const copy=document.createElement("p");
-        copy.textContent=node ? `${graphTypeLabels[node.type] || node.type} node. Click a connected node to follow the recommendation path.` : "Click any node to inspect its relationships.";
-        details.append(title,copy);
-        if (!node) return;
-        const rows=document.createElement("div"); rows.className="graph-detail-list";
-        const typeRow=document.createElement("div"); typeRow.className="graph-detail-row";
-        typeRow.innerHTML=`<span>Type</span><strong>${graphTypeLabels[node.type] || node.type}</strong>`; rows.appendChild(typeRow);
-        Object.entries(node.details || {}).slice(0,8).forEach(([key,value])=>{
+	      function layoutNodes() {
+	        const types=activeTypeList();
+	        const columns={};
+	        const start=86;
+	        const end=1114;
+	        const step=types.length > 1 ? (end-start)/(types.length-1) : 0;
+	        types.forEach((type,index)=>columns[type]={x:start + index*step, nodes:[]});
+	        nodes.filter(visible).forEach(node=>(columns[node.type] || columns[types[0]] || columns.profile).nodes.push(node));
+	        const coords={};
+	        Object.entries(columns).forEach(([type,column])=>{
+	          const sorted=column.nodes.sort((a,b)=>{
+	            if (a.type==="blend") return String(a.label).localeCompare(String(b.label));
+	            return String(a.label).localeCompare(String(b.label));
+	          });
+	          const count=sorted.length;
+	          sorted.forEach((node,index)=>{
+	            const top=112, bottom=552;
+	            const size=nodeCardSize(type);
+	            const minGap=Math.max(size[1]+18,(bottom-top)/Math.max(count,1));
+	            const y=count<=1 ? 330 : top + index*Math.min(minGap,(bottom-top)/(count-1));
+	            coords[node.id]={x:column.x,y:Math.min(bottom,Math.max(top,y))};
+	          });
+	        });
+	        return {coords,columns,types};
+	      }
+	      function neighborIds(id) {
+	        const neighbors=new Set([id]);
+	        edges.forEach(edge=>{
+	          if (edge.source===id) neighbors.add(edge.target);
+	          if (edge.target===id) neighbors.add(edge.source);
+	        });
+	        return neighbors;
+	      }
+	      function pathIds(id) {
+	        const seen=new Set([id]);
+	        const queue=[id];
+	        while (queue.length) {
+	          const current=queue.shift();
+	          edges.forEach(edge=>{
+	            const linked=edge.source===current ? edge.target : edge.target===current ? edge.source : null;
+	            if (!linked || seen.has(linked)) return;
+	            const node=nodes.find(item=>item.id===linked);
+	            if (!node || !visible(node)) return;
+	            seen.add(linked);
+	            queue.push(linked);
+	          });
+	        }
+	        return seen;
+	      }
+	      function formatDetailValue(value) {
+	        if (Array.isArray(value)) return value.join(", ");
+	        if (value && typeof value==="object") return Object.entries(value).slice(0,4).map(([key,val])=>`${key}: ${val}`).join(" | ");
+	        if (typeof value==="number") return Math.abs(value)>=10 ? value.toFixed(1) : value.toPrecision(3);
+	        return value == null || value === "" ? "-" : String(value);
+	      }
+	      function renderGraphDetails(node, neighbors) {
+	        details.textContent="";
+	        const title=document.createElement("h4"); title.textContent=node?.label || "Recommendation graph";
+	        const copy=document.createElement("p");
+	        copy.textContent=node ? typeExplanation(node.type) : "Click any card to inspect how the recommendation path connects.";
+	        details.append(title,copy);
+	        if (!node) return;
+	        const connected=[...neighbors].filter(id=>id!==node.id).map(id=>nodes.find(item=>item.id===id)).filter(Boolean).slice(0,8);
+	        if (connected.length) {
+	          const hint=document.createElement("div");
+	          hint.className="graph-path-hint";
+	          const hintTitle=document.createElement("strong");
+	          hintTitle.textContent="Highlighted path";
+	          const hintCopy=document.createElement("span");
+	          hintCopy.textContent=`This signal connects to ${connected.map(item=>item.label).join(", ")}. Follow the animated lines to see how labs turn into a nutrient vector and then a powder blend.`;
+	          hint.append(hintTitle,hintCopy);
+	          details.appendChild(hint);
+	        }
+	        const rows=document.createElement("div"); rows.className="graph-detail-list";
+	        const typeRow=document.createElement("div"); typeRow.className="graph-detail-row";
+	        typeRow.innerHTML=`<span>Type</span><strong>${graphTypeLabels[node.type] || node.type}</strong>`; rows.appendChild(typeRow);
+	        Object.entries(node.details || {}).slice(0,8).forEach(([key,value])=>{
           const row=document.createElement("div"); row.className="graph-detail-row";
           const label=document.createElement("span"); label.textContent=key.replaceAll("_"," ");
           const strong=document.createElement("strong"); strong.textContent=formatDetailValue(value);
           row.append(label,strong); rows.appendChild(row);
         });
-        const connected=[...neighbors].filter(id=>id!==node.id).map(id=>nodes.find(item=>item.id===id)).filter(Boolean).slice(0,8);
-        if (connected.length) {
-          const row=document.createElement("div"); row.className="graph-detail-row";
-          row.innerHTML=`<span>Connected</span><strong>${connected.map(item=>item.label).join(", ")}</strong>`;
+	        if (connected.length) {
+	          const row=document.createElement("div"); row.className="graph-detail-row";
+	          row.innerHTML=`<span>Connected</span><strong>${connected.map(item=>item.label).join(", ")}</strong>`;
           rows.appendChild(row);
         }
         details.appendChild(rows);
       }
-      function draw() {
-        svg.textContent="";
-        const coords=layoutNodes();
-        const selectedNode=nodes.find(node=>node.id===selectedId && visible(node)) || nodes.find(visible);
-        selectedId=selectedNode?.id;
-        const neighbors=selectedId ? neighborIds(selectedId) : new Set();
-        const edgeLayer=document.createElementNS("http://www.w3.org/2000/svg","g");
-        const nodeLayer=document.createElementNS("http://www.w3.org/2000/svg","g");
-        edges.forEach(edge=>{
-          const source=coords[edge.source], target=coords[edge.target];
-          if (!source || !target) return;
-          const line=document.createElementNS("http://www.w3.org/2000/svg","line");
-          line.setAttribute("x1",source.x); line.setAttribute("y1",source.y);
-          line.setAttribute("x2",target.x); line.setAttribute("y2",target.y);
-          line.classList.add("graph-edge");
-          if (selectedId && (edge.source===selectedId || edge.target===selectedId)) line.classList.add("active");
-          else if (selectedId) line.classList.add("dimmed");
-          edgeLayer.appendChild(line);
-        });
-        nodes.filter(visible).forEach(node=>{
-          const point=coords[node.id]; if (!point) return;
-          const group=document.createElementNS("http://www.w3.org/2000/svg","g");
-          group.classList.add("graph-node");
-          if (node.id===selectedId) group.classList.add("active");
-          else if (selectedId && !neighbors.has(node.id)) group.classList.add("dimmed");
-          group.style.setProperty("--graph-color",graphTypeColors[node.type] || "#43b8b1");
-          group.setAttribute("transform",`translate(${point.x} ${point.y})`);
-          group.setAttribute("tabindex","0");
-          group.setAttribute("role","button");
-          group.setAttribute("aria-label",node.label);
-          const circle=document.createElementNS("http://www.w3.org/2000/svg","circle");
-          circle.setAttribute("r",nodeRadius(node.type));
-          const label=document.createElementNS("http://www.w3.org/2000/svg","text");
-          label.setAttribute("y",nodeRadius(node.type)+15); label.textContent=truncate(node.label,node.type==="ingredient" ? 13 : 18);
-          const subtitle=document.createElementNS("http://www.w3.org/2000/svg","text");
-          subtitle.classList.add("graph-node-subtitle"); subtitle.setAttribute("y",nodeRadius(node.type)+27); subtitle.textContent=truncate(nodeSubtitle(node),16);
-          group.append(circle,label,subtitle);
-          group.addEventListener("click",()=>{selectedId=node.id; draw();});
-          group.addEventListener("keydown",event=>{if(event.key==="Enter" || event.key===" "){event.preventDefault(); selectedId=node.id; draw();}});
-          nodeLayer.appendChild(group);
-        });
-        svg.append(edgeLayer,nodeLayer);
-        renderGraphDetails(selectedNode,neighbors);
-      }
+	      function draw() {
+	        svg.textContent="";
+	        const layout=layoutNodes();
+	        const coords=layout.coords;
+	        const selectedNode=nodes.find(node=>node.id===selectedId && visible(node)) || nodes.find(visible);
+	        selectedId=selectedNode?.id;
+	        const neighbors=selectedId ? neighborIds(selectedId) : new Set();
+	        const focusIds=selectedId ? pathIds(selectedId) : new Set();
+	        const defs=document.createElementNS("http://www.w3.org/2000/svg","defs");
+	        const marker=document.createElementNS("http://www.w3.org/2000/svg","marker");
+	        marker.setAttribute("id","graphArrow");
+	        marker.setAttribute("markerWidth","8");
+	        marker.setAttribute("markerHeight","8");
+	        marker.setAttribute("refX","7");
+	        marker.setAttribute("refY","4");
+	        marker.setAttribute("orient","auto");
+	        marker.setAttribute("markerUnits","strokeWidth");
+	        const arrow=document.createElementNS("http://www.w3.org/2000/svg","path");
+	        arrow.setAttribute("d","M0,0 L8,4 L0,8 Z");
+	        arrow.setAttribute("fill","#0d6975");
+	        marker.appendChild(arrow);
+	        defs.appendChild(marker);
+	        svg.appendChild(defs);
+	        const laneLayer=document.createElementNS("http://www.w3.org/2000/svg","g");
+	        layout.types.forEach(type=>{
+	          const label=document.createElementNS("http://www.w3.org/2000/svg","text");
+	          label.classList.add("graph-lane-label");
+	          label.setAttribute("x",layout.columns[type].x);
+	          label.setAttribute("y","82");
+	          label.textContent=graphTypeLabels[type] || type;
+	          laneLayer.appendChild(label);
+	        });
+	        const edgeLayer=document.createElementNS("http://www.w3.org/2000/svg","g");
+	        const nodeLayer=document.createElementNS("http://www.w3.org/2000/svg","g");
+	        edges.forEach(edge=>{
+	          const source=coords[edge.source], target=coords[edge.target];
+	          if (!source || !target) return;
+	          const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+	          const control=Math.max(46,Math.abs(target.x-source.x)*.42);
+	          path.setAttribute("d",`M${source.x} ${source.y} C${source.x+control} ${source.y}, ${target.x-control} ${target.y}, ${target.x} ${target.y}`);
+	          path.classList.add("graph-edge");
+	          if (selectedId && focusIds.has(edge.source) && focusIds.has(edge.target)) {
+	            path.classList.add("active","flowing");
+	            path.setAttribute("marker-end","url(#graphArrow)");
+	          } else if (selectedId) {
+	            path.classList.add("dimmed");
+	          }
+	          edgeLayer.appendChild(path);
+	        });
+	        nodes.filter(visible).forEach(node=>{
+	          const point=coords[node.id]; if (!point) return;
+	          const [width,height]=nodeCardSize(node.type);
+	          const group=document.createElementNS("http://www.w3.org/2000/svg","g");
+	          group.classList.add("graph-node-card");
+	          if (node.id===selectedId) group.classList.add("active");
+	          else if (selectedId && !focusIds.has(node.id)) group.classList.add("dimmed");
+	          group.style.setProperty("--graph-color",graphTypeColors[node.type] || "#43b8b1");
+	          group.setAttribute("transform",`translate(${point.x} ${point.y})`);
+	          group.setAttribute("tabindex","0");
+	          group.setAttribute("role","button");
+	          group.setAttribute("aria-label",node.label);
+	          const rect=document.createElementNS("http://www.w3.org/2000/svg","rect");
+	          rect.setAttribute("x",String(-width/2));
+	          rect.setAttribute("y",String(-height/2));
+	          rect.setAttribute("width",String(width));
+	          rect.setAttribute("height",String(height));
+	          rect.setAttribute("rx","14");
+	          const dot=document.createElementNS("http://www.w3.org/2000/svg","circle");
+	          dot.classList.add("graph-color-dot");
+	          dot.setAttribute("cx",String(-width/2+16));
+	          dot.setAttribute("cy",String(-height/2+15));
+	          dot.setAttribute("r","5");
+	          const label=document.createElementNS("http://www.w3.org/2000/svg","text");
+	          label.setAttribute("y","-3");
+	          label.textContent=truncate(node.label,node.type==="ingredient" ? 15 : 18);
+	          const subtitle=document.createElementNS("http://www.w3.org/2000/svg","text");
+	          subtitle.classList.add("graph-node-subtitle");
+	          subtitle.setAttribute("y","14");
+	          subtitle.textContent=truncate(nodeSubtitle(node),18);
+	          group.append(rect,dot,label,subtitle);
+	          group.addEventListener("click",()=>{selectedId=node.id; draw();});
+	          group.addEventListener("pointerenter",()=>{selectedId=node.id; draw();});
+	          group.addEventListener("keydown",event=>{if(event.key==="Enter" || event.key===" "){event.preventDefault(); selectedId=node.id; draw();}});
+	          nodeLayer.appendChild(group);
+	        });
+	        svg.append(laneLayer,edgeLayer,nodeLayer);
+	        renderGraphDetails(selectedNode,neighbors);
+	      }
       draw();
     }
     function renderNutrientActionMap(actions,substitutions=[]) {
@@ -5206,29 +5744,33 @@
         row.append(name,action,dose,confidence,explanation); parent.appendChild(row);
       });
     }
-    function renderBlendOption(option,parent) {
-      parent.textContent="";
-      const head=document.createElement("div"); head.className="blend-title";
-      const title=document.createElement("div");
-      const displayName=option.name?.replace(/^Blend 1 · /,"Custom blend · ") || "Custom blend";
-      title.innerHTML=`<h3>${displayName}</h3><p class="section-copy">A personalized juice-powder blend built to deliver the nutrient vector below.</p>`;
-      const badge=document.createElement("div"); badge.className="score-badge"; badge.textContent=`${formatOptimizationFit(option.final_exploratory_reward ?? option.predicted_reward,{includeLevel:true})} fit`;
-      head.append(title,badge); parent.appendChild(head);
-      appendCustomFunctionPanel(option,parent);
-      if (option.blend_summary) {
-        const summary=document.createElement("div"); summary.className="blend-summary";
-        summary.innerHTML=`<strong>What this formula is solving</strong>${option.blend_summary}`;
-        parent.appendChild(summary);
-      }
-      if (option.predicted_age_effect?.available) {
-        const ageEffect=document.createElement("div"); ageEffect.className="blend-summary";
-        const checkpoint=ageTimelineCheckpoint(option.predicted_age_effect);
-        ageEffect.innerHTML=`<strong>Projected combined age drop</strong>${formatModeledAgeEffect(option.predicted_age_effect)}. ${checkpoint ? `${formatTimelineAgeEffect(checkpoint,{includeWeek:true})} on the 4-week adjustment curve. ` : ""}${modeledAgeEffectDetail(option.predicted_age_effect)}`;
-        parent.appendChild(ageEffect);
-        const timeline=renderAgeAdjustmentTimeline(option.predicted_age_effect);
-        if (timeline) parent.appendChild(timeline);
-      }
-      const list=document.createElement("div"); list.className="ingredient-list";
+	    function renderBlendOption(option,parent,settings={}) {
+	      const append=Boolean(settings.append);
+	      if (!append) parent.textContent="";
+	      const card=document.createElement("article");
+	      card.className=`blend-option-card${Number(settings.index || 0) === 0 ? " primary" : ""}`;
+	      const head=document.createElement("div"); head.className="blend-title";
+	      const title=document.createElement("div");
+	      const displayName=option.name?.replace(/^Blend 1 · /,"Custom blend · ") || "Custom blend";
+	      const variantLabel=append ? `Formula option ${Number(settings.index || 0) + 1}` : "Formula option";
+	      title.innerHTML=`<div class="eyebrow">${variantLabel}</div><h3>${displayName}</h3><p class="section-copy">A personalized juice-powder blend built to deliver the nutrient vector below.</p>`;
+	      const badge=document.createElement("div"); badge.className="score-badge"; badge.textContent=`${formatOptimizationFit(option.final_exploratory_reward ?? option.predicted_reward,{includeLevel:true})} fit`;
+	      head.append(title,badge); card.appendChild(head);
+	      appendCustomFunctionPanel(option,card);
+	      if (option.blend_summary) {
+	        const summary=document.createElement("div"); summary.className="blend-summary";
+	        summary.innerHTML=`<strong>What this formula is solving</strong>${option.blend_summary}`;
+	        card.appendChild(summary);
+	      }
+	      if (option.predicted_age_effect?.available) {
+	        const ageEffect=document.createElement("div"); ageEffect.className="blend-summary";
+	        const checkpoint=ageTimelineCheckpoint(option.predicted_age_effect);
+	        ageEffect.innerHTML=`<strong>Projected combined age drop</strong>${formatModeledAgeEffect(option.predicted_age_effect)}. ${checkpoint ? `${formatTimelineAgeEffect(checkpoint,{includeWeek:true})} on the 4-week adjustment curve. ` : ""}${modeledAgeEffectDetail(option.predicted_age_effect)}`;
+	        card.appendChild(ageEffect);
+	        const timeline=renderAgeAdjustmentTimeline(option.predicted_age_effect);
+	        if (timeline) card.appendChild(timeline);
+	      }
+	      const list=document.createElement("div"); list.className="ingredient-list";
       (option.ingredients || []).forEach(ingredient=>{
         const row=document.createElement("div"); row.className="ingredient-row";
         const name=document.createElement("strong"); name.textContent=ingredient.item;
@@ -5237,19 +5779,20 @@
         const value=document.createElement("div"); value.className="ingredient-percent"; value.textContent=`${Number(ingredient.blend_percent).toFixed(1)}%`;
         row.append(name,track,value); list.appendChild(row);
       });
-      parent.appendChild(list);
-      const opportunities=option.nutrient_opportunities || [];
-      if (opportunities.length) {
-        const section=document.createElement("div"); section.className="opportunity-section";
-        section.innerHTML="<h4>Target nutrient vector</h4><p class='section-copy'>This is the nutrient pattern the custom blend is designed to move. The percentages show each nutrient’s contribution to the recommendation direction.</p>";
-        renderNutrientTable(opportunities.slice(0,10),section,{matrix:true,kicker:"Custom vector",title:"Nutrient matrix behind this formula"});
-        parent.appendChild(section);
-      }
-      renderIncidentalNutrients(option.incidental_nutrient_opportunities || [],parent);
-      renderPrototypeFormulas(option.prototype_formulas || [],parent);
-      const note=document.createElement("div"); note.className="notice"; note.textContent="The blend percentages are formulation concepts. Powder grams use PowderPure conversion factors; final per-bottle grams should still be reconciled with flavor, solubility, and supplier COA data.";
-      parent.appendChild(note);
-    }
+	      card.appendChild(list);
+	      const opportunities=option.nutrient_opportunities || [];
+	      if (opportunities.length) {
+	        const section=document.createElement("div"); section.className="opportunity-section";
+	        section.innerHTML="<h4>Target nutrient vector</h4><p class='section-copy'>This is the nutrient pattern the custom blend is designed to move. The percentages show each nutrient’s contribution to the recommendation direction.</p>";
+	        renderNutrientTable(opportunities.slice(0,10),section,{matrix:true,kicker:"Custom vector",title:"Nutrient matrix behind this formula"});
+	        card.appendChild(section);
+	      }
+	      renderIncidentalNutrients(option.incidental_nutrient_opportunities || [],card);
+	      renderPrototypeFormulas(option.prototype_formulas || [],card);
+	      const note=document.createElement("div"); note.className="notice"; note.textContent="The blend percentages are formulation concepts. Powder grams use PowderPure conversion factors; final per-bottle grams should still be reconciled with flavor, solubility, and supplier COA data.";
+	      card.appendChild(note);
+	      parent.appendChild(card);
+	    }
     function formatSigned(value,digits=3) {
       const number=Number(value);
       if (!Number.isFinite(number)) return "—";
@@ -6535,6 +7078,11 @@
         _replyto:email,
         message:`New waitlist request for ${blendName} with ${launchDiscountCode}.`
       };
+      trackEvent("waitlist_submitted",{
+        blend_id:blendId,
+        blend_name:blendName,
+        discount_code:launchDiscountCode
+      });
       saveWaitlistLeadLocally(lead);
       if (submit) {
         submit.disabled=true;
@@ -6557,6 +7105,10 @@
       } catch (error) {
         remoteSaved=false;
       }
+      trackEvent("waitlist_saved",{
+        blend_id:blendId,
+        remote_saved:remoteSaved
+      });
       if (remoteSaved) {
         if (status) status.textContent=`You are on the early list. ${launchDiscountCode} is saved for your free custom profile.`;
         if (mailLink) mailLink.classList.remove("active");
