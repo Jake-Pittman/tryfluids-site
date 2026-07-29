@@ -2460,7 +2460,7 @@
       font-weight:760;
     }
     .vector-demo-card {
-      display:block;
+      display:grid;
       min-height:430px;
       padding:0;
       overflow:hidden;
@@ -2474,6 +2474,7 @@
       box-shadow:0 28px 70px rgba(13,27,42,.16);
     }
     .vector-matrix-stage {
+      --matrix-active-color:#71d8dc;
       position:relative;
       min-height:430px;
       scroll-margin-top:96px;
@@ -2482,11 +2483,57 @@
       border-radius:30px;
       color:#fffdf8;
       background:
-        radial-gradient(circle at 48% 44%,rgba(113,216,220,.20),transparent 14rem),
-        radial-gradient(circle at 83% 18%,rgba(242,190,55,.17),transparent 18rem),
-        radial-gradient(circle at 10% 86%,rgba(198,43,79,.22),transparent 18rem),
-        linear-gradient(135deg,#0d1b2a,#203445 62%,#0d1b2a);
+        radial-gradient(ellipse at 48% 43%,color-mix(in oklch,var(--matrix-active-color) 20%,transparent),transparent 31%),
+        radial-gradient(circle at 88% 12%,rgba(242,190,55,.14),transparent 27rem),
+        radial-gradient(circle at 6% 92%,rgba(198,43,79,.20),transparent 25rem),
+        linear-gradient(135deg,#081624,#152c3d 58%,#091723);
       isolation:isolate;
+    }
+    .vector-matrix-stage::before {
+      content:"";
+      position:absolute;
+      z-index:0;
+      inset:-42%;
+      background:
+        conic-gradient(
+          from 30deg,
+          transparent 0 14%,
+          color-mix(in oklch,var(--matrix-active-color) 25%,transparent) 22%,
+          transparent 36% 58%,
+          rgba(242,190,55,.13) 66%,
+          transparent 78%
+        );
+      filter:blur(56px);
+      opacity:.62;
+      transform-origin:center;
+      animation:vectorAuroraDrift 18s linear infinite;
+      pointer-events:none;
+    }
+    .vector-matrix-stage::after {
+      content:"";
+      position:absolute;
+      z-index:0;
+      inset:-35% -10%;
+      background:linear-gradient(
+        112deg,
+        transparent 42%,
+        color-mix(in oklch,var(--matrix-active-color) 18%,transparent) 49%,
+        rgba(255,255,255,.08) 50%,
+        transparent 57%
+      );
+      mix-blend-mode:screen;
+      opacity:.46;
+      transform:translateX(-42%);
+      animation:vectorScan 7.5s ease-in-out infinite;
+      pointer-events:none;
+    }
+    @keyframes vectorAuroraDrift {
+      to { transform:rotate(360deg) scale(1.04); }
+    }
+    @keyframes vectorScan {
+      0%,18% { transform:translateX(-46%); opacity:0; }
+      35% { opacity:.48; }
+      70%,100% { transform:translateX(46%); opacity:0; }
     }
     .vector-matrix-stage.hero-matrix {
       min-height:430px;
@@ -2507,12 +2554,59 @@
       height:100%;
       display:block;
       z-index:1;
-      filter:saturate(1.14) contrast(1.04);
+      filter:saturate(1.18) contrast(1.06);
+    }
+    .vector-matrix-labels {
+      position:absolute;
+      z-index:2;
+      inset:0;
+      overflow:hidden;
+      pointer-events:none;
+    }
+    .vector-node-label {
+      position:absolute;
+      top:0;
+      left:0;
+      display:grid;
+      grid-template-columns:7px auto;
+      gap:6px;
+      align-items:center;
+      max-width:128px;
+      padding:5px 8px;
+      border:1px solid rgba(255,255,255,.11);
+      border-radius:999px;
+      color:rgba(237,251,251,.72);
+      background:rgba(8,22,36,.46);
+      backdrop-filter:blur(10px);
+      box-shadow:0 8px 22px rgba(0,0,0,.13);
+      font-size:.54rem;
+      font-weight:900;
+      letter-spacing:.035em;
+      opacity:.42;
+      transform:translate(-50%,-50%);
+      transition:opacity .3s ease, border-color .3s ease, color .3s ease, box-shadow .3s ease;
+      will-change:transform;
+    }
+    .vector-node-label i {
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--nutrient-color);
+      box-shadow:0 0 12px var(--nutrient-color);
+    }
+    .vector-node-label.active {
+      z-index:2;
+      border-color:color-mix(in oklch,var(--nutrient-color) 62%,white);
+      color:#fff;
+      opacity:1;
+      box-shadow:
+        0 10px 28px rgba(0,0,0,.20),
+        0 0 22px color-mix(in oklch,var(--nutrient-color) 24%,transparent);
     }
     .vector-matrix-ui {
       position:absolute;
       inset:0;
-      z-index:2;
+      z-index:3;
       display:grid;
       grid-template-rows:auto 1fr auto;
       gap:16px;
@@ -2545,6 +2639,9 @@
     }
     .vector-matrix-count {
       flex:0 0 auto;
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
       padding:8px 10px;
       border:1px solid rgba(255,253,248,.15);
       border-radius:999px;
@@ -2555,15 +2652,31 @@
       letter-spacing:.08em;
       text-transform:uppercase;
     }
+    .vector-matrix-count::before {
+      content:"";
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--matrix-active-color);
+      box-shadow:0 0 13px var(--matrix-active-color);
+      animation:vectorLivePulse 1.8s ease-in-out infinite;
+    }
+    @keyframes vectorLivePulse {
+      50% { opacity:.45; transform:scale(.76); }
+    }
     .vector-matrix-active {
       align-self:end;
       max-width:270px;
       padding:13px 14px;
       border:1px solid rgba(255,253,248,.14);
       border-radius:18px;
-      background:rgba(13,27,42,.50);
+      background:
+        linear-gradient(135deg,color-mix(in oklch,var(--matrix-active-color) 10%,rgba(13,27,42,.68)),rgba(13,27,42,.64));
       backdrop-filter:blur(16px);
-      box-shadow:0 18px 36px rgba(0,0,0,.15);
+      box-shadow:
+        0 18px 36px rgba(0,0,0,.18),
+        inset 0 1px 0 rgba(255,255,255,.06);
+      transition:border-color .3s ease, background .3s ease;
     }
     .vector-matrix-active span {
       display:block;
@@ -2585,6 +2698,37 @@
       color:#d8d0c6;
       font-size:.68rem;
       line-height:1.35;
+    }
+    .vector-matrix-active-meter {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:9px;
+      align-items:center;
+      margin-top:10px;
+    }
+    .vector-matrix-active-meter b {
+      position:relative;
+      height:4px;
+      overflow:hidden;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+    }
+    .vector-matrix-active-meter b::after {
+      content:"";
+      position:absolute;
+      inset:0;
+      width:var(--active-share,50%);
+      border-radius:inherit;
+      background:linear-gradient(90deg,var(--matrix-active-color),rgba(255,255,255,.88));
+      box-shadow:0 0 16px var(--matrix-active-color);
+      transition:width .45s cubic-bezier(.2,.8,.2,1);
+    }
+    .vector-matrix-active-meter em {
+      color:#fff;
+      font-size:.58rem;
+      font-style:normal;
+      font-weight:950;
+      letter-spacing:.05em;
     }
     .vector-matrix-list {
       display:flex;
@@ -2618,8 +2762,9 @@
     }
     .vector-matrix-chip.active {
       border-color:color-mix(in oklch,var(--nutrient-color) 72%,white);
-      background:rgba(255,253,248,.16);
+      background:color-mix(in oklch,var(--nutrient-color) 15%,rgba(255,253,248,.08));
       transform:translateY(-1px);
+      box-shadow:0 7px 18px color-mix(in oklch,var(--nutrient-color) 16%,transparent);
     }
     .vector-matrix-fallback {
       position:relative;
@@ -3182,6 +3327,7 @@
       .vector-matrix-head strong { font-size:1.42rem; max-width:260px; }
       .vector-matrix-count { justify-self:start; }
       .vector-matrix-active { max-width:100%; }
+      .vector-matrix-labels { display:none; }
       .vector-matrix-fallback-row { grid-template-columns:1fr; }
       .vector-proof-grid,.vector-demo-row { grid-template-columns:1fr; }
       .vector-demo-row span { text-align:left; }
@@ -3979,6 +4125,11 @@
       .product-voyage img,
       .consumer-product-card,.calibration-card,.matrix-showcase,.product-voyage,.panel,.standard-card,
       .science-runner.active::before,.science-runner.active::after,.graph-edge.flowing {
+        animation:none !important;
+      }
+      .vector-matrix-stage::before,
+      .vector-matrix-stage::after,
+      .vector-matrix-count::before {
         animation:none !important;
       }
       .consumer-hero-product-card {
@@ -6527,10 +6678,25 @@
       if (!parent || !data.length) return null;
       const stage=document.createElement("div");
       stage.className=`vector-matrix-stage ${options.stageClass || ""}`.trim();
-      stage.setAttribute("role","img");
+      stage.setAttribute("role","group");
+      stage.setAttribute("aria-roledescription","interactive nutrient vector visualization");
       stage.setAttribute("aria-label",options.ariaLabel || "Animated nutrient vector matrix");
       const canvas=document.createElement("canvas");
       canvas.className="vector-matrix-canvas";
+      canvas.setAttribute("aria-hidden","true");
+      const labelLayer=document.createElement("div");
+      labelLayer.className="vector-matrix-labels";
+      labelLayer.setAttribute("aria-hidden","true");
+      const nodeLabels=data.map(item=>{
+        const label=document.createElement("span");
+        label.className="vector-node-label";
+        label.style.setProperty("--nutrient-color",item.color);
+        const dot=document.createElement("i");
+        const text=document.createElement("b"); text.textContent=item.label;
+        label.append(dot,text);
+        labelLayer.appendChild(label);
+        return label;
+      });
       const ui=document.createElement("div");
       ui.className="vector-matrix-ui";
       const head=document.createElement("div");
@@ -6546,7 +6712,12 @@
       const activeKicker=document.createElement("span"); activeKicker.textContent="Focused signal";
       const activeTitle=document.createElement("strong");
       const activeDetail=document.createElement("small");
-      active.append(activeKicker,activeTitle,activeDetail);
+      const activeMeter=document.createElement("div");
+      activeMeter.className="vector-matrix-active-meter";
+      const activeTrack=document.createElement("b");
+      const activeShare=document.createElement("em");
+      activeMeter.append(activeTrack,activeShare);
+      active.append(activeKicker,activeTitle,activeDetail,activeMeter);
       const list=document.createElement("div");
       list.className="vector-matrix-list";
       const chips=data.slice(0,6).map((item,index)=>{
@@ -6560,149 +6731,384 @@
         return chip;
       });
       ui.append(head,active,list);
-      stage.append(canvas,ui);
+      stage.append(canvas,labelLayer,ui);
       parent.appendChild(stage);
       const setActiveDom=index=>{
         const item=data[index] || data[0];
         activeTitle.textContent=item.label;
         activeDetail.textContent=`${item.amountLabel} · ${item.note}`;
+        activeShare.textContent=`${Math.round(item.share)}%`;
+        active.style.setProperty("--active-share",`${Math.max(6,item.share)}%`);
         chips.forEach((chip,chipIndex)=>chip.classList.toggle("active",chipIndex===index));
+        nodeLabels.forEach((label,labelIndex)=>label.classList.toggle("active",labelIndex===index));
         stage.style.setProperty("--matrix-active-color",item.color);
       };
       stage.__setMatrixActive=setActiveDom;
       setActiveDom(0);
       loadThreeModule()
-        .then(THREE=>initThreeVectorMatrix(THREE,stage,canvas,data,setActiveDom,options))
+        .then(THREE=>initThreeVectorMatrix(THREE,stage,canvas,data,setActiveDom,nodeLabels,options))
         .catch(()=>createMatrixFallback(stage,data));
       return stage;
     }
-    function initThreeVectorMatrix(THREE,stage,canvas,data,setActiveDom,options={}) {
+    function initThreeVectorMatrix(THREE,stage,canvas,data,setActiveDom,nodeLabels,options={}) {
       if (!canvas.isConnected) return;
       let activeIndex=0;
       let pointerX=0;
       let pointerY=0;
-      let lastAuto=0;
+      let targetPointerX=0;
+      let targetPointerY=0;
+      let lastAuto=performance.now();
+      let interacting=false;
+      let inViewport=true;
+      let lastWidth=0;
+      let lastHeight=0;
       const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const scene=new THREE.Scene();
-      const camera=new THREE.PerspectiveCamera(45,1,.1,100);
-      camera.position.set(0,0,6.6);
-      const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true,powerPreference:"high-performance",preserveDrawingBuffer:true});
+      scene.fog=new THREE.FogExp2(0x081624,.035);
+      const camera=new THREE.PerspectiveCamera(43,1,.1,100);
+      camera.position.set(0,.04,7.35);
+      const renderer=new THREE.WebGLRenderer({
+        canvas,
+        alpha:true,
+        antialias:true,
+        powerPreference:"high-performance",
+        preserveDrawingBuffer:true
+      });
       renderer.setClearColor(0x000000,0);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1,2));
       if (THREE.SRGBColorSpace) renderer.outputColorSpace=THREE.SRGBColorSpace;
+      if (THREE.ACESFilmicToneMapping) {
+        renderer.toneMapping=THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure=1.14;
+      }
+
       const root=new THREE.Group();
+      root.position.y=-.04;
       scene.add(root);
-      const ambient=new THREE.AmbientLight(0xb9ffff,.72);
-      scene.add(ambient);
-      const key=new THREE.PointLight(0xffe39b,1.4,12);
-      key.position.set(2.2,2.6,3.5);
+      scene.add(new THREE.HemisphereLight(0xbffcff,0x251225,1.22));
+      const key=new THREE.PointLight(0xffe4a3,2.15,14);
+      key.position.set(2.8,3.1,4.5);
       scene.add(key);
-      const rim=new THREE.PointLight(0xc62b4f,1.0,10);
-      rim.position.set(-2.8,-1.8,2.4);
-      scene.add(rim);
-      const gridMaterialTweaks=helper=>{
-        helper.material.transparent=true;
-        helper.material.opacity=.10;
-        helper.material.depthWrite=false;
-      };
-      const gridA=new THREE.GridHelper(5.2,10,0x71d8dc,0xffffff);
-      gridMaterialTweaks(gridA);
-      root.add(gridA);
-      const gridB=new THREE.GridHelper(5.2,10,0xf2be37,0xffffff);
-      gridMaterialTweaks(gridB);
-      gridB.rotation.x=Math.PI/2;
-      root.add(gridB);
-      const gridC=new THREE.GridHelper(4.8,8,0xc62b4f,0xffffff);
-      gridMaterialTweaks(gridC);
-      gridC.rotation.z=Math.PI/2;
-      root.add(gridC);
-      const core=new THREE.Mesh(
-        new THREE.IcosahedronGeometry(.36,2),
-        new THREE.MeshStandardMaterial({color:0xfff6dc,emissive:0xf2be37,emissiveIntensity:.28,metalness:.18,roughness:.36,transparent:true,opacity:.92})
+      const cyanRim=new THREE.PointLight(0x71d8dc,1.65,12);
+      cyanRim.position.set(-3.4,.2,3.0);
+      scene.add(cyanRim);
+      const berryRim=new THREE.PointLight(0xc62b4f,1.2,10);
+      berryRim.position.set(-1.8,-2.5,2.6);
+      scene.add(berryRim);
+
+      const fieldGroup=new THREE.Group();
+      root.add(fieldGroup);
+      [
+        {radius:2.52,color:0x71d8dc,rotation:[.92,.16,.18]},
+        {radius:2.16,color:0xf2be37,rotation:[1.18,-.5,.64]},
+        {radius:2.86,color:0xc62b4f,rotation:[.52,.72,-.28]}
+      ].forEach(spec=>{
+        const ring=new THREE.Mesh(
+          new THREE.TorusGeometry(spec.radius,.008,5,180),
+          new THREE.MeshBasicMaterial({
+            color:spec.color,
+            transparent:true,
+            opacity:.09,
+            depthWrite:false,
+            blending:THREE.AdditiveBlending
+          })
+        );
+        ring.rotation.set(...spec.rotation);
+        fieldGroup.add(ring);
+      });
+      const horizonGrid=new THREE.GridHelper(8.2,16,0x71d8dc,0x96aeb7);
+      horizonGrid.material.transparent=true;
+      horizonGrid.material.opacity=.038;
+      horizonGrid.material.depthWrite=false;
+      horizonGrid.rotation.x=Math.PI/2;
+      horizonGrid.position.z=-1.55;
+      root.add(horizonGrid);
+
+      const coreGroup=new THREE.Group();
+      root.add(coreGroup);
+      const coreGlow=new THREE.Mesh(
+        new THREE.SphereGeometry(.72,24,16),
+        new THREE.MeshBasicMaterial({
+          color:0xf2be37,
+          transparent:true,
+          opacity:.075,
+          depthWrite:false,
+          blending:THREE.AdditiveBlending
+        })
       );
-      root.add(core);
-      const nodeGeometry=new THREE.SphereGeometry(1,32,18);
+      const coreShell=new THREE.Mesh(
+        new THREE.IcosahedronGeometry(.46,2),
+        new THREE.MeshBasicMaterial({
+          color:0xfff1b9,
+          wireframe:true,
+          transparent:true,
+          opacity:.62,
+          depthWrite:false
+        })
+      );
+      const core=new THREE.Mesh(
+        new THREE.IcosahedronGeometry(.24,3),
+        new THREE.MeshStandardMaterial({
+          color:0xfff7dc,
+          emissive:0xf2be37,
+          emissiveIntensity:1.25,
+          metalness:.12,
+          roughness:.2
+        })
+      );
+      const coreOrbitA=new THREE.Mesh(
+        new THREE.TorusGeometry(.64,.014,6,96),
+        new THREE.MeshBasicMaterial({
+          color:0x71d8dc,
+          transparent:true,
+          opacity:.42,
+          depthWrite:false,
+          blending:THREE.AdditiveBlending
+        })
+      );
+      const coreOrbitB=coreOrbitA.clone();
+      coreOrbitB.material=coreOrbitA.material.clone();
+      coreOrbitB.material.color.set(0xf2be37);
+      coreOrbitB.rotation.x=Math.PI/2;
+      coreOrbitA.rotation.y=Math.PI/2.8;
+      coreGroup.add(coreGlow,coreShell,core,coreOrbitA,coreOrbitB);
+
+      const layout=[
+        [-1.78,.34,.38],
+        [-.52,1.18,-.32],
+        [1.18,.94,.42],
+        [1.96,-.22,-.18],
+        [.72,-1.14,.34],
+        [-.78,-1.18,-.06],
+        [-2.12,-.58,.28],
+        [.28,.10,-1.16],
+        [2.12,.64,-.72],
+        [-1.84,1.02,-.68]
+      ];
+      const nodeCoreGeometry=new THREE.IcosahedronGeometry(1,4);
+      const nodeShellGeometry=new THREE.IcosahedronGeometry(1.23,2);
+      const nodeHaloGeometry=new THREE.SphereGeometry(1,24,14);
+      const nodeRingGeometry=new THREE.TorusGeometry(1.48,.025,6,96);
       const nodes=[];
       const vectors=[];
+      const paths=[];
       data.forEach((item,index)=>{
-        const t=index/Math.max(data.length,1);
-        const theta=t*Math.PI*2.0+Math.PI*.18;
-        const radius=1.25+Math.sqrt(item.share/100)*1.35;
-        const y=((index%3)-1)*.56+Math.sin(theta*1.7)*.22;
-        const position=new THREE.Vector3(Math.cos(theta)*radius,y,Math.sin(theta)*radius);
+        const fallbackTheta=index*2.39996;
+        const fallbackRadius=1.45+(index%4)*.28;
+        const raw=layout[index] || [
+          Math.cos(fallbackTheta)*fallbackRadius,
+          Math.sin(fallbackTheta*1.7)*1.06,
+          Math.sin(fallbackTheta)*.52
+        ];
+        const position=new THREE.Vector3(...raw);
         vectors.push(position);
         const color=new THREE.Color(item.color);
+        const baseScale=.13+.27*Math.sqrt(item.share/100);
+        const group=new THREE.Group();
+        group.position.copy(position);
+        group.scale.setScalar(baseScale);
+        group.userData.matrixIndex=index;
+        root.add(group);
         const material=new THREE.MeshStandardMaterial({
           color,
           emissive:color,
-          emissiveIntensity:.36,
-          metalness:.22,
-          roughness:.32,
+          emissiveIntensity:.44,
+          metalness:.28,
+          roughness:.22,
           transparent:true,
-          opacity:.95
+          opacity:.96
         });
-        const mesh=new THREE.Mesh(nodeGeometry,material);
-        const scale=.105+.28*Math.sqrt(item.share/100);
-        mesh.scale.setScalar(scale);
-        mesh.position.copy(position);
-        mesh.userData.baseScale=scale;
+        const mesh=new THREE.Mesh(nodeCoreGeometry,material);
         mesh.userData.matrixIndex=index;
-        root.add(mesh);
-        const halo=new THREE.Mesh(
-          new THREE.SphereGeometry(1,24,12),
-          new THREE.MeshBasicMaterial({color,transparent:true,opacity:.085,depthWrite:false,blending:THREE.AdditiveBlending})
+        const shellMaterial=new THREE.MeshBasicMaterial({
+          color,
+          wireframe:true,
+          transparent:true,
+          opacity:.22,
+          depthWrite:false,
+          blending:THREE.AdditiveBlending
+        });
+        const shell=new THREE.Mesh(nodeShellGeometry,shellMaterial);
+        const haloMaterial=new THREE.MeshBasicMaterial({
+          color,
+          transparent:true,
+          opacity:.06,
+          depthWrite:false,
+          blending:THREE.AdditiveBlending
+        });
+        const halo=new THREE.Mesh(nodeHaloGeometry,haloMaterial);
+        halo.scale.setScalar(2.65);
+        const ringMaterial=new THREE.MeshBasicMaterial({
+          color,
+          transparent:true,
+          opacity:.15,
+          depthWrite:false,
+          blending:THREE.AdditiveBlending
+        });
+        const ring=new THREE.Mesh(nodeRingGeometry,ringMaterial);
+        ring.rotation.set(index*.37,index*.58,index*.24);
+        group.add(halo,ring,shell,mesh);
+        nodes.push({
+          group,
+          mesh,
+          shell,
+          halo,
+          ring,
+          material,
+          shellMaterial,
+          haloMaterial,
+          ringMaterial,
+          baseScale,
+          position,
+          color
+        });
+
+        const direction=position.clone().normalize();
+        const controlA=direction.clone().multiplyScalar(.52);
+        controlA.y+=(index%2 ? .34 : -.28);
+        controlA.z+=.26;
+        const controlB=position.clone().multiplyScalar(.68);
+        controlB.y+=(index%3-1)*.18;
+        const curve=new THREE.CatmullRomCurve3([
+          new THREE.Vector3(0,0,0),
+          controlA,
+          controlB,
+          position.clone()
+        ]);
+        const pathMaterial=new THREE.MeshBasicMaterial({
+          color,
+          transparent:true,
+          opacity:.16,
+          depthWrite:false,
+          blending:THREE.AdditiveBlending
+        });
+        const pathMesh=new THREE.Mesh(
+          new THREE.TubeGeometry(curve,72,.013,6,false),
+          pathMaterial
         );
-        halo.scale.setScalar(scale*2.75);
-        halo.position.copy(position);
-        root.add(halo);
-        nodes.push({mesh,halo,material,baseScale:scale,color});
+        root.add(pathMesh);
+        const beads=[];
+        for (let beadIndex=0;beadIndex<4;beadIndex+=1) {
+          const beadMaterial=new THREE.MeshBasicMaterial({
+            color,
+            transparent:true,
+            opacity:.48,
+            depthWrite:false,
+            blending:THREE.AdditiveBlending
+          });
+          const bead=new THREE.Mesh(
+            new THREE.SphereGeometry(.035,10,8),
+            beadMaterial
+          );
+          root.add(bead);
+          beads.push({mesh:bead,material:beadMaterial,offset:beadIndex/4});
+        }
+        paths.push({curve,mesh:pathMesh,material:pathMaterial,beads,color});
       });
-      const linePositions=[];
+
+      const networkPositions=[];
       vectors.forEach((point,index)=>{
-        linePositions.push(0,0,0,point.x,point.y,point.z);
         const next=vectors[(index+1)%vectors.length];
-        if (next) linePositions.push(point.x,point.y,point.z,next.x,next.y,next.z);
+        const skip=vectors[(index+2)%vectors.length];
+        if (next) networkPositions.push(point.x,point.y,point.z,next.x,next.y,next.z);
+        if (skip && index%2===0) networkPositions.push(point.x,point.y,point.z,skip.x,skip.y,skip.z);
       });
-      const lineGeometry=new THREE.BufferGeometry();
-      lineGeometry.setAttribute("position",new THREE.Float32BufferAttribute(linePositions,3));
-      const lines=new THREE.LineSegments(lineGeometry,new THREE.LineBasicMaterial({color:0xdff2f4,transparent:true,opacity:.20}));
-      root.add(lines);
-      if (vectors.length>1) {
-        const curve=new THREE.CatmullRomCurve3([...vectors, vectors[0]]);
-        const tube=new THREE.Mesh(
-          new THREE.TubeGeometry(curve,96,.018,8,true),
-          new THREE.MeshBasicMaterial({color:0xf2be37,transparent:true,opacity:.72,blending:THREE.AdditiveBlending})
-        );
-        root.add(tube);
-      }
-      const particleCount=190;
+      const networkGeometry=new THREE.BufferGeometry();
+      networkGeometry.setAttribute("position",new THREE.Float32BufferAttribute(networkPositions,3));
+      const network=new THREE.LineSegments(
+        networkGeometry,
+        new THREE.LineBasicMaterial({
+          color:0xbce7ec,
+          transparent:true,
+          opacity:.075,
+          depthWrite:false,
+          blending:THREE.AdditiveBlending
+        })
+      );
+      root.add(network);
+
+      const fieldPositions=[];
+      vectors.forEach((point,index)=>{
+        const next=vectors[(index+1)%vectors.length];
+        if (next) fieldPositions.push(0,0,0,point.x,point.y,point.z,next.x,next.y,next.z);
+      });
+      const fieldGeometry=new THREE.BufferGeometry();
+      fieldGeometry.setAttribute("position",new THREE.Float32BufferAttribute(fieldPositions,3));
+      fieldGeometry.computeVertexNormals();
+      const fieldMaterial=new THREE.MeshBasicMaterial({
+        color:new THREE.Color(data[0].color),
+        transparent:true,
+        opacity:.028,
+        depthWrite:false,
+        side:THREE.DoubleSide,
+        blending:THREE.AdditiveBlending
+      });
+      const vectorField=new THREE.Mesh(fieldGeometry,fieldMaterial);
+      root.add(vectorField);
+
+      const particleCount=260;
       const particlePositions=[];
       const particleColors=[];
       for (let i=0;i<particleCount;i+=1) {
-        const a=i*2.39996;
-        const r=1.0+(i%31)/31*2.7;
-        particlePositions.push(Math.cos(a)*r,((i%17)-8)*.095,Math.sin(a)*r);
+        const angle=i*2.39996;
+        const radius=1.05+(i%47)/47*3.05;
+        const depth=((i*17)%43)/43*2.8-1.4;
+        particlePositions.push(
+          Math.cos(angle)*radius,
+          Math.sin(angle*1.63)*1.7,
+          depth
+        );
         const color=new THREE.Color(data[i%data.length].color);
         particleColors.push(color.r,color.g,color.b);
       }
       const particleGeometry=new THREE.BufferGeometry();
       particleGeometry.setAttribute("position",new THREE.Float32BufferAttribute(particlePositions,3));
       particleGeometry.setAttribute("color",new THREE.Float32BufferAttribute(particleColors,3));
-      const particles=new THREE.Points(particleGeometry,new THREE.PointsMaterial({size:.026,vertexColors:true,transparent:true,opacity:.52,depthWrite:false,blending:THREE.AdditiveBlending}));
+      const particles=new THREE.Points(
+        particleGeometry,
+        new THREE.PointsMaterial({
+          size:.025,
+          vertexColors:true,
+          transparent:true,
+          opacity:.46,
+          depthWrite:false,
+          blending:THREE.AdditiveBlending
+        })
+      );
       root.add(particles);
-      const setActive=index=>{
-        activeIndex=((index%data.length)+data.length)%data.length;
+
+      const setActive=(index,force=false)=>{
+        const nextIndex=((index%data.length)+data.length)%data.length;
+        if (!force && nextIndex===activeIndex) return;
+        activeIndex=nextIndex;
         setActiveDom(activeIndex);
+        const activeColor=nodes[activeIndex]?.color;
+        if (activeColor) fieldMaterial.color.copy(activeColor);
+        nodes.forEach((node,nodeIndex)=>{
+          const focused=nodeIndex===activeIndex;
+          node.material.emissiveIntensity=focused ? 1.24 : .36;
+          node.shellMaterial.opacity=focused ? .76 : .18;
+          node.ringMaterial.opacity=focused ? .92 : .12;
+          node.haloMaterial.opacity=focused ? .23 : .05;
+        });
+        paths.forEach((path,pathIndex)=>{
+          const focused=pathIndex===activeIndex;
+          path.material.opacity=focused ? .88 : .105;
+          path.beads.forEach(bead=>{
+            bead.material.opacity=focused ? .98 : .34;
+            bead.mesh.scale.setScalar(focused ? 1.75 : .82);
+          });
+        });
       };
-      stage.__setMatrixActive=setActive;
+      stage.__setMatrixActive=index=>setActive(index,true);
       const raycaster=new THREE.Raycaster();
-      const mouse=new THREE.Vector2();
+      const mouse=new THREE.Vector2(2,2);
       const updatePointer=event=>{
         const rect=stage.getBoundingClientRect();
         const x=(event.clientX-rect.left)/Math.max(rect.width,1);
         const y=(event.clientY-rect.top)/Math.max(rect.height,1);
-        pointerX=(x-.5)*2;
-        pointerY=(y-.5)*2;
+        targetPointerX=(x-.5)*2;
+        targetPointerY=(y-.5)*2;
         mouse.x=x*2-1;
         mouse.y=-(y*2-1);
       };
@@ -6713,65 +7119,136 @@
       canvas.addEventListener("click",event=>{
         updatePointer(event);
         const hit=focusedNode();
-        if (hit && Number.isInteger(hit.userData.matrixIndex)) setActive(hit.userData.matrixIndex);
-        else setActive(activeIndex+1);
+        if (hit && Number.isInteger(hit.userData.matrixIndex)) setActive(hit.userData.matrixIndex,true);
+        else setActive(activeIndex+1,true);
       });
+      stage.addEventListener("pointerenter",()=>{interacting=true;});
+      stage.addEventListener("pointerleave",()=>{
+        interacting=false;
+        targetPointerX=0;
+        targetPointerY=0;
+        mouse.set(2,2);
+        canvas.style.cursor="crosshair";
+      });
+      stage.addEventListener("focusin",()=>{interacting=true;});
+      stage.addEventListener("focusout",()=>{interacting=false;});
       stage.addEventListener("pointermove",event=>{
         updatePointer(event);
         const hit=focusedNode();
-        canvas.style.cursor=hit ? "pointer" : "grab";
+        canvas.style.cursor=hit ? "pointer" : "crosshair";
         if (hit && Number.isInteger(hit.userData.matrixIndex)) setActive(hit.userData.matrixIndex);
       });
+
       function resize() {
         const rect=stage.getBoundingClientRect();
         if (rect.width<12 || rect.height<12) return false;
         const width=Math.floor(rect.width);
         const height=Math.floor(rect.height);
+        if (width===lastWidth && height===lastHeight) return true;
+        lastWidth=width;
+        lastHeight=height;
         renderer.setSize(width,height,false);
         camera.aspect=width/Math.max(height,1);
         camera.updateProjectionMatrix();
+        const compositionScale=camera.aspect<.9 ? .80 : camera.aspect<1.1 ? .91 : 1;
+        root.scale.setScalar(compositionScale);
         return true;
       }
       const observer=new ResizeObserver(resize);
       observer.observe(stage);
-      const sceneState={stage,resize,renderer,observer};
+      const viewportObserver=new IntersectionObserver(entries=>{
+        inViewport=Boolean(entries[0]?.isIntersecting);
+      },{threshold:.03});
+      viewportObserver.observe(stage);
+      const sceneState={stage,resize,renderer,observer,viewportObserver};
       vectorMatrixScenes.add(sceneState);
+      const projected=new THREE.Vector3();
+      const worldPosition=new THREE.Vector3();
+      function updateLabels() {
+        if (!lastWidth || !lastHeight || !nodeLabels?.length) return;
+        root.updateMatrixWorld(true);
+        nodes.forEach((node,index)=>{
+          const label=nodeLabels[index];
+          if (!label) return;
+          node.group.getWorldPosition(worldPosition);
+          projected.copy(worldPosition).project(camera);
+          const visible=projected.z<1 && Math.abs(projected.x)<1.18 && Math.abs(projected.y)<1.18;
+          label.style.visibility=visible ? "visible" : "hidden";
+          if (!visible) return;
+          const side=worldPosition.x<0 ? -1 : 1;
+          const x=(projected.x*.5+.5)*lastWidth+side*30;
+          const y=(-projected.y*.5+.5)*lastHeight-18;
+          label.style.transform=`translate3d(${x}px,${y}px,0) translate(-50%,-50%)`;
+        });
+      }
+      function cleanup() {
+        renderer.setAnimationLoop(null);
+        observer.disconnect();
+        viewportObserver.disconnect();
+        renderer.dispose();
+        vectorMatrixScenes.delete(sceneState);
+      }
       function animate(now=0) {
         if (!stage.isConnected) {
-          renderer.setAnimationLoop(null);
-          observer.disconnect();
-          renderer.dispose();
-          vectorMatrixScenes.delete(sceneState);
+          cleanup();
           return;
         }
-        resize();
+        if (!inViewport && !reduced) return;
         const time=now*.001;
-        if (!reduced && now-lastAuto>2600) {
-          setActive(activeIndex+1);
+        if (!reduced && !interacting && now-lastAuto>3200) {
+          setActive(activeIndex+1,true);
           lastAuto=now;
         }
-        root.rotation.y=time*.22+pointerX*.28;
-        root.rotation.x=-.24+pointerY*.14+Math.sin(time*.6)*.035;
-        root.rotation.z=Math.sin(time*.34)*.035;
-        particles.rotation.y=-time*.06;
-        particles.rotation.x=Math.sin(time*.22)*.08;
-        core.rotation.x=time*.45;
+        pointerX+=(targetPointerX-pointerX)*.055;
+        pointerY+=(targetPointerY-pointerY)*.055;
+        root.rotation.y=(reduced ? 0 : Math.sin(time*.14)*.075)+pointerX*.13;
+        root.rotation.x=-.035+pointerY*.075;
+        root.rotation.z=reduced ? 0 : Math.sin(time*.11)*.018;
+        fieldGroup.rotation.y=reduced ? .2 : time*.035;
+        fieldGroup.rotation.z=reduced ? -.08 : Math.sin(time*.16)*.08;
+        particles.rotation.y=reduced ? 0 : -time*.018;
+        particles.rotation.z=reduced ? 0 : Math.sin(time*.1)*.05;
+        core.rotation.x=time*.42;
         core.rotation.y=time*.34;
+        coreShell.rotation.x=-time*.18;
+        coreShell.rotation.y=time*.22;
+        coreOrbitA.rotation.z=time*.36;
+        coreOrbitB.rotation.z=-time*.28;
+        coreGlow.scale.setScalar(1+Math.sin(time*2.1)*.07);
+        vectorField.material.opacity=.026+Math.sin(time*.85)*.008;
+        network.material.opacity=.065+Math.sin(time*.62)*.015;
         nodes.forEach((node,index)=>{
           const focused=index===activeIndex;
-          const pulse=1+Math.sin(time*2.2+index*.9)*.045+(focused ? .22 : 0);
-          node.mesh.scale.setScalar(node.baseScale*pulse);
-          node.halo.scale.setScalar(node.baseScale*(focused ? 4.25 : 2.75)*(1+Math.sin(time*2.6+index)*.06));
-          node.halo.material.opacity=focused ? .22 : .08;
-          node.material.emissiveIntensity=focused ? .78 : .30;
+          const drift=reduced ? 0 : Math.sin(time*.72+index*1.37)*.045;
+          node.group.position.y=node.position.y+drift;
+          node.group.rotation.x=time*(focused ? .38 : .14)+index*.3;
+          node.group.rotation.y=-time*(focused ? .46 : .18)+index*.46;
+          const pulse=1+Math.sin(time*2.25+index*.82)*(focused ? .075 : .025)+(focused ? .16 : 0);
+          node.group.scale.setScalar(node.baseScale*pulse);
+          node.ring.rotation.z+=focused && !reduced ? .012 : .002;
+          node.halo.scale.setScalar((focused ? 3.5 : 2.6)*(1+Math.sin(time*2.4+index)*.06));
         });
+        paths.forEach((path,pathIndex)=>{
+          const focused=pathIndex===activeIndex;
+          path.beads.forEach((bead,beadIndex)=>{
+            const speed=focused ? .19 : .095;
+            const t=(time*speed+bead.offset+pathIndex*.087)%1;
+            bead.mesh.position.copy(path.curve.getPointAt(t));
+            const shimmer=.72+Math.sin(time*4+beadIndex+pathIndex)*.28;
+            bead.material.opacity=(focused ? .98 : .28)*shimmer;
+          });
+        });
+        camera.position.x=pointerX*.12;
+        camera.position.y=.04-pointerY*.08;
+        camera.lookAt(0,0,0);
+        updateLabels();
         renderer.render(scene,camera);
         if (reduced) renderer.setAnimationLoop(null);
       }
       resize();
-      renderer.setAnimationLoop(animate);
       stage.classList.add("three-ready");
-      setActive(0);
+      setActive(0,true);
+      renderer.setAnimationLoop(animate);
     }
     function resizeVectorMatrices() {
       vectorMatrixScenes.forEach(item=>item.resize());
