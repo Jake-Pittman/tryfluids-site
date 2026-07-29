@@ -5044,7 +5044,8 @@
         }
       });
       document.getElementById("founderLogoutButton")?.addEventListener("click",async event=>{
-        event.currentTarget.disabled=true;
+        const logoutButton=event.currentTarget;
+        logoutButton.disabled=true;
         setFounderLoginStatus("Locking production view…");
         try {
           await logoutFounder();
@@ -5052,7 +5053,7 @@
         } catch (error) {
           setFounderLoginStatus(error.message,true);
         } finally {
-          event.currentTarget.disabled=false;
+          logoutButton.disabled=false;
         }
       });
       syncFounderAccessUi();
