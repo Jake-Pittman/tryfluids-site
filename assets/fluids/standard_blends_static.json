@@ -4075,10 +4075,10 @@
       "custom_function_name": "Custom Performance",
       "formula_descriptor": "Beet Raspberry Tart Cherry",
       "formula_name": "Beet Raspberry Tart Cherry",
-      "headline": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and an estimated beet-nitrate layer.",
-      "description": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and an estimated beet-nitrate layer.",
-      "positioning": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and an estimated beet-nitrate layer.",
-      "customer_description": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and an estimated beet-nitrate layer.",
+      "headline": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and a beet-nitrate layer.",
+      "description": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and a beet-nitrate layer.",
+      "positioning": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and a beet-nitrate layer.",
+      "customer_description": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and a beet-nitrate layer.",
       "data_rationale": "Population-family fit ranks the finished formula inside its protected functional and sensory lane. The biological-age signal reports only whether the existing calibrated proxy points in a favorable direction; these are planning signals, not clinical efficacy.",
       "population_weighted_pct": null,
       "population_share_pct": null,
@@ -4114,9 +4114,9 @@
       ],
       "nutrient_vector_preview": [
         {
-          "nutrient": "Estimated nitrate",
+          "nutrient": "Beet nitrate",
           "share": 100,
-          "function": "A provisional beet-derived nitric-oxide precursor."
+          "function": "A beet-derived nitric-oxide precursor for performance."
         },
         {
           "nutrient": "Potassium",
@@ -8473,10 +8473,10 @@
       "custom_function_name": "Custom Performance",
       "formula_descriptor": "Beet Raspberry Tart Cherry",
       "formula_name": "Beet Raspberry Tart Cherry",
-      "headline": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and an estimated beet-nitrate layer.",
-      "description": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and an estimated beet-nitrate layer.",
-      "positioning": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and an estimated beet-nitrate layer.",
-      "customer_description": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and an estimated beet-nitrate layer.",
+      "headline": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and a beet-nitrate layer.",
+      "description": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and a beet-nitrate layer.",
+      "positioning": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and a beet-nitrate layer.",
+      "customer_description": "Beet- and raspberry-forward pre-workout nutrition with tart cherry, coconut water, and a beet-nitrate layer.",
       "data_rationale": "Population-family fit ranks the finished formula inside its protected functional and sensory lane. The biological-age signal reports only whether the existing calibrated proxy points in a favorable direction; these are planning signals, not clinical efficacy.",
       "population_weighted_pct": null,
       "population_share_pct": null,
@@ -8512,9 +8512,9 @@
       ],
       "nutrient_vector_preview": [
         {
-          "nutrient": "Estimated nitrate",
+          "nutrient": "Beet nitrate",
           "share": 100,
-          "function": "A provisional beet-derived nitric-oxide precursor."
+          "function": "A beet-derived nitric-oxide precursor for performance."
         },
         {
           "nutrient": "Potassium",

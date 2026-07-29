@@ -61,6 +61,123 @@
     .header-actions { display:flex; align-items:center; gap:10px; }
     .app-pill { display:inline-flex; align-items:center; gap:7px; padding:8px 11px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.68); color:var(--muted); font-size:.72rem; font-weight:800; white-space:nowrap; }
     .app-pill::before { content:""; width:7px; height:7px; border-radius:50%; background:var(--lime); box-shadow:0 0 0 4px rgba(67,197,197,.14); }
+    .founder-access-button {
+      padding:9px 12px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.68);
+      color:var(--muted);
+      box-shadow:none;
+      font-size:.72rem;
+      white-space:nowrap;
+    }
+    .founder-access-button:hover,
+    .founder-access-button.active {
+      transform:none;
+      border-color:rgba(67,197,197,.55);
+      background:#e3f5f6;
+      color:#075866;
+    }
+    .founder-access-button.active::before {
+      content:"";
+      display:inline-block;
+      width:7px;
+      height:7px;
+      margin-right:7px;
+      border-radius:50%;
+      background:#21a08f;
+      box-shadow:0 0 0 4px rgba(33,160,143,.12);
+    }
+    .founder-modal {
+      position:fixed;
+      inset:0;
+      z-index:1000;
+      display:grid;
+      place-items:center;
+      padding:20px;
+      background:rgba(4,30,38,.72);
+      backdrop-filter:blur(14px);
+    }
+    .founder-modal[hidden] { display:none; }
+    .founder-dialog {
+      width:min(440px,100%);
+      padding:28px;
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:26px;
+      background:linear-gradient(155deg,#fff,#eef7f8);
+      box-shadow:0 28px 90px rgba(3,28,35,.35);
+    }
+    .founder-dialog-head {
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      align-items:flex-start;
+    }
+    .founder-dialog h2 { margin:7px 0 0; font-family:Georgia,serif; font-size:2rem; font-weight:500; letter-spacing:-.035em; }
+    .founder-dialog-close {
+      width:36px;
+      height:36px;
+      padding:0;
+      border-radius:50%;
+      background:#e2eef0;
+      color:var(--ink);
+      box-shadow:none;
+      font-size:1.2rem;
+    }
+    .founder-dialog p { color:var(--muted); font-size:.82rem; line-height:1.5; }
+    .founder-login-form { display:grid; gap:11px; margin-top:20px; }
+    .founder-login-form label { margin:0; }
+    .founder-login-form input { background:white; }
+    .founder-login-status { min-height:1.35em; margin-top:10px; color:var(--muted); font-size:.75rem; line-height:1.4; }
+    .founder-login-status.error { display:block; padding:0; background:transparent; color:var(--danger); }
+    .founder-session-panel {
+      margin-top:20px;
+      padding:16px;
+      border:1px solid rgba(67,197,197,.36);
+      border-radius:18px;
+      background:#e5f5f6;
+    }
+    .founder-session-panel strong { display:block; color:#075866; }
+    .founder-session-panel p { margin:6px 0 12px; }
+    .ingredient-identity-list {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:16px;
+    }
+    .ingredient-identity-chip {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:9px 12px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#f4fafb;
+      color:var(--ink);
+      font-size:.76rem;
+      font-weight:850;
+    }
+    .ingredient-identity-chip::before {
+      content:"";
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:var(--lime);
+    }
+    .founder-production-label {
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      margin-top:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:#082f3b;
+      color:white;
+      font-size:.65rem;
+      font-weight:900;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+    }
     .hero { padding:54px 0 34px; max-width:780px; }
     .eyebrow { text-transform:uppercase; letter-spacing:.16em; font-weight:800; font-size:.72rem; color:var(--leaf); }
     h1 { font-family: Georgia, "Times New Roman", serif; font-size:clamp(2.8rem,7vw,5.8rem); line-height:.91; letter-spacing:-.055em; margin:16px 0 22px; font-weight:500; }
@@ -4191,6 +4308,7 @@
         </nav>
         <div class="app-pill">Daily drink mix</div>
         <div class="privacy">● Encrypted analysis</div>
+        <button type="button" class="founder-access-button" id="founderAccessButton">Founder login</button>
       </div>
     </header>
     <section class="hero" id="uploadHero">
@@ -4720,6 +4838,30 @@
       </div>
     </section>
 
+    <div class="founder-modal" id="founderModal" hidden>
+      <section class="founder-dialog" role="dialog" aria-modal="true" aria-labelledby="founderDialogTitle">
+        <div class="founder-dialog-head">
+          <div>
+            <div class="eyebrow">Private demo controls</div>
+            <h2 id="founderDialogTitle">Founder production view</h2>
+          </div>
+          <button type="button" class="founder-dialog-close" id="founderModalClose" aria-label="Close founder login">×</button>
+        </div>
+        <p>Unlock exact dry-blend percentages and per-ingredient grams for 10 g, 12 g, and 15 g production demos. Public visitors only see which ingredients are included.</p>
+        <form class="founder-login-form" id="founderLoginForm">
+          <label for="founderPassword">Founder password</label>
+          <input id="founderPassword" type="password" autocomplete="current-password" required>
+          <button type="submit">Unlock production view</button>
+        </form>
+        <div class="founder-session-panel" id="founderSessionPanel" hidden>
+          <strong>Production view is unlocked</strong>
+          <p>Exact formulation percentages and gram tables will be returned for custom blend demos on this browser.</p>
+          <button type="button" class="secondary" id="founderLogoutButton">Lock founder view</button>
+        </div>
+        <div class="founder-login-status" id="founderLoginStatus" aria-live="polite"></div>
+      </section>
+    </div>
+
     <footer>
       Personalized and population optimization recommendations for formulation development.
     </footer>
@@ -4770,12 +4912,151 @@
     const useAnalysisJobs = configuredApiMode === "jobs" || (
       configuredApiMode === "auto" && Boolean(configuredApiBase)
     );
+    let founderDemoAuthenticated = false;
+    let lastCustomBlendJobId = "";
+    let lastCustomBlendResult = null;
     function apiUrl(path) {
       if (!path || /^https?:\/\//i.test(path)) return path;
       return path.startsWith("/api/") ? `${configuredApiBase}${path}` : path;
     }
     function wait(ms) {
       return new Promise(resolve => window.setTimeout(resolve, ms));
+    }
+    function syncFounderAccessUi() {
+      const accessButton=document.getElementById("founderAccessButton");
+      const loginForm=document.getElementById("founderLoginForm");
+      const sessionPanel=document.getElementById("founderSessionPanel");
+      if (accessButton) {
+        accessButton.textContent=founderDemoAuthenticated ? "Founder view" : "Founder login";
+        accessButton.classList.toggle("active",founderDemoAuthenticated);
+        accessButton.setAttribute("aria-pressed",String(founderDemoAuthenticated));
+      }
+      if (loginForm) loginForm.hidden=founderDemoAuthenticated;
+      if (sessionPanel) sessionPanel.hidden=!founderDemoAuthenticated;
+      document.documentElement.dataset.founderView=founderDemoAuthenticated ? "true" : "false";
+    }
+    function openFounderModal() {
+      const modal=document.getElementById("founderModal");
+      if (!modal) return;
+      modal.hidden=false;
+      document.body.style.overflow="hidden";
+      const target=founderDemoAuthenticated
+        ? document.getElementById("founderLogoutButton")
+        : document.getElementById("founderPassword");
+      window.setTimeout(()=>target?.focus(),0);
+    }
+    function closeFounderModal() {
+      const modal=document.getElementById("founderModal");
+      if (!modal) return;
+      modal.hidden=true;
+      document.body.style.overflow="";
+      document.getElementById("founderAccessButton")?.focus();
+    }
+    function setFounderLoginStatus(message,error=false) {
+      const status=document.getElementById("founderLoginStatus");
+      if (!status) return;
+      status.textContent=message || "";
+      status.classList.toggle("error",Boolean(error));
+    }
+    async function refreshFounderCustomResult() {
+      if (!lastCustomBlendJobId) {
+        if (founderDemoAuthenticated && lastCustomBlendResult) {
+          setFounderLoginStatus("Founder view is active. Run a new custom blend to load its production table.");
+        }
+        return;
+      }
+      const response=await fetch(apiUrl(`/api/jobs/${encodeURIComponent(lastCustomBlendJobId)}`),{
+        headers:{"Accept":"application/json"},
+        credentials:"include"
+      });
+      const job=await response.json();
+      if (!response.ok || !job.ok || job.status!=="completed" || !job.result?.ok) {
+        throw new Error(job?.message || "The completed blend could not be refreshed.");
+      }
+      lastCustomBlendResult=job.result;
+      renderResults(job.result);
+    }
+    async function checkFounderSession() {
+      try {
+        const response=await fetch(apiUrl("/api/founder/session"),{
+          headers:{"Accept":"application/json"},
+          credentials:"include"
+        });
+        const data=await response.json();
+        founderDemoAuthenticated=Boolean(response.ok && data.authenticated);
+      } catch (error) {
+        founderDemoAuthenticated=false;
+      }
+      syncFounderAccessUi();
+    }
+    async function loginFounder(password) {
+      const response=await fetch(apiUrl("/api/founder/login"),{
+        method:"POST",
+        headers:{"Accept":"application/json","Content-Type":"application/json"},
+        credentials:"include",
+        body:JSON.stringify({password})
+      });
+      const data=await response.json();
+      if (!response.ok || !data.authenticated) {
+        throw new Error(data?.message || "Founder login failed.");
+      }
+      founderDemoAuthenticated=true;
+      syncFounderAccessUi();
+      await refreshFounderCustomResult();
+    }
+    async function logoutFounder() {
+      const response=await fetch(apiUrl("/api/founder/logout"),{
+        method:"POST",
+        headers:{"Accept":"application/json"},
+        credentials:"include"
+      });
+      if (!response.ok) throw new Error("Founder view could not be locked.");
+      founderDemoAuthenticated=false;
+      lastCustomBlendResult=null;
+      syncFounderAccessUi();
+      await refreshFounderCustomResult();
+    }
+    function initFounderAccess() {
+      const modal=document.getElementById("founderModal");
+      const form=document.getElementById("founderLoginForm");
+      const password=document.getElementById("founderPassword");
+      document.getElementById("founderAccessButton")?.addEventListener("click",openFounderModal);
+      document.getElementById("founderModalClose")?.addEventListener("click",closeFounderModal);
+      modal?.addEventListener("click",event=>{
+        if (event.target===modal) closeFounderModal();
+      });
+      document.addEventListener("keydown",event=>{
+        if (event.key==="Escape" && modal && !modal.hidden) closeFounderModal();
+      });
+      form?.addEventListener("submit",async event=>{
+        event.preventDefault();
+        const submit=form.querySelector('button[type="submit"]');
+        submit.disabled=true;
+        setFounderLoginStatus("Unlocking secure production data…");
+        try {
+          await loginFounder(password.value);
+          password.value="";
+          setFounderLoginStatus("Founder production view unlocked.");
+        } catch (error) {
+          setFounderLoginStatus(error.message,true);
+        } finally {
+          submit.disabled=false;
+        }
+      });
+      document.getElementById("founderLogoutButton")?.addEventListener("click",async event=>{
+        event.currentTarget.disabled=true;
+        setFounderLoginStatus("Locking production view…");
+        try {
+          await logoutFounder();
+          setFounderLoginStatus("Founder production view locked.");
+        } catch (error) {
+          setFounderLoginStatus(error.message,true);
+        } finally {
+          event.currentTarget.disabled=false;
+        }
+      });
+      syncFounderAccessUi();
+      checkFounderSession();
     }
     const analyticsSessionId = (() => {
       const key = "fluids_analytics_session";
@@ -5522,6 +5803,7 @@
           console.warn("App revision changed while this page was open.", data.app_revision);
         }
         renderResults(data);
+        lastCustomBlendResult=data;
         const firstBlend=(data.blend_options || [])[0] || {};
         trackEvent("custom_blend_completed",customBlendAnalyticsMetadata(data,firstBlend,{
           analysis_seconds:Number(data.analysis_seconds) || Number(((performance.now()-analysisStartedAt)/1000).toFixed(1)),
@@ -5543,6 +5825,7 @@
       const response = await fetch(apiUrl("/api/analyze"), {
         method:"POST",
         headers:{"Content-Type":"application/json"},
+        credentials:"include",
         body:JSON.stringify(payload)
       });
       const data = await response.json();
@@ -5557,18 +5840,21 @@
       const createResponse = await fetch(apiUrl("/api/jobs/analyze"), {
         method:"POST",
         headers:{"Content-Type":"application/json","Accept":"application/json"},
+        credentials:"include",
         body:JSON.stringify(payload)
       });
       const created = await createResponse.json();
       if (!createResponse.ok || !created.ok) throwAnalysisError(created);
       const jobId = created.job_id;
+      lastCustomBlendJobId=jobId;
       const pollMs = Math.max(1200, Number(created.poll_interval_seconds || 2) * 1000);
       trackEvent("custom_blend_job_queued",{poll_interval_seconds:Number(created.poll_interval_seconds || 2)});
       updateAnalysisJobReadout({status:"queued",message:"Queued for cloud analysis."});
       for (let attempt = 0; attempt < 240; attempt += 1) {
         await wait(pollMs);
         const statusResponse = await fetch(apiUrl(`/api/jobs/${encodeURIComponent(jobId)}`), {
-          headers:{"Accept":"application/json"}
+          headers:{"Accept":"application/json"},
+          credentials:"include"
         });
         const job = await statusResponse.json();
         if (!statusResponse.ok || !job.ok) throwAnalysisError(job);
@@ -5816,7 +6102,11 @@
         ?? data.model_metrics?.predicted_reward
       );
       status.textContent = blendOptions.length
-        ? `Custom blend generated · ${blendOptions.length} formulation alternatives · normalized dry-blend percentages`
+        ? (
+          founderDemoAuthenticated
+            ? `Custom blend generated · ${blendOptions.length} formulation alternatives · founder production breakdown enabled`
+            : `Custom blend generated · ${blendOptions.length} formulation alternatives · proprietary ratios hidden`
+        )
         : "Custom blend unavailable";
       if (labCompleteness.partial_lab_analysis) {
         const pheno = ageScores?.scores?.phenoage || {};
@@ -6045,9 +6335,19 @@
       const body=document.createElement("div"); body.className="custom-blend-body";
       appendCustomFunctionPanel(option,body,{hero:true});
       const solve=document.createElement("div"); solve.className="custom-blend-card";
-      solve.innerHTML="<h4>How we solve it with powders</h4><p>The custom blend is the formulation concept designed to deliver the selected product-feasible nutrient vector. Percentages are normalized dry-blend concept weights.</p>";
-      const ingredientList=document.createElement("div"); ingredientList.className="hero-ingredient-list";
+      solve.innerHTML=founderDemoAuthenticated
+        ? "<h4>How we solve it with powders</h4><p>Founder production view shows the normalized dry-blend concept weights used in this model run.</p>"
+        : "<h4>How we solve it with powders</h4><p>These whole-food powder ingredients deliver the selected nutrient vector. Exact formulation ratios remain proprietary.</p>";
+      const ingredientList=document.createElement("div");
+      ingredientList.className=founderDemoAuthenticated ? "hero-ingredient-list" : "ingredient-identity-list";
       (option.ingredients || []).slice(0,8).forEach(ingredient=>{
+        if (!founderDemoAuthenticated || !Number.isFinite(Number(ingredient.blend_percent))) {
+          const chip=document.createElement("span");
+          chip.className="ingredient-identity-chip";
+          chip.textContent=ingredient.item;
+          ingredientList.appendChild(chip);
+          return;
+        }
         const row=document.createElement("div"); row.className="hero-ingredient-row";
         const name=document.createElement("span"); name.textContent=ingredient.item;
         const track=document.createElement("span"); track.className="hero-ingredient-track";
@@ -6386,9 +6686,23 @@
 	      title.innerHTML=`<div class="eyebrow">${variantLabel}</div><h3>${displayName}</h3><p class="section-copy">A personalized juice-powder blend built to deliver the nutrient vector below.</p>`;
 	      const badge=document.createElement("div"); badge.className="score-badge"; badge.textContent=`${isRecommended ? "Recommended · " : ""}${formatOptimizationFit(option.final_exploratory_reward ?? option.predicted_reward,{includeLevel:true})} fit`;
 	      head.append(title,badge); card.appendChild(head);
+	      if (founderDemoAuthenticated) {
+	        const founderLabel=document.createElement("div");
+	        founderLabel.className="founder-production-label";
+	        founderLabel.textContent="Founder production view";
+	        card.appendChild(founderLabel);
+	      }
 	      appendFormulaSummary(option,card);
-	      const list=document.createElement("div"); list.className="ingredient-list";
+	      const list=document.createElement("div");
+	      list.className=founderDemoAuthenticated ? "ingredient-list" : "ingredient-identity-list";
       (option.ingredients || []).forEach(ingredient=>{
+        if (!founderDemoAuthenticated || !Number.isFinite(Number(ingredient.blend_percent))) {
+          const chip=document.createElement("span");
+          chip.className="ingredient-identity-chip";
+          chip.textContent=ingredient.item;
+          list.appendChild(chip);
+          return;
+        }
         const row=document.createElement("div"); row.className="ingredient-row";
         const name=document.createElement("strong"); name.textContent=ingredient.item;
         const track=document.createElement("div"); track.className="ingredient-track";
@@ -6405,8 +6719,14 @@
 	        card.appendChild(section);
 	      }
 	      renderIncidentalNutrients(option.incidental_nutrient_opportunities || [],card);
-	      renderPrototypeFormulas(option.prototype_formulas || [],card);
-	      const note=document.createElement("div"); note.className="notice"; note.textContent="The blend percentages are formulation concepts. Powder grams use PowderPure conversion factors; final per-bottle grams should still be reconciled with flavor, solubility, and supplier COA data.";
+	      if (founderDemoAuthenticated) {
+	        renderPrototypeFormulas(option.prototype_formulas || [],card);
+	      }
+	      const note=document.createElement("div");
+	      note.className="notice";
+	      note.textContent=founderDemoAuthenticated
+	        ? "Founder view: percentages are formulation concepts. Powder grams use PowderPure conversion factors; final per-bottle grams should still be reconciled with flavor, solubility, and supplier COA data."
+	        : "Ingredient identity is shown for transparency. Exact percentages and production gram weights are proprietary.";
 	      card.appendChild(note);
 	      parent.appendChild(card);
 	    }
@@ -9247,6 +9567,7 @@
     initPremiumExperience();
     initHomeVectorMatrix();
     loadHomeFunctionMenu().catch(() => {});
+    initFounderAccess();
     loadSpecs().catch(error => console.warn("Lab schema unavailable until the custom blend API is reachable.",error));
   </script>
 </body>
