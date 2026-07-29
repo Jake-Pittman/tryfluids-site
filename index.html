@@ -1686,17 +1686,17 @@
     }
     .home-function-grid {
       display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
-      gap:13px;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:15px;
     }
     .home-function-card {
       --lane-a:var(--raspberry);
       --lane-b:var(--lemon);
       --lane-c:var(--leaf);
       display:grid;
-      grid-template-rows:auto auto minmax(56px,auto) auto auto auto;
-      min-height:390px;
-      padding:17px;
+      grid-template-rows:auto auto minmax(64px,auto) auto auto auto auto;
+      min-height:520px;
+      padding:19px;
       overflow:hidden;
       border:1px solid rgba(157,111,67,.16);
       border-radius:24px;
@@ -1731,6 +1731,27 @@
       margin:0;
       color:#67625d;
       font-size:.77rem;
+      line-height:1.42;
+    }
+    .home-function-purpose {
+      display:grid;
+      gap:4px;
+      margin:13px 0 0;
+      padding:11px 12px;
+      border-left:3px solid var(--lane-a);
+      border-radius:0 13px 13px 0;
+      background:color-mix(in oklch,var(--lane-a) 7%,rgba(255,255,255,.68));
+    }
+    .home-function-purpose strong {
+      color:#203445;
+      font-size:.65rem;
+      font-weight:950;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+    }
+    .home-function-purpose span {
+      color:#67625d;
+      font-size:.72rem;
       line-height:1.42;
     }
     .home-function-visual {
@@ -1784,6 +1805,31 @@
       color:#4f514d;
       font-size:.66rem;
       font-weight:880;
+    }
+    .home-function-nutrients {
+      display:grid;
+      gap:7px;
+      margin-top:2px;
+    }
+    .home-function-nutrient {
+      display:grid;
+      grid-template-columns:minmax(82px,.72fr) minmax(0,1.28fr);
+      gap:9px;
+      align-items:start;
+      padding:8px 9px;
+      border-radius:12px;
+      background:rgba(255,255,255,.62);
+      border:1px solid rgba(157,111,67,.10);
+    }
+    .home-function-nutrient strong {
+      color:#203445;
+      font-size:.65rem;
+      line-height:1.25;
+    }
+    .home-function-nutrient span {
+      color:#77716a;
+      font-size:.62rem;
+      line-height:1.35;
     }
     .home-vector-row i {
       height:7px;
@@ -3928,7 +3974,7 @@
     <section class="hero" id="uploadHero">
       <div>
         <div class="eyebrow">Fluids early access</div>
-        <h1>Eight daily blends. One custom path.</h1>
+          <h1>Eleven daily blends. One custom path.</h1>
         <p class="lead">Pick the function you want now. Use launch code FLUIDS100 when you want your labs translated into a custom nutrient vector.</p>
         <div class="consumer-hero-actions">
           <button type="button" data-quick-mode="upload">Start custom profile</button>
@@ -3936,7 +3982,7 @@
         </div>
         <div class="consumer-proof-row" aria-label="Product promises">
           <span>launch code FLUIDS100</span>
-          <span>8 function blends</span>
+          <span>11 function blends</span>
           <span>lab-based customization</span>
         </div>
       </div>
@@ -3966,7 +4012,7 @@
         <div>
           <div class="eyebrow">Standard blend menu</div>
           <h2>Start with the function that fits your day.</h2>
-          <p>Eight standard blends, each with a distinct nutrient vector and a simple path into custom personalization.</p>
+          <p>Eleven standard blends, each with a distinct nutrient vector, a clear everyday function, and a simple path into custom personalization.</p>
         </div>
         <div class="home-function-cta home-function-code-note" aria-label="Launch code offer">
           <span>FLUIDS100</span>
@@ -7189,8 +7235,12 @@
         vitamin_a_rae_mcg:"cellular defense and epithelial support",
         magnesium:"muscle, glucose, and energy metabolism support",
         magnesium_mg:"muscle, glucose, and energy metabolism support",
+        sodium:"fluid retention, hydration, and nerve signaling support",
+        sodium_mg:"fluid retention, hydration, and nerve signaling support",
         potassium:"fluid balance and cardiovascular support",
         potassium_mg:"fluid balance and cardiovascular support",
+        estimated_nitrate:"beet-derived nitric-oxide precursor for performance",
+        nitrate:"beet-derived nitric-oxide precursor for performance",
         folate:"cell renewal and methylation support",
         folate_dfe_mcg:"cell renewal and methylation support",
         fiber:"gut, glucose, and fullness support",
@@ -7560,7 +7610,12 @@
         grid.appendChild(empty);
         return;
       }
-      lanes.slice(0,8).forEach((lane,index)=>{
+      const orderedLanes=[...lanes].sort((left,right)=>{
+        const leftFunctional=left?.standard_set === "functional" ? 1 : 0;
+        const rightFunctional=right?.standard_set === "functional" ? 1 : 0;
+        return rightFunctional-leftFunctional;
+      });
+      orderedLanes.forEach((lane,index)=>{
         const palette=lanePalette(index);
         const card=document.createElement("article");
         card.className="home-function-card";
@@ -7573,7 +7628,11 @@
         const share=document.createElement("span"); share.textContent=Number.isFinite(population) ? `${population.toFixed(1)}% population family` : "standard function";
         const descriptor=document.createElement("span"); descriptor.textContent=lane.formula_descriptor || lane.formula_name || "nutrient vector";
         kicker.append(share,descriptor);
-        const copy=document.createElement("p"); copy.textContent=conciseText(lane.customer_description || lane.description || lane.positioning || "");
+        const purpose=document.createElement("div"); purpose.className="home-function-purpose";
+        const purposeLabel=document.createElement("strong"); purposeLabel.textContent="What it supports";
+        const purposeCopy=document.createElement("span");
+        purposeCopy.textContent=conciseText(lane.customer_description || lane.description || lane.positioning || "",190);
+        purpose.append(purposeLabel,purposeCopy);
         const visual=document.createElement("div"); visual.className="home-function-visual";
         const orb=document.createElement("div"); orb.className="home-vector-orb";
         const orbLabel=document.createElement("span"); orbLabel.textContent=String(index+1).padStart(2,"0");
@@ -7590,6 +7649,16 @@
           row.append(name,bar); vectorList.appendChild(row);
         });
         visual.append(orb,vectorList);
+        const nutrients=document.createElement("div"); nutrients.className="home-function-nutrients";
+        preview.slice(0,3).forEach(item=>{
+          const row=document.createElement("div"); row.className="home-function-nutrient";
+          const name=document.createElement("strong");
+          name.textContent=nutrientLabel(item.nutrient || item.label || "Nutrient");
+          const functionCopy=document.createElement("span");
+          functionCopy.textContent=item.function || nutrientPlainMeaning(item.nutrient || item.label || "");
+          row.append(name,functionCopy);
+          nutrients.appendChild(row);
+        });
         const ingredients=document.createElement("div"); ingredients.className="home-function-ingredients";
         (lane.ingredients || []).slice(0,4).forEach(ingredient=>{
           const chip=document.createElement("span");
@@ -7620,7 +7689,7 @@
           openHomeVectorModal(lane,index,button);
         });
         actions.append(waitlistButton,button);
-        card.append(title,kicker,copy,visual,ingredients,actions);
+        card.append(title,kicker,purpose,visual,nutrients,ingredients,actions);
         grid.appendChild(card);
       });
     }
