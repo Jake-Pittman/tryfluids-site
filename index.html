@@ -7901,7 +7901,7 @@
           const usable=scaledPct(lane.fit_metrics?.usable_or_better_fit_pct ?? lane.formula_metrics?.usable_or_better_fit_pct);
           addHomeVectorMeta(meta,"Modeled family fit",Number.isFinite(usable) ? percentText(usable,0) : "Available");
           const topPowder=(lane.ingredients || []).find(item=>Number(item.blend_percent)>0);
-          addHomeVectorMeta(meta,"Lead powder",topPowder ? `${topPowder.item} ${percentText(Number(topPowder.blend_percent),1)}` : "Formula ready");
+          addHomeVectorMeta(meta,"Lead ingredient",topPowder ? topPowder.item : "Formula ready");
         }
       }
       const vectorItems=laneVectorItems(lane);
@@ -8019,13 +8019,9 @@
     }
     function createIngredientReference(ingredient) {
       const itemName=String(ingredient?.item || "Ingredient");
-      const percent=Number(ingredient?.blend_percent);
       const chip=document.createElement("span");
       chip.className="home-ingredient-reference";
-      chip.setAttribute(
-        "aria-label",
-        `${itemName}${Number.isFinite(percent) ? ` ${percent.toFixed(1)} percent` : ""}`
-      );
+      chip.setAttribute("aria-label",itemName);
       const position=ingredientAtlasPosition(itemName);
       if (position) {
         const thumbnail=document.createElement("i");
@@ -8037,7 +8033,7 @@
       }
       const copy=document.createElement("span");
       copy.className="home-ingredient-copy";
-      copy.textContent=`${itemName}${Number.isFinite(percent) ? ` ${percent.toFixed(1)}%` : ""}`;
+      copy.textContent=itemName;
       chip.appendChild(copy);
       return chip;
     }
