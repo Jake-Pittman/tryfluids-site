@@ -4445,7 +4445,7 @@
 
       <section class="panel section lab-wrap app-view" id="reviewView">
         <div class="section-head">
-          <div><h2>Review extracted markers</h2><p class="section-copy">Correct any extraction error. Missing markers are okay — the custom blend can run from available bloodwork, while the age score is shown only when its inputs are present.</p></div>
+          <div><h2>Review extracted markers</h2><p class="section-copy">Correct any extraction error. A custom blend needs at least 7 of the 9 core markers; with 7–8, up to two missing values are estimated from matched NHANES medians and clearly labeled. Below 7, we’ll guide you to a standard blend.</p></div>
           <button id="reviewContinueBtn">Continue to questionnaire</button>
         </div>
         <div class="lab-summary" id="labReviewSummary" aria-live="polite"></div>
@@ -4736,6 +4736,7 @@
     const questionBack = document.getElementById("questionBack");
     const questionNext = document.getElementById("questionNext");
     let specs = {};
+    let customBlendMinimum = {minimum_core_markers:7,total_core_markers:9,maximum_imputed_core_markers:2,core_markers:[]};
     let selectedFile = null;
     let currentQuestion = 0;
     const dataLoopConsentVersion = "2026-07-29-v1";
@@ -5329,6 +5330,7 @@
     async function loadSpecs() {
       const response = await fetch(apiUrl("/api/specs"));
       const data = await response.json();
+      customBlendMinimum = data.custom_blend_minimum || customBlendMinimum;
       data.labs.forEach(item => specs[item.key] = item);
     }
     function renderLabs(extracted) {
@@ -5371,25 +5373,39 @@
         const input=document.getElementById(`lab-${key}`);
         return specs[key]?.phenoage_required && (!input || input.value === "");
       });
+      const coreReady=fieldOrder.filter(key=>{
+        const input=document.getElementById(`lab-${key}`);
+        return specs[key]?.phenoage_required && input && input.value !== "";
+      });
+      const minimumCore=Number(customBlendMinimum.minimum_core_markers || 7);
+      const totalCore=Number(customBlendMinimum.total_core_markers || ageScoreMissing.length+coreReady.length || 9);
+      const customReady=coreReady.length>=minimumCore;
+      const analysisType=coreReady.length>=totalCore
+        ? "Measured custom"
+        : customReady
+          ? "Estimated custom"
+          : "Standard blend";
       summary.textContent="";
       [
         ["Markers ready", `${ready.length}/${fieldOrder.length}`],
-        ["Age-score inputs missing", String(ageScoreMissing.length)],
-        ["Formula can run", ready.length ? "Yes" : "Add 1 marker"]
+        ["Core markers", `${coreReady.length}/${totalCore}`],
+        ["Minimum for custom", `${minimumCore} of ${totalCore}`],
+        ["Next path", analysisType]
       ].forEach(([label,value])=>{
         const card=document.createElement("div"); card.className="lab-summary-card";
         const small=document.createElement("small"); small.textContent=label;
         const strong=document.createElement("strong"); strong.textContent=value;
         card.append(small,strong); summary.appendChild(card);
       });
-      reviewContinueBtn.disabled=requiredMissing.length>0 || ready.length===0;
+      reviewContinueBtn.disabled=requiredMissing.length>0;
+      reviewContinueBtn.dataset.reviewMode=customReady ? "custom" : "standard";
       reviewContinueBtn.textContent=requiredMissing.length
         ? `Add ${requiredMissing.length} required marker${requiredMissing.length===1 ? "" : "s"}`
-        : ready.length===0
-          ? "Add at least 1 marker"
+        : !customReady
+          ? "Explore standard blends"
           : ageScoreMissing.length
-            ? "Continue with partial bloodwork"
-            : "Continue to questionnaire";
+            ? "Continue with estimated custom blend"
+            : "Continue with measured custom blend";
     }
     extractBtn.addEventListener("click", async () => {
       if (!selectedFile) return;
@@ -5424,6 +5440,13 @@
       finally { extractBtn.disabled = false; setLoading("extractLoader", false); }
     });
     reviewContinueBtn.addEventListener("click",()=>{
+      if (reviewContinueBtn.dataset.reviewMode==="standard") {
+        trackEvent("insufficient_lab_panel_standard_selected",{
+          minimum_core_markers:Number(customBlendMinimum.minimum_core_markers || 7)
+        });
+        loadStandardBlend();
+        return;
+      }
       const ready=fieldOrder.filter(key=>{
         const input=document.getElementById(`lab-${key}`);
         return input && input.value !== "";
@@ -6735,7 +6758,7 @@
       const kicker=document.createElement("span"); kicker.textContent=options.kicker || "Nutrient vector";
       const title=document.createElement("strong"); title.textContent=options.title || "Explore the nutrient matrix";
       copy.append(kicker,title);
-      const count=document.createElement("div"); count.className="vector-matrix-count"; count.textContent=`${data.length} signals`;
+      const count=document.createElement("div"); count.className="vector-matrix-count"; count.textContent=options.countLabel || `${data.length} signals`;
       head.append(copy,count);
       const active=document.createElement("div");
       active.className="vector-matrix-active";
@@ -7284,43 +7307,37 @@
       vectorMatrixScenes.forEach(item=>item.resize());
       scienceRunnerVisual?.resize?.();
     }
-    const HOME_VECTOR_FOUNDATION_ID="K8-S1";
+    const HOME_VECTOR_FOUNDATION_ID="V10-PRIMARY";
     const HOME_VECTOR_FOUNDATION_FALLBACK={
       id:HOME_VECTOR_FOUNDATION_ID,
-      function_name:"Daily Vitality",
+      function_name:"Fruit + Root Daily",
+      modeled_nutrient_count:30,
       nutrient_vector_preview:[
-        {nutrient:"Vitamin D",share:96,function:"Supports normal immune function, muscle function, and calcium regulation."},
-        {nutrient:"Vitamin A",share:84,function:"Supports normal vision, immune function, and epithelial health."},
-        {nutrient:"Vitamin C",share:76,function:"Supports normal immune function, collagen formation, and antioxidant protection."},
-        {nutrient:"Magnesium",share:66,function:"Supports normal muscle and nerve function and energy metabolism."}
+        {nutrient:"vitamin_e_mg",amount:.6844599056,unit:"mg",conditional_reward_contribution:.1493751358,function:"Cell-membrane antioxidant support delivered through the fruit and vegetable matrix."},
+        {nutrient:"fiber_g",amount:3.0066053383,unit:"g",conditional_reward_contribution:.1106691872,function:"Whole-food matrix support for gut function, glucose response, and fullness."},
+        {nutrient:"copper_mg",amount:.0908517023,unit:"mg",conditional_reward_contribution:.1086448061,function:"Mineral cofactor support for normal energy metabolism and antioxidant enzymes."},
+        {nutrient:"potassium_mg",amount:308.762145687,unit:"mg",conditional_reward_contribution:.0860961262,function:"Fruit- and coconut-water-derived support for fluid balance and normal muscle function."},
+        {nutrient:"magnesium_mg",amount:24.4398480085,unit:"mg",conditional_reward_contribution:.0713879254,function:"Supports normal muscle, nerve, and energy metabolism."},
+        {nutrient:"vitamin_c_mg",amount:134.37376756,unit:"mg",conditional_reward_contribution:.0623080378,function:"Citrus and acerola support for collagen formation and antioxidant protection."},
+        {nutrient:"zinc_mg",amount:.3069704159,unit:"mg",conditional_reward_contribution:.0531775336,function:"Trace-mineral support within the broader whole-food nutrient pattern."},
+        {nutrient:"phosphorus_mg",amount:37.3834756747,unit:"mg",conditional_reward_contribution:.0289213902,function:"Supports normal cellular energy and mineral structure."}
       ]
     };
     async function initHomeVectorMatrix() {
       const mount=document.getElementById("homeVectorMatrix");
       if (!mount || mount.dataset.ready) return;
       mount.dataset.ready="true";
-      let foundation=HOME_VECTOR_FOUNDATION_FALLBACK;
-      try {
-        const catalog=await fetchStaticJsonOrThrow(
-          "/assets/fluids/standard_blends_static.json",
-          "The standard blend catalog could not be loaded."
-        );
-        const lanes=catalog.function_lanes || catalog.population_standard_blends || [];
-        foundation=lanes.find(lane=>lane.id===HOME_VECTOR_FOUNDATION_ID)
-          || lanes.find(lane=>String(lane.function_name || lane.name || "").toLowerCase()==="daily vitality")
-          || foundation;
-      } catch (error) {
-        foundation=HOME_VECTOR_FOUNDATION_FALLBACK;
-      }
+      const foundation=HOME_VECTOR_FOUNDATION_FALLBACK;
       const blendName=standardDisplayName(foundation);
       renderVectorMatrix(
         laneVectorItems(foundation).slice(0,8),
         mount,
         {
           stageClass:"hero-matrix",
-          kicker:`${blendName} · standard blend`,
-          title:"Hover or tap its nutrient signals",
-          ariaLabel:`Animated ${blendName} standard blend nutrient vector`
+          kicker:`${blendName} · whole-food standard`,
+          title:"Eight signals from a 30-nutrient model",
+          countLabel:"8 of 30 modeled",
+          ariaLabel:`Eight selected signals from the ${blendName} 30-nutrient model vector`
         }
       );
     }
@@ -7873,6 +7890,10 @@
         copper_mg:"mineral cofactor and antioxidant enzyme support",
         iron:"oxygen transport and energy support",
         iron_mg:"oxygen transport and energy support",
+        zinc:"trace-mineral support for normal immune and metabolic function",
+        zinc_mg:"trace-mineral support for normal immune and metabolic function",
+        phosphorus:"cellular energy and mineral structure support",
+        phosphorus_mg:"cellular energy and mineral structure support",
         vitamin_e:"cell membrane antioxidant support",
         vitamin_e_mg:"cell membrane antioxidant support"
       };
