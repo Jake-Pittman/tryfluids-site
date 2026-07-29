@@ -1756,7 +1756,7 @@
     }
     .home-function-model-fit {
       display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
+      grid-template-columns:repeat(2,minmax(0,1fr));
       gap:7px;
       margin-top:10px;
     }
@@ -1785,6 +1785,13 @@
       line-height:1.25;
       letter-spacing:.07em;
       text-transform:uppercase;
+    }
+    .home-function-model-fit div.is-positive {
+      border-color:rgba(53,126,84,.28);
+      background:rgba(232,246,237,.82);
+    }
+    .home-function-model-fit div.is-positive strong {
+      color:#287149;
     }
     .home-function-visual {
       display:grid;
@@ -4148,7 +4155,6 @@
         <nav class="mode-switch" aria-label="Recommendation mode">
           <button type="button" class="mode-button active" data-app-mode="personalized">My Blend</button>
           <button type="button" class="mode-button" data-app-mode="standard">Standard Blend</button>
-          <button type="button" class="mode-button" data-app-mode="discovery">Science</button>
         </nav>
         <div class="app-pill">Daily drink mix</div>
         <div class="privacy">● Private lab upload</div>
@@ -7741,11 +7747,29 @@
     }
     function laneModelFit(lane) {
       const fit=lane?.population_fit || lane?.v10_fit_metrics || {};
+      const ageEffect=lane?.predicted_age_effect && typeof lane.predicted_age_effect === "object"
+        ? lane.predicted_age_effect
+        : {};
       const coverageDirect=Number(fit.positive_coverage_pct);
       const coverageFallback=scaledPct(
         lane?.fit_metrics?.survey_weighted_positive_coverage
         ?? lane?.formula_metrics?.survey_weighted_positive_coverage
       );
+      const ageScoreValue=fit.planning_proxy_12_week_drop_years
+        ?? ageEffect.predicted_drop_years;
+      const ageScore=ageScoreValue === null || ageScoreValue === undefined || ageScoreValue === ""
+        ? NaN
+        : Number(ageScoreValue);
+      const ageDirection=String(
+        fit.biological_age_direction
+        ?? ageEffect.direction
+        ?? ""
+      ).toLowerCase();
+      const biologicalAgePositive=typeof fit.biological_age_positive === "boolean"
+        ? fit.biological_age_positive
+        : ageEffect.available === true && Number.isFinite(ageScore)
+          ? ageScore>0 && ageDirection==="decrease"
+          : null;
       return {
         sameLane:scaledPct(
           fit.same_lane_percentile
@@ -7755,12 +7779,20 @@
           fit.broad_formula_percentile
           ?? lane?.broad_formula_fit_percentile
         ),
-        coverage:Number.isFinite(coverageDirect) ? coverageDirect : coverageFallback
+        coverage:Number.isFinite(coverageDirect) ? coverageDirect : coverageFallback,
+        biologicalAgePositive,
+        biologicalAgeDirection:ageDirection,
+        biologicalAgeScore:ageScore
       };
     }
     function percentileText(value,digits=1) {
       const number=Number(value);
       return Number.isFinite(number) ? `${number.toFixed(digits)}th pct` : "—";
+    }
+    function biologicalAgeSignalText(modelFit) {
+      if (modelFit?.biologicalAgePositive === true) return "Positive";
+      if (modelFit?.biologicalAgePositive === false) return "Not positive";
+      return "—";
     }
     function laneVectorItems(lane) {
       const direct=Array.isArray(lane.nutrient_vector) && lane.nutrient_vector.length
@@ -7869,24 +7901,15 @@
       if (meta) {
         meta.textContent="";
         if (hasV10Fit) {
-          addHomeVectorMeta(meta,"Same-lane V10 fit",percentileText(modelFit.sameLane,1));
-          addHomeVectorMeta(
-            meta,
-            "Positive model coverage",
-            Number.isFinite(modelFit.coverage) ? percentText(modelFit.coverage,1) : "—"
-          );
-          addHomeVectorMeta(
-            meta,
-            "Broad formula fit",
-            Number.isFinite(modelFit.broad) ? percentileText(modelFit.broad,1) : "—"
-          );
+          addHomeVectorMeta(meta,"Population family fit",percentileText(modelFit.sameLane,1));
+          addHomeVectorMeta(meta,"Biological age signal",biologicalAgeSignalText(modelFit));
         } else {
           addHomeVectorMeta(meta,"Population family",Number.isFinite(population) ? percentText(population,1) : "Standard");
           const usable=scaledPct(lane.fit_metrics?.usable_or_better_fit_pct ?? lane.formula_metrics?.usable_or_better_fit_pct);
           addHomeVectorMeta(meta,"Modeled family fit",Number.isFinite(usable) ? percentText(usable,0) : "Available");
+          const topPowder=(lane.ingredients || []).find(item=>Number(item.blend_percent)>0);
+          addHomeVectorMeta(meta,"Lead powder",topPowder ? `${topPowder.item} ${percentText(Number(topPowder.blend_percent),1)}` : "Formula ready");
         }
-        const topPowder=(lane.ingredients || []).find(item=>Number(item.blend_percent)>0);
-        addHomeVectorMeta(meta,"Lead powder",topPowder ? `${topPowder.item} ${percentText(Number(topPowder.blend_percent),1)}` : "Formula ready");
       }
       const vectorItems=laneVectorItems(lane);
       const topVectorLabels=vectorItems.slice(0,3).map(item=>nutrientLabel(item.nutrient).toLowerCase());
@@ -8230,11 +8253,15 @@
         modelMetrics.className="home-function-model-fit";
         if (hasV10Fit) {
           [
-            [percentileText(modelFit.sameLane,1),"Same-lane V10 fit"],
-            [Number.isFinite(modelFit.coverage) ? percentText(modelFit.coverage,1) : "—","Positive coverage"],
-            [Number.isFinite(modelFit.broad) ? percentileText(modelFit.broad,1) : "—","Broad formula fit"]
-          ].forEach(([value,label])=>{
+            [percentileText(modelFit.sameLane,1),"Population family fit",""],
+            [
+              biologicalAgeSignalText(modelFit),
+              "Biological age signal",
+              modelFit.biologicalAgePositive === true ? "is-positive" : ""
+            ]
+          ].forEach(([value,label,stateClass])=>{
             const metric=document.createElement("div");
+            if (stateClass) metric.classList.add(stateClass);
             const strong=document.createElement("strong"); strong.textContent=value;
             const span=document.createElement("span"); span.textContent=label;
             metric.append(strong,span);
@@ -8559,17 +8586,20 @@
       const modelFit=laneModelFit(archetype);
       if (Number.isFinite(reward) || Number.isFinite(coverage) || Number.isFinite(objective) || Number.isFinite(ageDrop) || Number.isFinite(populationShare) || Number.isFinite(usableFit) || Number.isFinite(modelFit.sameLane) || Number.isFinite(modelFit.broad)) {
         const metricPills=document.createElement("div"); metricPills.className="variant-metrics";
-        [
-          Number.isFinite(populationShare) ? `${populationShare.toFixed(1)}% population family` : "",
-          Number.isFinite(usableFit) ? `${(usableFit*100).toFixed(0)}% usable fit` : "",
-          Number.isFinite(modelFit.sameLane) ? `${modelFit.sameLane.toFixed(1)}th pct same-lane V10 fit` : "",
-          Number.isFinite(modelFit.broad) ? `${modelFit.broad.toFixed(1)}th pct broad formula fit` : "",
-          Number.isFinite(objective) ? `model objective +${objective.toFixed(3)}` : "",
-          Number.isFinite(reward) ? `score +${reward.toFixed(3)}` : "",
-          Number.isFinite(modelFit.coverage) ? `${modelFit.coverage.toFixed(1)}% positive model coverage` : Number.isFinite(coverage) ? `${(coverage*100).toFixed(1)}% coverage` : "",
-          Number.isFinite(ageDrop) ? `${ageDrop.toFixed(2)} yr projected drop` : "",
-          archetype.cohort_rows ? `${Number(archetype.cohort_rows).toLocaleString()} rows` : ""
-        ].filter(Boolean).forEach(text=>{
+        const metricText=Number.isFinite(modelFit.sameLane)
+          ? [
+              `${modelFit.sameLane.toFixed(1)}th pct population family fit`,
+              `${biologicalAgeSignalText(modelFit)} biological age signal`
+            ]
+          : [
+              Number.isFinite(populationShare) ? `${populationShare.toFixed(1)}% population family` : "",
+              Number.isFinite(usableFit) ? `${(usableFit*100).toFixed(0)}% usable fit` : "",
+              Number.isFinite(objective) ? `model objective +${objective.toFixed(3)}` : "",
+              Number.isFinite(reward) ? `score +${reward.toFixed(3)}` : "",
+              Number.isFinite(coverage) ? `${(coverage*100).toFixed(1)}% coverage` : "",
+              archetype.cohort_rows ? `${Number(archetype.cohort_rows).toLocaleString()} rows` : ""
+            ];
+        metricText.filter(Boolean).forEach(text=>{
           const pill=document.createElement("span"); pill.className="variant-pill"; pill.textContent=text; metricPills.appendChild(pill);
         });
         card.appendChild(metricPills);
