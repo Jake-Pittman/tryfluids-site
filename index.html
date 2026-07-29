@@ -1754,6 +1754,38 @@
       font-size:.72rem;
       line-height:1.42;
     }
+    .home-function-model-fit {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:7px;
+      margin-top:10px;
+    }
+    .home-function-model-fit div {
+      min-width:0;
+      padding:9px 8px;
+      border:1px solid color-mix(in oklch,var(--lane-a) 18%,rgba(157,111,67,.12));
+      border-radius:13px;
+      background:color-mix(in oklch,var(--lane-a) 5%,rgba(255,255,255,.72));
+    }
+    .home-function-model-fit strong {
+      display:block;
+      color:#203445;
+      font-family:var(--display-font);
+      font-size:1.08rem;
+      font-weight:600;
+      line-height:1;
+      letter-spacing:-.03em;
+    }
+    .home-function-model-fit span {
+      display:block;
+      margin-top:5px;
+      color:#77716a;
+      font-size:.52rem;
+      font-weight:900;
+      line-height:1.25;
+      letter-spacing:.07em;
+      text-transform:uppercase;
+    }
     .home-function-visual {
       display:grid;
       grid-template-columns:76px minmax(0,1fr);
@@ -2034,7 +2066,7 @@
     }
     .home-vector-modal-meta {
       display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
+      grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
       gap:10px;
       margin:18px 0;
     }
@@ -7196,6 +7228,29 @@
       if (!Number.isFinite(number)) return NaN;
       return Math.abs(number)<=1 ? number*100 : number;
     }
+    function laneModelFit(lane) {
+      const fit=lane?.population_fit || lane?.v10_fit_metrics || {};
+      const coverageDirect=Number(fit.positive_coverage_pct);
+      const coverageFallback=scaledPct(
+        lane?.fit_metrics?.survey_weighted_positive_coverage
+        ?? lane?.formula_metrics?.survey_weighted_positive_coverage
+      );
+      return {
+        sameLane:scaledPct(
+          fit.same_lane_percentile
+          ?? lane?.same_lane_fit_percentile
+        ),
+        broad:scaledPct(
+          fit.broad_formula_percentile
+          ?? lane?.broad_formula_fit_percentile
+        ),
+        coverage:Number.isFinite(coverageDirect) ? coverageDirect : coverageFallback
+      };
+    }
+    function percentileText(value,digits=1) {
+      const number=Number(value);
+      return Number.isFinite(number) ? `${number.toFixed(digits)}th pct` : "—";
+    }
     function laneVectorItems(lane) {
       const direct=Array.isArray(lane.nutrient_vector) && lane.nutrient_vector.length
         ? lane.nutrient_vector
@@ -7272,6 +7327,8 @@
       modal.style.setProperty("--lane-b",palette[1]);
       modal.style.setProperty("--lane-c",palette[2]);
       const population=lanePopulationShare(lane);
+      const modelFit=laneModelFit(lane);
+      const hasV10Fit=Number.isFinite(modelFit.sameLane);
       const title=document.getElementById("homeVectorModalTitle");
       const description=document.getElementById("homeVectorModalDescription");
       const kicker=document.getElementById("homeVectorModalKicker");
@@ -7287,7 +7344,11 @@
         kicker.textContent="";
         [
           lane.formula_descriptor || lane.formula_name || "Standard blend",
-          Number.isFinite(population) ? `${percentText(population,1)} population family` : "population-derived function"
+          Number.isFinite(population)
+            ? `${percentText(population,1)} population family`
+            : hasV10Fit
+              ? "V10-ranked functional blend"
+              : "population-derived function"
         ].forEach(value=>{
           const item=document.createElement("span");
           item.textContent=value;
@@ -7296,9 +7357,23 @@
       }
       if (meta) {
         meta.textContent="";
-        addHomeVectorMeta(meta,"Population family",Number.isFinite(population) ? percentText(population,1) : "Standard");
-        const usable=scaledPct(lane.fit_metrics?.usable_or_better_fit_pct ?? lane.formula_metrics?.usable_or_better_fit_pct);
-        addHomeVectorMeta(meta,"Modeled family fit",Number.isFinite(usable) ? percentText(usable,0) : "Available");
+        if (hasV10Fit) {
+          addHomeVectorMeta(meta,"Same-lane V10 fit",percentileText(modelFit.sameLane,1));
+          addHomeVectorMeta(
+            meta,
+            "Positive model coverage",
+            Number.isFinite(modelFit.coverage) ? percentText(modelFit.coverage,1) : "—"
+          );
+          addHomeVectorMeta(
+            meta,
+            "Broad formula fit",
+            Number.isFinite(modelFit.broad) ? percentileText(modelFit.broad,1) : "—"
+          );
+        } else {
+          addHomeVectorMeta(meta,"Population family",Number.isFinite(population) ? percentText(population,1) : "Standard");
+          const usable=scaledPct(lane.fit_metrics?.usable_or_better_fit_pct ?? lane.formula_metrics?.usable_or_better_fit_pct);
+          addHomeVectorMeta(meta,"Modeled family fit",Number.isFinite(usable) ? percentText(usable,0) : "Available");
+        }
         const topPowder=(lane.ingredients || []).find(item=>Number(item.blend_percent)>0);
         addHomeVectorMeta(meta,"Lead powder",topPowder ? `${topPowder.item} ${percentText(Number(topPowder.blend_percent),1)}` : "Formula ready");
       }
@@ -7623,9 +7698,16 @@
         card.style.setProperty("--lane-b",palette[1]);
         card.style.setProperty("--lane-c",palette[2]);
         const population=lanePopulationShare(lane);
+        const modelFit=laneModelFit(lane);
+        const hasV10Fit=Number.isFinite(modelFit.sameLane);
         const title=document.createElement("h3"); title.textContent=standardDisplayName(lane);
         const kicker=document.createElement("div"); kicker.className="home-function-kicker";
-        const share=document.createElement("span"); share.textContent=Number.isFinite(population) ? `${population.toFixed(1)}% population family` : "standard function";
+        const share=document.createElement("span");
+        share.textContent=Number.isFinite(population)
+          ? `${population.toFixed(1)}% population family`
+          : hasV10Fit
+            ? "V10 ranked function"
+            : "standard function";
         const descriptor=document.createElement("span"); descriptor.textContent=lane.formula_descriptor || lane.formula_name || "nutrient vector";
         kicker.append(share,descriptor);
         const purpose=document.createElement("div"); purpose.className="home-function-purpose";
@@ -7633,6 +7715,21 @@
         const purposeCopy=document.createElement("span");
         purposeCopy.textContent=conciseText(lane.customer_description || lane.description || lane.positioning || "",190);
         purpose.append(purposeLabel,purposeCopy);
+        const modelMetrics=document.createElement("div");
+        modelMetrics.className="home-function-model-fit";
+        if (hasV10Fit) {
+          [
+            [percentileText(modelFit.sameLane,1),"Same-lane V10 fit"],
+            [Number.isFinite(modelFit.coverage) ? percentText(modelFit.coverage,1) : "—","Positive coverage"],
+            [Number.isFinite(modelFit.broad) ? percentileText(modelFit.broad,1) : "—","Broad formula fit"]
+          ].forEach(([value,label])=>{
+            const metric=document.createElement("div");
+            const strong=document.createElement("strong"); strong.textContent=value;
+            const span=document.createElement("span"); span.textContent=label;
+            metric.append(strong,span);
+            modelMetrics.appendChild(metric);
+          });
+        }
         const visual=document.createElement("div"); visual.className="home-function-visual";
         const orb=document.createElement("div"); orb.className="home-vector-orb";
         const orbLabel=document.createElement("span"); orbLabel.textContent=String(index+1).padStart(2,"0");
@@ -7689,7 +7786,9 @@
           openHomeVectorModal(lane,index,button);
         });
         actions.append(waitlistButton,button);
-        card.append(title,kicker,purpose,visual,nutrients,ingredients,actions);
+        card.append(title,kicker,purpose);
+        if (modelMetrics.childNodes.length) card.appendChild(modelMetrics);
+        card.append(visual,nutrients,ingredients,actions);
         grid.appendChild(card);
       });
     }
@@ -7946,14 +8045,17 @@
       const ageDrop=Number(archetype.predicted_age_effect?.predicted_drop_years);
       const populationShare=Number(archetype.population_share_pct ?? Number(archetype.population_weighted_pct)*100);
       const usableFit=Number(archetype.fit_metrics?.usable_or_better_fit_pct);
-      if (Number.isFinite(reward) || Number.isFinite(coverage) || Number.isFinite(objective) || Number.isFinite(ageDrop) || Number.isFinite(populationShare) || Number.isFinite(usableFit)) {
+      const modelFit=laneModelFit(archetype);
+      if (Number.isFinite(reward) || Number.isFinite(coverage) || Number.isFinite(objective) || Number.isFinite(ageDrop) || Number.isFinite(populationShare) || Number.isFinite(usableFit) || Number.isFinite(modelFit.sameLane) || Number.isFinite(modelFit.broad)) {
         const metricPills=document.createElement("div"); metricPills.className="variant-metrics";
         [
           Number.isFinite(populationShare) ? `${populationShare.toFixed(1)}% population family` : "",
           Number.isFinite(usableFit) ? `${(usableFit*100).toFixed(0)}% usable fit` : "",
+          Number.isFinite(modelFit.sameLane) ? `${modelFit.sameLane.toFixed(1)}th pct same-lane V10 fit` : "",
+          Number.isFinite(modelFit.broad) ? `${modelFit.broad.toFixed(1)}th pct broad formula fit` : "",
           Number.isFinite(objective) ? `model objective +${objective.toFixed(3)}` : "",
           Number.isFinite(reward) ? `score +${reward.toFixed(3)}` : "",
-          Number.isFinite(coverage) ? `${(coverage*100).toFixed(1)}% coverage` : "",
+          Number.isFinite(modelFit.coverage) ? `${modelFit.coverage.toFixed(1)}% positive model coverage` : Number.isFinite(coverage) ? `${(coverage*100).toFixed(1)}% coverage` : "",
           Number.isFinite(ageDrop) ? `${ageDrop.toFixed(2)} yr projected drop` : "",
           archetype.cohort_rows ? `${Number(archetype.cohort_rows).toLocaleString()} rows` : ""
         ].filter(Boolean).forEach(text=>{
