@@ -820,6 +820,11 @@
     .question-page { display:none; border:0; padding:0; margin:0; background:transparent; }
     .question-page.active { display:block; animation:viewIn .2s ease both; }
     .question-actions { display:flex; justify-content:space-between; gap:12px; margin-top:24px; padding-top:18px; border-top:1px solid var(--line); }
+    .model-run-consent { margin-top:20px; padding:16px 18px; border:1px solid rgba(13,105,117,.24); border-radius:18px; background:linear-gradient(135deg,rgba(223,242,244,.78),rgba(255,250,242,.96)); }
+    .model-run-consent .check { margin:0; align-items:flex-start; }
+    .model-run-consent .check span { font-size:.76rem; line-height:1.5; }
+    .model-run-consent .check strong { display:block; margin-bottom:3px; color:var(--ink); font-size:.8rem; }
+    .model-run-consent p { margin:9px 0 0 29px; color:var(--muted); font-size:.65rem; line-height:1.45; }
     #questionnaireView { max-width:900px; }
     #reviewView { max-width:1160px; }
     #results.active { display:block !important; }
@@ -4185,7 +4190,7 @@
           <button type="button" class="mode-button" data-app-mode="standard">Standard Blend</button>
         </nav>
         <div class="app-pill">Daily drink mix</div>
-        <div class="privacy">● Private lab upload</div>
+        <div class="privacy">● Encrypted analysis</div>
       </div>
     </header>
     <section class="hero" id="uploadHero">
@@ -4306,7 +4311,7 @@
     <div class="wizard-stage" id="wizardStage">
       <main class="panel section app-view active upload-panel" id="uploadView">
         <div class="section-head">
-          <div><h2>Build your personalized blend</h2><p class="section-copy">Start with your blood-test PDF. We’ll extract the markers locally and turn them into a drinkable nutrition plan.</p></div>
+          <div><h2>Build your personalized blend</h2><p class="section-copy">Start with your blood-test PDF. We’ll temporarily extract the markers, then delete the original file and turn the reviewed values into a drinkable nutrition plan.</p></div>
           <button id="extractBtn" disabled>Start analysis</button>
         </div>
         <label class="drop" id="dropZone" for="pdfInput">
@@ -4316,7 +4321,7 @@
         </label>
         <div class="inline-help"><strong>What happens next:</strong> the app extracts common PhenoAge-style markers, asks you to confirm the values, then uses your context answers to generate a custom formula and nutrient vector.</div>
         <div class="actions">
-          <div class="loader" id="extractLoader"><span class="spinner"></span> Reading locally…</div>
+          <div class="loader" id="extractLoader"><span class="spinner"></span> Reading securely…</div>
           <span class="section-copy" id="extractMeta"></span>
         </div>
         <div class="notice error" id="errorBox"></div>
@@ -4389,6 +4394,13 @@
           <label class="check"><input id="steroidMedication" type="checkbox"><span>Steroid medication</span></label>
           <label class="check"><input id="kidneyRisk" type="checkbox"><span>I take potassium-affecting medication or was told to limit potassium.</span></label>
           <label class="check"><input id="pregnant" type="checkbox"><span>I am pregnant or breastfeeding.</span></label>
+          <div class="model-run-consent">
+            <label class="check" for="dataLoopConsent">
+              <input id="dataLoopConsent" type="checkbox">
+              <span><strong>Save this analysis to improve Fluids.</strong>I consent to Fluids retaining my reviewed lab values, questionnaire answers, and generated recommendation for model evaluation and improvement.</span>
+            </label>
+            <p>The record is encrypted and pseudonymous. The original PDF is deleted after extraction, and no name or email is attached to the model run.</p>
+          </div>
         </details>
         <div class="question-actions">
           <button type="button" class="secondary" id="questionBack">Back</button>
@@ -4719,12 +4731,14 @@
     const pdfInput = document.getElementById("pdfInput");
     const extractBtn = document.getElementById("extractBtn");
     const analyzeBtn = document.getElementById("analyzeBtn");
+    const dataLoopConsent = document.getElementById("dataLoopConsent");
     const reviewContinueBtn = document.getElementById("reviewContinueBtn");
     const questionBack = document.getElementById("questionBack");
     const questionNext = document.getElementById("questionNext");
     let specs = {};
     let selectedFile = null;
     let currentQuestion = 0;
+    const dataLoopConsentVersion = "2026-07-29-v1";
     const viewIds = ["uploadView","reviewView","questionnaireView","results","standardView","discoveryView"];
     let standardBlendLoaded = false;
     let homeFunctionMenuLoaded = false;
@@ -5194,6 +5208,11 @@
       questionBack.textContent = currentQuestion === 0 ? "Back to labs" : "Back";
       questionNext.style.display = currentQuestion === 3 ? "none" : "inline-block";
       analyzeBtn.style.display = currentQuestion === 3 ? "inline-block" : "none";
+      syncAnalysisConsent();
+    }
+
+    function syncAnalysisConsent() {
+      analyzeBtn.disabled = currentQuestion === 3 && !dataLoopConsent.checked;
     }
 
     function showError(message) {
@@ -5417,12 +5436,24 @@
     });
     questionNext.addEventListener("click",()=>showQuestion(currentQuestion + 1));
     document.querySelectorAll("[data-question-tab]").forEach(item=>item.addEventListener("click",()=>showQuestion(Number(item.dataset.questionTab))));
+    dataLoopConsent.addEventListener("change",()=>{
+      syncAnalysisConsent();
+      if (dataLoopConsent.checked) showError("");
+    });
     analyzeBtn.addEventListener("click", async () => {
+      if (!dataLoopConsent.checked) {
+        showError("Please review and accept the model-improvement data consent before generating your blend.");
+        dataLoopConsent.focus();
+        return;
+      }
       showError(""); analyzeBtn.disabled = true; setLoading("analysisLoader", true); startScienceRunner();
       const labs = {}; fieldOrder.forEach(key => { const input = document.getElementById(`lab-${key}`); if (input && input.value !== "") labs[key] = Number(input.value); });
       const analysisStartedAt = performance.now();
       const payload = {
         analytics_session_id:analyticsSessionId,
+        data_loop_consent:true,
+        data_loop_consent_version:dataLoopConsentVersion,
+        data_loop_consented_at:new Date().toISOString(),
         age:numberOrNull("age"), sex:document.getElementById("sex").value, bmi:numberOrNull("bmi"),
         race_ethnicity_code:numberOrNull("raceEthnicity"), waist_cm:numberOrNull("waist"), labs,
         kidney_or_potassium_risk:document.getElementById("kidneyRisk").checked,
@@ -5482,7 +5513,7 @@
         });
         showError(error.message); window.scrollTo({top:0,behavior:"smooth"});
       }
-      finally { analyzeBtn.disabled = false; setLoading("analysisLoader", false); stopScienceRunner(); }
+      finally { syncAnalysisConsent(); setLoading("analysisLoader", false); stopScienceRunner(); }
     });
     async function runCustomBlendAnalysis(payload) {
       if (useAnalysisJobs) return runCustomBlendAnalysisJob(payload);
