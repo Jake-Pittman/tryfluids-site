@@ -1883,13 +1883,37 @@
       gap:6px;
       margin-top:12px;
     }
-    .home-function-ingredients span {
-      padding:6px 8px;
+    .home-function-ingredients > span {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      min-height:34px;
+      padding:3px 8px 3px 3px;
       border-radius:999px;
       color:#4f514d;
-      background:#f2e7d8;
+      border:1px solid rgba(157,111,67,.10);
+      background:rgba(248,242,233,.92);
       font-size:.6rem;
       font-weight:900;
+    }
+    .home-ingredient-thumb {
+      display:block;
+      width:28px;
+      height:28px;
+      flex:0 0 28px;
+      border-radius:50%;
+      background-image:url("/assets/fluids/ingredients/produce-atlas-v1.webp");
+      background-repeat:no-repeat;
+      background-size:400% 300%;
+      background-position:var(--ingredient-x,0%) var(--ingredient-y,0%);
+      background-color:rgba(255,255,255,.7);
+      box-shadow:
+        inset 0 0 0 1px rgba(157,111,67,.10),
+        0 3px 8px rgba(13,27,42,.07);
+    }
+    .home-ingredient-copy {
+      line-height:1.1;
+      white-space:nowrap;
     }
     .home-function-card button {
       width:100%;
@@ -2183,11 +2207,15 @@
       flex-wrap:wrap;
       gap:7px;
     }
-    .home-vector-modal-ingredients span {
-      padding:7px 9px;
+    .home-vector-modal-ingredients > span {
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      padding:4px 9px 4px 4px;
       border-radius:999px;
       color:#4f514d;
-      background:#f2e7d8;
+      border:1px solid rgba(157,111,67,.10);
+      background:rgba(248,242,233,.92);
       font-size:.66rem;
       font-weight:900;
     }
@@ -4164,37 +4192,37 @@
       <div>
         <div class="eyebrow">Fluids early access</div>
           <h1>Eleven daily blends. One custom path.</h1>
-        <p class="lead">Pick the function you want now. Use launch code FLUIDS100 when you want your labs translated into a custom nutrient vector.</p>
+        <p class="lead">Pick the function you want now, or use your labs to build a custom nutrient vector.</p>
         <div class="consumer-hero-actions">
           <button type="button" data-quick-mode="upload">Start custom profile</button>
           <button type="button" class="secondary" data-quick-mode="upload">Generate custom blend</button>
         </div>
         <div class="consumer-proof-row" aria-label="Product promises">
-          <span>launch code FLUIDS100</span>
           <span>11 function blends</span>
+          <span>V10 population modeling</span>
           <span>lab-based customization</span>
         </div>
       </div>
       <div class="hero-side landing-brief">
         <div class="landing-brief-card">
-          <div class="eyebrow">Limited launch offer</div>
-          <strong>Free analysis and blend customization for early users.</strong>
-          <p>Join any blend waitlist and keep the code for your first custom profile when we open the beta.</p>
+          <div class="eyebrow">Two product paths</div>
+          <strong>Start with a standard function or build from your labs.</strong>
+          <p>Explore any formula, then upload bloodwork when you want a custom nutrient vector.</p>
           <div class="landing-brief-steps" aria-label="How Fluids works">
             <div><b>01</b><span>Pick a function blend</span></div>
-            <div><b>02</b><span>Join the early list</span></div>
-            <div><b>03</b><span>Use FLUIDS100 for custom</span></div>
+            <div><b>02</b><span>Explore its nutrient vector</span></div>
+            <div><b>03</b><span>Customize from bloodwork</span></div>
           </div>
         </div>
       </div>
     </section>
-    <section class="launch-offer-strip" id="launchOffer" aria-label="Limited launch offer">
+    <section class="launch-offer-strip" id="launchOffer" aria-label="Custom blend profile">
       <div>
-        <div class="eyebrow">Founding beta</div>
-        <h2>Free custom profile for early users.</h2>
-        <p>Use <span class="launch-code-pill">FLUIDS100</span> when the first cohort opens.</p>
+        <div class="eyebrow">Custom profile</div>
+        <h2>Want a blend built from your labs?</h2>
+        <p>Upload a blood-test PDF to turn your markers into a custom nutrient vector and fruit-forward formula.</p>
       </div>
-      <button type="button" class="launch-offer-button" data-open-waitlist data-blend-id="custom" data-blend-name="Custom blend profile">Join early list</button>
+      <button type="button" class="launch-offer-button" data-quick-mode="upload">Start custom profile</button>
     </section>
     <section class="home-function-menu" id="homeFunctionMenu" aria-label="Standard function blend menu">
       <div class="home-function-head">
@@ -4203,9 +4231,9 @@
           <h2>Start with the function that fits your day.</h2>
           <p>Eleven standard blends, each with a distinct nutrient vector, a clear everyday function, and a simple path into custom personalization.</p>
         </div>
-        <div class="home-function-cta home-function-code-note" aria-label="Launch code offer">
-          <span>FLUIDS100</span>
-          <b>Free custom profile for early access</b>
+        <div class="home-function-cta home-function-code-note" aria-label="Formula collection">
+          <span>11 blends</span>
+          <b>Fruit-forward formulas with modeled nutrient vectors</b>
         </div>
       </div>
       <div class="home-function-grid" id="homeFunctionGrid">
@@ -4233,33 +4261,6 @@
             <p id="homeVectorModalRationale"></p>
           </div>
         </div>
-      </section>
-    </div>
-    <div class="waitlist-modal" id="waitlistModal" hidden>
-      <div class="waitlist-modal-backdrop" data-close-waitlist-modal></div>
-      <section class="waitlist-modal-panel" role="dialog" aria-modal="true" aria-labelledby="waitlistModalTitle" aria-describedby="waitlistModalDescription">
-        <button type="button" class="waitlist-modal-close" data-close-waitlist-modal>Close</button>
-        <div class="waitlist-modal-kicker">Early access</div>
-        <h3 id="waitlistModalTitle">Join the Fluids waitlist.</h3>
-        <p id="waitlistModalDescription">Save your spot and keep launch code FLUIDS100 for a free custom analysis and blend profile.</p>
-        <div class="waitlist-selected" aria-live="polite">
-          <span id="waitlistBlendName">Custom blend profile</span>
-          <span>FLUIDS100</span>
-        </div>
-        <form class="waitlist-form" id="waitlistForm" action="https://formsubmit.co/jakepittman2@gmail.com" method="POST">
-          <input type="hidden" id="waitlistBlendId" name="blend_id" value="custom">
-          <input type="hidden" id="waitlistDiscountCode" name="discount_code" value="FLUIDS100">
-          <input type="hidden" name="_subject" value="New Fluids waitlist lead">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_captcha" value="false">
-          <div class="waitlist-field">
-            <label for="waitlistEmail">Email</label>
-            <input id="waitlistEmail" name="email" type="email" autocomplete="email" placeholder="you@email.com" required>
-          </div>
-          <button type="submit" class="waitlist-submit">Join waitlist</button>
-          <p class="waitlist-status" id="waitlistStatus" aria-live="polite"></p>
-          <a class="waitlist-mail-link" id="waitlistMailLink" href="mailto:jakepittman2@gmail.com">Send request email</a>
-        </form>
       </section>
     </div>
     <section class="vector-manifesto" id="vectorStory" aria-label="Personalized nutrient vector explanation">
@@ -5182,14 +5183,6 @@
     document.querySelectorAll("[data-scroll-target]").forEach(item=>item.addEventListener("click",()=>{
       trackEvent("section_jump_clicked",{target:item.dataset.scrollTarget || ""});
       scrollToTarget(item.dataset.scrollTarget,item);
-    }));
-    document.querySelectorAll("[data-open-waitlist]").forEach(item=>item.addEventListener("click",()=>{
-      trackEvent("cta_clicked",{
-        cta:"open_waitlist",
-        blend_id:item.dataset.blendId || "custom",
-        blend_name:item.dataset.blendName || "Custom blend profile"
-      });
-      openWaitlistModalFromTrigger(item);
     }));
     function showQuestion(index) {
       currentQuestion = Math.max(0,Math.min(3,index));
@@ -7968,9 +7961,7 @@
       if (ingredients) {
         ingredients.textContent="";
         (lane.ingredients || []).filter(item=>Number(item.blend_percent)>0).slice(0,8).forEach(item=>{
-          const chip=document.createElement("span");
-          chip.textContent=`${item.item} ${percentText(Number(item.blend_percent),1)}`;
-          ingredients.appendChild(chip);
+          ingredients.appendChild(createIngredientReference(item));
         });
       }
       if (rationale) {
@@ -7999,6 +7990,56 @@
     function conciseText(value,limit=148) {
       const text=String(value || "").replace(/\s+/g," ").trim();
       return text.length > limit ? `${text.slice(0,limit-3).trim()}...` : text;
+    }
+    const ingredientAtlasPositions={
+      "raspberry":["0%","0%"],
+      "coconut":["33.333%","0%"],
+      "coconut water":["33.333%","0%"],
+      "lemon":["66.667%","0%"],
+      "pineapple":["100%","0%"],
+      "orange":["0%","50%"],
+      "mango":["33.333%","50%"],
+      "beet":["66.667%","50%"],
+      "beetroot":["66.667%","50%"],
+      "tart cherry":["100%","50%"],
+      "cherry":["100%","50%"],
+      "strawberry":["0%","100%"],
+      "blueberry":["33.333%","100%"],
+      "carrot":["66.667%","100%"],
+      "turmeric":["100%","100%"]
+    };
+    function ingredientAtlasPosition(value) {
+      const normalized=String(value || "")
+        .toLowerCase()
+        .replace(/\b(powder|juice|concentrate)\b/g," ")
+        .replace(/[^a-z]+/g," ")
+        .replace(/\s+/g," ")
+        .trim();
+      return ingredientAtlasPositions[normalized] || null;
+    }
+    function createIngredientReference(ingredient) {
+      const itemName=String(ingredient?.item || "Ingredient");
+      const percent=Number(ingredient?.blend_percent);
+      const chip=document.createElement("span");
+      chip.className="home-ingredient-reference";
+      chip.setAttribute(
+        "aria-label",
+        `${itemName}${Number.isFinite(percent) ? ` ${percent.toFixed(1)} percent` : ""}`
+      );
+      const position=ingredientAtlasPosition(itemName);
+      if (position) {
+        const thumbnail=document.createElement("i");
+        thumbnail.className="home-ingredient-thumb";
+        thumbnail.setAttribute("aria-hidden","true");
+        thumbnail.style.setProperty("--ingredient-x",position[0]);
+        thumbnail.style.setProperty("--ingredient-y",position[1]);
+        chip.appendChild(thumbnail);
+      }
+      const copy=document.createElement("span");
+      copy.className="home-ingredient-copy";
+      copy.textContent=`${itemName}${Number.isFinite(percent) ? ` ${percent.toFixed(1)}%` : ""}`;
+      chip.appendChild(copy);
+      return chip;
     }
     function openWaitlistModalFromTrigger(trigger) {
       openWaitlistModal({
@@ -8296,22 +8337,9 @@
         });
         const ingredients=document.createElement("div"); ingredients.className="home-function-ingredients";
         (lane.ingredients || []).slice(0,4).forEach(ingredient=>{
-          const chip=document.createElement("span");
-          chip.textContent=`${ingredient.item} ${Number(ingredient.blend_percent).toFixed(1)}%`;
-          ingredients.appendChild(chip);
+          ingredients.appendChild(createIngredientReference(ingredient));
         });
         const actions=document.createElement("div"); actions.className="home-function-actions";
-        const waitlistButton=document.createElement("button");
-        waitlistButton.type="button";
-        waitlistButton.textContent="Join waitlist";
-        waitlistButton.className="home-function-waitlist-button";
-        waitlistButton.addEventListener("click",()=>{
-          trackEvent("standard_blend_waitlist_clicked",{
-            blend_id:lane.id || "",
-            blend_name:standardDisplayName(lane)
-          });
-          openWaitlistModal(lane,index,waitlistButton);
-        });
         const button=document.createElement("button");
         button.type="button";
         button.textContent="Explore nutrient vectors";
@@ -8323,7 +8351,7 @@
           });
           openHomeVectorModal(lane,index,button);
         });
-        actions.append(waitlistButton,button);
+        actions.append(button);
         card.append(title,kicker,purpose);
         if (modelMetrics.childNodes.length) card.appendChild(modelMetrics);
         card.append(visual,nutrients,ingredients,actions);
@@ -8365,14 +8393,9 @@
     document.querySelectorAll("[data-close-vector-modal]").forEach(item=>{
       item.addEventListener("click",closeHomeVectorModal);
     });
-    document.querySelectorAll("[data-close-waitlist-modal]").forEach(item=>{
-      item.addEventListener("click",closeWaitlistModal);
-    });
-    document.getElementById("waitlistForm")?.addEventListener("submit",submitWaitlistLead);
     document.addEventListener("keydown",event=>{
       if (event.key === "Escape") {
         closeHomeVectorModal();
-        closeWaitlistModal();
       }
     });
     async function loadV7Discovery() {
@@ -9176,7 +9199,6 @@
     initPremiumExperience();
     initHomeVectorMatrix();
     loadHomeFunctionMenu().catch(() => {});
-    maybeOpenLaunchCodeModal();
     loadSpecs().catch(error => console.warn("Lab schema unavailable until the custom blend API is reachable.",error));
   </script>
 </body>
