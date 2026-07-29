@@ -33,19 +33,23 @@
       "nutrient_vector_preview": [
         {
           "nutrient": "Vitamin D",
-          "share": 96
+          "share": 96,
+          "function": "Supports normal immune function, muscle function, and calcium regulation."
         },
         {
           "nutrient": "Vitamin A",
-          "share": 84
+          "share": 84,
+          "function": "Supports normal vision, immune function, and epithelial health."
         },
         {
           "nutrient": "Vitamin C",
-          "share": 76
+          "share": 76,
+          "function": "Supports normal immune function, collagen formation, and antioxidant protection."
         },
         {
           "nutrient": "Magnesium",
-          "share": 66
+          "share": 66,
+          "function": "Supports normal muscle and nerve function and energy metabolism."
         }
       ],
       "ingredients": [
@@ -4415,19 +4419,23 @@
       "nutrient_vector_preview": [
         {
           "nutrient": "Vitamin D",
-          "share": 96
+          "share": 96,
+          "function": "Supports normal immune function, muscle function, and calcium regulation."
         },
         {
           "nutrient": "Vitamin A",
-          "share": 84
+          "share": 84,
+          "function": "Supports normal vision, immune function, and epithelial health."
         },
         {
           "nutrient": "Vitamin C",
-          "share": 76
+          "share": 76,
+          "function": "Supports normal immune function, collagen formation, and antioxidant protection."
         },
         {
           "nutrient": "Magnesium",
-          "share": 66
+          "share": 66,
+          "function": "Supports normal muscle and nerve function and energy metabolism."
         }
       ],
       "ingredients": [

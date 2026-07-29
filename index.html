@@ -6654,7 +6654,7 @@
           color:matrixColor(nutrient),
           share,
           amountLabel,
-          note:item.matrix_note || item.source_note || item.explanation || item.category || matrixCategory(nutrient)
+          note:item.matrix_note || item.function || item.source_note || item.explanation || item.category || matrixCategory(nutrient)
         };
       });
     }
@@ -7254,17 +7254,45 @@
       vectorMatrixScenes.forEach(item=>item.resize());
       scienceRunnerVisual?.resize?.();
     }
-    function initHomeVectorMatrix() {
+    const HOME_VECTOR_FOUNDATION_ID="K8-S1";
+    const HOME_VECTOR_FOUNDATION_FALLBACK={
+      id:HOME_VECTOR_FOUNDATION_ID,
+      function_name:"Daily Vitality",
+      nutrient_vector_preview:[
+        {nutrient:"Vitamin D",share:96,function:"Supports normal immune function, muscle function, and calcium regulation."},
+        {nutrient:"Vitamin A",share:84,function:"Supports normal vision, immune function, and epithelial health."},
+        {nutrient:"Vitamin C",share:76,function:"Supports normal immune function, collagen formation, and antioxidant protection."},
+        {nutrient:"Magnesium",share:66,function:"Supports normal muscle and nerve function and energy metabolism."}
+      ]
+    };
+    async function initHomeVectorMatrix() {
       const mount=document.getElementById("homeVectorMatrix");
       if (!mount || mount.dataset.ready) return;
       mount.dataset.ready="true";
-      renderVectorMatrix([
-        {nutrient:"vitamin_c_mg",amount:42,unit:"mg",share:86,matrix_note:"Berry, acerola, citrus"},
-        {nutrient:"magnesium_mg",amount:75,unit:"mg",share:64,matrix_note:"Greens, roots, mineral carriers"},
-        {nutrient:"potassium_mg",amount:380,unit:"mg",share:72,matrix_note:"Coconut water, carrot, beet"},
-        {nutrient:"folate_dfe_mcg",amount:90,unit:"mcg",share:46,matrix_note:"Leafy, citrus, fruit matrix"},
-        {nutrient:"fiber_g",amount:4.2,unit:"g",share:58,matrix_note:"Berry and root powder structure"}
-      ],mount,{stageClass:"hero-matrix",kicker:"Interactive example",title:"Hover or tap a nutrient signal"});
+      let foundation=HOME_VECTOR_FOUNDATION_FALLBACK;
+      try {
+        const catalog=await fetchStaticJsonOrThrow(
+          "/assets/fluids/standard_blends_static.json",
+          "The standard blend catalog could not be loaded."
+        );
+        const lanes=catalog.function_lanes || catalog.population_standard_blends || [];
+        foundation=lanes.find(lane=>lane.id===HOME_VECTOR_FOUNDATION_ID)
+          || lanes.find(lane=>String(lane.function_name || lane.name || "").toLowerCase()==="daily vitality")
+          || foundation;
+      } catch (error) {
+        foundation=HOME_VECTOR_FOUNDATION_FALLBACK;
+      }
+      const blendName=standardDisplayName(foundation);
+      renderVectorMatrix(
+        laneVectorItems(foundation).slice(0,8),
+        mount,
+        {
+          stageClass:"hero-matrix",
+          kicker:`${blendName} · standard blend`,
+          title:"Hover or tap its nutrient signals",
+          ariaLabel:`Animated ${blendName} standard blend nutrient vector`
+        }
+      );
     }
     function initScienceRunnerMatrix() {
       const canvas=document.getElementById("scienceRunnerCanvas");
@@ -7746,7 +7774,7 @@
           share:Number(item.share ?? item.weight ?? item.value ?? 50),
           amount:item.amount,
           unit:item.unit,
-          matrix_note:item.matrix_note || item.source_note || item.explanation || nutrientPlainMeaning(item.nutrient || item.label || item.name)
+          matrix_note:item.matrix_note || item.function || item.source_note || item.explanation || nutrientPlainMeaning(item.nutrient || item.label || item.name)
         }));
       }
       return (lane.support_tags || lane.function_focus || [])
