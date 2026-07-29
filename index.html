@@ -7218,9 +7218,15 @@
       return palettes[index % palettes.length];
     }
     function lanePopulationShare(lane) {
-      const direct=Number(lane.population_share_pct);
+      const directValue=lane?.population_share_pct;
+      const direct=directValue === null || directValue === undefined || directValue === ""
+        ? NaN
+        : Number(directValue);
       if (Number.isFinite(direct)) return direct;
-      const weighted=Number(lane.population_weighted_pct);
+      const weightedValue=lane?.population_weighted_pct;
+      const weighted=weightedValue === null || weightedValue === undefined || weightedValue === ""
+        ? NaN
+        : Number(weightedValue);
       return Number.isFinite(weighted) ? weighted*100 : NaN;
     }
     function scaledPct(value) {
@@ -8043,7 +8049,7 @@
       const coverage=Number(metrics.survey_weighted_positive_coverage);
       const objective=Number(metrics["v" + "10_formula_objective"] ?? metrics.objective ?? archetype.score?.objective);
       const ageDrop=Number(archetype.predicted_age_effect?.predicted_drop_years);
-      const populationShare=Number(archetype.population_share_pct ?? Number(archetype.population_weighted_pct)*100);
+      const populationShare=lanePopulationShare(archetype);
       const usableFit=Number(archetype.fit_metrics?.usable_or_better_fit_pct);
       const modelFit=laneModelFit(archetype);
       if (Number.isFinite(reward) || Number.isFinite(coverage) || Number.isFinite(objective) || Number.isFinite(ageDrop) || Number.isFinite(populationShare) || Number.isFinite(usableFit) || Number.isFinite(modelFit.sameLane) || Number.isFinite(modelFit.broad)) {
