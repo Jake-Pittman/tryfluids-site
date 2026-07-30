@@ -5487,7 +5487,7 @@
       <div class="kpis results-support-kpis">
         <div class="kpi"><small>Chronological age</small><strong id="chronoAge">—</strong></div>
         <div class="kpi"><small id="ageDeltaLabel">Age difference</small><strong id="ageDelta">—</strong></div>
-        <div class="kpi reward"><small>Optimization fit</small><strong id="rewardKpi">—</strong></div>
+        <div class="kpi reward"><small>Formula selection</small><strong id="formulaSelectionKpi">—</strong></div>
       </div>
       <div class="age-score-panel" id="ageScorePanel"></div>
       <div class="portfolio-layout section-anchor" id="personalPortfolioSection">
@@ -7125,10 +7125,6 @@
       if (methodDetails) methodDetails.open=false;
       const founderDiagnostic=document.getElementById("archetypeReportPanel");
       if (founderDiagnostic) founderDiagnostic.hidden=!founderDemoAuthenticated;
-      const predictedReward = Number(
-        data.model_metrics?.final_exploratory_reward
-        ?? data.model_metrics?.predicted_reward
-      );
       status.textContent = blendOptions.length
         ? (
           founderDemoAuthenticated
@@ -7146,7 +7142,9 @@
           : `PhenoAge unavailable without ${missingLabels}`;
         status.textContent += ` · generated from available markers; ${phenoCopy}`;
       }
-      document.getElementById("rewardKpi").textContent = formatOptimizationFit(predictedReward);
+      document.getElementById("formulaSelectionKpi").textContent = blendOptions.length
+        ? "Top-ranked"
+        : "Unavailable";
       renderAgeScores(ageScores);
       renderResultsAgeHero(data,blendOptions[0] || null);
       renderCustomBlendHero(blendOptions[0] || null,data);
@@ -7578,7 +7576,6 @@
         hero.innerHTML="<h3>No custom blend was generated.</h3><p>Review the lab values and try again.</p>";
         return;
       }
-      const reward=Number(option.final_exploratory_reward ?? option.predicted_reward);
       const top=document.createElement("div"); top.className="custom-blend-top";
       const copy=document.createElement("div");
       const displayFunction=customFunctionName(option);
@@ -7591,15 +7588,11 @@
       const personalization=data?.personalization_summary || {};
       const candidateFormulaCount=Number(personalization.candidate_formula_count ?? data?.blend_options?.length);
       const metricStack=document.createElement("div"); metricStack.className="custom-blend-metric-stack";
-      const pill=document.createElement("div"); pill.className="custom-blend-pill";
-      pill.innerHTML=Number.isFinite(reward)
-        ? `${formatOptimizationFit(reward)}<small>Nutrient-vector fit</small>`
-        : "Selected<small>Top formula</small>";
       const agePill=document.createElement("div"); agePill.className="custom-blend-pill secondary";
       agePill.innerHTML=Number.isFinite(candidateFormulaCount)
         ? `${candidateFormulaCount}<small>Formulas compared</small>`
         : "V10<small>Personalized reranking</small>";
-      metricStack.append(pill,agePill);
+      metricStack.append(agePill);
       top.append(copy,metricStack); hero.appendChild(top);
       renderCustomIngredientShowcase(option,hero);
       renderCustomFullNutrientVector(data,option,hero);
@@ -7913,7 +7906,7 @@
         const action=document.createElement("span"); action.className="action-pill"; action.textContent="substitute";
         const dose=document.createElement("span"); dose.className="action-dose"; dose.textContent=Number(item.uncertainty_adjusted_reward)>0 ? "Favorable" : "Low leverage";
         const confidence=document.createElement("span"); confidence.className="action-confidence"; confidence.textContent=`${item.model_family_count || 0} model families`;
-        const explanation=document.createElement("span"); explanation.className="action-explanation"; explanation.textContent=`Tested as a coupled nutrient replacement · ${formatOptimizationFit(item.predicted_reward,{includeLevel:true})} optimization fit`;
+        const explanation=document.createElement("span"); explanation.className="action-explanation"; explanation.textContent="Tested as a coupled nutrient replacement within the personalized nutrient vector.";
         row.append(name,action,dose,confidence,explanation); parent.appendChild(row);
       });
     }
@@ -7932,7 +7925,7 @@
 	        : `Personalized formula option ${optionIndex + 1}`;
 	      const variantLabel=isRecommended ? "Recommended custom blend" : append ? `Formula option ${optionIndex + 1}` : "Formula option";
 	      title.innerHTML=`<div class="eyebrow">${variantLabel}</div><h3>${displayName}</h3><p class="section-copy">${isRecommended ? "Selected after reranking the feasible whole-food formulas against this person’s nutrient vector." : "A distinct whole-food formulation evaluated against the same personalized nutrient target."}</p>`;
-	      const badge=document.createElement("div"); badge.className="score-badge"; badge.textContent=`${isRecommended ? "Recommended · " : ""}${formatOptimizationFit(option.final_exploratory_reward ?? option.predicted_reward,{includeLevel:true})} fit`;
+	      const badge=document.createElement("div"); badge.className="score-badge"; badge.textContent=isRecommended ? "Recommended formula" : `Alternative ${optionIndex}`;
 	      head.append(title,badge); card.appendChild(head);
 	      if (founderDemoAuthenticated) {
 	        const founderLabel=document.createElement("div");
