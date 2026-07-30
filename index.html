@@ -9722,11 +9722,11 @@
         });
       }
       if (ingredients) {
-        renderStandardIngredientReferences(ingredients,lane.ingredients || [],8);
+        renderStandardIngredientReferences(ingredients,lane,8);
       }
       if (formulaTitle) {
         formulaTitle.textContent=founderDemoAuthenticated
-          ? "Founder production formula · 15g serving"
+          ? "Founder production formula · 15g prototype"
           : "Powder blend";
       }
       if (rationale) {
@@ -9816,6 +9816,7 @@
       const dose=document.createElement("em");
       dose.textContent=[
         Number.isFinite(percent) ? `${percent.toFixed(1)}%` : "",
+        ingredient?.production_additive ? "additive" : "",
         Number.isFinite(grams) ? `${grams.toFixed(2)}g` : ""
       ].filter(Boolean).join(" · ");
       chip.querySelector(".home-ingredient-copy")?.appendChild(dose);
@@ -9825,20 +9826,44 @@
       );
       return chip;
     }
-    function renderStandardIngredientReferences(parent,ingredientRows,publicLimit=4) {
+    function standardRecipeIngredientRows(lane) {
+      const rows=[...(lane?.ingredients || [])];
+      const mineralSaltMg=Number(
+        lane?.functional_overlay?.mineral_salt?.estimated_mineral_salt_mg
+      );
+      if (Number.isFinite(mineralSaltMg) && mineralSaltMg>0) {
+        rows.push({
+          item:"Mineral Salt",
+          blend_percent:NaN,
+          prototype_grams_15g:mineralSaltMg/1000,
+          production_additive:true
+        });
+      }
+      return rows;
+    }
+    function renderStandardIngredientReferences(parent,lane,publicLimit=4) {
       parent.textContent="";
-      const available=(ingredientRows || []).filter(item=>Number(item.blend_percent)>0);
+      const publicIngredients=(lane?.ingredients || []).filter(
+        item=>Number(item.blend_percent)>0
+      );
       if (founderDemoAuthenticated) {
+        const recipeIngredients=standardRecipeIngredientRows(lane).filter(
+          item=>Number(item.blend_percent)>0 || item.production_additive
+        );
+        const hasAdditive=recipeIngredients.some(item=>item.production_additive);
         const label=document.createElement("div");
         label.className="founder-standard-recipe-label";
         const title=document.createElement("span"); title.textContent="Founder production view";
-        const serving=document.createElement("em"); serving.textContent="percent · grams per 15g serving";
+        const serving=document.createElement("em");
+        serving.textContent=hasAdditive
+          ? "base blend % · grams per 15g base + additives"
+          : "blend % · grams per 15g serving";
         label.append(title,serving);
         parent.appendChild(label);
-        available.forEach(item=>parent.appendChild(createFounderIngredientReference(item)));
+        recipeIngredients.forEach(item=>parent.appendChild(createFounderIngredientReference(item)));
         return;
       }
-      available.slice(0,publicLimit).forEach(item=>{
+      publicIngredients.slice(0,publicLimit).forEach(item=>{
         parent.appendChild(createIngredientReference(item));
       });
     }
@@ -10145,7 +10170,7 @@
           nutrients.appendChild(row);
         });
         const ingredients=document.createElement("div"); ingredients.className="home-function-ingredients";
-        renderStandardIngredientReferences(ingredients,lane.ingredients || [],4);
+        renderStandardIngredientReferences(ingredients,lane,4);
         const actions=document.createElement("div"); actions.className="home-function-actions";
         const button=document.createElement("button");
         button.type="button";
