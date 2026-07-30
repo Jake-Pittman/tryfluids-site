@@ -1368,6 +1368,7 @@
       .vector-matrix-stage { min-height:360px; }
       .vector-demo-row { grid-template-columns:1fr; gap:7px; }
       .vector-demo-row span { text-align:left; }
+      .vector-experience-card { min-height:0; }
     }
     @media (max-width:520px) {
       .standard-kpis { grid-template-columns:1fr; }
@@ -3044,6 +3045,359 @@
       letter-spacing:.08em;
       text-transform:uppercase;
     }
+    .vector-definition {
+      display:grid;
+      gap:10px;
+      margin-top:18px;
+      max-width:740px;
+      padding:16px;
+      border:1px solid rgba(157,111,67,.16);
+      border-radius:20px;
+      background:rgba(255,253,248,.76);
+      box-shadow:0 14px 30px rgba(13,27,42,.045);
+    }
+    .vector-definition strong {
+      color:var(--ink);
+      font-size:.95rem;
+      line-height:1.35;
+    }
+    .vector-definition > span {
+      color:#67625d;
+      font-size:.84rem;
+      line-height:1.5;
+    }
+    .vector-definition-chips {
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+    }
+    .vector-definition-chips b {
+      display:inline-flex;
+      align-items:center;
+      padding:7px 9px;
+      border-radius:999px;
+      color:#075866;
+      background:#dff2f4;
+      font-size:.63rem;
+      font-weight:950;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+    }
+    .vector-experience-card {
+      position:relative;
+      z-index:1;
+      display:grid;
+      align-content:start;
+      gap:14px;
+      min-height:520px;
+      padding:20px;
+      overflow:hidden;
+      border:1px solid rgba(255,253,248,.14);
+      border-radius:30px;
+      color:#fffdf8;
+      background:
+        radial-gradient(circle at 90% 8%,rgba(242,190,55,.17),transparent 20rem),
+        radial-gradient(circle at 4% 96%,rgba(198,43,79,.20),transparent 22rem),
+        linear-gradient(145deg,#0a1927,#193245 64%,#0d1b2a);
+      box-shadow:0 28px 70px rgba(13,27,42,.16);
+    }
+    .vector-experience-card::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0 / 54px 54px,
+        linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px) 0 0 / 54px 54px;
+      mask-image:linear-gradient(135deg,black,transparent 82%);
+    }
+    .experience-card-head,
+    .experience-lab-card,
+    .experience-model-step,
+    .experience-vector-card,
+    .experience-blend-card,
+    .experience-example-note {
+      position:relative;
+      z-index:1;
+    }
+    .experience-card-head {
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .experience-card-head span {
+      display:block;
+      color:#f1c989;
+      font-size:.61rem;
+      font-weight:950;
+      letter-spacing:.15em;
+      text-transform:uppercase;
+    }
+    .experience-card-head strong {
+      display:block;
+      max-width:360px;
+      margin-top:5px;
+      font-family:var(--display-font);
+      font-size:1.55rem;
+      font-weight:500;
+      line-height:1.02;
+      letter-spacing:-.04em;
+    }
+    .experience-card-head b {
+      flex:0 0 auto;
+      padding:8px 10px;
+      border:1px solid rgba(255,253,248,.16);
+      border-radius:999px;
+      color:#d9f3f3;
+      background:rgba(255,253,248,.08);
+      font-size:.6rem;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+    }
+    .experience-lab-card {
+      padding:15px;
+      border-radius:20px;
+      color:var(--ink);
+      background:#fffaf2;
+      box-shadow:0 16px 30px rgba(0,0,0,.16);
+    }
+    .experience-lab-head {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding-bottom:12px;
+      border-bottom:1px solid rgba(157,111,67,.17);
+    }
+    .experience-file {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width:0;
+    }
+    .experience-file-badge {
+      width:34px;
+      height:38px;
+      display:grid;
+      place-items:center;
+      border-radius:9px;
+      color:#fffaf2;
+      background:linear-gradient(145deg,var(--raspberry),#9e2444);
+      font-size:.58rem;
+      font-weight:950;
+      letter-spacing:.06em;
+      box-shadow:0 8px 16px rgba(198,43,79,.18);
+    }
+    .experience-file strong,
+    .experience-file small {
+      display:block;
+    }
+    .experience-file strong {
+      overflow:hidden;
+      font-size:.77rem;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .experience-file small {
+      margin-top:2px;
+      color:#817a70;
+      font-size:.61rem;
+    }
+    .experience-reviewed {
+      color:#075866;
+      font-size:.59rem;
+      font-weight:950;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+    }
+    .experience-lab-grid {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:8px;
+      margin-top:12px;
+    }
+    .experience-lab-marker {
+      padding:9px;
+      border:1px solid rgba(157,111,67,.13);
+      border-radius:13px;
+      background:#f6eee3;
+    }
+    .experience-lab-marker span,
+    .experience-lab-marker strong,
+    .experience-lab-marker small {
+      display:block;
+    }
+    .experience-lab-marker span {
+      color:#82786e;
+      font-size:.53rem;
+      font-weight:900;
+      letter-spacing:.04em;
+      text-transform:uppercase;
+    }
+    .experience-lab-marker strong {
+      margin-top:5px;
+      font-family:var(--display-font);
+      font-size:1.2rem;
+      font-weight:600;
+      line-height:.9;
+    }
+    .experience-lab-marker small {
+      margin-top:4px;
+      color:#8a8177;
+      font-size:.52rem;
+    }
+    .experience-model-step {
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      color:#bcdfe0;
+      font-size:.6rem;
+      font-weight:900;
+      letter-spacing:.07em;
+      text-align:center;
+      text-transform:uppercase;
+    }
+    .experience-model-step::before,
+    .experience-model-step::after {
+      content:"";
+      height:1px;
+      flex:1;
+      background:linear-gradient(90deg,transparent,rgba(113,216,220,.5));
+    }
+    .experience-model-step::after {
+      background:linear-gradient(90deg,rgba(113,216,220,.5),transparent);
+    }
+    .experience-model-step b {
+      color:#f5d36f;
+      font-size:.88rem;
+    }
+    .experience-vector-card {
+      padding:15px;
+      border:1px solid rgba(255,253,248,.13);
+      border-radius:20px;
+      background:rgba(255,253,248,.075);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.05);
+    }
+    .experience-vector-head {
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:8px;
+    }
+    .experience-vector-head span {
+      display:block;
+      color:#8ee7e5;
+      font-size:.56rem;
+      font-weight:950;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+    .experience-vector-head strong {
+      display:block;
+      margin-top:4px;
+      font-size:.87rem;
+    }
+    .experience-vector-head b {
+      color:#d7cdbe;
+      font-size:.56rem;
+      font-weight:850;
+      white-space:nowrap;
+    }
+    .experience-vector-row {
+      display:grid;
+      grid-template-columns:82px minmax(70px,1fr) 58px;
+      gap:9px;
+      align-items:center;
+      padding:6px 0;
+      border-top:1px solid rgba(255,253,248,.07);
+    }
+    .experience-vector-row strong {
+      font-size:.66rem;
+    }
+    .experience-vector-track {
+      height:7px;
+      overflow:hidden;
+      border-radius:999px;
+      background:rgba(255,255,255,.09);
+    }
+    .experience-vector-track i {
+      display:block;
+      width:var(--vector-level);
+      height:100%;
+      border-radius:inherit;
+      background:linear-gradient(90deg,var(--vector-color),color-mix(in oklch,var(--vector-color) 52%,white));
+      box-shadow:0 0 12px color-mix(in oklch,var(--vector-color) 34%,transparent);
+    }
+    .experience-vector-row span:last-child {
+      color:#f5efe7;
+      font-size:.61rem;
+      font-weight:900;
+      text-align:right;
+      font-variant-numeric:tabular-nums;
+    }
+    .experience-blend-card {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:12px;
+      align-items:center;
+      padding:14px 15px;
+      border:1px solid rgba(242,190,55,.22);
+      border-radius:20px;
+      background:
+        radial-gradient(circle at 100% 0,rgba(242,190,55,.18),transparent 13rem),
+        rgba(255,253,248,.08);
+    }
+    .experience-blend-card span,
+    .experience-blend-card strong,
+    .experience-blend-card small {
+      display:block;
+    }
+    .experience-blend-card > div > span {
+      color:#f1c989;
+      font-size:.55rem;
+      font-weight:950;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+    .experience-blend-card strong {
+      margin-top:4px;
+      font-family:var(--display-font);
+      font-size:1.16rem;
+      font-weight:500;
+      line-height:1;
+    }
+    .experience-blend-card small {
+      max-width:360px;
+      margin-top:5px;
+      color:#c9c1b7;
+      font-size:.59rem;
+      line-height:1.35;
+    }
+    .experience-ingredients {
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      gap:6px;
+      max-width:190px;
+    }
+    .experience-ingredients b {
+      padding:7px 8px;
+      border:1px solid rgba(255,253,248,.12);
+      border-radius:999px;
+      color:#edf9f7;
+      background:rgba(255,253,248,.08);
+      font-size:.55rem;
+    }
+    .experience-example-note {
+      margin:0;
+      color:#9fb0b5;
+      font-size:.54rem;
+      line-height:1.35;
+      text-align:center;
+    }
     .consumer-product-card {
       overflow:hidden;
       border:1px solid rgba(157,111,67,.17);
@@ -3780,6 +4134,14 @@
       .vector-proof-grid,.vector-demo-row { grid-template-columns:1fr; }
       .vector-demo-row span { text-align:left; }
       .vector-demo-card { padding:0; border-radius:24px; }
+      .vector-experience-card { padding:16px; border-radius:24px; }
+      .experience-card-head { display:grid; }
+      .experience-card-head b { justify-self:start; }
+      .experience-lab-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .experience-model-step { font-size:.52rem; }
+      .experience-vector-row { grid-template-columns:76px minmax(56px,1fr) 54px; gap:7px; }
+      .experience-blend-card { grid-template-columns:1fr; }
+      .experience-ingredients { justify-content:flex-start; max-width:none; }
       .consumer-product-card img { height:230px; }
       .hero-product-caption { left:14px; top:14px; width:64%; padding:12px; }
       .hero-product-caption strong { font-size:1.12rem; }
@@ -5271,28 +5633,82 @@
         </div>
       </section>
     </div>
-    <section class="vector-manifesto" id="vectorStory" aria-label="Personalized nutrient vector explanation">
+    <section class="vector-manifesto" id="vectorStory" aria-label="Personalized nutrient vector customer experience">
       <div class="vector-copy">
-        <div class="eyebrow">How the science works</div>
-        <h2>The nutrient vector is the target. The blend is the delivery system.</h2>
-        <p>Instead of matching one lab marker to one vitamin, Fluids looks for a coordinated nutrition direction: the mix of nutrients most worth increasing together for your blood markers, age-score inputs, and personal context.</p>
-        <div class="phenoage-definition">
-          <strong>PhenoAge is a bloodwork-based age score that summarizes how your body is functioning compared with your calendar age.</strong>
-          <span>It blends routine markers for inflammation, metabolism, liver, kidney, immune, and protein status into one overall health signal. Lower relative to your age generally points to a more resilient profile; higher can highlight areas worth supporting.</span>
-          <div class="phenoage-chips" aria-label="PhenoAge health signals">
-            <b>Metabolism</b>
-            <b>Inflammation</b>
-            <b>Organ function</b>
+        <div class="eyebrow">Your custom experience</div>
+        <h2>From a blood test to a daily blend built around you.</h2>
+        <p>Upload routine labs, review the extracted markers, and see the coordinated nutrient targets Fluids builds from your bloodwork, age-score inputs, and personal context.</p>
+        <div class="vector-definition">
+          <strong>Your nutrient vector is the complete plan—not a match to a standard product.</strong>
+          <span>It shows the nutrients your custom formula is designed to influence, the modeled increase for each one, and the whole-food ingredients selected to deliver that pattern.</span>
+          <div class="vector-definition-chips" aria-label="Personalized vector features">
+            <b>30 nutrients modeled</b>
+            <b>Every target visible</b>
+            <b>Whole-food delivery</b>
           </div>
         </div>
         <div class="vector-proof-grid">
-          <div><strong>1</strong><span>Bloodwork defines the biological starting point.</span></div>
-          <div><strong>2</strong><span>The model finds a personalized nutrient-vector target.</span></div>
-          <div><strong>3</strong><span>Fruit and vegetable powders are blended to deliver it.</span></div>
+          <div><strong>1</strong><span>Upload a PDF and confirm the extracted lab values.</span></div>
+          <div><strong>2</strong><span>See your ranked nutrient targets and modeled increases.</span></div>
+          <div><strong>3</strong><span>Receive the fruit-and-vegetable formula designed around them.</span></div>
         </div>
       </div>
-      <div class="vector-demo-card">
-        <div id="homeVectorMatrix" aria-label="Animated nutrient vector matrix"></div>
+      <div class="vector-experience-card" aria-label="Illustrative blood test to personalized nutrient vector example">
+        <div class="experience-card-head">
+          <div>
+            <span>Illustrative custom profile</span>
+            <strong>See exactly how the recommendation takes shape.</strong>
+          </div>
+          <b>Example</b>
+        </div>
+        <article class="experience-lab-card" aria-label="Example reviewed blood test">
+          <div class="experience-lab-head">
+            <div class="experience-file">
+              <span class="experience-file-badge">PDF</span>
+              <div>
+                <strong>Example blood test.pdf</strong>
+                <small>Routine laboratory report</small>
+              </div>
+            </div>
+            <span class="experience-reviewed">Values reviewed</span>
+          </div>
+          <div class="experience-lab-grid">
+            <div class="experience-lab-marker"><span>hs-CRP</span><strong>2.4</strong><small>mg/L</small></div>
+            <div class="experience-lab-marker"><span>Glucose</span><strong>103</strong><small>mg/dL</small></div>
+            <div class="experience-lab-marker"><span>ALT</span><strong>31</strong><small>U/L</small></div>
+            <div class="experience-lab-marker"><span>Potassium</span><strong>4.1</strong><small>mmol/L</small></div>
+          </div>
+        </article>
+        <div class="experience-model-step"><span>Bloodwork + context</span><b>↓</b><span>Personalized target</span></div>
+        <article class="experience-vector-card" aria-label="Example personalized nutrient vector">
+          <div class="experience-vector-head">
+            <div>
+              <span>Personalized nutrient vector</span>
+              <strong>Highest-priority modeled increases</strong>
+            </div>
+            <b>5 shown · 30 modeled</b>
+          </div>
+          <div class="experience-vector-row" style="--vector-level:92%;--vector-color:#c62b4f"><strong>Fiber</strong><span class="experience-vector-track"><i></i></span><span>+4.8 g</span></div>
+          <div class="experience-vector-row" style="--vector-level:81%;--vector-color:#71d8dc"><strong>Magnesium</strong><span class="experience-vector-track"><i></i></span><span>+46 mg</span></div>
+          <div class="experience-vector-row" style="--vector-level:74%;--vector-color:#6faec3"><strong>Potassium</strong><span class="experience-vector-track"><i></i></span><span>+380 mg</span></div>
+          <div class="experience-vector-row" style="--vector-level:66%;--vector-color:#f2be37"><strong>Vitamin C</strong><span class="experience-vector-track"><i></i></span><span>+52 mg</span></div>
+          <div class="experience-vector-row" style="--vector-level:57%;--vector-color:#9fb84a"><strong>Folate</strong><span class="experience-vector-track"><i></i></span><span>+88 mcg</span></div>
+        </article>
+        <article class="experience-blend-card" aria-label="Example whole-food blend output">
+          <div>
+            <span>Example custom output</span>
+            <strong>Berry + greens daily blend</strong>
+            <small>Built around this vector rather than assigned to a standard blend lane.</small>
+          </div>
+          <div class="experience-ingredients" aria-label="Example blend ingredients">
+            <b>Raspberry</b>
+            <b>Beet</b>
+            <b>Spinach</b>
+            <b>Lemon</b>
+            <b>Coconut water</b>
+          </div>
+        </article>
+        <p class="experience-example-note">Illustrative experience only. Actual targets depend on reviewed lab values and personal context and are not medical advice.</p>
       </div>
     </section>
     <section class="homepage-flow-intro" id="homepageFlowIntro" aria-label="Build your blend workflow">
@@ -9000,40 +9416,6 @@
       vectorMatrixScenes.forEach(item=>item.resize());
       scienceRunnerVisual?.resize?.();
     }
-    const HOME_VECTOR_FOUNDATION_ID="K5-S2";
-    const HOME_VECTOR_FOUNDATION_FALLBACK={
-      id:HOME_VECTOR_FOUNDATION_ID,
-      function_name:"Daily Vitality",
-      modeled_nutrient_count:30,
-      nutrient_vector_preview:[
-        {nutrient:"vitamin_k_mcg",amount:32.8814,unit:"mcg",conditional_reward_contribution:.1613876,function:"Supports normal clotting and healthy tissue maintenance."},
-        {nutrient:"vitamin_e_mg",amount:.4173,unit:"mg",conditional_reward_contribution:.1353293,function:"Cell-membrane antioxidant support delivered through the fruit and vegetable matrix."},
-        {nutrient:"copper_mg",amount:.0751,unit:"mg",conditional_reward_contribution:.1010299,function:"Mineral cofactor support for normal energy metabolism and antioxidant enzymes."},
-        {nutrient:"fiber_g",amount:2.6404,unit:"g",conditional_reward_contribution:.1004004,function:"Whole-food matrix support for gut function, glucose response, and fullness."},
-        {nutrient:"carbohydrate_g",amount:10.7669,unit:"g",conditional_reward_contribution:.0831850,function:"Fruit- and vegetable-derived carbohydrate supporting daily energy."},
-        {nutrient:"potassium_mg",amount:217.5933,unit:"mg",conditional_reward_contribution:.0787609,function:"Supports fluid balance and normal muscle function."},
-        {nutrient:"magnesium_mg",amount:20.6662,unit:"mg",conditional_reward_contribution:.0605448,function:"Supports normal muscle, nerve, and energy metabolism."},
-        {nutrient:"zinc_mg",amount:.2606,unit:"mg",conditional_reward_contribution:.0500457,function:"Trace-mineral support within the broader whole-food nutrient pattern."}
-      ]
-    };
-    async function initHomeVectorMatrix() {
-      const mount=document.getElementById("homeVectorMatrix");
-      if (!mount || mount.dataset.ready) return;
-      mount.dataset.ready="true";
-      const foundation=HOME_VECTOR_FOUNDATION_FALLBACK;
-      const blendName=standardDisplayName(foundation);
-      renderVectorMatrix(
-        laneVectorItems(foundation).slice(0,8),
-        mount,
-        {
-          stageClass:"hero-matrix",
-          kicker:`${blendName} · whole-food standard`,
-          title:"Eight signals from a 30-nutrient model",
-          countLabel:"8 of 30 modeled",
-          ariaLabel:`Eight selected signals from the ${blendName} 30-nutrient model vector`
-        }
-      );
-    }
     function initScienceRunnerMatrix() {
       const canvas=document.getElementById("scienceRunnerCanvas");
       if (!canvas || scienceRunnerVisual) return;
@@ -11040,7 +11422,6 @@
       card.append(copy,doseEl); parent.appendChild(card);
     }
     initPremiumExperience();
-    initHomeVectorMatrix();
     loadHomeFunctionMenu().catch(() => {});
     initFounderAccess();
     loadSpecs().catch(error => console.warn("Lab schema unavailable until the custom blend API is reachable.",error));
