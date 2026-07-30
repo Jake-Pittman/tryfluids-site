@@ -3391,6 +3391,18 @@
       background:rgba(255,253,248,.08);
       font-size:.55rem;
     }
+    .experience-route-note {
+      grid-column:1 / -1;
+      margin:0;
+      padding-top:10px;
+      border-top:1px solid rgba(255,253,248,.09);
+      color:#c9c1b7;
+      font-size:.58rem;
+      line-height:1.4;
+    }
+    .experience-route-note b {
+      color:#fffaf2;
+    }
     .experience-example-note {
       margin:0;
       color:#9fb0b5;
@@ -5639,8 +5651,8 @@
         <h2>From a blood test to a daily blend built around you.</h2>
         <p>Upload routine labs, review the extracted markers, and see the coordinated nutrient targets Fluids builds from your bloodwork, age-score inputs, and personal context.</p>
         <div class="vector-definition">
-          <strong>Your nutrient vector is the complete plan—not a match to a standard product.</strong>
-          <span>It shows the nutrients your custom formula is designed to influence, the modeled increase for each one, and the whole-food ingredients selected to deliver that pattern.</span>
+          <strong>Your nutrient vector comes first. Product selection happens afterward.</strong>
+          <span>Fluids shows the nutrients worth targeting together and the modeled increase for each one. It then checks whether a ready-made blend covers that vector well enough—or builds a custom formula when it does not.</span>
           <div class="vector-definition-chips" aria-label="Personalized vector features">
             <b>30 nutrients modeled</b>
             <b>Every target visible</b>
@@ -5650,7 +5662,7 @@
         <div class="vector-proof-grid">
           <div><strong>1</strong><span>Upload a PDF and confirm the extracted lab values.</span></div>
           <div><strong>2</strong><span>See your ranked nutrient targets and modeled increases.</span></div>
-          <div><strong>3</strong><span>Receive the fruit-and-vegetable formula designed around them.</span></div>
+          <div><strong>3</strong><span>Get the closest ready-made blend—or a custom formula when needed.</span></div>
         </div>
       </div>
       <div class="vector-experience-card" aria-label="Illustrative blood test to personalized nutrient vector example">
@@ -5667,7 +5679,7 @@
               <span class="experience-file-badge">PDF</span>
               <div>
                 <strong>Example blood test.pdf</strong>
-                <small>Routine laboratory report</small>
+                <small>Original PDF deleted after extraction</small>
               </div>
             </div>
             <span class="experience-reviewed">Values reviewed</span>
@@ -5688,25 +5700,27 @@
             </div>
             <b>5 shown · 30 modeled</b>
           </div>
-          <div class="experience-vector-row" style="--vector-level:92%;--vector-color:#c62b4f"><strong>Fiber</strong><span class="experience-vector-track"><i></i></span><span>+4.8 g</span></div>
-          <div class="experience-vector-row" style="--vector-level:81%;--vector-color:#71d8dc"><strong>Magnesium</strong><span class="experience-vector-track"><i></i></span><span>+46 mg</span></div>
-          <div class="experience-vector-row" style="--vector-level:74%;--vector-color:#6faec3"><strong>Potassium</strong><span class="experience-vector-track"><i></i></span><span>+380 mg</span></div>
-          <div class="experience-vector-row" style="--vector-level:66%;--vector-color:#f2be37"><strong>Vitamin C</strong><span class="experience-vector-track"><i></i></span><span>+52 mg</span></div>
-          <div class="experience-vector-row" style="--vector-level:57%;--vector-color:#9fb84a"><strong>Folate</strong><span class="experience-vector-track"><i></i></span><span>+88 mcg</span></div>
+          <div class="experience-vector-row" style="--vector-level:96%;--vector-color:#71d8dc"><strong>Vitamin K</strong><span class="experience-vector-track"><i></i></span><span>+32.9 mcg</span></div>
+          <div class="experience-vector-row" style="--vector-level:84%;--vector-color:#9de4e6"><strong>Vitamin E</strong><span class="experience-vector-track"><i></i></span><span>+0.42 mg</span></div>
+          <div class="experience-vector-row" style="--vector-level:63%;--vector-color:#6faec3"><strong>Copper</strong><span class="experience-vector-track"><i></i></span><span>+0.08 mg</span></div>
+          <div class="experience-vector-row" style="--vector-level:62%;--vector-color:#43b8b1"><strong>Fiber</strong><span class="experience-vector-track"><i></i></span><span>+2.6 g</span></div>
+          <div class="experience-vector-row" style="--vector-level:50%;--vector-color:#f2be37"><strong>Potassium</strong><span class="experience-vector-track"><i></i></span><span>+218 mg</span></div>
         </article>
-        <article class="experience-blend-card" aria-label="Example whole-food blend output">
+        <article class="experience-blend-card" aria-label="Daily Vitality ready-made blend recommendation">
           <div>
-            <span>Example custom output</span>
-            <strong>Berry + greens daily blend</strong>
-            <small>Built around this vector rather than assigned to a standard blend lane.</small>
+            <span>Recommended ready-made blend</span>
+            <strong>Daily Vitality</strong>
+            <small>The closest ready-made option for this illustrative nutrient vector.</small>
           </div>
-          <div class="experience-ingredients" aria-label="Example blend ingredients">
+          <div class="experience-ingredients" aria-label="Daily Vitality leading ingredients">
+            <b>Lemon</b>
             <b>Raspberry</b>
             <b>Beet</b>
-            <b>Spinach</b>
-            <b>Lemon</b>
+            <b>Strawberry</b>
             <b>Coconut water</b>
+            <b>+11 more</b>
           </div>
+          <p class="experience-route-note"><b>Personalization stays primary.</b> If a ready-made blend does not cover the nutrient vector well enough, Fluids generates a custom formula instead.</p>
         </article>
         <p class="experience-example-note">Illustrative experience only. Actual targets depend on reviewed lab values and personal context and are not medical advice.</p>
       </div>
