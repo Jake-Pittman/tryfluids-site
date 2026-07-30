@@ -5201,7 +5201,7 @@
         <div>
           <div class="eyebrow">Standard blend menu</div>
           <h2>Start with the function that fits your day.</h2>
-          <p>Five population-derived families plus Hydration, Vitamin C, and Performance—each with a distinct nutrient vector and a simple path into custom personalization.</p>
+          <p>Five population-derived families plus Hydration, Vitamin C, and Performance—each with a distinct nutrient vector and a simple path into custom personalization. Biological-age values are modeled 12-week planning proxies, not clinical outcomes.</p>
         </div>
         <div class="home-function-cta home-function-code-note" aria-label="Formula collection">
           <span>8 blends</span>
@@ -9484,9 +9484,22 @@
       return Number.isFinite(number) ? `${number.toFixed(digits)}th pct` : "—";
     }
     function biologicalAgeSignalText(modelFit) {
+      const years=Number(modelFit?.biologicalAgeScore);
+      if (Number.isFinite(years)) {
+        const magnitude=Math.abs(years).toFixed(2);
+        if (modelFit?.biologicalAgeDirection === "decrease" || modelFit?.biologicalAgePositive === true) {
+          return `−${magnitude} yr`;
+        }
+        if (modelFit?.biologicalAgeDirection === "increase") return `+${magnitude} yr`;
+      }
       if (modelFit?.biologicalAgePositive === true) return "Positive";
       if (modelFit?.biologicalAgePositive === false) return "Not positive";
       return "—";
+    }
+    function biologicalAgeSignalLabel(modelFit) {
+      return Number.isFinite(Number(modelFit?.biologicalAgeScore))
+        ? "Modeled 12-week age change"
+        : "Biological age signal";
     }
     function laneVectorItems(lane) {
       const direct=Array.isArray(lane.nutrient_vector) && lane.nutrient_vector.length
@@ -9601,11 +9614,11 @@
         meta.textContent="";
         if (hasV10Fit) {
           addHomeVectorMeta(meta,"Population family fit",percentileText(modelFit.sameLane,1));
-          addHomeVectorMeta(meta,"Biological age signal",biologicalAgeSignalText(modelFit));
+          addHomeVectorMeta(meta,biologicalAgeSignalLabel(modelFit),biologicalAgeSignalText(modelFit));
         } else {
           addHomeVectorMeta(meta,"Population family",Number.isFinite(population) ? percentText(population,1) : "Standard");
           addHomeVectorMeta(meta,"Population family fit",Number.isFinite(modelFit.familyFit) ? percentText(modelFit.familyFit,0) : "Available");
-          addHomeVectorMeta(meta,"Biological age signal",biologicalAgeSignalText(modelFit));
+          addHomeVectorMeta(meta,biologicalAgeSignalLabel(modelFit),biologicalAgeSignalText(modelFit));
         }
       }
       const vectorItems=laneVectorItems(lane);
@@ -10005,7 +10018,7 @@
             ],
             [
               biologicalAgeSignalText(modelFit),
-              "Biological age signal",
+              biologicalAgeSignalLabel(modelFit),
               modelFit.biologicalAgePositive === true ? "is-positive" : ""
             ]
           ].forEach(([value,label,stateClass])=>{
@@ -10321,12 +10334,12 @@
         const metricText=Number.isFinite(modelFit.sameLane)
           ? [
               `${modelFit.sameLane.toFixed(1)}th pct population family fit`,
-              `${biologicalAgeSignalText(modelFit)} biological age signal`
+              `${biologicalAgeSignalText(modelFit)} modeled 12-week age change`
             ]
           : Number.isFinite(modelFit.familyFit)
           ? [
               `${modelFit.familyFit.toFixed(0)}% population family fit`,
-              `${biologicalAgeSignalText(modelFit)} biological age signal`
+              `${biologicalAgeSignalText(modelFit)} modeled 12-week age change`
             ]
           : [
               Number.isFinite(populationShare) ? `${populationShare.toFixed(1)}% population family` : "",
