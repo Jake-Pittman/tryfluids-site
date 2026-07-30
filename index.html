@@ -178,6 +178,42 @@
       letter-spacing:.05em;
       text-transform:uppercase;
     }
+    .founder-standard-recipe-label {
+      display:flex;
+      flex:1 0 100%;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:2px;
+      color:#203445;
+      font-size:.62rem;
+      font-weight:950;
+      letter-spacing:.07em;
+      text-transform:uppercase;
+    }
+    .founder-standard-recipe-label em {
+      color:#8f6b4d;
+      font-size:.58rem;
+      font-style:normal;
+      letter-spacing:.04em;
+    }
+    .home-ingredient-reference.founder-recipe-chip {
+      padding-right:9px;
+      border-color:rgba(13,105,117,.22);
+      background:rgba(239,249,249,.94);
+    }
+    .founder-recipe-chip .home-ingredient-copy {
+      display:grid;
+      gap:1px;
+    }
+    .founder-recipe-chip .home-ingredient-copy em {
+      color:#0d6975;
+      font-size:.56rem;
+      font-style:normal;
+      font-variant-numeric:tabular-nums;
+      letter-spacing:.01em;
+      white-space:nowrap;
+    }
     .hero { padding:54px 0 34px; max-width:780px; }
     .eyebrow { text-transform:uppercase; letter-spacing:.16em; font-weight:800; font-size:.72rem; color:var(--leaf); }
     h1 { font-family: Georgia, "Times New Roman", serif; font-size:clamp(2.8rem,7vw,5.8rem); line-height:.91; letter-spacing:-.055em; margin:16px 0 22px; font-weight:500; }
@@ -5228,7 +5264,7 @@
             <div class="home-vector-modal-list" id="homeVectorModalList"></div>
           </div>
           <div class="home-vector-modal-section">
-            <h4>Powder blend</h4>
+            <h4 id="homeVectorModalFormulaTitle">Powder blend</h4>
             <div class="home-vector-modal-ingredients" id="homeVectorModalIngredients"></div>
             <p id="homeVectorModalRationale"></p>
           </div>
@@ -5782,6 +5818,7 @@
     const viewIds = ["uploadView","reviewView","questionnaireView","results","standardView","discoveryView"];
     let standardBlendLoaded = false;
     let homeFunctionMenuLoaded = false;
+    let homeFunctionMenuLanes = [];
     let lastHomeVectorModalTrigger = null;
     let lastWaitlistModalTrigger = null;
     const launchDiscountCode = "FLUIDS100";
@@ -5831,6 +5868,14 @@
       if (loginForm) loginForm.hidden=founderDemoAuthenticated;
       if (sessionPanel) sessionPanel.hidden=!founderDemoAuthenticated;
       document.documentElement.dataset.founderView=founderDemoAuthenticated ? "true" : "false";
+      refreshFounderStandardViews();
+    }
+    function refreshFounderStandardViews() {
+      const vectorModal=document.getElementById("homeVectorModal");
+      if (vectorModal && !vectorModal.hidden) closeHomeVectorModal();
+      if (homeFunctionMenuLanes.length) {
+        renderHomeFunctionMenu(homeFunctionMenuLanes);
+      }
     }
     function openFounderModal() {
       const modal=document.getElementById("founderModal");
@@ -9592,6 +9637,7 @@
       const matrix=document.getElementById("homeVectorModalMatrix");
       const list=document.getElementById("homeVectorModalList");
       const ingredients=document.getElementById("homeVectorModalIngredients");
+      const formulaTitle=document.getElementById("homeVectorModalFormulaTitle");
       const rationale=document.getElementById("homeVectorModalRationale");
       if (title) title.textContent=standardDisplayName(lane);
       if (description) description.textContent=lane.customer_description || lane.description || lane.positioning || "";
@@ -9676,10 +9722,12 @@
         });
       }
       if (ingredients) {
-        ingredients.textContent="";
-        (lane.ingredients || []).filter(item=>Number(item.blend_percent)>0).slice(0,8).forEach(item=>{
-          ingredients.appendChild(createIngredientReference(item));
-        });
+        renderStandardIngredientReferences(ingredients,lane.ingredients || [],8);
+      }
+      if (formulaTitle) {
+        formulaTitle.textContent=founderDemoAuthenticated
+          ? "Founder production formula · 15g serving"
+          : "Powder blend";
       }
       if (rationale) {
         rationale.textContent=lane.data_rationale || "This standard blend is a population-derived nutrient lane from the NHANES custom-blend run.";
@@ -9753,6 +9801,46 @@
       copy.textContent=itemName;
       chip.appendChild(copy);
       return chip;
+    }
+    function standardIngredientGrams(ingredient,servingGrams=15) {
+      const direct=Number(ingredient?.prototype_grams_15g);
+      if (Number.isFinite(direct)) return direct;
+      const percent=Number(ingredient?.blend_percent);
+      return Number.isFinite(percent) ? percent/100*servingGrams : NaN;
+    }
+    function createFounderIngredientReference(ingredient) {
+      const chip=createIngredientReference(ingredient);
+      chip.classList.add("founder-recipe-chip");
+      const percent=Number(ingredient?.blend_percent);
+      const grams=standardIngredientGrams(ingredient);
+      const dose=document.createElement("em");
+      dose.textContent=[
+        Number.isFinite(percent) ? `${percent.toFixed(1)}%` : "",
+        Number.isFinite(grams) ? `${grams.toFixed(2)}g` : ""
+      ].filter(Boolean).join(" · ");
+      chip.querySelector(".home-ingredient-copy")?.appendChild(dose);
+      chip.setAttribute(
+        "aria-label",
+        `${String(ingredient?.item || "Ingredient")}${dose.textContent ? `, ${dose.textContent}` : ""}`
+      );
+      return chip;
+    }
+    function renderStandardIngredientReferences(parent,ingredientRows,publicLimit=4) {
+      parent.textContent="";
+      const available=(ingredientRows || []).filter(item=>Number(item.blend_percent)>0);
+      if (founderDemoAuthenticated) {
+        const label=document.createElement("div");
+        label.className="founder-standard-recipe-label";
+        const title=document.createElement("span"); title.textContent="Founder production view";
+        const serving=document.createElement("em"); serving.textContent="percent · grams per 15g serving";
+        label.append(title,serving);
+        parent.appendChild(label);
+        available.forEach(item=>parent.appendChild(createFounderIngredientReference(item)));
+        return;
+      }
+      available.slice(0,publicLimit).forEach(item=>{
+        parent.appendChild(createIngredientReference(item));
+      });
     }
     function openWaitlistModalFromTrigger(trigger) {
       openWaitlistModal({
@@ -10057,9 +10145,7 @@
           nutrients.appendChild(row);
         });
         const ingredients=document.createElement("div"); ingredients.className="home-function-ingredients";
-        (lane.ingredients || []).slice(0,4).forEach(ingredient=>{
-          ingredients.appendChild(createIngredientReference(ingredient));
-        });
+        renderStandardIngredientReferences(ingredients,lane.ingredients || [],4);
         const actions=document.createElement("div"); actions.className="home-function-actions";
         const button=document.createElement("button");
         button.type="button";
@@ -10084,7 +10170,8 @@
       if (homeFunctionMenuLoaded) return;
       const renderLoadedMenu=data=>{
         const lanes=data.function_lanes || data.population_standard_blends || [];
-        renderHomeFunctionMenu(lanes);
+        homeFunctionMenuLanes=[...lanes];
+        renderHomeFunctionMenu(homeFunctionMenuLanes);
         homeFunctionMenuLoaded=true;
         trackEvent("standard_blend_menu_loaded",{blend_count:lanes.length});
       };
