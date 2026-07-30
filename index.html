@@ -6031,6 +6031,83 @@
       }).catch(() => {});
     }
     trackEvent("page_view",{title:document.title});
+    let analyticsActiveMilliseconds=0;
+    let analyticsVisibleStartedAt=document.visibilityState === "visible" ? performance.now() : null;
+    let analyticsMaxScrollPct=0;
+    const analyticsSeenSections=new Set();
+    const analyticsSeenStandardBlends=new Set();
+    const analyticsSeenQuestionSections=new Set();
+    function updateAnalyticsScrollDepth() {
+      const scrollable=Math.max(1,document.documentElement.scrollHeight-window.innerHeight);
+      const percentage=Math.round(Math.max(0,Math.min(1,window.scrollY/scrollable))*100);
+      analyticsMaxScrollPct=Math.max(analyticsMaxScrollPct,percentage);
+    }
+    window.addEventListener("scroll",updateAnalyticsScrollDepth,{passive:true});
+    document.addEventListener("visibilitychange",()=>{
+      if (document.visibilityState === "visible") {
+        analyticsVisibleStartedAt=performance.now();
+      } else if (analyticsVisibleStartedAt !== null) {
+        analyticsActiveMilliseconds+=performance.now()-analyticsVisibleStartedAt;
+        analyticsVisibleStartedAt=null;
+      }
+    });
+    window.addEventListener("pagehide",()=>{
+      if (analyticsVisibleStartedAt !== null) {
+        analyticsActiveMilliseconds+=performance.now()-analyticsVisibleStartedAt;
+        analyticsVisibleStartedAt=null;
+      }
+      updateAnalyticsScrollDepth();
+      trackEvent("page_session_summary",{
+        active_seconds:Math.max(1,Math.round(analyticsActiveMilliseconds/1000)),
+        max_scroll_pct:analyticsMaxScrollPct
+      });
+    });
+    if ("IntersectionObserver" in window) {
+      const sectionObserver=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{
+          if (!entry.isIntersecting || entry.intersectionRatio<0.28) return;
+          const section=entry.target;
+          const sectionName=section.dataset.analyticsSection || section.id;
+          if (!sectionName || analyticsSeenSections.has(sectionName)) return;
+          analyticsSeenSections.add(sectionName);
+          trackEvent("section_viewed",{
+            section:sectionName,
+            section_label:section.dataset.analyticsLabel || sectionName.replaceAll(/[-_]/g," ")
+          });
+          sectionObserver.unobserve(section);
+        });
+      },{threshold:[0.28,0.55]});
+      [
+        ["vectorStory","model_story","How the nutrient model works"],
+        ["homepageFlowIntro","personalization_intro","Personalized blend introduction"],
+        ["homeFunctionMenu","standard_blends","Standard blend collection"],
+        ["uploadView","pdf_upload","PDF upload"],
+        ["customBlendHero","custom_blend_result","Selected custom blend"],
+        ["personalizationProofPanel","personalization_proof","Why this is personalized"]
+      ].forEach(([id,section,label])=>{
+        const element=document.getElementById(id);
+        if (!element) return;
+        element.dataset.analyticsSection=section;
+        element.dataset.analyticsLabel=label;
+        sectionObserver.observe(element);
+      });
+    }
+    const standardBlendCardObserver="IntersectionObserver" in window
+      ? new IntersectionObserver(entries=>{
+          entries.forEach(entry=>{
+            if (!entry.isIntersecting || entry.intersectionRatio<0.45) return;
+            const card=entry.target;
+            const blendId=card.dataset.analyticsBlendId || "";
+            if (!blendId || analyticsSeenStandardBlends.has(blendId)) return;
+            analyticsSeenStandardBlends.add(blendId);
+            trackEvent("standard_blend_card_viewed",{
+              blend_id:blendId,
+              blend_name:card.dataset.analyticsBlendName || ""
+            });
+            standardBlendCardObserver.unobserve(card);
+          });
+        },{threshold:[0.45,0.7]})
+      : null;
     let discoveryLoaded = false;
     let discoveryCache = null;
     let substitutionBlendCache = [];
@@ -6392,6 +6469,13 @@
       questionNext.style.display = currentQuestion === 3 ? "none" : "inline-block";
       analyzeBtn.style.display = currentQuestion === 3 ? "inline-block" : "none";
       syncAnalysisConsent();
+      if (!analyticsSeenQuestionSections.has(currentQuestion)) {
+        analyticsSeenQuestionSections.add(currentQuestion);
+        trackEvent("questionnaire_section_viewed",{
+          section:currentQuestion+1,
+          section_label:labels[currentQuestion]
+        });
+      }
     }
 
     function syncAnalysisConsent() {
@@ -6647,7 +6731,10 @@
     document.querySelectorAll("[data-question-tab]").forEach(item=>item.addEventListener("click",()=>showQuestion(Number(item.dataset.questionTab))));
     dataLoopConsent.addEventListener("change",()=>{
       syncAnalysisConsent();
-      if (dataLoopConsent.checked) showError("");
+      if (dataLoopConsent.checked) {
+        showError("");
+        trackEvent("data_loop_consent_accepted",{consent_version:dataLoopConsentVersion});
+      }
     });
     analyzeBtn.addEventListener("click", async () => {
       if (!dataLoopConsent.checked) {
@@ -9878,6 +9965,8 @@
         const palette=lanePalette(index);
         const card=document.createElement("article");
         card.className="home-function-card";
+        card.dataset.analyticsBlendId=lane.id || `standard-${index+1}`;
+        card.dataset.analyticsBlendName=standardDisplayName(lane);
         card.style.setProperty("--lane-a",palette[0]);
         card.style.setProperty("--lane-b",palette[1]);
         card.style.setProperty("--lane-c",palette[2]);
@@ -9965,6 +10054,7 @@
         if (modelMetrics.childNodes.length) card.appendChild(modelMetrics);
         card.append(visual,nutrients,ingredients,actions);
         grid.appendChild(card);
+        standardBlendCardObserver?.observe(card);
       });
     }
     async function loadHomeFunctionMenu() {
