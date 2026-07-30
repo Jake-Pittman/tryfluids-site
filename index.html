@@ -518,6 +518,7 @@
     .custom-blend-pill.secondary { color:white; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.18); }
     .custom-blend-pill small { display:block; margin-top:2px; font-size:.58rem; line-height:1.25; opacity:.76; text-transform:uppercase; letter-spacing:.08em; }
     .custom-blend-body { display:grid; grid-template-columns:minmax(0,1.04fr) minmax(340px,.96fr); gap:18px; align-items:start; }
+    .custom-blend-body.fingerprint-only { grid-template-columns:1fr; }
     .custom-blend-card { padding:18px; border:1px solid rgba(255,255,255,.13); border-radius:22px; background:rgba(255,255,255,.08); box-shadow:inset 0 1px 0 rgba(255,255,255,.08); }
     .custom-blend-card h4 { margin:0 0 6px; color:white; font-size:1rem; }
     .custom-blend-card p { margin:0 0 14px; color:#c7e4e8; font-size:.78rem; line-height:1.45; }
@@ -3254,18 +3255,126 @@
       text-overflow:ellipsis;
     }
     .custom-product-reveal {
-      display:grid;
-      grid-template-columns:minmax(0,1fr) 96px;
-      gap:18px;
-      align-items:center;
+      display:block;
       margin:-6px 0 20px;
-      padding:15px 18px;
+      padding:20px;
+      scroll-margin-top:108px;
       border:1px solid rgba(255,253,248,.14);
       border-radius:24px;
       background:rgba(255,253,248,.08);
       box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
     }
-    .custom-product-reveal span {
+    .custom-full-vector-head {
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:20px;
+      margin-bottom:16px;
+    }
+    .custom-full-vector-count {
+      flex:0 0 auto;
+      min-width:108px;
+      padding:10px 12px;
+      border:1px solid rgba(255,253,248,.13);
+      border-radius:16px;
+      color:#fffdf8;
+      background:rgba(255,253,248,.08);
+      text-align:right;
+    }
+    .custom-full-vector-count b {
+      display:block;
+      font-family:var(--display-font);
+      font-size:1.8rem;
+      font-weight:500;
+      line-height:.9;
+    }
+    .custom-full-vector-count em {
+      display:block;
+      margin-top:5px;
+      color:#bfcbd0;
+      font-size:.56rem;
+      font-style:normal;
+      font-weight:850;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .custom-full-vector-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(142px,1fr));
+      gap:8px;
+    }
+    .custom-full-vector-item {
+      --vector-color:#71d8dc;
+      position:relative;
+      min-width:0;
+      display:grid;
+      gap:8px;
+      min-height:108px;
+      padding:12px;
+      overflow:hidden;
+      border:1px solid rgba(255,253,248,.12);
+      border-radius:17px;
+      color:#fffdf8;
+      background:linear-gradient(150deg,rgba(255,255,255,.11),rgba(255,255,255,.04));
+    }
+    .custom-full-vector-item::after {
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:3px;
+      background:var(--vector-color);
+      opacity:.78;
+    }
+    .custom-full-vector-meta {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+    }
+    .custom-full-vector-rank {
+      color:#9fb3b9;
+      font-size:.55rem;
+      font-weight:900;
+      letter-spacing:.08em;
+    }
+    .custom-full-vector-category {
+      padding:4px 6px;
+      border-radius:999px;
+      color:var(--vector-color);
+      background:color-mix(in srgb,var(--vector-color) 12%,transparent);
+      font-size:.52rem;
+      font-weight:900;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+    .custom-full-vector-item strong {
+      overflow-wrap:anywhere;
+      font-size:.76rem;
+      line-height:1.2;
+    }
+    .custom-full-vector-item b {
+      align-self:end;
+      color:#fffdf8;
+      font-family:var(--display-font);
+      font-size:1.2rem;
+      font-weight:500;
+      letter-spacing:-.02em;
+    }
+    .custom-full-vector-item small {
+      color:#aebfc4;
+      font-size:.55rem;
+      line-height:1.2;
+      text-transform:uppercase;
+    }
+    .custom-full-vector-empty {
+      padding:14px;
+      border:1px solid rgba(255,253,248,.12);
+      border-radius:16px;
+      color:#d9d1c6;
+    }
+    .custom-product-reveal-kicker {
       display:block;
       color:#f1c989;
       font-size:.62rem;
@@ -3273,7 +3382,7 @@
       letter-spacing:.16em;
       text-transform:uppercase;
     }
-    .custom-product-reveal strong {
+    .custom-product-reveal-copy > strong {
       display:block;
       margin-top:5px;
       color:#fffdf8;
@@ -3282,19 +3391,12 @@
       font-weight:500;
       letter-spacing:-.035em;
     }
-    .custom-product-reveal small {
+    .custom-product-reveal-copy > small {
       display:block;
       max-width:780px;
       margin-top:5px;
       color:#d9d1c6;
       line-height:1.45;
-    }
-    .custom-product-reveal img {
-      justify-self:end;
-      width:82px;
-      max-height:156px;
-      object-fit:contain;
-      filter:drop-shadow(0 14px 18px rgba(0,0,0,.22));
     }
     .custom-blend-pill {
       background:linear-gradient(135deg,#fffdf8,#f0e4d5);
@@ -3484,8 +3586,14 @@
         max-width:none;
         text-align:left;
       }
-      .custom-product-reveal { grid-template-columns:1fr; }
-      .custom-product-reveal img { display:none; }
+      .custom-full-vector-head {
+        display:grid;
+        gap:10px;
+      }
+      .custom-full-vector-count {
+        justify-self:start;
+        text-align:left;
+      }
       .homepage-flow-intro { grid-template-columns:1fr; }
       .homepage-flow-intro button { width:100%; }
       .standard-product-visual { display:none; }
@@ -3532,6 +3640,27 @@
         font-size:.58rem;
         overflow-wrap:anywhere;
         text-overflow:clip;
+      }
+      .custom-product-reveal {
+        padding:16px;
+        scroll-margin-top:176px;
+      }
+      .custom-full-vector-grid {
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:7px;
+      }
+      .custom-full-vector-item {
+        min-height:96px;
+        padding:10px 8px;
+      }
+      .custom-full-vector-category {
+        display:none;
+      }
+      .custom-full-vector-item strong {
+        font-size:.68rem;
+      }
+      .custom-full-vector-item b {
+        font-size:1.02rem;
       }
       .hero {
         gap:16px;
@@ -4251,6 +4380,79 @@
       grid-template-columns:repeat(2,minmax(0,1fr));
       gap:12px;
     }
+    .results-age-trajectory {
+      grid-column:1 / -1;
+      position:relative;
+      z-index:1;
+      padding:16px;
+      border:1px solid rgba(157,111,67,.14);
+      border-radius:22px;
+      background:rgba(255,253,248,.72);
+    }
+    .results-age-trajectory[hidden] { display:none; }
+    .results-age-trajectory-head {
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:12px;
+    }
+    .results-age-trajectory-head strong {
+      display:block;
+      color:var(--ink);
+      font-size:.82rem;
+    }
+    .results-age-trajectory-head span {
+      color:var(--muted);
+      font-size:.66rem;
+      line-height:1.4;
+      text-align:right;
+    }
+    .results-age-trajectory-grid {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:8px;
+    }
+    .results-age-trajectory-point {
+      position:relative;
+      display:grid;
+      gap:5px;
+      min-height:94px;
+      padding:12px;
+      overflow:hidden;
+      border:1px solid rgba(157,111,67,.12);
+      border-radius:16px;
+      background:linear-gradient(145deg,#fffdf8,#f4eadb);
+    }
+    .results-age-trajectory-point::after {
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:4px;
+      background:linear-gradient(90deg,var(--raspberry),var(--lemon),var(--lime));
+      opacity:var(--trajectory-fill,.35);
+    }
+    .results-age-trajectory-point small {
+      color:#7b756e;
+      font-size:.58rem;
+      font-weight:900;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+    }
+    .results-age-trajectory-point strong {
+      color:var(--ink);
+      font-family:var(--display-font);
+      font-size:1.55rem;
+      font-weight:500;
+      letter-spacing:-.035em;
+    }
+    .results-age-trajectory-point span {
+      color:var(--muted);
+      font-size:.6rem;
+      line-height:1.35;
+    }
     .results-age-stat {
       min-height:210px;
       display:flex;
@@ -4585,6 +4787,16 @@
       }
     }
     @media (max-width:560px) {
+      #results .results-top-nav {
+        gap:4px;
+        padding:6px;
+      }
+      #results .results-top-nav .jump-button {
+        flex:1 1 0;
+        min-width:0;
+        padding:8px 4px;
+        font-size:.61rem;
+      }
       .results-head {
         flex-direction:column;
         align-items:flex-start;
@@ -4610,6 +4822,22 @@
       .results-age-stat strong {
         font-size:clamp(2.25rem,11vw,3rem);
       }
+      .results-age-trajectory {
+        padding:12px;
+      }
+      .results-age-trajectory-head {
+        display:grid;
+        gap:4px;
+      }
+      .results-age-trajectory-head span {
+        text-align:left;
+      }
+      .results-age-trajectory-grid {
+        grid-template-columns:1fr;
+      }
+      .results-age-trajectory-point {
+        min-height:80px;
+      }
       .results-age-next {
         justify-content:flex-start;
       }
@@ -4617,6 +4845,9 @@
     @media (max-width:340px) {
       .results-age-grid {
         grid-template-columns:1fr;
+      }
+      .custom-full-vector-grid {
+        grid-template-columns:repeat(2,minmax(0,1fr));
       }
     }
     .personalization-proof {
@@ -4795,6 +5026,83 @@
     .profile-family-context strong {
       color:var(--ink);
     }
+    .personalization-method-details {
+      margin-top:16px;
+      border:1px solid rgba(157,111,67,.15);
+      border-radius:20px;
+      background:rgba(255,255,255,.58);
+    }
+    .personalization-method-details > summary {
+      padding:14px 16px;
+      color:var(--ink);
+      cursor:pointer;
+      font-size:.75rem;
+      font-weight:900;
+      list-style:none;
+    }
+    .personalization-method-details > summary::-webkit-details-marker { display:none; }
+    .personalization-method-details > summary::after {
+      content:"+";
+      float:right;
+      color:#9d6f43;
+      font-size:1rem;
+    }
+    .personalization-method-details[open] > summary::after { content:"−"; }
+    .personalization-method-details .personalization-flow {
+      margin:0 14px 14px;
+    }
+    .personalization-method-details .profile-family-context {
+      margin:0 14px 14px;
+    }
+    .results-deep-dive {
+      margin:20px 0 0;
+      border:1px solid rgba(157,111,67,.18);
+      border-radius:26px;
+      background:linear-gradient(145deg,#fffdf8,#f4ecdf);
+      box-shadow:0 18px 46px rgba(13,27,42,.07);
+    }
+    .results-deep-dive > summary {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      padding:18px 20px;
+      cursor:pointer;
+      list-style:none;
+    }
+    .results-deep-dive > summary::-webkit-details-marker { display:none; }
+    .results-deep-dive > summary span,
+    .results-deep-dive > summary strong,
+    .results-deep-dive > summary small {
+      display:block;
+    }
+    .results-deep-dive > summary strong {
+      color:var(--ink);
+      font-size:.88rem;
+    }
+    .results-deep-dive > summary small {
+      margin-top:4px;
+      color:var(--muted);
+      font-size:.68rem;
+      line-height:1.4;
+    }
+    .results-deep-dive > summary b {
+      flex:0 0 auto;
+      padding:8px 10px;
+      border-radius:999px;
+      color:#fffdf8;
+      background:var(--ink);
+      font-size:.62rem;
+    }
+    .results-deep-dive > summary b::after { content:"Open details"; }
+    .results-deep-dive[open] > summary b::after { content:"Close details"; }
+    .results-deep-dive-body {
+      padding:0 18px 18px;
+      border-top:1px solid rgba(157,111,67,.13);
+    }
+    .results-deep-dive-body > :first-child {
+      margin-top:18px !important;
+    }
     @media (max-width:860px) {
       .personalization-proof-head,
       .personalization-proof-grid,
@@ -4810,6 +5118,9 @@
         content:"↓";
         left:20px;
         top:-14px;
+      }
+      .results-deep-dive > summary {
+        align-items:flex-start;
       }
     }
     @media (prefers-reduced-motion:reduce) {
@@ -5119,7 +5430,7 @@
         <button type="button" class="jump-button active" data-scroll-target="resultsAgeHero">Age outlook</button>
         <button type="button" class="jump-button" data-scroll-target="customBlendHero">Your blend</button>
         <button type="button" class="jump-button" data-scroll-target="personalizationProofPanel">Why personalized</button>
-        <button type="button" class="jump-button" data-scroll-target="nutrientStrategySection">Full vector</button>
+        <button type="button" class="jump-button" data-scroll-target="customFullNutrientVector">Full vector</button>
       </nav>
       <div class="results-head">
         <div><div class="eyebrow">Personalized nutrition vector</div><h2>Your personalized nutrient blueprint.</h2></div>
@@ -5143,6 +5454,7 @@
             <span class="results-age-change" id="projectedBioAgeChange">Modeled direction unavailable</span>
           </article>
         </div>
+        <div class="results-age-trajectory" id="resultsAgeTrajectory"></div>
         <div class="results-age-note">
           <strong id="projectedBioAgeBasis">Model-estimated direction</strong>
           <span id="projectedBioAgeNote">This is a planning projection, not a guaranteed clinical outcome. Repeat labs are how the direction is confirmed.</span>
@@ -5160,9 +5472,18 @@
           <div class="personalization-proof-seal">Biomarker-derived</div>
         </div>
         <div class="personalization-proof-grid" id="personalizationProofGrid"></div>
-        <div class="personalization-flow" id="personalizationFlow"></div>
-        <div class="profile-family-context" id="profileFamilyContext" hidden></div>
+        <details class="personalization-method-details">
+          <summary>See how your biomarkers became this formula</summary>
+          <div class="personalization-flow" id="personalizationFlow"></div>
+          <div class="profile-family-context" id="profileFamilyContext" hidden></div>
+        </details>
       </section>
+      <details class="results-deep-dive" id="resultsDeepDive">
+        <summary>
+          <span><strong>Explore the model details</strong><small>Age-score context, formula alternatives, recommendation graph, and technical action map</small></span>
+          <b aria-hidden="true"></b>
+        </summary>
+        <div class="results-deep-dive-body">
       <div class="kpis results-support-kpis">
         <div class="kpi"><small>Chronological age</small><strong id="chronoAge">—</strong></div>
         <div class="kpi"><small id="ageDeltaLabel">Age difference</small><strong id="ageDelta">—</strong></div>
@@ -5207,6 +5528,8 @@
         <p class="section-copy">This expands the priority nutrient direction behind the custom blend and shows the broader increase, substitution, or deprioritization logic.</p>
         <div id="nutrientActionMap" class="action-map-grid"></div>
       </div>
+        </div>
+      </details>
     </section>
 
     <section class="standard-view app-view" id="standardView">
@@ -6694,6 +7017,46 @@
         basis:String(effect.basis || "Personalized counterfactual model")
       };
     }
+    function renderResultsAgeTrajectory(effect) {
+      const parent=document.getElementById("resultsAgeTrajectory");
+      parent.textContent="";
+      const rows=(effect?.adjustment_timeline?.timeline || [])
+        .filter(row=>Number(row?.week)>0 && Number.isFinite(Number(row?.predicted_change_years)))
+        .slice(0,3);
+      if (!rows.length) {
+        parent.hidden=true;
+        return;
+      }
+      parent.hidden=false;
+      const head=document.createElement("div"); head.className="results-age-trajectory-head";
+      const title=document.createElement("strong"); title.textContent="Month-over-month modeled biological-age trajectory";
+      const note=document.createElement("span"); note.textContent="Cumulative direction at each checkpoint; the smaller line shows the modeled change since the prior month.";
+      head.append(title,note);
+      const grid=document.createElement("div"); grid.className="results-age-trajectory-grid";
+      let previousChange=0;
+      rows.forEach((row,index)=>{
+        const change=Number(row.predicted_change_years);
+        const incremental=change-previousChange;
+        previousChange=change;
+        const cumulativeAbs=Math.abs(change);
+        const incrementalAbs=Math.abs(incremental);
+        const point=document.createElement("article"); point.className="results-age-trajectory-point";
+        const fraction=Math.max(0,Math.min(1,Number(row.response_fraction || (index+1)/rows.length)));
+        point.style.setProperty("--trajectory-fill",String(.28+fraction*.72));
+        const month=document.createElement("small"); month.textContent=`Month ${index+1} · week ${Number(row.week)}`;
+        const value=document.createElement("strong");
+        value.textContent=Math.abs(change)<.005
+          ? "Neutral"
+          : `${cumulativeAbs<1 ? cumulativeAbs.toFixed(2) : cumulativeAbs.toFixed(1)} yr ${change<0 ? "drop" : "increase"}`;
+        const delta=document.createElement("span");
+        delta.textContent=Math.abs(incremental)<.005
+          ? "No modeled change from the prior checkpoint"
+          : `${incrementalAbs<1 ? incrementalAbs.toFixed(2) : incrementalAbs.toFixed(1)} yr modeled ${incremental<0 ? "drop" : "increase"} this month`;
+        point.append(month,value,delta);
+        grid.appendChild(point);
+      });
+      parent.append(head,grid);
+    }
     function renderResultsAgeHero(data,option) {
       const projection=selectedBiologicalAgeProjection(data,option);
       const currentLabel=document.getElementById("bioAgeLabel");
@@ -6703,6 +7066,7 @@
       const projectedChange=document.getElementById("projectedBioAgeChange");
       const projectedBasis=document.getElementById("projectedBioAgeBasis");
       const projectedNote=document.getElementById("projectedBioAgeNote");
+      renderResultsAgeTrajectory(option?.predicted_age_effect || {});
       currentLabel.textContent=`Current ${projection.scoreLabel}`;
       currentValue.textContent=projection.current===null
         ? "Unavailable"
@@ -6755,6 +7119,12 @@
       const status = document.getElementById("recommendationStatus");
       const blendOptions = data.blend_options || [];
       const labCompleteness = data.lab_completeness || {};
+      const deepDive=document.getElementById("resultsDeepDive");
+      if (deepDive) deepDive.open=false;
+      const methodDetails=document.querySelector(".personalization-method-details");
+      if (methodDetails) methodDetails.open=false;
+      const founderDiagnostic=document.getElementById("archetypeReportPanel");
+      if (founderDiagnostic) founderDiagnostic.hidden=!founderDemoAuthenticated;
       const predictedReward = Number(
         data.model_metrics?.final_exploratory_reward
         ?? data.model_metrics?.predicted_reward
@@ -7121,6 +7491,85 @@
       showcase.append(head,gallery);
       parent.appendChild(showcase);
     }
+    function completePersonalizedNutrientVector(data,option) {
+      const personalizedRows=(data?.personalized_nutrient_vector || []).length
+        ? data.personalized_nutrient_vector
+        : (data?.nutrient_action_map || []).length
+        ? data.nutrient_action_map
+        : (data?.nutrient_opportunity_vector || []).length
+        ? data.nutrient_opportunity_vector
+        : option?.nutrient_opportunities || [];
+      const merged=new Map();
+      personalizedRows.forEach(row=>{
+        const nutrient=String(row?.nutrient || "").trim();
+        const direction=String(row?.direction || row?.action || "increase").toLowerCase();
+        const amount=Number(row?.target_change ?? row?.amount ?? row?.optimized_amount);
+        if (!nutrient || direction==="decrease" || !Number.isFinite(amount) || amount<=0) return;
+        if (!merged.has(nutrient)) {
+          merged.set(nutrient,{
+            nutrient,
+            amount,
+            unit:String(row?.unit || ""),
+            agreement:Number(row?.agreement ?? row?.absolute_share),
+            confidence:String(row?.confidence || "")
+          });
+        }
+      });
+      return Array.from(merged.values());
+    }
+    function formatFullVectorTarget(item) {
+      const amount=Number(item?.amount);
+      if (!Number.isFinite(amount)) return "—";
+      const digits=Math.abs(amount)>=100 ? 3 : Math.abs(amount)>=10 ? 3 : Math.abs(amount)>=1 ? 3 : 2;
+      return `+${amount.toPrecision(digits)} ${item.unit || ""}`.trim();
+    }
+    function renderCustomFullNutrientVector(data,option,parent) {
+      const vector=completePersonalizedNutrientVector(data,option);
+      const shell=document.createElement("section");
+      shell.className="custom-product-reveal";
+      shell.id="customFullNutrientVector";
+      const head=document.createElement("div"); head.className="custom-full-vector-head";
+      const copy=document.createElement("div"); copy.className="custom-product-reveal-copy";
+      const kicker=document.createElement("span"); kicker.className="custom-product-reveal-kicker"; kicker.textContent="Why this formula";
+      const title=document.createElement("strong"); title.textContent="Best whole-food delivery for your complete nutrient vector";
+      const detail=document.createElement("small");
+      detail.textContent="These are the personalized nutrient increases produced from the reviewed biomarkers. The selected formula was reranked for how well it delivers this complete direction.";
+      copy.append(kicker,title,detail);
+      const count=document.createElement("div"); count.className="custom-full-vector-count";
+      const countValue=document.createElement("b"); countValue.textContent=String(vector.length);
+      const countLabel=document.createElement("em"); countLabel.textContent="Nutrient targets";
+      count.append(countValue,countLabel);
+      head.append(copy,count);
+      shell.appendChild(head);
+      if (!vector.length) {
+        const empty=document.createElement("div"); empty.className="custom-full-vector-empty";
+        empty.textContent="The complete nutrient-vector payload was unavailable for this run. The prioritized fingerprint remains below.";
+        shell.appendChild(empty);
+        parent.appendChild(shell);
+        return;
+      }
+      const grid=document.createElement("div"); grid.className="custom-full-vector-grid";
+      vector.forEach((item,index)=>{
+        const card=document.createElement("article"); card.className="custom-full-vector-item";
+        card.style.setProperty("--vector-color",nutrientColor(item.nutrient));
+        const meta=document.createElement("div"); meta.className="custom-full-vector-meta";
+        const rank=document.createElement("span"); rank.className="custom-full-vector-rank"; rank.textContent=String(index+1).padStart(2,"0");
+        const category=document.createElement("span"); category.className="custom-full-vector-category"; category.textContent=nutrientCategory(item.nutrient);
+        meta.append(rank,category);
+        const name=document.createElement("strong"); name.textContent=nutrientLabel(item.nutrient);
+        const amount=document.createElement("b"); amount.textContent=formatFullVectorTarget(item);
+        const label=document.createElement("small"); label.textContent="Personalized increase target";
+        card.append(meta,name,amount,label);
+        grid.appendChild(card);
+      });
+      shell.appendChild(grid);
+      parent.appendChild(shell);
+    }
+    function openResultsDeepDive(targetId) {
+      const details=document.getElementById("resultsDeepDive");
+      if (details) details.open=true;
+      window.requestAnimationFrame(()=>scrollToTarget(targetId));
+    }
     function renderCustomBlendHero(option,data) {
       const hero=document.getElementById("customBlendHero");
       hero.textContent="";
@@ -7153,44 +7602,10 @@
       metricStack.append(pill,agePill);
       top.append(copy,metricStack); hero.appendChild(top);
       renderCustomIngredientShowcase(option,hero);
-      const productReveal=document.createElement("div");
-      productReveal.className="custom-product-reveal";
-      const revealCopy=document.createElement("div");
-      const revealKicker=document.createElement("span"); revealKicker.textContent="Why this formula";
-      const revealTitle=document.createElement("strong"); revealTitle.textContent="Best whole-food delivery for your nutrient vector";
-      const revealDetail=document.createElement("small"); revealDetail.textContent="The model compared feasible formulas, reranked them against your personalized target, and selected this fruit-and-vegetable powder blend.";
-      revealCopy.append(revealKicker,revealTitle,revealDetail);
-      const revealImage=document.createElement("img"); revealImage.src="/assets/fluids/fluids_stick_pack_transparent.png"; revealImage.alt="";
-      productReveal.append(revealCopy,revealImage);
-      hero.appendChild(productReveal);
-      const body=document.createElement("div"); body.className="custom-blend-body";
-      appendCustomFunctionPanel(option,body,{hero:true});
-      const solve=document.createElement("div"); solve.className="custom-blend-card";
-      solve.innerHTML=founderDemoAuthenticated
-        ? "<h4>How we solve it with powders</h4><p>Founder production view shows the normalized dry-blend concept weights used in this model run.</p>"
-        : "<h4>How we solve it with powders</h4><p>These whole-food powder ingredients deliver the selected nutrient vector. Exact formulation ratios remain proprietary.</p>";
-      const ingredientList=document.createElement("div");
-      ingredientList.className=founderDemoAuthenticated ? "hero-ingredient-list" : "ingredient-identity-list";
-      (option.ingredients || []).slice(0,8).forEach(ingredient=>{
-        if (!founderDemoAuthenticated || !Number.isFinite(Number(ingredient.blend_percent))) {
-          const chip=document.createElement("span");
-          chip.className="ingredient-identity-chip";
-          chip.textContent=ingredient.item;
-          ingredientList.appendChild(chip);
-          return;
-        }
-        const row=document.createElement("div"); row.className="hero-ingredient-row";
-        const name=document.createElement("span"); name.textContent=ingredient.item;
-        const track=document.createElement("span"); track.className="hero-ingredient-track";
-        const fill=document.createElement("i"); fill.className="hero-ingredient-fill";
-        fill.style.width=`${Math.min(100,Math.max(3,Number(ingredient.blend_percent)*2.2))}%`;
-        track.appendChild(fill);
-        const pct=document.createElement("span"); pct.textContent=`${Number(ingredient.blend_percent).toFixed(1)}%`;
-        row.append(name,track,pct); ingredientList.appendChild(row);
-      });
-      solve.appendChild(ingredientList);
+      renderCustomFullNutrientVector(data,option,hero);
+      const body=document.createElement("div"); body.className="custom-blend-body fingerprint-only";
       const vector=document.createElement("div"); vector.className="custom-blend-card vector-primary";
-      vector.innerHTML="<h4>Your nutrient-vector fingerprint</h4><p>These are the priority nutrient increases produced from the reviewed biomarkers. The percentages describe each nutrient’s contribution to the personalized target—not the ingredient recipe.</p>";
+      vector.innerHTML="<h4>One nutrient fingerprint</h4><p>This is the compact visual signature of the highest-priority increases. The complete personalized vector is shown directly above.</p>";
       const opportunities=(option.nutrient_opportunities || []).slice(0,6);
       renderVectorMatrix(opportunities,vector,{stageClass:"compact-matrix",kicker:"Custom matrix",title:"Your nutrient space"});
       const shares=nutrientContributionShares(opportunities);
@@ -7211,17 +7626,17 @@
         vector.appendChild(empty);
       }
       vector.appendChild(vectorList);
-      body.append(vector,solve); hero.appendChild(body);
+      body.appendChild(vector); hero.appendChild(body);
       const actions=document.createElement("div"); actions.className="custom-blend-actions";
       const blendButton=document.createElement("button"); blendButton.type="button"; blendButton.textContent="See custom blend details";
       blendButton.addEventListener("click",()=>{
         trackEvent("result_detail_clicked",{detail:"formula_blend",top_function:displayFunction});
-        scrollToTarget("personalPortfolioSection");
+        openResultsDeepDive("personalPortfolioSection");
       });
       const vectorButton=document.createElement("button"); vectorButton.type="button"; vectorButton.textContent="View full nutrient vector"; vectorButton.className="secondary";
       vectorButton.addEventListener("click",()=>{
         trackEvent("result_detail_clicked",{detail:"full_nutrient_vector",top_function:displayFunction});
-        scrollToTarget("nutrientStrategySection");
+        scrollToTarget("customFullNutrientVector");
       });
       const personalizationButton=document.createElement("button"); personalizationButton.type="button"; personalizationButton.textContent="See why this is personalized"; personalizationButton.className="secondary";
       personalizationButton.addEventListener("click",()=>{
