@@ -4053,10 +4053,6 @@
       margin-top:0;
       scroll-margin-top:86px;
     }
-    #results .results-head,
-    #results #customBlendHero {
-      display:none !important;
-    }
     #results .jump-nav {
       margin-top:0;
       margin-bottom:18px;
@@ -4272,6 +4268,199 @@
       .age-timeline-head,
       .timeline-hero {
         grid-template-columns:1fr;
+      }
+    }
+    .personalization-proof {
+      position:relative;
+      overflow:hidden;
+      margin:18px 0 22px;
+      padding:clamp(24px,3vw,34px);
+      border:1px solid rgba(157,111,67,.18);
+      border-radius:30px;
+      background:
+        radial-gradient(circle at 94% 0%,rgba(242,190,55,.14),transparent 25rem),
+        radial-gradient(circle at 2% 100%,rgba(67,197,197,.13),transparent 22rem),
+        linear-gradient(145deg,#fffdf8,#f7fbfb);
+      box-shadow:0 24px 60px rgba(8,47,59,.09);
+    }
+    .personalization-proof::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:.34;
+      background-image:
+        linear-gradient(rgba(8,47,59,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(8,47,59,.035) 1px,transparent 1px);
+      background-size:38px 38px;
+      mask-image:linear-gradient(90deg,#000,transparent 84%);
+    }
+    .personalization-proof > * { position:relative; z-index:1; }
+    .personalization-proof-head {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:24px;
+      align-items:start;
+    }
+    .personalization-proof-head h3 {
+      margin:4px 0 8px;
+      max-width:760px;
+      font-family:var(--display-font);
+      font-size:clamp(2rem,3.4vw,3rem);
+      font-weight:500;
+      letter-spacing:-.05em;
+      line-height:1;
+    }
+    .personalization-proof-head p {
+      max-width:820px;
+      margin:0;
+      color:var(--muted);
+      line-height:1.55;
+    }
+    .personalization-proof-seal {
+      padding:10px 13px;
+      border:1px solid rgba(13,105,117,.18);
+      border-radius:999px;
+      color:#075866;
+      background:#dff2f4;
+      font-size:.66rem;
+      font-weight:950;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+    .personalization-proof-grid {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:11px;
+      margin-top:24px;
+    }
+    .personalization-proof-metric {
+      min-height:128px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      padding:17px;
+      border:1px solid rgba(157,111,67,.14);
+      border-radius:20px;
+      background:rgba(255,255,255,.76);
+      box-shadow:inset 0 1px 0 #fff;
+    }
+    .personalization-proof-metric small {
+      color:var(--muted);
+      font-size:.62rem;
+      font-weight:900;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+    }
+    .personalization-proof-metric strong {
+      display:block;
+      margin:10px 0 5px;
+      color:var(--ink);
+      font-family:var(--display-font);
+      font-size:2.15rem;
+      font-weight:500;
+      letter-spacing:-.05em;
+    }
+    .personalization-proof-metric span {
+      color:var(--muted);
+      font-size:.7rem;
+      line-height:1.35;
+    }
+    .personalization-flow {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:0;
+      margin-top:14px;
+      overflow:hidden;
+      border:1px solid rgba(157,111,67,.15);
+      border-radius:24px;
+      background:rgba(255,255,255,.72);
+    }
+    .personalization-flow-step {
+      position:relative;
+      min-height:170px;
+      padding:20px;
+    }
+    .personalization-flow-step + .personalization-flow-step {
+      border-left:1px solid rgba(157,111,67,.14);
+    }
+    .personalization-flow-step + .personalization-flow-step::before {
+      content:"→";
+      position:absolute;
+      left:-14px;
+      top:24px;
+      width:28px;
+      height:28px;
+      display:grid;
+      place-items:center;
+      border:1px solid rgba(157,111,67,.18);
+      border-radius:999px;
+      color:#9d6f43;
+      background:#fffdf8;
+      font-weight:950;
+    }
+    .personalization-flow-step b {
+      display:block;
+      color:#9d6f43;
+      font-size:.62rem;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+    }
+    .personalization-flow-step strong {
+      display:block;
+      margin:7px 0 6px;
+      color:var(--ink);
+      font-size:1rem;
+    }
+    .personalization-flow-step p {
+      margin:0;
+      color:var(--muted);
+      font-size:.75rem;
+      line-height:1.45;
+    }
+    .personalization-chip-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      margin-top:13px;
+    }
+    .personalization-chip {
+      padding:6px 8px;
+      border-radius:999px;
+      color:#075866;
+      background:#dff2f4;
+      font-size:.62rem;
+      font-weight:850;
+    }
+    .profile-family-context {
+      margin-top:14px;
+      padding:14px 16px;
+      border:1px solid rgba(157,111,67,.15);
+      border-radius:18px;
+      color:var(--muted);
+      background:rgba(240,228,213,.45);
+      font-size:.75rem;
+      line-height:1.5;
+    }
+    .profile-family-context strong {
+      color:var(--ink);
+    }
+    @media (max-width:860px) {
+      .personalization-proof-head,
+      .personalization-proof-grid,
+      .personalization-flow {
+        grid-template-columns:1fr;
+      }
+      .personalization-proof-seal { justify-self:start; }
+      .personalization-flow-step + .personalization-flow-step {
+        border-left:0;
+        border-top:1px solid rgba(157,111,67,.14);
+      }
+      .personalization-flow-step + .personalization-flow-step::before {
+        content:"↓";
+        left:20px;
+        top:-14px;
       }
     }
     @media (prefers-reduced-motion:reduce) {
@@ -4578,16 +4767,29 @@
 
     <section class="results app-view" id="results">
       <nav class="jump-nav results-top-nav" id="resultsTopNav" aria-label="Results sections">
-        <button type="button" class="jump-button active" data-scroll-target="results">Nutrient vector</button>
+        <button type="button" class="jump-button active" data-scroll-target="customBlendHero">Your blueprint</button>
+        <button type="button" class="jump-button" data-scroll-target="personalizationProofPanel">Why personalized</button>
         <button type="button" class="jump-button" data-scroll-target="personalPortfolioSection">Formula blend</button>
         <button type="button" class="jump-button" data-scroll-target="nutrientStrategySection">Full vector</button>
-        <button type="button" class="jump-button" data-scroll-target="archetypeReportPanel">Function lane</button>
       </nav>
       <div class="results-head">
-        <div><div class="eyebrow">Personalized nutrition vector</div><h2>Here’s the nutrient direction we found.</h2></div>
+        <div><div class="eyebrow">Personalized nutrition vector</div><h2>Your biomarkers produced a distinct nutrient blueprint.</h2></div>
         <p class="section-copy" id="recommendationStatus"></p>
       </div>
       <div class="custom-blend-hero section-anchor" id="customBlendHero"></div>
+      <section class="personalization-proof section-anchor" id="personalizationProofPanel">
+        <div class="personalization-proof-head">
+          <div>
+            <div class="eyebrow">Why this is personalized</div>
+            <h3>One reviewed profile. One nutrient fingerprint.</h3>
+            <p>The standard blends begin with a population formula. This result begins with the person’s biomarkers, builds an individual nutrient direction, and only then searches for the whole-food formula that best delivers it.</p>
+          </div>
+          <div class="personalization-proof-seal">Biomarker-derived</div>
+        </div>
+        <div class="personalization-proof-grid" id="personalizationProofGrid"></div>
+        <div class="personalization-flow" id="personalizationFlow"></div>
+        <div class="profile-family-context" id="profileFamilyContext" hidden></div>
+      </section>
       <div class="kpis">
         <div class="kpi"><small id="bioAgeLabel">Age score</small><strong id="bioAge">—</strong></div>
         <div class="kpi"><small>Chronological age</small><strong id="chronoAge">—</strong></div>
@@ -4602,9 +4804,9 @@
       <div class="archetype-report section-anchor" id="archetypeReportPanel">
         <div class="archetype-report-head">
           <div>
-            <div class="eyebrow">Standard function lane</div>
-            <h3>Where this profile fits in the product family.</h3>
-            <p class="section-copy" id="archetypeSummary">If someone does not choose the custom blend, this maps their bloodwork into a broader standard function lane.</p>
+            <div class="eyebrow">Founder model diagnostic</div>
+            <h3>Internal standard-product fallback mapping.</h3>
+            <p class="section-copy" id="archetypeSummary">This internal comparison is retained for cohort analysis and standard-product fallback decisions.</p>
           </div>
           <div class="archetype-primary-pill" id="archetypePrimaryPill">—</div>
         </div>
@@ -6125,6 +6327,7 @@
       document.getElementById("rewardKpi").textContent = formatOptimizationFit(predictedReward);
       renderAgeScores(ageScores);
       renderCustomBlendHero(blendOptions[0] || null,data);
+      renderPersonalizationProof(data,blendOptions[0] || null);
 	      const nav = document.getElementById("portfolioNav");
 	      if (nav) {
 	        nav.textContent = "";
@@ -6164,9 +6367,9 @@
     }
     function customFunctionName(option) {
       if (!option) return "";
+      if (option.personalized_blend_name) return option.personalized_blend_name;
       if (option.custom_function_name) return option.custom_function_name;
-      if (option.function_name) return `Custom ${option.function_name}`;
-      return "";
+      return "Your Personalized Nutrient Blend";
     }
     function customBlendAnalyticsMetadata(data={},option={},extra={}) {
       const archetype=data.archetype_report || {};
@@ -6176,7 +6379,7 @@
         ?? data.model_metrics?.final_exploratory_reward
         ?? data.model_metrics?.predicted_reward
       );
-      const functionLane=option.function_lane || {};
+      const profileFamily=option.broad_profile_family || {};
       const topNutrients=(option.nutrient_opportunities || [])
         .slice(0,4)
         .map(item=>nutrientLabel(item.nutrient || item.label || item.name || "Nutrient"));
@@ -6188,7 +6391,7 @@
         analysis_timing:data.analysis_timing || {},
         blend_count:(data.blend_options || []).length,
         top_function:customFunctionName(option) || option.function_name || option.name || option.formula_name || "",
-        function_lane:functionLane.function_name || option.function_name || "",
+        profile_family:profileFamily.name || "",
         top_archetype:archetype.name || archetype.primary_archetype || archetype.archetype_name || archetype.label || "",
         top_nutrients:topNutrients,
         lead_ingredients:leadIngredients,
@@ -6206,12 +6409,12 @@
       panel.className=hero ? "custom-blend-card custom-function-card" : "blend-summary function-summary";
       const copy=document.createElement("div");
       if (hero) {
-        const kicker=document.createElement("span"); kicker.className="function-kicker"; kicker.textContent="Function readout";
-        const title=document.createElement("h4"); title.textContent=displayName || "Custom function";
+        const kicker=document.createElement("span"); kicker.className="function-kicker"; kicker.textContent="Your biomarker blueprint";
+        const title=document.createElement("h4"); title.textContent=displayName || "Your personalized blend";
         const description=document.createElement("p"); description.className="function-description"; description.textContent=summary;
         copy.append(kicker,title,description);
       } else {
-        const title=document.createElement("strong"); title.textContent=displayName || "Custom function";
+        const title=document.createElement("strong"); title.textContent=displayName || "Personalized direction";
         const description=document.createElement("p"); description.textContent=summary;
         copy.append(title,description);
       }
@@ -6224,7 +6427,7 @@
         });
         side.appendChild(list);
       }
-      const tags=option?.function_lane?.support_tags || [];
+      const tags=option?.broad_profile_family?.support_tags || [];
       if (Array.isArray(tags) && tags.length) {
         const tagRow=document.createElement("div"); tagRow.className="function-tag-row";
         tags.slice(0,4).forEach(text=>{
@@ -6271,7 +6474,7 @@
       const functionCopy=option?.function_summary || option?.function_description || "";
       appendSummaryLine(
         panel,
-        displayName || "Function",
+        displayName || "Personalized direction",
         functionCopy || "This formula is tuned to the nutrient pattern and bloodwork priorities from this upload."
       );
       const reasons=Array.isArray(option?.function_reasons) ? option.function_reasons : [];
@@ -6287,14 +6490,135 @@
         );
       }
       appendSummaryLine(panel,"PhenoAge",phenoAgeProjectionText(option?.predicted_age_effect));
-      const tags=option?.function_lane?.support_tags || [];
-      if (Array.isArray(tags) && tags.length) {
+      const profileFamily=option?.broad_profile_family || {};
+      const tags=profileFamily.support_tags || [];
+      if (profileFamily.name || (Array.isArray(tags) && tags.length)) {
         const meta=document.createElement("div");
         meta.className="formula-summary-meta";
-        meta.textContent=`Function lane signals: ${tags.slice(0,4).join(", ")}.`;
+        const tagText=Array.isArray(tags) && tags.length
+          ? ` · ${tags.slice(0,4).join(", ")}`
+          : "";
+        meta.textContent=`Broader nutrition direction: ${profileFamily.name || "personalized support"}${tagText}.`;
         panel.appendChild(meta);
       }
       parent.appendChild(panel);
+    }
+    function renderPersonalizationProof(data,option) {
+      const panel=document.getElementById("personalizationProofPanel");
+      const grid=document.getElementById("personalizationProofGrid");
+      const flow=document.getElementById("personalizationFlow");
+      const family=document.getElementById("profileFamilyContext");
+      if (!panel || !grid || !flow || !family) return;
+      if (!option) {
+        panel.hidden=true;
+        return;
+      }
+      panel.hidden=false;
+      grid.textContent="";
+      flow.textContent="";
+      family.textContent="";
+      family.hidden=true;
+      const summary=data?.personalization_summary || {};
+      const reviewed=Number(summary.reviewed_marker_count ?? data?.lab_completeness?.reviewed_marker_count);
+      const profileInputs=Number(summary.profile_input_count);
+      const nutrientCount=Number(summary.priority_nutrient_count ?? (option.nutrient_opportunities || []).length);
+      const candidateCount=Number(summary.candidate_formula_count ?? data?.blend_options?.length);
+      const finalistCount=Number(summary.finalist_formula_count ?? data?.blend_options?.length);
+      const ingredientCount=Number(summary.selected_ingredient_count ?? (option.ingredients || []).length);
+      const ageEstimateCount=Number(summary.estimated_age_marker_count || 0);
+      [
+        {
+          label:"Blood markers reviewed",
+          value:Number.isFinite(reviewed) ? reviewed : "—",
+          copy:ageEstimateCount>0
+            ? `${ageEstimateCount} age-score input${ageEstimateCount===1?" was":"s were"} transparently estimated`
+            : "Reviewed values anchor the biological starting point"
+        },
+        {
+          label:"Profile signals",
+          value:Number.isFinite(profileInputs) ? profileInputs : "—",
+          copy:"Bloodwork and personal context evaluated together"
+        },
+        {
+          label:"Nutrient priorities",
+          value:Number.isFinite(nutrientCount) ? nutrientCount : "—",
+          copy:"A coordinated vector, not a one-marker-to-one-vitamin rule"
+        },
+        {
+          label:"Formulas compared",
+          value:Number.isFinite(candidateCount) ? candidateCount : "—",
+          copy:Number.isFinite(finalistCount)
+            ? `${finalistCount} strongest formulation${finalistCount===1?"":"s"} returned`
+            : "Whole-food candidates reranked for this profile"
+        }
+      ].forEach(metric=>{
+        const card=document.createElement("div");
+        card.className="personalization-proof-metric";
+        const label=document.createElement("small"); label.textContent=metric.label;
+        const value=document.createElement("strong"); value.textContent=metric.value;
+        const copy=document.createElement("span"); copy.textContent=metric.copy;
+        card.append(label,value,copy); grid.appendChild(card);
+      });
+
+      const topOutcomes=Array.isArray(summary.top_outcomes)
+        ? summary.top_outcomes.filter(Boolean).slice(0,4)
+        : [];
+      const topNutrients=Array.isArray(summary.top_nutrients) && summary.top_nutrients.length
+        ? summary.top_nutrients.filter(Boolean).slice(0,6)
+        : (option.nutrient_opportunities || [])
+          .slice(0,6)
+          .map(item=>nutrientLabel(item.nutrient));
+      const leadIngredients=(option.ingredients || [])
+        .slice(0,6)
+        .map(item=>item.item)
+        .filter(Boolean);
+      [
+        {
+          kicker:"01 · Biological starting point",
+          title:"Reviewed biomarkers",
+          copy:`${Number.isFinite(reviewed) ? reviewed : "The available"} blood markers${Number.isFinite(profileInputs) ? ` and ${profileInputs} profile signals` : ""} defined the person-specific starting state.`,
+          chips:topOutcomes
+        },
+        {
+          kicker:"02 · Individual target",
+          title:"Nutrient-vector fingerprint",
+          copy:"The model weighted the nutrients worth moving together for this exact profile. The percentages shown above describe this target—not the recipe.",
+          chips:topNutrients
+        },
+        {
+          kicker:"03 · Whole-food delivery",
+          title:"Reranked custom formula",
+          copy:`The V10 ranker compared ${Number.isFinite(candidateCount) ? candidateCount : "multiple"} feasible formulas and selected a ${Number.isFinite(ingredientCount) ? `${ingredientCount}-ingredient` : "whole-food"} delivery matrix.`,
+          chips:leadIngredients
+        }
+      ].forEach(step=>{
+        const card=document.createElement("div");
+        card.className="personalization-flow-step";
+        const kicker=document.createElement("b"); kicker.textContent=step.kicker;
+        const title=document.createElement("strong"); title.textContent=step.title;
+        const copy=document.createElement("p"); copy.textContent=step.copy;
+        card.append(kicker,title,copy);
+        if (step.chips.length) {
+          const row=document.createElement("div"); row.className="personalization-chip-row";
+          step.chips.forEach(text=>{
+            const chip=document.createElement("span"); chip.className="personalization-chip"; chip.textContent=text; row.appendChild(chip);
+          });
+          card.appendChild(row);
+        }
+        flow.appendChild(card);
+      });
+
+      const profileFamily=option.broad_profile_family || {};
+      if (profileFamily.name) {
+        const label=document.createElement("strong");
+        label.textContent=`Broader nutrition direction: ${profileFamily.name}. `;
+        const note=document.createTextNode(
+          profileFamily.note ||
+          "This is descriptive context only; the nutrient targets and formula were generated from the reviewed biomarkers."
+        );
+        family.append(label,note);
+        family.hidden=false;
+      }
     }
     function renderCustomBlendHero(option,data) {
       const hero=document.getElementById("customBlendHero");
@@ -6308,27 +6632,32 @@
       const top=document.createElement("div"); top.className="custom-blend-top";
       const copy=document.createElement("div");
       const displayFunction=customFunctionName(option);
-      const eyebrow=document.createElement("div"); eyebrow.className="eyebrow"; eyebrow.style.color="#9ee8ea"; eyebrow.textContent="Your custom function";
-      const title=document.createElement("h3"); title.textContent=displayFunction || "This is what we’re trying to improve nutritionally.";
+      const eyebrow=document.createElement("div"); eyebrow.className="eyebrow"; eyebrow.style.color="#9ee8ea"; eyebrow.textContent="Your personalized nutrient blueprint";
+      const title=document.createElement("h3"); title.textContent=displayFunction || "Your Personalized Nutrient Blend";
       const description=document.createElement("p");
       const topNutrients=(option.nutrient_opportunities || []).slice(0,3).map(item=>nutrientLabel(item.nutrient).toLowerCase()).join(", ");
       description.textContent=option.function_summary || `The model found a personalized nutrient direction${topNutrients ? ` centered on ${topNutrients}` : ""}. The formula below is how we translate that vector into a daily juice-powder blend.`;
       copy.append(eyebrow,title,description);
+      const personalization=data?.personalization_summary || {};
+      const reviewedMarkerCount=Number(personalization.reviewed_marker_count ?? data?.lab_completeness?.reviewed_marker_count);
+      const candidateFormulaCount=Number(personalization.candidate_formula_count ?? data?.blend_options?.length);
       const metricStack=document.createElement("div"); metricStack.className="custom-blend-metric-stack";
       const pill=document.createElement("div"); pill.className="custom-blend-pill";
-      pill.innerHTML=Number.isFinite(reward)
-        ? `${formatOptimizationFit(reward,{includeLevel:true})}<small>Optimization fit</small>`
-        : "custom blend";
+      pill.innerHTML=Number.isFinite(reviewedMarkerCount)
+        ? `${reviewedMarkerCount}<small>Biomarkers reviewed</small>`
+        : "Reviewed<small>Biomarker profile</small>";
       const agePill=document.createElement("div"); agePill.className="custom-blend-pill secondary";
-      agePill.innerHTML=`${formatModeledAgeEffect(option.predicted_age_effect)}<small>Combined age drop</small>`;
+      agePill.innerHTML=Number.isFinite(candidateFormulaCount)
+        ? `${candidateFormulaCount}<small>Formulas compared</small>`
+        : `${Number.isFinite(reward) ? formatOptimizationFit(reward,{includeLevel:true}) : "V10"}<small>Personalized reranking</small>`;
       metricStack.append(pill,agePill);
       top.append(copy,metricStack); hero.appendChild(top);
       const productReveal=document.createElement("div");
       productReveal.className="custom-product-reveal";
       const revealCopy=document.createElement("div");
-      const revealKicker=document.createElement("span"); revealKicker.textContent="Function to formula";
-      const revealTitle=document.createElement("strong"); revealTitle.textContent=option.product_concept || displayFunction || "Personalized daily blend";
-      const revealDetail=document.createElement("small"); revealDetail.textContent=option.function_description || "The powder blend is the delivery system. The nutrient vector is the personalized target.";
+      const revealKicker=document.createElement("span"); revealKicker.textContent="Blueprint to blend";
+      const revealTitle=document.createElement("strong"); revealTitle.textContent=displayFunction || option.product_concept || "Personalized daily blend";
+      const revealDetail=document.createElement("small"); revealDetail.textContent="The nutrient vector is the person-specific target. The fruit and vegetable powder blend is the delivery system.";
       revealCopy.append(revealKicker,revealTitle,revealDetail);
       const revealImage=document.createElement("img"); revealImage.src="/assets/fluids/fluids_stick_pack_transparent.png"; revealImage.alt="";
       productReveal.append(revealCopy,revealImage);
@@ -6360,7 +6689,7 @@
       });
       solve.appendChild(ingredientList);
       const vector=document.createElement("div"); vector.className="custom-blend-card vector-primary";
-      vector.innerHTML="<h4>Your nutrient vector</h4><p>These are the priority nutrient increases the model is solving for. The percentages show how much each nutrient contributes to the personalized direction.</p>";
+      vector.innerHTML="<h4>Your nutrient-vector fingerprint</h4><p>These are the priority nutrient increases produced from the reviewed biomarkers. The percentages describe each nutrient’s contribution to the personalized target—not the ingredient recipe.</p>";
       const opportunities=(option.nutrient_opportunities || []).slice(0,6);
       renderVectorMatrix(opportunities,vector,{stageClass:"compact-matrix",kicker:"Custom matrix",title:"Your nutrient space"});
       const shares=nutrientContributionShares(opportunities);
@@ -6393,15 +6722,15 @@
         trackEvent("result_detail_clicked",{detail:"full_nutrient_vector",top_function:displayFunction});
         scrollToTarget("nutrientStrategySection");
       });
-      const archetypeButton=document.createElement("button"); archetypeButton.type="button"; archetypeButton.textContent="Compare function lane"; archetypeButton.className="secondary";
-      archetypeButton.addEventListener("click",()=>{
-        trackEvent("result_detail_clicked",{detail:"function_lane",top_function:displayFunction});
-        scrollToTarget("archetypeReportPanel");
+      const personalizationButton=document.createElement("button"); personalizationButton.type="button"; personalizationButton.textContent="See why this is personalized"; personalizationButton.className="secondary";
+      personalizationButton.addEventListener("click",()=>{
+        trackEvent("result_detail_clicked",{detail:"personalization_proof",top_function:displayFunction});
+        scrollToTarget("personalizationProofPanel");
       });
-      actions.append(blendButton,vectorButton,archetypeButton); hero.appendChild(actions);
+      actions.append(blendButton,vectorButton,personalizationButton); hero.appendChild(actions);
     }
     const graphTypeOrder=["profile","biomarker","finding","function","nutrient","blend","concept","synergy","ingredient"];
-    const graphTypeLabels={profile:"Plan",biomarker:"Blood",finding:"Finding",function:"Function",nutrient:"Nutrient",blend:"Blend",concept:"Concept",synergy:"Synergy",ingredient:"Ingredient"};
+    const graphTypeLabels={profile:"Plan",biomarker:"Blood",finding:"Finding",function:"Outcome",nutrient:"Nutrient",blend:"Blend",concept:"Concept",synergy:"Synergy",ingredient:"Ingredient"};
     const graphTypeColors={profile:"#052d38",biomarker:"#5fa9d4",finding:"#987bd1",function:"#43b8b1",nutrient:"#35b8aa",blend:"#0d6975",concept:"#f6a84b",synergy:"#d96fae",ingredient:"#f15f78"};
     function renderRecommendationGraph(graph) {
       const panel=document.getElementById("recommendationGraphPanel");
@@ -6682,9 +7011,11 @@
 	      card.className=`blend-option-card${isRecommended ? " primary" : ""}`;
 	      const head=document.createElement("div"); head.className="blend-title";
 	      const title=document.createElement("div");
-	      const displayName=option.name?.replace(/^Blend 1 · /,"Custom blend · ") || "Custom blend";
+	      const displayName=isRecommended
+	        ? customFunctionName(option)
+	        : `Personalized formula option ${optionIndex + 1}`;
 	      const variantLabel=isRecommended ? "Recommended custom blend" : append ? `Formula option ${optionIndex + 1}` : "Formula option";
-	      title.innerHTML=`<div class="eyebrow">${variantLabel}</div><h3>${displayName}</h3><p class="section-copy">A personalized juice-powder blend built to deliver the nutrient vector below.</p>`;
+	      title.innerHTML=`<div class="eyebrow">${variantLabel}</div><h3>${displayName}</h3><p class="section-copy">${isRecommended ? "Selected after reranking the feasible whole-food formulas against this person’s nutrient vector." : "A distinct whole-food formulation evaluated against the same personalized nutrient target."}</p>`;
 	      const badge=document.createElement("div"); badge.className="score-badge"; badge.textContent=`${isRecommended ? "Recommended · " : ""}${formatOptimizationFit(option.final_exploratory_reward ?? option.predicted_reward,{includeLevel:true})} fit`;
 	      head.append(title,badge); card.appendChild(head);
 	      if (founderDemoAuthenticated) {
@@ -9030,6 +9361,10 @@
       const summary=document.getElementById("archetypeSummary");
       const pill=document.getElementById("archetypePrimaryPill");
       primarySlot.textContent=""; list.textContent="";
+      if (!founderDemoAuthenticated) {
+        panel.style.display="none";
+        return;
+      }
       const primary=report?.primary_archetype;
       const archetypes=Array.isArray(report?.archetypes) ? report.archetypes : [];
       if (!primary || !archetypes.length) {
@@ -9038,8 +9373,8 @@
       }
       panel.style.display="";
       summary.textContent=report.summary
-        ? `Secondary standard path: ${report.summary}`
-        : "Secondary standard path: use this broader product lane if the custom blend is not selected.";
+        ? `Internal fallback diagnostic: ${report.summary}`
+        : "Internal fallback diagnostic for cohort analysis and standard-product routing.";
       pill.textContent=`${primary.name || "Primary"} · ${Math.round(Number(primary.fit_percent || 0))}%`;
       primarySlot.appendChild(renderArchetypeCard(primary,{primary:true,showFit:true,showEvidence:true,maxIngredients:6}));
       archetypes.slice(0,5).forEach(item=>{
