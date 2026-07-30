@@ -4871,8 +4871,8 @@
           <div><label for="sex">Sex</label><select id="sex"><option value="male">Male</option><option value="female">Female</option></select></div>
           <div><label for="raceEthnicity">Race/ethnicity <span style="font-weight:400">(optional calibration)</span></label><select id="raceEthnicity"><option value="">Not provided</option><option value="1">Mexican American</option><option value="2">Other Hispanic</option><option value="3">Non-Hispanic White</option><option value="4">Non-Hispanic Black</option><option value="6">Non-Hispanic Asian</option><option value="7">Other / multiracial</option></select></div>
           <div><label for="bmi">BMI <span style="font-weight:400">(optional)</span></label><input id="bmi" type="number" min="10" max="80" step=".1" placeholder="e.g. 24.5"></div>
-          <div><label for="waist">Waist cm <span style="font-weight:400">(optional)</span></label><input id="waist" type="number" min="40" max="250" step=".1"></div>
-          <div><label for="weightKg">Weight kg</label><input id="weightKg" type="number" min="30" max="300" step=".1"></div>
+          <div><label for="waistInches">Waist (inches) <span style="font-weight:400">(optional)</span></label><input id="waistInches" type="number" min="16" max="100" step=".1" inputmode="decimal" placeholder="34"></div>
+          <div><label for="weightPounds">Weight (pounds)</label><input id="weightPounds" type="number" min="66" max="660" step=".1" inputmode="decimal" placeholder="175"></div>
           <div><label for="fastingHours">Hours fasted before labs</label><input id="fastingHours" type="number" min="0" max="72" step=".25"></div>
         </div></div>
         <details open class="question-page" data-question-page="1">
@@ -6044,6 +6044,10 @@
 	      }
 	    }
     function numberOrNull(id) { const v = document.getElementById(id).value; return v === "" ? null : Number(v); }
+    function convertedNumberOrNull(id,multiplier) {
+      const value=numberOrNull(id);
+      return value===null ? null : Number((value*multiplier).toFixed(4));
+    }
     function selectFile(file) {
       if (!file) return;
       selectedFile = file;
@@ -6211,10 +6215,10 @@
         data_loop_consent_version:dataLoopConsentVersion,
         data_loop_consented_at:new Date().toISOString(),
         age:numberOrNull("age"), sex:document.getElementById("sex").value, bmi:numberOrNull("bmi"),
-        race_ethnicity_code:numberOrNull("raceEthnicity"), waist_cm:numberOrNull("waist"), labs,
+        race_ethnicity_code:numberOrNull("raceEthnicity"), waist_cm:convertedNumberOrNull("waistInches",2.54), labs,
         kidney_or_potassium_risk:document.getElementById("kidneyRisk").checked,
         pregnant_or_breastfeeding:document.getElementById("pregnant").checked,
-        weight_kg:numberOrNull("weightKg"), sleep_hours:numberOrNull("sleepHours"),
+        weight_kg:convertedNumberOrNull("weightPounds",0.45359237), sleep_hours:numberOrNull("sleepHours"),
         activity_met_minutes_week:numberOrNull("activityMet"), sedentary_minutes_day:numberOrNull("sedentaryMinutes"),
         alcohol_drinks_day:numberOrNull("alcoholDrinks"), fasting_hours:numberOrNull("fastingHours"),
         prescription_count:numberOrNull("prescriptionCount"), supplement_count:numberOrNull("supplementCount"),
