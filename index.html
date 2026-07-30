@@ -2654,6 +2654,57 @@
       line-height:1.45;
       font-weight:760;
     }
+    .vector-journey-cta {
+      display:grid;
+      gap:9px;
+      max-width:740px;
+      margin-top:22px;
+    }
+    .vector-journey-cta button {
+      width:100%;
+      min-height:62px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      padding:15px 17px 15px 20px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:18px;
+      text-align:left;
+      background:
+        radial-gradient(circle at 88% 20%,rgba(198,43,79,.30),transparent 11rem),
+        linear-gradient(135deg,#0d1b2a,#203445);
+      box-shadow:0 18px 36px rgba(13,27,42,.18);
+    }
+    .vector-journey-cta button:hover {
+      background:
+        radial-gradient(circle at 88% 20%,rgba(198,43,79,.38),transparent 11rem),
+        linear-gradient(135deg,#182c3e,#2c4253);
+      box-shadow:0 21px 42px rgba(13,27,42,.22);
+    }
+    .vector-journey-cta button span {
+      font-size:.89rem;
+      font-weight:900;
+      line-height:1.25;
+    }
+    .vector-journey-cta button b {
+      flex:0 0 auto;
+      width:31px;
+      height:31px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      color:var(--ink);
+      background:#fffaf2;
+      font-size:1rem;
+      line-height:1;
+    }
+    .vector-journey-cta small {
+      padding-left:3px;
+      color:#777069;
+      font-size:.68rem;
+      line-height:1.4;
+    }
     .vector-demo-card {
       display:grid;
       min-height:430px;
@@ -5692,6 +5743,13 @@
           <div><strong>1</strong><span>Upload a PDF and confirm the extracted lab values.</span></div>
           <div><strong>2</strong><span>See your ranked nutrient targets and modeled increases.</span></div>
           <div><strong>3</strong><span>Get the closest ready-made blend—or a custom formula when needed.</span></div>
+        </div>
+        <div class="vector-journey-cta">
+          <button type="button" data-quick-mode="upload" aria-label="Upload labs and get your personalized nutrient vector and blend">
+            <span>Upload labs · Get your personalized vector + blend</span>
+            <b aria-hidden="true">→</b>
+          </button>
+          <small>You’ll review every extracted value before your recommendation is generated.</small>
         </div>
       </div>
       <div class="vector-experience-card" aria-label="Illustrative blood test to personalized nutrient vector example">
