@@ -3157,7 +3157,102 @@
       pointer-events:none;
       filter:blur(.1px);
     }
-    .custom-blend-top,.custom-blend-body,.custom-blend-actions,.custom-product-reveal { position:relative; z-index:1; }
+    .custom-blend-top,.custom-ingredient-showcase,.custom-blend-body,.custom-blend-actions,.custom-product-reveal { position:relative; z-index:1; }
+    .custom-ingredient-showcase {
+      margin:-4px 0 20px;
+      padding:18px;
+      border:1px solid rgba(255,253,248,.14);
+      border-radius:26px;
+      background:
+        radial-gradient(circle at 95% 0%,rgba(242,190,55,.14),transparent 18rem),
+        rgba(255,253,248,.08);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .custom-ingredient-showcase-head {
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:14px;
+    }
+    .custom-ingredient-showcase-head span {
+      display:block;
+      color:#f1c989;
+      font-size:.62rem;
+      font-weight:900;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+    .custom-ingredient-showcase-head strong {
+      display:block;
+      margin-top:4px;
+      color:#fffdf8;
+      font-family:var(--display-font);
+      font-size:1.45rem;
+      font-weight:500;
+      letter-spacing:-.035em;
+    }
+    .custom-ingredient-showcase-head small {
+      max-width:420px;
+      color:#bfcbd0;
+      font-size:.68rem;
+      line-height:1.4;
+      text-align:right;
+    }
+    .custom-ingredient-gallery {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(92px,1fr));
+      gap:9px;
+    }
+    .custom-ingredient-tile {
+      min-width:0;
+      display:grid;
+      justify-items:center;
+      align-content:center;
+      gap:8px;
+      min-height:116px;
+      padding:10px 8px;
+      border:1px solid rgba(255,253,248,.12);
+      border-radius:20px;
+      color:#fffdf8;
+      background:linear-gradient(155deg,rgba(255,255,255,.12),rgba(255,255,255,.045));
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 12px 24px rgba(0,0,0,.08);
+    }
+    .custom-ingredient-visual {
+      display:grid;
+      place-items:center;
+      width:68px;
+      height:68px;
+      border-radius:50%;
+      overflow:hidden;
+      background-image:url("/assets/fluids/ingredients/produce-atlas-v1.webp");
+      background-repeat:no-repeat;
+      background-size:400% 300%;
+      background-position:var(--ingredient-x,0%) var(--ingredient-y,0%);
+      background-color:rgba(255,253,248,.92);
+      box-shadow:
+        inset 0 0 0 1px rgba(157,111,67,.12),
+        0 10px 20px rgba(0,0,0,.18);
+    }
+    .custom-ingredient-visual.fallback {
+      background-image:
+        radial-gradient(circle at 30% 24%,rgba(255,255,255,.48),transparent 24%),
+        linear-gradient(145deg,var(--ingredient-accent,#c62b4f),#f2be37);
+      color:#fffdf8;
+      font-family:var(--display-font);
+      font-size:1.55rem;
+      text-transform:uppercase;
+    }
+    .custom-ingredient-name {
+      max-width:100%;
+      overflow:hidden;
+      color:#fffdf8;
+      font-size:.64rem;
+      font-weight:850;
+      line-height:1.2;
+      text-align:center;
+      text-overflow:ellipsis;
+    }
     .custom-product-reveal {
       display:grid;
       grid-template-columns:minmax(0,1fr) 96px;
@@ -3381,6 +3476,14 @@
       .home-function-cta { width:100%; min-width:0; }
       .home-vector-explain,
       .home-vector-modal-body { grid-template-columns:1fr; }
+      .custom-ingredient-showcase-head {
+        display:grid;
+        gap:5px;
+      }
+      .custom-ingredient-showcase-head small {
+        max-width:none;
+        text-align:left;
+      }
       .custom-product-reveal { grid-template-columns:1fr; }
       .custom-product-reveal img { display:none; }
       .homepage-flow-intro { grid-template-columns:1fr; }
@@ -3406,6 +3509,29 @@
         padding:7px 8px;
         white-space:normal;
         line-height:1.1;
+      }
+      .custom-ingredient-showcase {
+        padding:14px;
+        border-radius:22px;
+      }
+      .custom-ingredient-gallery {
+        grid-template-columns:repeat(4,minmax(0,1fr));
+        gap:7px;
+      }
+      .custom-ingredient-tile {
+        min-height:100px;
+        padding:8px 4px;
+        border-radius:16px;
+      }
+      .custom-ingredient-visual {
+        width:54px;
+        height:54px;
+      }
+      .custom-ingredient-name {
+        overflow:visible;
+        font-size:.58rem;
+        overflow-wrap:anywhere;
+        text-overflow:clip;
       }
       .hero {
         gap:16px;
@@ -6947,6 +7073,54 @@
         family.hidden=false;
       }
     }
+    function renderCustomIngredientShowcase(option,parent) {
+      const ingredients=Array.from(
+        new Map(
+          (option?.ingredients || [])
+            .filter(ingredient=>ingredient?.item)
+            .map(ingredient=>[String(ingredient.item).trim().toLowerCase(),ingredient])
+        ).values()
+      );
+      if (!ingredients.length) return;
+      const accents=["#c62b4f","#f2be37","#7f9f32","#ef6c3e","#539fbd","#9d6f43"];
+      const showcase=document.createElement("section");
+      showcase.className="custom-ingredient-showcase";
+      showcase.setAttribute("aria-label","Whole-food ingredients in your selected custom blend");
+      const head=document.createElement("div"); head.className="custom-ingredient-showcase-head";
+      const heading=document.createElement("div");
+      const kicker=document.createElement("span"); kicker.textContent="Whole-food ingredients";
+      const title=document.createElement("strong"); title.textContent="What’s inside your selected blend";
+      heading.append(kicker,title);
+      const note=document.createElement("small");
+      note.textContent="Every ingredient is shown. Proprietary formulation ratios remain private.";
+      head.append(heading,note);
+      const gallery=document.createElement("div"); gallery.className="custom-ingredient-gallery";
+      ingredients.forEach((ingredient,index)=>{
+        const itemName=String(ingredient.item).trim();
+        const tile=document.createElement("div");
+        tile.className="custom-ingredient-tile";
+        tile.title=itemName;
+        const visual=document.createElement("i");
+        visual.className="custom-ingredient-visual";
+        visual.setAttribute("aria-hidden","true");
+        const position=ingredientAtlasPosition(itemName);
+        if (position) {
+          visual.style.setProperty("--ingredient-x",position[0]);
+          visual.style.setProperty("--ingredient-y",position[1]);
+        } else {
+          visual.classList.add("fallback");
+          visual.style.setProperty("--ingredient-accent",accents[index%accents.length]);
+          visual.textContent=itemName.slice(0,1);
+        }
+        const name=document.createElement("span");
+        name.className="custom-ingredient-name";
+        name.textContent=itemName;
+        tile.append(visual,name);
+        gallery.appendChild(tile);
+      });
+      showcase.append(head,gallery);
+      parent.appendChild(showcase);
+    }
     function renderCustomBlendHero(option,data) {
       const hero=document.getElementById("customBlendHero");
       hero.textContent="";
@@ -6978,6 +7152,7 @@
         : "V10<small>Personalized reranking</small>";
       metricStack.append(pill,agePill);
       top.append(copy,metricStack); hero.appendChild(top);
+      renderCustomIngredientShowcase(option,hero);
       const productReveal=document.createElement("div");
       productReveal.className="custom-product-reveal";
       const revealCopy=document.createElement("div");
