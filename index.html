@@ -395,9 +395,12 @@
       50% { transform:scale(1.045); }
     }
     .science-copy { align-self:center; }
+    .science-brand-logo { display:block; width:min(170px,44vw); height:auto; margin:0 0 14px; }
     .science-copy .eyebrow { color:#9ee8ea; }
     .science-copy h3 { margin:7px 0 7px; font-family:Georgia,serif; font-size:1.74rem; font-weight:500; letter-spacing:-.045em; }
     .science-copy p { margin:0; color:#c7e4e8; line-height:1.52; font-size:.88rem; max-width:680px; }
+    .science-principles { display:flex; flex-wrap:wrap; gap:7px; margin-top:16px; }
+    .science-principles span { padding:7px 10px; border:1px solid rgba(255,255,255,.14); border-radius:999px; font-size:.64rem; font-weight:850; letter-spacing:.055em; text-transform:uppercase; }
     .science-progress { height:8px; margin-top:16px; border-radius:999px; overflow:hidden; background:rgba(255,255,255,.14); }
     .science-progress i { display:block; height:100%; width:12%; border-radius:inherit; background:linear-gradient(90deg,#71d8dc,#f8e58b,#ff9f6b); transition:width .55s ease; }
     .science-vector-build {
@@ -985,6 +988,29 @@
     .question-progress span:last-child { color:var(--leaf); }
     .question-page { display:none; border:0; padding:0; margin:0; background:transparent; }
     .question-page.active { display:block; animation:viewIn .2s ease both; }
+    .question-page .form-grid > div,
+    .question-page .context-grid > div,
+    .question-page > div:not(.context-grid):not(.model-run-consent) {
+      align-content:start;
+    }
+    .field-help {
+      display:block;
+      min-height:2.8em;
+      margin:5px 0 8px;
+      color:#766c67;
+      font-size:.64rem;
+      font-weight:520;
+      line-height:1.42;
+    }
+    .check span { line-height:1.35; }
+    .check-help {
+      display:block;
+      margin-top:3px;
+      color:#766c67;
+      font-size:.61rem;
+      font-weight:520;
+      line-height:1.4;
+    }
     .question-actions { display:flex; justify-content:space-between; gap:12px; margin-top:24px; padding-top:18px; border-top:1px solid var(--line); }
     .model-run-consent { margin-top:20px; padding:16px 18px; border:1px solid rgba(13,105,117,.24); border-radius:18px; background:linear-gradient(135deg,rgba(223,242,244,.78),rgba(255,250,242,.96)); }
     .model-run-consent .check { margin:0; align-items:flex-start; }
@@ -4899,10 +4925,11 @@
       border-radius:0;
       box-shadow:none;
       background:
-        radial-gradient(circle at 18% 22%,rgba(67,197,197,.24),transparent 25rem),
-        radial-gradient(circle at 74% 14%,rgba(242,190,55,.20),transparent 23rem),
-        radial-gradient(circle at 82% 78%,rgba(198,43,79,.22),transparent 24rem),
-        linear-gradient(135deg,#06141e,#152b3a 48%,#071620);
+        radial-gradient(circle at 8% 10%,rgba(143,22,55,.10),transparent 28rem),
+        radial-gradient(circle at 88% 12%,rgba(213,165,66,.13),transparent 24rem),
+        radial-gradient(circle at 72% 90%,rgba(79,155,142,.10),transparent 28rem),
+        linear-gradient(135deg,#fffaf3,#f8efe4 52%,#fffdf8);
+      color:#28151b;
       animation:modelRunnerEnter .42s cubic-bezier(.2,.8,.2,1) both;
     }
     .science-runner.active::before {
@@ -4911,8 +4938,8 @@
       inset:0;
       pointer-events:none;
       background:
-        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px),
-        linear-gradient(0deg,rgba(255,255,255,.03) 1px,transparent 1px);
+        linear-gradient(90deg,rgba(99,41,55,.045) 1px,transparent 1px),
+        linear-gradient(0deg,rgba(99,41,55,.04) 1px,transparent 1px);
       background-size:42px 42px;
       mask-image:radial-gradient(circle at 48% 46%,black,transparent 72%);
       animation:matrixGridDrift 16s linear infinite;
@@ -4922,7 +4949,7 @@
       position:absolute;
       inset:-22% -12%;
       pointer-events:none;
-      background:linear-gradient(110deg,transparent 42%,rgba(255,255,255,.08) 49%,transparent 57%);
+      background:linear-gradient(110deg,transparent 42%,rgba(143,22,55,.055) 49%,transparent 57%);
       animation:analysisSweep 4.8s ease-in-out infinite;
     }
     .science-runner.active > * {
@@ -4932,11 +4959,12 @@
     .science-runner.active .science-visual {
       min-height:clamp(320px,64vh,720px);
       border-radius:32px;
-      border-color:rgba(255,253,248,.16);
+      border-color:rgba(255,247,236,.18);
       background:
-        radial-gradient(circle at 50% 48%,rgba(113,216,220,.22),transparent 16rem),
-        linear-gradient(135deg,rgba(255,253,248,.09),rgba(255,255,255,.018));
-      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04),0 30px 80px rgba(0,0,0,.22);
+        radial-gradient(circle at 50% 48%,rgba(213,165,66,.20),transparent 17rem),
+        radial-gradient(circle at 16% 84%,rgba(79,155,142,.17),transparent 20rem),
+        linear-gradient(145deg,#340b19,#65152e 56%,#32101d);
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.05),0 30px 80px rgba(87,30,44,.20);
     }
     .science-runner.active .science-copy {
       align-self:center;
@@ -4948,30 +4976,50 @@
     }
     .science-runner.active .science-copy h3 {
       max-width:780px;
-      font-size:clamp(2.15rem,4.6vw,5.8rem);
-      line-height:.93;
-      letter-spacing:0;
+      color:#28151b;
+      font-size:clamp(2.15rem,4.15vw,5.15rem);
+      line-height:.96;
+      letter-spacing:-.035em;
     }
+    .science-runner.active .science-copy .eyebrow { color:#8f1637; }
     .science-runner.active .science-copy p {
       max-width:650px;
       font-size:clamp(.95rem,1.25vw,1.18rem);
-      color:#d9edf0;
+      color:#685b58;
     }
+    .science-runner.active .science-principles span { border-color:rgba(143,22,55,.20); background:rgba(255,255,255,.55); color:#76203a; }
     .science-runner.active .science-progress {
       max-width:520px;
       height:10px;
       margin-top:24px;
+      background:rgba(97,45,55,.11);
     }
+    .science-runner.active .science-progress i { background:linear-gradient(90deg,#8f1637,#d5a542,#4f9b8e); }
+    .science-runner.active .science-vector-build-head { color:#756763; }
+    .science-runner.active .science-vector-build-head span:last-child { color:#8f1637; }
+    .science-runner.active .science-vector-point { border-color:rgba(122,71,78,.14); background:rgba(255,255,255,.62); color:#685b58; box-shadow:0 8px 22px rgba(95,39,52,.05); }
+    .science-runner.active .science-vector-point strong { color:#28151b; }
+    .science-runner.active .science-vector-point span { color:#756763; }
+    .science-runner.active .science-vector-point em { color:#8f1637; }
     .science-runner.active .science-step-grid {
       align-self:end;
       grid-column:1 / -1;
-      grid-template-columns:repeat(5,minmax(0,1fr));
+      grid-template-columns:repeat(6,minmax(0,1fr));
     }
     .science-runner.active .science-step {
       min-height:104px;
       border-radius:20px;
       backdrop-filter:blur(16px);
+      border-color:rgba(111,60,69,.15);
+      background:rgba(255,255,255,.60);
+      color:#756763;
+      box-shadow:0 10px 30px rgba(78,35,44,.045);
     }
+    .science-runner.active .science-step b { background:#f2e5d7; color:#8f1637; }
+    .science-runner.active .science-step strong { color:#28151b; }
+    .science-runner.active .science-step.active { border-color:#8f1637; background:#8f1637; color:#f7e8dc; box-shadow:0 14px 34px rgba(111,16,43,.18); }
+    .science-runner.active .science-step.active b { background:#fff8ef; color:#8f1637; }
+    .science-runner.active .science-step.active strong { color:#fffaf3; }
     .science-runner.active .science-model-readout {
       left:18px;
       right:18px;
@@ -5385,6 +5433,163 @@
     @keyframes graphFlow {
       to { stroke-dashoffset:-22; }
     }
+
+    /* Personalized product paths and profile-scored ready-made membership options */
+    .personalized-offer-comparison,
+    .standard-fit-dashboard {
+      margin:18px 0;
+      padding:clamp(24px,4vw,48px);
+      border:1px solid rgba(120,73,76,.16);
+      border-radius:32px;
+      background:
+        radial-gradient(circle at 95% 0%,rgba(213,165,66,.12),transparent 22rem),
+        linear-gradient(145deg,#fffdf8,#f8f0e7);
+      box-shadow:0 24px 70px rgba(86,42,50,.07);
+    }
+    .offer-comparison-head,
+    .standard-fit-head {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      align-items:end;
+      gap:24px;
+      margin-bottom:24px;
+    }
+    .offer-comparison-head h3,
+    .standard-fit-head h3 {
+      max-width:850px;
+      margin:8px 0 9px;
+      color:#28151b;
+      font-family:var(--display-font);
+      font-size:clamp(2rem,3.7vw,4.15rem);
+      font-weight:500;
+      line-height:.98;
+      letter-spacing:-.045em;
+    }
+    .offer-comparison-head p,
+    .standard-fit-head p {
+      max-width:860px;
+      margin:0;
+      color:#71625e;
+      font-size:.88rem;
+      line-height:1.6;
+    }
+    .offer-comparison-seal,
+    .standard-fit-seal {
+      display:grid;
+      gap:4px;
+      min-width:145px;
+      padding:15px 17px;
+      border:1px solid rgba(143,22,55,.18);
+      border-radius:18px;
+      background:rgba(255,255,255,.62);
+      text-align:right;
+    }
+    .offer-comparison-seal span,
+    .standard-fit-seal span {
+      color:#8b7772;
+      font-size:.61rem;
+      font-weight:900;
+      letter-spacing:.11em;
+      text-transform:uppercase;
+    }
+    .offer-comparison-seal strong,
+    .standard-fit-seal strong { color:#8f1637; font-size:.9rem; }
+    .personalized-offer-grid { display:grid; gap:14px; }
+    .personalized-path-card {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 42px minmax(0,1fr);
+      align-items:stretch;
+      overflow:hidden;
+      border:1px solid rgba(116,72,74,.16);
+      border-radius:24px;
+      background:rgba(255,255,255,.68);
+    }
+    .personalized-path-custom,
+    .personalized-path-standard { padding:22px; }
+    .personalized-path-custom { background:linear-gradient(145deg,#471020,#7c1938); color:#fffaf3; }
+    .personalized-path-custom small,
+    .personalized-path-standard small { display:block; font-size:.6rem; font-weight:900; letter-spacing:.12em; text-transform:uppercase; }
+    .personalized-path-custom small { color:#edc9a0; }
+    .personalized-path-standard small { color:#8f1637; }
+    .personalized-path-custom h4,
+    .personalized-path-standard h4 { margin:7px 0 8px; font-family:var(--display-font); font-size:1.45rem; font-weight:500; line-height:1; }
+    .personalized-path-custom p,
+    .personalized-path-standard p { margin:0; font-size:.75rem; line-height:1.5; }
+    .personalized-path-custom p { color:#eadbd7; }
+    .personalized-path-standard p { color:#756763; }
+    .personalized-path-arrow { display:grid; place-items:center; background:#f2e7dc; color:#8f1637; font-size:1.2rem; }
+    .path-ingredients,
+    .standard-fit-nutrients { display:flex; flex-wrap:wrap; gap:6px; margin-top:14px; }
+    .path-ingredients span,
+    .standard-fit-nutrients span { padding:6px 8px; border-radius:999px; font-size:.61rem; font-weight:750; }
+    .personalized-path-custom .path-ingredients span { background:rgba(255,255,255,.11); color:#fff7ef; }
+    .personalized-path-standard .path-ingredients span,
+    .standard-fit-nutrients span { background:#f3e9df; color:#6b3441; }
+    .path-fit-row { display:flex; align-items:baseline; gap:8px; margin:12px 0 7px; }
+    .path-fit-row strong { color:#8f1637; font-family:var(--display-font); font-size:2rem; font-weight:500; line-height:1; }
+    .path-fit-row span { color:#5f4e4d; font-size:.72rem; font-weight:850; }
+    .path-fit-meta { display:flex; flex-wrap:wrap; gap:8px 14px; margin-top:10px; color:#81716c; font-size:.64rem; font-weight:750; }
+    .standard-fit-lead {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .standard-fit-lead-card {
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:15px;
+      padding:18px;
+      border-radius:20px;
+      background:#491020;
+      color:#fff8f0;
+    }
+    .standard-fit-lead-card.functional { background:#355f58; }
+    .standard-fit-lead-card small { color:#ecc999; font-size:.6rem; font-weight:900; letter-spacing:.11em; text-transform:uppercase; }
+    .standard-fit-lead-card h4 { margin:5px 0 5px; font-family:var(--display-font); font-size:1.3rem; font-weight:500; }
+    .standard-fit-lead-card p { margin:0; color:#dfd1cc; font-size:.7rem; line-height:1.45; }
+    .standard-fit-lead-score { align-self:center; text-align:right; }
+    .standard-fit-lead-score strong { display:block; font-family:var(--display-font); font-size:2.15rem; font-weight:500; line-height:1; }
+    .standard-fit-lead-score span { display:block; margin-top:4px; font-size:.62rem; }
+    .standard-fit-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .standard-fit-card {
+      display:grid;
+      grid-template-columns:44px minmax(0,1fr) auto;
+      gap:12px;
+      align-items:start;
+      padding:17px;
+      border:1px solid rgba(119,75,77,.15);
+      border-radius:20px;
+      background:rgba(255,255,255,.70);
+    }
+    .standard-fit-card.recommended { border-color:rgba(143,22,55,.42); box-shadow:inset 0 0 0 1px rgba(143,22,55,.08); }
+    .standard-fit-rank { display:grid; place-items:center; width:40px; height:40px; border-radius:14px; background:#f2e6da; color:#8f1637; font-weight:900; }
+    .standard-fit-main small { color:#8d7d78; font-size:.59rem; font-weight:900; letter-spacing:.09em; text-transform:uppercase; }
+    .standard-fit-main h4 { margin:4px 0 5px; color:#28151b; font-size:.96rem; }
+    .standard-fit-main p { margin:0; color:#796a65; font-size:.68rem; line-height:1.42; }
+    .standard-fit-bar { height:6px; margin-top:11px; overflow:hidden; border-radius:999px; background:#eee2d7; }
+    .standard-fit-bar i { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,#8f1637,#d5a542,#4f9b8e); }
+    .standard-fit-score { min-width:78px; text-align:right; }
+    .standard-fit-score strong { display:block; color:#8f1637; font-family:var(--display-font); font-size:1.75rem; font-weight:500; line-height:1; }
+    .standard-fit-score span { display:block; margin-top:4px; color:#695a56; font-size:.62rem; font-weight:850; }
+    .standard-fit-breakdown { display:flex; flex-wrap:wrap; gap:10px; margin-top:9px; color:#8a7a75; font-size:.6rem; }
+    .standard-fit-disclaimer { margin:16px 0 0; color:#8a7a75; font-size:.68rem; line-height:1.5; }
+    .closest-standard-offer {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:12px;
+      margin:18px 0 0;
+      padding:16px;
+      border:1px solid rgba(143,22,55,.18);
+      border-radius:18px;
+      background:#fbf4ec;
+    }
+    .closest-standard-offer small { color:#8f1637; font-size:.6rem; font-weight:900; letter-spacing:.1em; text-transform:uppercase; }
+    .closest-standard-offer h4 { margin:5px 0 5px; color:#28151b; }
+    .closest-standard-offer p { margin:0; color:#756763; font-size:.7rem; line-height:1.45; }
+    .closest-standard-score { text-align:right; }
+    .closest-standard-score strong { display:block; color:#8f1637; font-family:var(--display-font); font-size:1.8rem; font-weight:500; line-height:1; }
+    .closest-standard-score span { display:block; max-width:90px; margin-top:4px; color:#685955; font-size:.6rem; font-weight:850; }
 	    @media (max-width:860px) {
         .results-age-hero {
           grid-template-columns:1fr;
@@ -5448,11 +5653,19 @@
 	        order:3;
 	        align-self:stretch;
 	        width:100%;
-	        grid-template-columns:1fr;
+	        grid-template-columns:repeat(2,minmax(0,1fr));
 	      }
       .science-runner.active .science-step {
         min-height:auto;
       }
+      .offer-comparison-head,
+      .standard-fit-head,
+      .personalized-path-card,
+      .standard-fit-lead { grid-template-columns:1fr; }
+      .offer-comparison-seal,
+      .standard-fit-seal { justify-self:start; text-align:left; }
+      .personalized-path-arrow { min-height:34px; transform:none; }
+      .standard-fit-grid { grid-template-columns:1fr; }
       .graph-shell {
         display:grid;
         grid-template-columns:1fr;
@@ -6919,63 +7132,63 @@
           <button type="button" class="question-tab" data-question-tab="3">Health</button>
         </div>
         <div class="question-page active" data-question-page="0"><div class="form-grid">
-          <div><label for="age">Chronological age</label><input id="age" type="number" min="20" max="100" value="40"></div>
-          <div><label for="sex">Sex</label><select id="sex"><option value="male">Male</option><option value="female">Female</option></select></div>
-          <div><label for="raceEthnicity">Race/ethnicity <span style="font-weight:400">(optional calibration)</span></label><select id="raceEthnicity"><option value="">Not provided</option><option value="1">Mexican American</option><option value="2">Other Hispanic</option><option value="3">Non-Hispanic White</option><option value="4">Non-Hispanic Black</option><option value="6">Non-Hispanic Asian</option><option value="7">Other / multiracial</option></select></div>
-          <div><label for="bmi">BMI <span style="font-weight:400">(optional)</span></label><input id="bmi" type="number" min="10" max="80" step=".1" placeholder="e.g. 24.5"></div>
-          <div><label for="waistInches">Waist (inches) <span style="font-weight:400">(optional)</span></label><input id="waistInches" type="number" min="16" max="100" step=".1" inputmode="decimal" placeholder="34"></div>
-          <div><label for="weightPounds">Weight (pounds)</label><input id="weightPounds" type="number" min="66" max="660" step=".1" inputmode="decimal" placeholder="175"></div>
-          <div><label for="fastingHours">Hours fasted before labs</label><input id="fastingHours" type="number" min="0" max="72" step=".25"></div>
+          <div><label for="age">Chronological age</label><small class="field-help">Your age on the day of the blood draw; it anchors the biological-age comparison.</small><input id="age" type="number" min="20" max="100" value="40"></div>
+          <div><label for="sex">Sex</label><small class="field-help">Choose the sex used by the reporting laboratory so age-score calibration is applied consistently.</small><select id="sex"><option value="male">Male</option><option value="female">Female</option></select></div>
+          <div><label for="raceEthnicity">Race/ethnicity <span style="font-weight:400">(optional calibration)</span></label><small class="field-help">Optional model-calibration context. Leave this blank if you prefer; it will not block your analysis.</small><select id="raceEthnicity"><option value="">Not provided</option><option value="1">Mexican American</option><option value="2">Other Hispanic</option><option value="3">Non-Hispanic White</option><option value="4">Non-Hispanic Black</option><option value="6">Non-Hispanic Asian</option><option value="7">Other / multiracial</option></select></div>
+          <div><label for="bmi">BMI <span style="font-weight:400">(optional)</span></label><small class="field-help">Enter a recent measured BMI if you know it. Leave blank rather than estimating.</small><input id="bmi" type="number" min="10" max="80" step=".1" placeholder="e.g. 24.5"></div>
+          <div><label for="waistInches">Waist (inches) <span style="font-weight:400">(optional)</span></label><small class="field-help">Measure a relaxed waist around the level of your navel after a normal exhale.</small><input id="waistInches" type="number" min="16" max="100" step=".1" inputmode="decimal" placeholder="34"></div>
+          <div><label for="weightPounds">Weight (pounds)</label><small class="field-help">Use your recent typical weight, ideally from near the date of the blood draw.</small><input id="weightPounds" type="number" min="66" max="660" step=".1" inputmode="decimal" placeholder="175"></div>
+          <div><label for="fastingHours">Hours fasted before labs</label><small class="field-help">Hours without calories before the draw. Plain water does not end the fast.</small><input id="fastingHours" type="number" min="0" max="72" step=".25"></div>
         </div></div>
         <details open class="question-page" data-question-page="1">
           <summary>Lifestyle and activity</summary>
           <p class="section-copy">Blank numeric fields use the training-population median.</p>
           <div class="context-grid">
-            <div><label for="sleepHours">Sleep hours</label><input id="sleepHours" type="number" min="2" max="14" step=".1"></div>
-            <div><label for="activityMet">Activity MET-min/week</label><input id="activityMet" type="number" min="0" max="30000" step="10"></div>
-            <div><label for="sedentaryMinutes">Sedentary min/day</label><input id="sedentaryMinutes" type="number" min="0" max="1440"></div>
-            <div><label for="alcoholDrinks">Alcohol drinks/day</label><input id="alcoholDrinks" type="number" min="0" max="25" step=".1"></div>
-            <div><label for="cigarettesDay">Cigarettes/day</label><input id="cigarettesDay" type="number" min="0" max="200"></div>
+            <div><label for="sleepHours">Sleep hours</label><small class="field-help">Your average nightly sleep over a typical recent week—not just last night.</small><input id="sleepHours" type="number" min="2" max="14" step=".1"></div>
+            <div><label for="activityMet">Activity MET-min/week</label><small class="field-help">Weekly activity intensity × minutes. Example: 150 minutes of moderate exercise is about 600 MET-min. Leave blank if unsure.</small><input id="activityMet" type="number" min="0" max="30000" step="10"></div>
+            <div><label for="sedentaryMinutes">Sedentary min/day</label><small class="field-help">Average waking time spent sitting or reclining, including work, driving, and screen time.</small><input id="sedentaryMinutes" type="number" min="0" max="1440"></div>
+            <div><label for="alcoholDrinks">Alcohol drinks/day</label><small class="field-help">Your average across the full week. Enter 0 if you do not currently drink.</small><input id="alcoholDrinks" type="number" min="0" max="25" step=".1"></div>
+            <div><label for="cigarettesDay">Cigarettes/day</label><small class="field-help">Current average per day. Enter 0 if you do not currently smoke cigarettes.</small><input id="cigarettesDay" type="number" min="0" max="200"></div>
           </div>
-          <label class="check"><input id="currentSmoker" type="checkbox"><span>Current smoker</span></label>
-          <label class="check"><input id="formerSmoker" type="checkbox"><span>Former smoker</span></label>
+          <label class="check"><input id="currentSmoker" type="checkbox"><span>Current smoker<small class="check-help">Select if you currently use combustible tobacco, even if not every day.</small></span></label>
+          <label class="check"><input id="formerSmoker" type="checkbox"><span>Former smoker<small class="check-help">Select if you previously smoked regularly but do not now.</small></span></label>
         </details>
         <details open class="question-page" data-question-page="2">
           <summary>Usual diet</summary>
           <p class="section-copy">Tell us about your typical week so the formulation reflects your usual nutrition context.</p>
           <div class="context-grid">
-            <div><label for="dietQuality">Diet quality, 1–5</label><input id="dietQuality" type="number" min="1" max="5" step="1"></div>
-            <div><label for="fruitServings">Fruit servings/day</label><input id="fruitServings" type="number" min="0" max="20" step=".5"></div>
-            <div><label for="vegetableServings">Vegetable servings/day</label><input id="vegetableServings" type="number" min="0" max="20" step=".5"></div>
-            <div><label for="wholeGrainServings">Whole-grain servings/day</label><input id="wholeGrainServings" type="number" min="0" max="20" step=".5"></div>
-            <div><label for="legumeServings">Legume servings/week</label><input id="legumeServings" type="number" min="0" max="100" step=".5"></div>
-            <div><label for="nutsSeedsServings">Nuts/seeds servings/week</label><input id="nutsSeedsServings" type="number" min="0" max="100" step=".5"></div>
-            <div><label for="sugaryDrinks">Sugary drinks/week</label><input id="sugaryDrinks" type="number" min="0" max="100" step=".5"></div>
-            <div><label for="ultraProcessedMeals">Ultra-processed meals/week</label><input id="ultraProcessedMeals" type="number" min="0" max="100" step=".5"></div>
+            <div><label for="dietQuality">Diet quality, 1–5</label><small class="field-help">Rate your usual pattern: 1 = mostly convenience foods; 5 = consistently varied, minimally processed foods.</small><input id="dietQuality" type="number" min="1" max="5" step="1"></div>
+            <div><label for="fruitServings">Fruit servings/day</label><small class="field-help">One serving is roughly one medium fruit or one cup of berries or cut fruit.</small><input id="fruitServings" type="number" min="0" max="20" step=".5"></div>
+            <div><label for="vegetableServings">Vegetable servings/day</label><small class="field-help">One serving is roughly one cup raw or one-half cup cooked vegetables.</small><input id="vegetableServings" type="number" min="0" max="20" step=".5"></div>
+            <div><label for="wholeGrainServings">Whole-grain servings/day</label><small class="field-help">Count foods such as oatmeal, brown rice, quinoa, or whole-grain bread.</small><input id="wholeGrainServings" type="number" min="0" max="20" step=".5"></div>
+            <div><label for="legumeServings">Legume servings/week</label><small class="field-help">Count beans, lentils, chickpeas, and peas; one serving is about one-half cup cooked.</small><input id="legumeServings" type="number" min="0" max="100" step=".5"></div>
+            <div><label for="nutsSeedsServings">Nuts/seeds servings/week</label><small class="field-help">One serving is roughly a small handful or two tablespoons of seeds or nut butter.</small><input id="nutsSeedsServings" type="number" min="0" max="100" step=".5"></div>
+            <div><label for="sugaryDrinks">Sugary drinks/week</label><small class="field-help">Include soda, sweet tea, energy drinks, and sweetened coffee; exclude unsweetened drinks.</small><input id="sugaryDrinks" type="number" min="0" max="100" step=".5"></div>
+            <div><label for="ultraProcessedMeals">Ultra-processed meals/week</label><small class="field-help">Estimate meals built mostly from packaged fast food, frozen entrées, or highly processed snacks.</small><input id="ultraProcessedMeals" type="number" min="0" max="100" step=".5"></div>
           </div>
-          <div><label for="dietaryPattern">Dietary pattern</label><select id="dietaryPattern"><option value="">Not specified</option><option>Mediterranean-style</option><option>Plant-forward</option><option>Vegetarian</option><option>Vegan</option><option>Low carbohydrate</option><option>Ketogenic</option><option>Mixed / omnivorous</option></select></div>
-          <div><label for="dietaryRestrictions">Dietary restrictions</label><input id="dietaryRestrictions" maxlength="300" placeholder="e.g. low sodium"></div>
-          <div><label for="foodAllergies">Food allergies</label><input id="foodAllergies" maxlength="300" placeholder="e.g. berry allergy"></div>
-          <div><label for="primaryGoal">Primary goal</label><input id="primaryGoal" maxlength="300" placeholder="e.g. glucose regulation"></div>
+          <div><label for="dietaryPattern">Dietary pattern</label><small class="field-help">Choose the option that best describes how you usually eat; it does not need to be perfect.</small><select id="dietaryPattern"><option value="">Not specified</option><option>Mediterranean-style</option><option>Plant-forward</option><option>Vegetarian</option><option>Vegan</option><option>Low carbohydrate</option><option>Ketogenic</option><option>Mixed / omnivorous</option></select></div>
+          <div><label for="dietaryRestrictions">Dietary restrictions</label><small class="field-help">List medically advised, religious, or personal restrictions the formula should respect.</small><input id="dietaryRestrictions" maxlength="300" placeholder="e.g. low sodium"></div>
+          <div><label for="foodAllergies">Food allergies</label><small class="field-help">List known food allergies or ingredients you must avoid. Do not list mild preferences here.</small><input id="foodAllergies" maxlength="300" placeholder="e.g. berry allergy"></div>
+          <div><label for="primaryGoal">Primary goal</label><small class="field-help">Name the single outcome you care about most so the report can frame priorities clearly.</small><input id="primaryGoal" maxlength="300" placeholder="e.g. glucose regulation"></div>
         </details>
         <details open class="question-page" data-question-page="3">
           <summary>Conditions, medications, and supplements</summary>
           <div class="context-grid">
-            <div><label for="prescriptionCount">Prescription count</label><input id="prescriptionCount" type="number" min="0" max="50"></div>
-            <div><label for="supplementCount">Supplement count</label><input id="supplementCount" type="number" min="0" max="50"></div>
+            <div><label for="prescriptionCount">Prescription count</label><small class="field-help">Number of prescription medications you currently take regularly; different doses of one medication count once.</small><input id="prescriptionCount" type="number" min="0" max="50"></div>
+            <div><label for="supplementCount">Supplement count</label><small class="field-help">Number of vitamins, minerals, powders, or herbal supplements you currently use regularly.</small><input id="supplementCount" type="number" min="0" max="50"></div>
           </div>
-          <label class="check"><input id="diagnosedDiabetes" type="checkbox"><span>Diagnosed diabetes</span></label>
-          <label class="check"><input id="diagnosedKidney" type="checkbox"><span>Diagnosed kidney disease</span></label>
-          <label class="check"><input id="diagnosedLiver" type="checkbox"><span>Diagnosed liver disease</span></label>
-          <label class="check"><input id="supplementUse" type="checkbox"><span>Uses dietary supplements</span></label>
-          <label class="check"><input id="postmenopausal" type="checkbox"><span>Postmenopausal</span></label>
-          <label class="check"><input id="glucoseMedication" type="checkbox"><span>Glucose-lowering medication</span></label>
-          <label class="check"><input id="lipidMedication" type="checkbox"><span>Lipid-lowering medication</span></label>
-          <label class="check"><input id="bloodPressureMedication" type="checkbox"><span>Blood-pressure medication</span></label>
-          <label class="check"><input id="diureticMedication" type="checkbox"><span>Diuretic medication</span></label>
-          <label class="check"><input id="steroidMedication" type="checkbox"><span>Steroid medication</span></label>
-          <label class="check"><input id="kidneyRisk" type="checkbox"><span>I take potassium-affecting medication or was told to limit potassium.</span></label>
-          <label class="check"><input id="pregnant" type="checkbox"><span>I am pregnant or breastfeeding.</span></label>
+          <label class="check"><input id="diagnosedDiabetes" type="checkbox"><span>Diagnosed diabetes<small class="check-help">Select only if a clinician has diagnosed type 1, type 2, or another form of diabetes.</small></span></label>
+          <label class="check"><input id="diagnosedKidney" type="checkbox"><span>Diagnosed kidney disease<small class="check-help">Select if a clinician has diagnosed chronic kidney disease or impaired kidney function.</small></span></label>
+          <label class="check"><input id="diagnosedLiver" type="checkbox"><span>Diagnosed liver disease<small class="check-help">Select if a clinician has diagnosed fatty liver disease, hepatitis, cirrhosis, or another liver condition.</small></span></label>
+          <label class="check"><input id="supplementUse" type="checkbox"><span>Uses dietary supplements<small class="check-help">Select if you currently take any vitamin, mineral, herbal, greens, or performance supplement.</small></span></label>
+          <label class="check"><input id="postmenopausal" type="checkbox"><span>Postmenopausal<small class="check-help">Select if menstrual periods have stopped for 12 months or more for reasons other than pregnancy.</small></span></label>
+          <label class="check"><input id="glucoseMedication" type="checkbox"><span>Glucose-lowering medication<small class="check-help">Includes insulin and prescription medicines used to lower blood glucose.</small></span></label>
+          <label class="check"><input id="lipidMedication" type="checkbox"><span>Lipid-lowering medication<small class="check-help">Includes statins and other prescriptions used for cholesterol or triglycerides.</small></span></label>
+          <label class="check"><input id="bloodPressureMedication" type="checkbox"><span>Blood-pressure medication<small class="check-help">Select if you currently take any prescription specifically for blood pressure.</small></span></label>
+          <label class="check"><input id="diureticMedication" type="checkbox"><span>Diuretic medication<small class="check-help">Select for prescription “water pills,” which can affect hydration and electrolyte context.</small></span></label>
+          <label class="check"><input id="steroidMedication" type="checkbox"><span>Steroid medication<small class="check-help">Select for current systemic corticosteroids such as prednisone; topical creams usually do not count.</small></span></label>
+          <label class="check"><input id="kidneyRisk" type="checkbox"><span>I take potassium-affecting medication or was told to limit potassium.<small class="check-help">This activates a conservative mineral-safety guardrail in the formulation process.</small></span></label>
+          <label class="check"><input id="pregnant" type="checkbox"><span>I am pregnant or breastfeeding.<small class="check-help">This changes nutrition and safety requirements and should be reviewed with your clinician.</small></span></label>
           <div class="model-run-consent">
             <label class="check" for="dataLoopConsent">
               <input id="dataLoopConsent" type="checkbox">
@@ -6994,33 +7207,38 @@
           <div class="science-visual" aria-hidden="true">
             <canvas class="science-runner-canvas" id="scienceRunnerCanvas"></canvas>
             <div class="science-vector-counter">
-              <span>Vector points built</span>
-              <strong id="scienceRunnerPointCount">0 / 18</strong>
+              <span>Decision layers</span>
+              <strong id="scienceRunnerPointCount">0 / 6</strong>
             </div>
             <div class="science-model-readout">
-              <span>Vector search</span>
+              <span>Current decision</span>
               <b id="scienceRunnerReadout">initializing</b>
             </div>
           </div>
           <div class="science-copy">
-            <div class="eyebrow">Custom blend engine</div>
-            <h3 id="scienceRunnerTitle">Reading the bloodwork signal.</h3>
-            <p id="scienceRunnerBody">We are turning the reviewed blood markers and questionnaire context into a model-ready health profile.</p>
+            <img class="science-brand-logo" src="/assets/fluids/fluids_logo_wordmark_premium.svg?v=burgundy-1" alt="Fluids">
+            <div class="eyebrow">Fluids decision engine</div>
+            <h3 id="scienceRunnerTitle">Turning your bloodwork into a product decision.</h3>
+            <p id="scienceRunnerBody">The engine evaluates your reviewed labs as one connected profile, builds a coordinated nutrient direction, and tests how that direction can be delivered through a realistic whole-food formula.</p>
+            <div class="science-principles" aria-label="Decision engine principles">
+              <span>Whole-profile view</span><span>Safety-aware</span><span>Product-feasible</span>
+            </div>
             <div class="science-progress" aria-hidden="true"><i id="scienceRunnerProgress"></i></div>
             <div class="science-vector-build" aria-live="polite">
               <div class="science-vector-build-head">
-                <span>Live vector build</span>
+                <span>Decision trace</span>
                 <span id="scienceRunnerBackendStatus">waiting for model</span>
               </div>
               <div class="science-vector-points" id="scienceRunnerPointList"></div>
             </div>
           </div>
           <div class="science-step-grid" id="scienceStepGrid">
-            <div class="science-step active"><b>1</b><strong>Signals</strong><span>Clean bloodwork and context.</span></div>
-            <div class="science-step"><b>2</b><strong>Direction</strong><span>Find the health vector.</span></div>
-            <div class="science-step"><b>3</b><strong>Vector</strong><span>Search feasible nutrients.</span></div>
-            <div class="science-step"><b>4</b><strong>Powders</strong><span>Match nutrients to real powders.</span></div>
-            <div class="science-step"><b>5</b><strong>Formula</strong><span>Rank blend candidates.</span></div>
+            <div class="science-step active"><b>1</b><strong>Profile</strong><span>Structure reviewed labs and context.</span></div>
+            <div class="science-step"><b>2</b><strong>Priorities</strong><span>Weigh patterns, confidence, and guardrails.</span></div>
+            <div class="science-step"><b>3</b><strong>Nutrients</strong><span>Build a coordinated nutrient vector.</span></div>
+            <div class="science-step"><b>4</b><strong>Ingredients</strong><span>Test whole-food delivery feasibility.</span></div>
+            <div class="science-step"><b>5</b><strong>Options</strong><span>Compare custom and ready-made paths.</span></div>
+            <div class="science-step"><b>6</b><strong>Plan</strong><span>Prepare your result and baseline.</span></div>
           </div>
         </div>
       </aside>
@@ -7045,6 +7263,8 @@
         <button type="button" class="jump-button active" data-scroll-target="resultsAgeHero">Age outlook</button>
         <button type="button" class="jump-button" data-scroll-target="biomarkerDashboard">Blood markers</button>
         <button type="button" class="jump-button" data-scroll-target="customBlendHero">Your blend</button>
+        <button type="button" class="jump-button" data-scroll-target="personalizedOfferComparison">Formula paths</button>
+        <button type="button" class="jump-button" data-scroll-target="standardFitDashboard">Membership fit</button>
         <button type="button" class="jump-button" data-scroll-target="personalizationProofPanel">Why personalized</button>
         <button type="button" class="jump-button" data-scroll-target="customFullNutrientVector">Target + delivery</button>
       </nav>
@@ -7104,6 +7324,30 @@
         <p class="biomarker-disclaimer" id="biomarkerDisclaimer"></p>
       </section>
       <div class="custom-blend-hero section-anchor" id="customBlendHero"></div>
+      <section class="personalized-offer-comparison section-anchor" id="personalizedOfferComparison" hidden>
+        <header class="offer-comparison-head">
+          <div>
+            <div class="eyebrow">Your formula paths</div>
+            <h3>Personalized formulas—with the closest ready-made alternative beside each one.</h3>
+            <p>Each custom formula is built from your nutrient vector. Its neighboring standard blend is the closest ready-made delivery pattern, then separately scored for how well it fits your bloodwork-derived target.</p>
+          </div>
+          <div class="offer-comparison-seal"><span>Custom remains</span><strong>Most personal</strong></div>
+        </header>
+        <div class="personalized-offer-grid" id="personalizedOfferGrid"></div>
+      </section>
+      <section class="standard-fit-dashboard section-anchor" id="standardFitDashboard" hidden>
+        <header class="standard-fit-head">
+          <div>
+            <div class="eyebrow">Ready-made membership path</div>
+            <h3>Every standard blend, scored for your profile.</h3>
+            <p>This is a personal product-fit score—not a population coverage number. It combines how much of your target vector a blend covers, how closely its nutrient pattern aligns, and whether it reaches your highest-priority nutrients.</p>
+          </div>
+          <div class="standard-fit-seal"><span id="standardFitCount">8 blends</span><strong>One target</strong></div>
+        </header>
+        <div class="standard-fit-lead" id="standardFitLead"></div>
+        <div class="standard-fit-grid" id="standardFitGrid"></div>
+        <p class="standard-fit-disclaimer">Fit scores compare modeled nutrient delivery with this analysis’s nutrient target. They help compare products; they do not predict a guaranteed health outcome or replace clinical advice.</p>
+      </section>
       <section class="personalization-proof section-anchor" id="personalizationProofPanel">
         <div class="personalization-proof-head">
           <div>
@@ -7736,6 +7980,8 @@
         ["homeFunctionMenu","standard_blends","Standard blend collection"],
         ["uploadView","pdf_upload","PDF upload"],
         ["customBlendHero","custom_blend_result","Selected custom blend"],
+        ["personalizedOfferComparison","personalized_formula_paths","Personalized formula paths"],
+        ["standardFitDashboard","standard_membership_fit","Standard blend membership fit"],
         ["personalizationProofPanel","personalization_proof","Why this is personalized"]
       ].forEach(([id,section,label])=>{
         const element=document.getElementById(id);
@@ -7776,50 +8022,43 @@
 	    let scienceRunnerBackendStatus = "waiting for model";
 	    const scienceRunnerPhases = [
 	      {
-	        title:"Reading the bloodwork signal.",
-	        body:"First we clean the labs and context into one model-ready profile. The model is looking for patterns, not treating any single marker as the whole story.",
-	        readout:"bloodwork signal"
+	        title:"Structuring your health profile.",
+	        body:"Your reviewed lab values, units, available markers, and questionnaire context are organized into one consistent profile.",
+	        readout:"profile structure"
 	      },
 	      {
-	        title:"Finding the health direction.",
-	        body:"Next it weighs which bloodwork signals matter most for this person, then turns that pattern into a direction the nutrient vector can move.",
-	        readout:"marker alignment"
+	        title:"Finding the highest-value patterns.",
+	        body:"The engine weighs related signals together, checks their confidence, and applies health and ingredient guardrails before recommending a direction.",
+	        readout:"priority map"
 	      },
 	      {
-	        title:"Building the nutrient vector.",
-	        body:"The vector is a ranked set of nutrient moves. Each point has a size, a reason, and a feasibility check before ingredients enter the picture.",
-	        readout:"vector search"
+	        title:"Building your nutrient vector.",
+	        body:"The strongest opportunities become coordinated nutrient targets with a direction, relative magnitude, and confidence—not a one-marker-to-one-vitamin rule.",
+	        readout:"nutrient vector"
 	      },
 	      {
-	        title:"Mapping nutrients to real powders.",
-	        body:"Only after the target vector is built do we match it to fruit, vegetable, root, citrus, and mineral-carrier powders that can actually deliver it.",
-	        readout:"powder mapping"
+	        title:"Testing whole-food delivery.",
+	        body:"The vector is translated against fruit, vegetable, root, citrus, and mineral ingredients while respecting serving and formula constraints.",
+	        readout:"delivery feasibility"
 	      },
 	      {
-	        title:"Ranking candidate blends.",
-	        body:"The final pass compares candidate blends for vector fit, balance, product realism, and whether the formula still makes sense as a daily drink.",
-	        readout:"blend ranking"
+	        title:"Comparing your product paths.",
+	        body:"Personalized candidates are ranked, then every ready-made blend is scored against the same nutrient target so you can compare custom and membership options clearly.",
+	        readout:"formula comparison"
+	      },
+	      {
+	        title:"Preparing your personalized plan.",
+	        body:"Your result brings the bloodwork baseline, biological-age outlook, nutrient vector, selected formula, and closest ready-made alternative into one report.",
+	        readout:"result assembly"
 	      }
 	    ];
 	    const scienceRunnerSignals = [
-	      {phase:0, marker:"Age, sex, and context", nutrient:"Profile baseline", detail:"Sets the comparison frame before any nutrient target is chosen.", color:"#d5e1e1"},
-	      {phase:0, marker:"Albumin and protein status", nutrient:"Amino acid and mineral support", detail:"Helps the model judge whether the blend should lean more rebuilding, recovery, or maintenance.", color:"#71d8dc"},
-	      {phase:0, marker:"White blood cells", nutrient:"Micronutrient immune tone", detail:"Adds a measured signal for broad immune and inflammatory context.", color:"#5fa9d4"},
-	      {phase:0, marker:"MCV and RDW", nutrient:"B vitamin pattern", detail:"Turns red-blood-cell shape signals into a careful folate and B-vitamin direction.", color:"#b991d4"},
-	      {phase:1, marker:"Glucose and A1c", nutrient:"Fiber and polyphenol direction", detail:"Flags whether the vector should support steadier post-meal metabolism.", color:"#f2be37"},
-	      {phase:1, marker:"Triglyceride-style context", nutrient:"Metabolic lift", detail:"Connects energy-balance signals to nutrient moves that fit a real powder formula.", color:"#f6a84b"},
-	      {phase:1, marker:"CRP or inflammation proxy", nutrient:"Antioxidant priority", detail:"Raises or lowers the need for colorful plant polyphenols and vitamin C carriers.", color:"#c62b4f"},
-	      {phase:1, marker:"ALT and GGT", nutrient:"Liver processing support", detail:"Helps decide whether citrus, root, and antioxidant levers should move higher.", color:"#d95c25"},
-	      {phase:2, marker:"Creatinine and eGFR", nutrient:"Mineral guardrails", detail:"Checks kidney-related signals before mineral-heavy moves are allowed to grow.", color:"#43b8b1"},
-	      {phase:2, marker:"Potassium", nutrient:"Electrolyte balance", detail:"Keeps the vector useful without ignoring potassium sensitivity.", color:"#8fbc8f"},
-	      {phase:2, marker:"Alkaline phosphatase", nutrient:"Mineral matrix", detail:"Adds a bone and mineral-context signal without overcalling one lab value.", color:"#d2a24c"},
-	      {phase:2, marker:"BUN and hydration context", nutrient:"Recovery balance", detail:"Helps keep the vector from overcorrecting toward one narrow pathway.", color:"#7fb3d5"},
-	      {phase:3, marker:"Nutrient bounds", nutrient:"Product-feasible dose", detail:"Shrinks theoretical nutrient moves into amounts a daily powder could reasonably carry.", color:"#fff1a8"},
-	      {phase:3, marker:"Ingredient nutrition profiles", nutrient:"Whole-food delivery", detail:"Searches which powder families can deliver the target without becoming one-note.", color:"#9dc56b"},
-	      {phase:3, marker:"Taste and formula constraints", nutrient:"Blend realism", detail:"Balances the math with the need for a formula someone could actually drink.", color:"#f1c989"},
-	      {phase:4, marker:"Candidate formulas", nutrient:"Vector fit score", detail:"Ranks formulas by how closely the ingredient mix recreates the personal nutrient vector.", color:"#71d8dc"},
-	      {phase:4, marker:"Model agreement", nutrient:"Confidence check", detail:"Looks for a direction that is stable across model families, not just a lucky score.", color:"#d9edf0"},
-	      {phase:4, marker:"Final blend", nutrient:"Personalized function", detail:"Turns the ranked nutrient vector into the custom function name and blend card.", color:"#f5d36f"}
+	      {phase:0, marker:"Reviewed labs + personal context", nutrient:"Profile ready", detail:"No single marker decides the recommendation.", color:"#ead7c5"},
+	      {phase:1, marker:"Connected marker patterns + guardrails", nutrient:"Priority map", detail:"Signals are considered together and weighted by relevance and confidence.", color:"#c83b57"},
+	      {phase:2, marker:"Ranked health opportunities", nutrient:"Coordinated targets", detail:"Each target carries a direction and relative magnitude for this profile.", color:"#d6a542"},
+	      {phase:3, marker:"Nutrient targets + product constraints", nutrient:"Feasible delivery", detail:"Ingredient combinations must work nutritionally and as a realistic daily product.", color:"#4f9b8e"},
+	      {phase:4, marker:"Custom candidates + eight standard blends", nutrient:"Fit + coverage", detail:"Custom and ready-made choices are evaluated against the same personal target.", color:"#9c2947"},
+	      {phase:5, marker:"Ranked products + biomarker baseline", nutrient:"Personalized plan", detail:"The report shows what is personal, what is ready-made, and how each option fits.", color:"#f0c878"}
 	    ];
 
     function initPremiumExperience() {
@@ -8181,12 +8420,12 @@
       const body=document.getElementById("scienceRunnerBody");
       if (title) title.textContent=phase.title;
       if (body) {
-        body.textContent=`${phase.body} Now adding ${signal.nutrient.toLowerCase()} from ${signal.marker.toLowerCase()}.`;
+        body.textContent=`${phase.body} ${signal.detail}`;
       }
       const progressBar=document.getElementById("scienceRunnerProgress");
       if (progressBar) progressBar.style.width=`${progress.toFixed(1)}%`;
       const readout=document.getElementById("scienceRunnerReadout");
-      if (readout) readout.textContent=`point ${Math.min(activeIndex+1,total)} of ${total} · ${signal.nutrient}`;
+      if (readout) readout.textContent=`stage ${Math.min(activeIndex+1,total)} of ${total} · ${signal.nutrient}`;
       const count=document.getElementById("scienceRunnerPointCount");
       if (count) count.textContent=`${buildCount} / ${total}`;
       const backend=document.getElementById("scienceRunnerBackendStatus");
@@ -8197,7 +8436,7 @@
       const list=document.getElementById("scienceRunnerPointList");
       if (list) {
         list.textContent="";
-        const visible=scienceRunnerSignals.slice(0,buildCount).slice(-5).reverse();
+        const visible=scienceRunnerSignals.slice(0,buildCount).slice(-3).reverse();
         visible.forEach((item,visibleIndex)=>{
           const row=document.createElement("div");
           row.className="science-vector-point";
@@ -8238,7 +8477,7 @@
         scienceRunnerStep=(scienceRunnerStep+1)%scienceRunnerSignals.length;
         scienceRunnerBuildCount=Math.min(scienceRunnerSignals.length,scienceRunnerBuildCount+1);
         renderScienceRunnerStep(scienceRunnerStep);
-      },850);
+      },2600);
     }
     function stopScienceRunner() {
       clearInterval(scienceRunnerTimer);
@@ -9042,6 +9281,185 @@
       }));
       renderList();
     }
+    function profileFitPercent(value) {
+      const number=Number(value);
+      return Number.isFinite(number) ? Math.max(0,Math.min(100,number)) : null;
+    }
+    function appendProductIngredientPills(parent,names,className="path-ingredients") {
+      const clean=(Array.isArray(names) ? names : [])
+        .map(name=>cleanPowderName(name))
+        .filter(Boolean)
+        .slice(0,8);
+      if (!clean.length) return;
+      const wrap=document.createElement("div");
+      wrap.className=className;
+      clean.forEach(name=>{
+        const chip=document.createElement("span");
+        chip.textContent=name;
+        wrap.appendChild(chip);
+      });
+      parent.appendChild(wrap);
+    }
+    function appendClosestStandardOffer(option,parent) {
+      const neighbor=option?.closest_standard_blend;
+      if (!neighbor || !parent) return;
+      const panel=document.createElement("aside");
+      panel.className="closest-standard-offer";
+      const copy=document.createElement("div");
+      const eyebrow=document.createElement("small");
+      eyebrow.textContent="Closest ready-made alternative";
+      const title=document.createElement("h4");
+      title.textContent=neighbor.name || "Standard blend";
+      const body=document.createElement("p");
+      body.textContent="The closest standard product to this formula’s nutrient-delivery pattern. Shared ingredients do not make it the same formula; the custom composition is tuned around your target.";
+      copy.append(eyebrow,title,body);
+      appendProductIngredientPills(copy,neighbor.ingredient_names);
+      const score=document.createElement("div");
+      score.className="closest-standard-score";
+      const value=document.createElement("strong");
+      const fit=profileFitPercent(neighbor.profile_fit_percent);
+      value.textContent=fit===null ? "—" : `${fit.toFixed(0)}`;
+      const label=document.createElement("span");
+      label.textContent=fit===null ? "Profile fit unavailable" : `${neighbor.fit_label || "Profile fit"} · profile fit`;
+      score.append(value,label);
+      panel.append(copy,score);
+      parent.appendChild(panel);
+    }
+    function renderPersonalizedOfferComparison(options) {
+      const panel=document.getElementById("personalizedOfferComparison");
+      const grid=document.getElementById("personalizedOfferGrid");
+      if (!panel || !grid) return;
+      const rows=(Array.isArray(options) ? options : []).filter(option=>option?.closest_standard_blend);
+      grid.textContent="";
+      if (!rows.length) {
+        panel.hidden=true;
+        return;
+      }
+      panel.hidden=false;
+      rows.forEach((option,index)=>{
+        const neighbor=option.closest_standard_blend || {};
+        const card=document.createElement("article");
+        card.className="personalized-path-card";
+        const custom=document.createElement("div");
+        custom.className="personalized-path-custom";
+        const customLabel=document.createElement("small");
+        customLabel.textContent=index===0 ? "Recommended personalized formula" : `Personalized formula option ${index+1}`;
+        const customTitle=document.createElement("h4");
+        customTitle.textContent=index===0 ? customFunctionName(option) : `Personalized formula option ${index+1}`;
+        const customCopy=document.createElement("p");
+        customCopy.textContent=option.function_summary || option.function_description || "A distinct whole-food formula ranked against this person’s complete nutrient vector.";
+        custom.append(customLabel,customTitle,customCopy);
+        appendProductIngredientPills(custom,(option.ingredients || []).map(item=>item.item));
+
+        const arrow=document.createElement("div");
+        arrow.className="personalized-path-arrow";
+        arrow.setAttribute("aria-hidden","true");
+        arrow.textContent="→";
+
+        const standard=document.createElement("div");
+        standard.className="personalized-path-standard";
+        const standardLabel=document.createElement("small");
+        standardLabel.textContent="Closest ready-made alternative";
+        const standardTitle=document.createElement("h4");
+        standardTitle.textContent=neighbor.name || "Standard blend";
+        const fitRow=document.createElement("div");
+        fitRow.className="path-fit-row";
+        const fitValue=document.createElement("strong");
+        const fit=profileFitPercent(neighbor.profile_fit_percent);
+        fitValue.textContent=fit===null ? "—" : `${fit.toFixed(0)}`;
+        const fitLabel=document.createElement("span");
+        fitLabel.textContent=fit===null ? "Profile fit unavailable" : `${neighbor.fit_label || "Profile fit"} for you`;
+        fitRow.append(fitValue,fitLabel);
+        const standardCopy=document.createElement("p");
+        standardCopy.textContent="The nearest ready-made nutrient pattern to this personalized option. Shared ingredients can overlap, but the custom composition is tuned around your individual target.";
+        standard.append(standardLabel,standardTitle,fitRow,standardCopy);
+        const meta=document.createElement("div");
+        meta.className="path-fit-meta";
+        const coverage=profileFitPercent(neighbor.target_coverage_percent);
+        const alignment=profileFitPercent(neighbor.target_alignment_percent);
+        if (coverage!==null) {
+          const item=document.createElement("span"); item.textContent=`${coverage.toFixed(0)} target coverage`; meta.appendChild(item);
+        }
+        if (alignment!==null) {
+          const item=document.createElement("span"); item.textContent=`${alignment.toFixed(0)} vector alignment`; meta.appendChild(item);
+        }
+        if (meta.children.length) standard.appendChild(meta);
+        appendProductIngredientPills(standard,neighbor.ingredient_names);
+        card.append(custom,arrow,standard);
+        grid.appendChild(card);
+      });
+    }
+    function buildStandardFitLeadCard(score,labelText,extraClass="") {
+      const card=document.createElement("article");
+      card.className=`standard-fit-lead-card ${extraClass}`.trim();
+      const copy=document.createElement("div");
+      const label=document.createElement("small"); label.textContent=labelText;
+      const title=document.createElement("h4"); title.textContent=score.name || "Standard blend";
+      const body=document.createElement("p");
+      body.textContent=score.description || "The highest-fitting ready-made product in this membership lane.";
+      copy.append(label,title,body);
+      const scoreBlock=document.createElement("div"); scoreBlock.className="standard-fit-lead-score";
+      const value=document.createElement("strong"); value.textContent=`${Math.round(Number(score.profile_fit_percent || 0))}`;
+      const status=document.createElement("span"); status.textContent=`${score.fit_label || "Profile fit"} · profile fit`;
+      scoreBlock.append(value,status);
+      card.append(copy,scoreBlock);
+      return card;
+    }
+    function renderStandardFitDashboard(scores) {
+      const panel=document.getElementById("standardFitDashboard");
+      const lead=document.getElementById("standardFitLead");
+      const grid=document.getElementById("standardFitGrid");
+      const count=document.getElementById("standardFitCount");
+      if (!panel || !lead || !grid) return;
+      const rows=(Array.isArray(scores) ? scores : [])
+        .filter(item=>profileFitPercent(item?.profile_fit_percent)!==null)
+        .slice()
+        .sort((a,b)=>Number(a.rank || 999)-Number(b.rank || 999));
+      lead.textContent="";
+      grid.textContent="";
+      if (!rows.length) {
+        panel.hidden=true;
+        return;
+      }
+      panel.hidden=false;
+      if (count) count.textContent=`${rows.length} blends`;
+      const bestCore=rows.find(item=>item.standard_type==="foundation");
+      const bestFunctional=rows.find(item=>item.standard_type==="functional");
+      if (bestCore) lead.appendChild(buildStandardFitLeadCard(bestCore,"Best Core foundation"));
+      if (bestFunctional) lead.appendChild(buildStandardFitLeadCard(bestFunctional,"Best functional add-on","functional"));
+      rows.forEach(item=>{
+        const card=document.createElement("article");
+        card.className=`standard-fit-card${item.recommended_core_foundation || item.best_ready_made_overall ? " recommended" : ""}`;
+        const rank=document.createElement("div"); rank.className="standard-fit-rank"; rank.textContent=`#${Number(item.rank || 0)}`;
+        const main=document.createElement("div"); main.className="standard-fit-main";
+        const role=document.createElement("small");
+        role.textContent=item.recommended_core_foundation ? "Recommended Core foundation" : item.membership_role || "Ready-made blend";
+        const title=document.createElement("h4"); title.textContent=item.name || item.id || "Standard blend";
+        const copy=document.createElement("p"); copy.textContent=item.description || "A ready-made whole-food formula scored against your nutrient target.";
+        const bar=document.createElement("div"); bar.className="standard-fit-bar";
+        const fill=document.createElement("i"); fill.style.width=`${profileFitPercent(item.profile_fit_percent) || 0}%`; bar.appendChild(fill);
+        const breakdown=document.createElement("div"); breakdown.className="standard-fit-breakdown";
+        const coverage=profileFitPercent(item.target_coverage_percent);
+        const alignment=profileFitPercent(item.target_alignment_percent);
+        if (coverage!==null) { const piece=document.createElement("span"); piece.textContent=`${coverage.toFixed(0)} target coverage`; breakdown.appendChild(piece); }
+        if (alignment!==null) { const piece=document.createElement("span"); piece.textContent=`${alignment.toFixed(0)} vector alignment`; breakdown.appendChild(piece); }
+        if (Number(item.top_priority_hit_count)>=0 && Number(item.top_priority_count)>0) {
+          const piece=document.createElement("span"); piece.textContent=`${item.top_priority_hit_count}/${item.top_priority_count} top priorities reached`; breakdown.appendChild(piece);
+        }
+        main.append(role,title,copy,bar,breakdown);
+        appendProductIngredientPills(
+          main,
+          (item.top_matched_nutrients || []).map(nutrient=>nutrientLabel(nutrient)),
+          "standard-fit-nutrients"
+        );
+        const score=document.createElement("div"); score.className="standard-fit-score";
+        const value=document.createElement("strong"); value.textContent=`${Math.round(Number(item.profile_fit_percent || 0))}`;
+        const label=document.createElement("span"); label.textContent=item.fit_label || "Profile fit";
+        score.append(value,label);
+        card.append(rank,main,score);
+        grid.appendChild(card);
+      });
+    }
     function renderResults(data) {
       const age = data.biological_age || {ok:false};
       const ageScores = data.age_scores || {};
@@ -9096,6 +9514,8 @@
       renderResultsAgeHero(data,blendOptions[0] || null);
       renderBiomarkerDashboard(data.biomarker_report || {});
       renderCustomBlendHero(blendOptions[0] || null,data);
+      renderPersonalizedOfferComparison(blendOptions.slice(0,4));
+      renderStandardFitDashboard(data.standard_blend_profile_scores || []);
       renderPersonalizationProof(data,blendOptions[0] || null);
 	      const nav = document.getElementById("portfolioNav");
 	      if (nav) {
@@ -9947,8 +10367,9 @@
         const fill=document.createElement("div"); fill.className="ingredient-fill"; fill.style.width=`${Math.min(100,Number(ingredient.blend_percent)*3)}%`; track.appendChild(fill);
         const value=document.createElement("div"); value.className="ingredient-percent"; value.textContent=`${Number(ingredient.blend_percent).toFixed(1)}%`;
         row.append(name,track,value); list.appendChild(row);
-      });
+	      });
 	      card.appendChild(list);
+	      appendClosestStandardOffer(option,card);
 	      const opportunities=option.nutrient_opportunities || [];
 	      if (opportunities.length) {
 	        const section=document.createElement("div"); section.className="opportunity-section";
