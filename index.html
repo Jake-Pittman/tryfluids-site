@@ -1409,6 +1409,192 @@
       .science-runner.active { padding:16px; }
       .science-visual { min-height:230px; }
     }
+    /* 2026 premium burgundy identity: editorial science, warm ivory, produce as secondary signal */
+    :root {
+      --ink:#2a0d19;
+      --muted:#726367;
+      --paper:#fbf7f1;
+      --card:#fffdf9;
+      --leaf:#748a48;
+      --lime:#9caf63;
+      --raspberry:#8a0b2f;
+      --lemon:#d3ad61;
+      --carrot:#b9563d;
+      --ocean:#7b9294;
+      --blush:#e6c4ca;
+      --sand:#e4d7cb;
+      --copper:#98644d;
+      --slate:#382a31;
+      --line:#e8dcd3;
+      --shadow:0 28px 90px rgba(67,13,34,.10);
+    }
+    body {
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 7% 2%,rgba(138,11,47,.10),transparent 28rem),
+        radial-gradient(circle at 92% 12%,rgba(211,173,97,.12),transparent 30rem),
+        linear-gradient(180deg,#fffaf4 0,var(--paper) 44rem,#fffaf5 100%);
+    }
+    body::before {
+      background:
+        linear-gradient(90deg,rgba(71,17,37,.028) 1px,transparent 1px) 50% 0 / 88px 88px,
+        linear-gradient(rgba(71,17,37,.024) 1px,transparent 1px) 0 50% / 88px 88px;
+    }
+    header {
+      background:rgba(255,250,244,.9);
+      border-bottom-color:rgba(138,11,47,.13);
+      box-shadow:0 8px 28px rgba(67,13,34,.04);
+    }
+    .brand { min-width:230px; }
+    .brand-logo {
+      width:218px;
+      max-width:38vw;
+      filter:drop-shadow(0 8px 18px rgba(86,6,32,.07));
+    }
+    .mode-switch,.app-pill,.privacy,.founder-access-button {
+      background:rgba(255,253,249,.84);
+      border-color:rgba(138,11,47,.14);
+      box-shadow:0 10px 28px rgba(67,13,34,.045);
+    }
+    .app-pill::before,
+    .consumer-proof-row span::before {
+      background:var(--raspberry);
+      box-shadow:0 0 0 4px rgba(138,11,47,.11);
+    }
+    .mode-button:hover,.mode-button.active,
+    .jump-button:hover,.jump-button.active,
+    .standard-side-nav button:hover,.standard-side-nav button.active,
+    .blend-tab:hover,.blend-tab.active,
+    .discovery-tab:hover,.discovery-tab.active {
+      color:#fff9f2;
+      background:linear-gradient(135deg,#720420,#98133a);
+      box-shadow:0 12px 24px rgba(107,5,36,.16);
+    }
+    button {
+      color:#fff9f2;
+      background:linear-gradient(135deg,#75021f,#99143b);
+      box-shadow:0 14px 30px rgba(107,5,36,.15);
+    }
+    button:hover { background:linear-gradient(135deg,#98133a,#5f031a); }
+    .secondary,.quick-link {
+      color:var(--ink);
+      background:#f4e8e6;
+      border-color:rgba(138,11,47,.13);
+    }
+    .eyebrow { color:var(--raspberry); }
+    .hero > div:first-child::before {
+      background:conic-gradient(from var(--orbital-angle),#8a0b2f,#d3ad61,#748a48,#b9563d,#8a0b2f);
+      opacity:.14;
+    }
+    .hero h1 {
+      background:linear-gradient(112deg,#2a0d19 0%,#4c1428 42%,#8a0b2f 77%,#2a0d19 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .lead { color:#6c5f61; }
+    .platform-hero-link {
+      color:var(--raspberry);
+      border-color:rgba(138,11,47,.22);
+      background:rgba(255,253,249,.7);
+    }
+    .platform-hero-link:hover {
+      border-color:rgba(138,11,47,.42);
+      background:#fffdf9;
+    }
+    .consumer-proof-row span,
+    .panel,.standard-card,.home-function-card,.membership-card,
+    .personalization-proof-metric,.personalization-flow {
+      border-color:rgba(138,11,47,.12);
+      background:rgba(255,253,249,.82);
+      box-shadow:0 18px 48px rgba(67,13,34,.055);
+    }
+    .full-stack-experience {
+      border-color:rgba(138,11,47,.28);
+      background:
+        radial-gradient(circle at 90% 2%,rgba(211,173,97,.15),transparent 32%),
+        linear-gradient(145deg,#260b18 0%,#4b1027 60%,#280b19 100%);
+      color:#fff8f0;
+      box-shadow:0 28px 78px rgba(67,13,34,.18);
+    }
+    .full-stack-head .eyebrow,
+    .full-stack-promise span { color:#e5bfc8; }
+    .full-stack-head h2 { color:#fff9f2; }
+    .full-stack-head p,
+    .full-stack-step span { color:rgba(255,248,240,.7); }
+    .full-stack-promise,
+    .full-stack-grid { border-color:rgba(255,248,240,.13);background:rgba(255,248,240,.055); }
+    .full-stack-step { border-color:rgba(255,248,240,.1); }
+    .full-stack-step::after { color:#d3ad61; }
+    .full-stack-step b {
+      color:#4b1027;
+      background:linear-gradient(135deg,#f2dbe0,#d3ad61);
+    }
+    .platform-partner-note { color:rgba(255,248,240,.48); }
+    .membership-system {
+      border-color:rgba(138,11,47,.14);
+      background:
+        radial-gradient(circle at 100% 0%,rgba(138,11,47,.075),transparent 30%),
+        linear-gradient(145deg,rgba(255,253,249,.88),rgba(248,237,232,.86));
+      box-shadow:0 22px 62px rgba(67,13,34,.075);
+    }
+    .membership-card.featured {
+      color:#fff8f0;
+      border-color:rgba(138,11,47,.65);
+      background:linear-gradient(145deg,#720420,#98133a);
+      box-shadow:0 20px 42px rgba(107,5,36,.18);
+    }
+    .membership-card .eyebrow,
+    .membership-card strong.pack-count { color:var(--raspberry); }
+    .membership-card.featured .eyebrow { color:#f0cfd6; }
+    .membership-card.featured strong.pack-count { color:#e8c476; }
+    .platform-product-layer .home-function-code-note span { background:var(--raspberry); }
+    .personalization-proof {
+      border-color:rgba(138,11,47,.14);
+      background:
+        radial-gradient(circle at 94% 0%,rgba(211,173,97,.12),transparent 25rem),
+        radial-gradient(circle at 2% 100%,rgba(138,11,47,.09),transparent 22rem),
+        linear-gradient(145deg,#fffdf9,#f9f1ef);
+      box-shadow:0 24px 60px rgba(67,13,34,.075);
+    }
+    .personalization-proof::before {
+      background-image:
+        linear-gradient(rgba(138,11,47,.028) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(138,11,47,.028) 1px,transparent 1px);
+    }
+    .personalization-proof-seal {
+      color:#7b082a;
+      border-color:rgba(138,11,47,.18);
+      background:#f2dfe3;
+    }
+    .launch-offer-strip,.section-banner {
+      border-color:rgba(138,11,47,.14);
+      background:
+        radial-gradient(circle at 100% 20%,rgba(211,173,97,.14),transparent 18rem),
+        linear-gradient(135deg,#fffdf9,#f8eeeb);
+    }
+    .custom-blend-hero,.standard-hero,.science-runner,.atom-stage,.vector-manifesto {
+      background:
+        radial-gradient(circle at 8% 92%,rgba(138,11,47,.28),transparent 24rem),
+        radial-gradient(circle at 86% 18%,rgba(211,173,97,.14),transparent 26rem),
+        linear-gradient(135deg,#260b18,#4b1027 62%,#260b18);
+    }
+    .score-badge,.variant-pill,.archetype-tag,.section-banner .banner-tag,.nutrient-type,.action-pill {
+      color:#7b082a;
+      background:#f1dfe3;
+    }
+    .ingredient-fill,.variant-fill,.archetype-fit-fill,.nutrient-share-fill,.hero-ingredient-fill,.hero-vector-fill {
+      background:linear-gradient(90deg,#8a0b2f,#d3ad61,#748a48);
+    }
+    .nutrient-table-intro { background:linear-gradient(125deg,#260b18,#65102f); }
+    ::selection { background:#8a0b2f;color:#fff9f2; }
+    @media (max-width:840px) {
+      .brand { min-width:0; }
+      .brand-logo { width:154px;max-width:44vw; }
+    }
+    @media (max-width:520px) {
+      .brand-logo { width:146px;max-width:62vw; }
+    }
     @media (prefers-reduced-motion:reduce) {
       .atom-stage::after,.atom-orbit,.atom-electron-halo,.atom-ingredient-node,.source-segment,.nutrient-share-fill { animation:none; }
     }
@@ -5827,6 +6013,178 @@
       .full-stack-step { min-height:auto;border-right:0; }
       .full-stack-step b { margin-bottom:18px; }
     }
+    /* Final brand cascade: supplied burgundy wordmark is the primary identity. */
+    :root {
+      --ink:#2a0d19;
+      --muted:#726367;
+      --paper:#fbf7f1;
+      --card:#fffdf9;
+      --leaf:#748a48;
+      --lime:#9caf63;
+      --raspberry:#8a0b2f;
+      --lemon:#d3ad61;
+      --carrot:#b9563d;
+      --ocean:#7b9294;
+      --blush:#e6c4ca;
+      --sand:#e4d7cb;
+      --copper:#98644d;
+      --slate:#382a31;
+      --line:#e8dcd3;
+      --shadow:0 28px 90px rgba(67,13,34,.10);
+    }
+    body {
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 7% 2%,rgba(138,11,47,.10),transparent 28rem),
+        radial-gradient(circle at 92% 12%,rgba(211,173,97,.12),transparent 30rem),
+        linear-gradient(180deg,#fffaf4 0,var(--paper) 44rem,#fffaf5 100%);
+    }
+    body::before {
+      background:
+        linear-gradient(90deg,rgba(71,17,37,.028) 1px,transparent 1px) 50% 0 / 88px 88px,
+        linear-gradient(rgba(71,17,37,.024) 1px,transparent 1px) 0 50% / 88px 88px;
+    }
+    header {
+      background:rgba(255,250,244,.9);
+      border-bottom-color:rgba(138,11,47,.13);
+      box-shadow:0 8px 28px rgba(67,13,34,.04);
+    }
+    .brand { min-width:230px; }
+    .brand-logo {
+      width:218px;
+      max-width:38vw;
+      filter:drop-shadow(0 8px 18px rgba(86,6,32,.07));
+    }
+    .mode-switch,.app-pill,.privacy,.founder-access-button {
+      background:rgba(255,253,249,.84);
+      border-color:rgba(138,11,47,.14);
+      box-shadow:0 10px 28px rgba(67,13,34,.045);
+    }
+    .app-pill::before,.consumer-proof-row span::before {
+      background:var(--raspberry);
+      box-shadow:0 0 0 4px rgba(138,11,47,.11);
+    }
+    .mode-button:hover,.mode-button.active,
+    .jump-button:hover,.jump-button.active,
+    .standard-side-nav button:hover,.standard-side-nav button.active,
+    .blend-tab:hover,.blend-tab.active,.discovery-tab:hover,.discovery-tab.active {
+      color:#fff9f2;
+      background:linear-gradient(135deg,#720420,#98133a);
+      box-shadow:0 12px 24px rgba(107,5,36,.16);
+    }
+    button {
+      color:#fff9f2;
+      background:linear-gradient(135deg,#75021f,#99143b);
+      box-shadow:0 14px 30px rgba(107,5,36,.15);
+    }
+    button:hover { background:linear-gradient(135deg,#98133a,#5f031a); }
+    .secondary,.quick-link {
+      color:var(--ink);
+      background:#f4e8e6;
+      border-color:rgba(138,11,47,.13);
+    }
+    .eyebrow { color:var(--raspberry); }
+    .hero > div:first-child::before {
+      background:conic-gradient(from var(--orbital-angle),#8a0b2f,#d3ad61,#748a48,#b9563d,#8a0b2f);
+      opacity:.14;
+    }
+    .hero h1 {
+      background:linear-gradient(112deg,#2a0d19 0%,#4c1428 42%,#8a0b2f 77%,#2a0d19 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .lead { color:#6c5f61; }
+    .platform-hero-link {
+      color:var(--raspberry);
+      border-color:rgba(138,11,47,.22);
+      background:rgba(255,253,249,.7);
+    }
+    .platform-hero-link:hover { border-color:rgba(138,11,47,.42);background:#fffdf9; }
+    .consumer-proof-row span,.panel,.standard-card,.home-function-card,.membership-card,
+    .personalization-proof-metric,.personalization-flow {
+      border-color:rgba(138,11,47,.12);
+      background:rgba(255,253,249,.82);
+      box-shadow:0 18px 48px rgba(67,13,34,.055);
+    }
+    .full-stack-experience {
+      border-color:rgba(138,11,47,.28);
+      background:
+        radial-gradient(circle at 90% 2%,rgba(211,173,97,.15),transparent 32%),
+        linear-gradient(145deg,#260b18 0%,#4b1027 60%,#280b19 100%);
+      color:#fff8f0;
+      box-shadow:0 28px 78px rgba(67,13,34,.18);
+    }
+    .full-stack-head .eyebrow,.full-stack-promise span { color:#e5bfc8; }
+    .full-stack-head h2 { color:#fff9f2; }
+    .full-stack-head p,.full-stack-step span { color:rgba(255,248,240,.7); }
+    .full-stack-promise,.full-stack-grid {
+      border-color:rgba(255,248,240,.13);
+      background:rgba(255,248,240,.055);
+    }
+    .full-stack-step { border-color:rgba(255,248,240,.1); }
+    .full-stack-step::after { color:#d3ad61; }
+    .full-stack-step b { color:#4b1027;background:linear-gradient(135deg,#f2dbe0,#d3ad61); }
+    .platform-partner-note { color:rgba(255,248,240,.48); }
+    .membership-system {
+      border-color:rgba(138,11,47,.14);
+      background:
+        radial-gradient(circle at 100% 0%,rgba(138,11,47,.075),transparent 30%),
+        linear-gradient(145deg,rgba(255,253,249,.88),rgba(248,237,232,.86));
+      box-shadow:0 22px 62px rgba(67,13,34,.075);
+    }
+    .membership-card.featured {
+      color:#fff8f0;
+      border-color:rgba(138,11,47,.65);
+      background:linear-gradient(145deg,#720420,#98133a);
+      box-shadow:0 20px 42px rgba(107,5,36,.18);
+    }
+    .membership-card .eyebrow,.membership-card strong.pack-count { color:var(--raspberry); }
+    .membership-card.featured .eyebrow { color:#f0cfd6; }
+    .membership-card.featured strong.pack-count { color:#e8c476; }
+    .platform-product-layer .home-function-code-note span { background:var(--raspberry); }
+    .personalization-proof {
+      border-color:rgba(138,11,47,.14);
+      background:
+        radial-gradient(circle at 94% 0%,rgba(211,173,97,.12),transparent 25rem),
+        radial-gradient(circle at 2% 100%,rgba(138,11,47,.09),transparent 22rem),
+        linear-gradient(145deg,#fffdf9,#f9f1ef);
+      box-shadow:0 24px 60px rgba(67,13,34,.075);
+    }
+    .personalization-proof::before {
+      background-image:
+        linear-gradient(rgba(138,11,47,.028) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(138,11,47,.028) 1px,transparent 1px);
+    }
+    .personalization-proof-seal { color:#7b082a;border-color:rgba(138,11,47,.18);background:#f2dfe3; }
+    .launch-offer-strip,.section-banner {
+      border-color:rgba(138,11,47,.14);
+      background:
+        radial-gradient(circle at 100% 20%,rgba(211,173,97,.14),transparent 18rem),
+        linear-gradient(135deg,#fffdf9,#f8eeeb);
+    }
+    .custom-blend-hero,.standard-hero,.science-runner,.atom-stage,.vector-manifesto {
+      background:
+        radial-gradient(circle at 8% 92%,rgba(138,11,47,.28),transparent 24rem),
+        radial-gradient(circle at 86% 18%,rgba(211,173,97,.14),transparent 26rem),
+        linear-gradient(135deg,#260b18,#4b1027 62%,#260b18);
+    }
+    .score-badge,.variant-pill,.archetype-tag,.section-banner .banner-tag,.nutrient-type,.action-pill {
+      color:#7b082a;
+      background:#f1dfe3;
+    }
+    .ingredient-fill,.variant-fill,.archetype-fit-fill,.nutrient-share-fill,.hero-ingredient-fill,.hero-vector-fill {
+      background:linear-gradient(90deg,#8a0b2f,#d3ad61,#748a48);
+    }
+    .nutrient-table-intro { background:linear-gradient(125deg,#260b18,#65102f); }
+    ::selection { background:#8a0b2f;color:#fff9f2; }
+    @media (max-width:840px) {
+      .brand { min-width:0; }
+      .brand-logo { width:154px;max-width:44vw; }
+    }
+    @media (max-width:520px) {
+      .brand-logo { width:146px;max-width:62vw; }
+    }
     @media (prefers-reduced-motion:reduce) {
       .hero > div:first-child::before,
       .constellation-node,
@@ -5852,7 +6210,7 @@
   <div class="shell">
     <header>
       <div class="brand">
-        <img class="brand-logo" src="/assets/fluids/fluids_logo_wordmark_premium.svg?v=wordmark-11" alt="Fluids">
+        <img class="brand-logo" src="/assets/fluids/fluids_logo_wordmark_premium.svg?v=burgundy-1" alt="Fluids">
       </div>
       <div class="header-actions">
         <nav class="mode-switch" aria-label="Recommendation mode">
