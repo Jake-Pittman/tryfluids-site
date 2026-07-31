@@ -34,20 +34,17 @@
       flex-direction:column;
     }
     header { order:0; }
-    #uploadHero,
-    #launchOffer {
-      display:none !important;
-    }
-    #vectorStory {
-      order:1;
-      margin-top:16px;
-    }
-    #homepageFlowIntro { order:2; }
-    #flowProgress { order:3; }
-    #wizardStage { order:4; }
-    #homeFunctionMenu { order:5; }
-    #standardView { order:6; }
-    #discoveryView { order:7; }
+    #uploadHero { order:1; }
+    #fullStackExperience { order:2; }
+    #launchOffer { order:3; }
+    #homeFunctionMenu { order:4; }
+    #membershipSystem { order:5; }
+    #vectorStory { order:6; margin-top:16px; }
+    #homepageFlowIntro { order:7; }
+    #flowProgress { order:8; }
+    #wizardStage { order:9; }
+    #standardView { order:10; }
+    #discoveryView { order:11; }
     footer { order:99; }
     header { display:flex; justify-content:space-between; align-items:center; padding:26px 0 14px; }
     .brand { font-weight:850; letter-spacing:-.04em; font-size:1.18rem; }
@@ -2670,62 +2667,6 @@
       line-height:1.45;
       font-weight:760;
     }
-    .vector-journey-cta {
-      display:grid;
-      gap:9px;
-      max-width:740px;
-      margin-top:22px;
-    }
-    .vector-journey-cta button {
-      width:100%;
-      min-height:76px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:22px;
-      padding:18px 20px 18px 24px;
-      border:1px solid rgba(255,255,255,.24);
-      border-radius:22px;
-      text-align:left;
-      background:
-        radial-gradient(circle at 88% 18%,rgba(242,190,55,.32),transparent 10rem),
-        linear-gradient(120deg,#123044 0%,#176576 58%,#c62b4f 112%);
-      box-shadow:
-        0 20px 42px rgba(13,27,42,.22),
-        0 9px 28px rgba(111,174,195,.20);
-    }
-    .vector-journey-cta button:hover {
-      background:
-        radial-gradient(circle at 88% 18%,rgba(242,190,55,.42),transparent 10rem),
-        linear-gradient(120deg,#173c53 0%,#1a7485 56%,#d7355b 112%);
-      box-shadow:
-        0 24px 48px rgba(13,27,42,.25),
-        0 12px 34px rgba(111,174,195,.26);
-    }
-    .vector-journey-cta button span {
-      font-size:1.03rem;
-      font-weight:900;
-      line-height:1.22;
-    }
-    .vector-journey-cta button b {
-      flex:0 0 auto;
-      width:39px;
-      height:39px;
-      display:grid;
-      place-items:center;
-      border-radius:50%;
-      color:var(--ink);
-      background:#fffaf2;
-      font-size:1.18rem;
-      line-height:1;
-      box-shadow:0 8px 20px rgba(13,27,42,.18);
-    }
-    .vector-journey-cta small {
-      padding-left:3px;
-      color:#777069;
-      font-size:.68rem;
-      line-height:1.4;
-    }
     .vector-demo-card {
       display:grid;
       min-height:430px;
@@ -4074,7 +4015,7 @@
     @media (max-width:840px) {
       .shell { width:min(100% - 24px,1180px); }
       header { margin:0 -12px; padding:13px 12px; }
-      .brand-logo { width:154px; }
+      .brand-logo { width:132px; }
       .header-actions {
         flex:1;
         justify-content:flex-end;
@@ -4148,7 +4089,7 @@
       .standard-product-visual { display:none; }
     }
     @media (max-width:520px) {
-      .brand-logo { width:132px; }
+      .brand-logo { width:112px; }
       header {
         display:grid;
         grid-template-columns:1fr;
@@ -5664,7 +5605,204 @@
     .results-deep-dive-body > :first-child {
       margin-top:18px !important;
     }
+    .platform-hero-link {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:0 22px;
+      border:1px solid rgba(11,35,51,.2);
+      border-radius:999px;
+      color:var(--ink);
+      background:rgba(255,255,255,.58);
+      font-weight:800;
+      text-decoration:none;
+      transition:transform .2s ease,border-color .2s ease,background .2s ease;
+    }
+    .platform-hero-link:hover {
+      transform:translateY(-2px);
+      border-color:rgba(11,35,51,.38);
+      background:#fff;
+    }
+    .full-stack-experience {
+      margin:26px 0 30px;
+      padding:38px;
+      border:1px solid rgba(157,111,67,.18);
+      border-radius:34px;
+      background:
+        radial-gradient(circle at 92% 8%,rgba(255,184,92,.22),transparent 28%),
+        linear-gradient(145deg,#10293a 0%,#17384a 62%,#102b34 100%);
+      color:#f7f1e7;
+      box-shadow:0 24px 70px rgba(11,35,51,.16);
+      overflow:hidden;
+    }
+    .full-stack-head {
+      display:grid;
+      grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);
+      gap:34px;
+      align-items:end;
+      margin-bottom:28px;
+    }
+    .full-stack-head .eyebrow { color:#90e6e6; }
+    .full-stack-head h2 {
+      max-width:760px;
+      margin:8px 0 12px;
+      color:#fffaf2;
+      font:700 clamp(38px,5.4vw,72px)/.96 Didot,Georgia,serif;
+      letter-spacing:-.045em;
+    }
+    .full-stack-head p {
+      margin:0;
+      color:rgba(247,241,231,.75);
+      font-size:17px;
+      line-height:1.55;
+    }
+    .full-stack-promise {
+      padding:20px 22px;
+      border:1px solid rgba(255,255,255,.15);
+      border-radius:22px;
+      background:rgba(255,255,255,.07);
+      backdrop-filter:blur(14px);
+    }
+    .full-stack-promise span {
+      display:block;
+      color:#90e6e6;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+    .full-stack-promise strong {
+      display:block;
+      margin-top:8px;
+      color:#fff;
+      font-size:20px;
+      line-height:1.25;
+    }
+    .full-stack-grid {
+      display:grid;
+      grid-template-columns:repeat(6,minmax(0,1fr));
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:24px;
+      background:rgba(3,19,30,.24);
+      overflow:hidden;
+    }
+    .full-stack-step {
+      position:relative;
+      min-height:198px;
+      padding:22px 18px 20px;
+      border-right:1px solid rgba(255,255,255,.1);
+    }
+    .full-stack-step:last-child { border-right:0; }
+    .full-stack-step::after {
+      content:"→";
+      position:absolute;
+      z-index:2;
+      right:-11px;
+      top:27px;
+      color:#ffc370;
+      font-weight:900;
+    }
+    .full-stack-step:last-child::after { content:"↻"; right:14px; }
+    .full-stack-step b {
+      display:grid;
+      width:34px;
+      height:34px;
+      place-items:center;
+      margin-bottom:28px;
+      border-radius:11px;
+      color:#10293a;
+      background:linear-gradient(135deg,#90e6e6,#ffc370);
+      font-size:12px;
+    }
+    .full-stack-step strong {
+      display:block;
+      color:#fff;
+      font-size:16px;
+      line-height:1.2;
+    }
+    .full-stack-step span {
+      display:block;
+      margin-top:8px;
+      color:rgba(247,241,231,.65);
+      font-size:13px;
+      line-height:1.45;
+    }
+    .platform-partner-note {
+      margin:18px 4px 0;
+      color:rgba(247,241,231,.5);
+      font-size:11px;
+      line-height:1.5;
+    }
+    .membership-system {
+      margin:30px 0;
+      padding:36px;
+      border:1px solid rgba(157,111,67,.18);
+      border-radius:32px;
+      background:linear-gradient(145deg,rgba(255,255,255,.78),rgba(249,241,231,.8));
+      box-shadow:0 18px 52px rgba(36,44,51,.08);
+    }
+    .membership-head {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(280px,.65fr);
+      gap:28px;
+      align-items:end;
+      margin-bottom:26px;
+    }
+    .membership-head h2 {
+      margin:8px 0 0;
+      font:700 clamp(34px,4.8vw,62px)/.98 Didot,Georgia,serif;
+      letter-spacing:-.04em;
+    }
+    .membership-head p { margin:0;color:var(--muted);font-size:16px;line-height:1.55; }
+    .membership-grid {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+    }
+    .membership-card {
+      padding:24px;
+      border:1px solid rgba(157,111,67,.18);
+      border-radius:24px;
+      background:rgba(255,255,255,.72);
+    }
+    .membership-card.featured {
+      color:#f8f3ea;
+      border-color:rgba(11,35,51,.55);
+      background:linear-gradient(145deg,#10293a,#1c4450);
+      box-shadow:0 18px 36px rgba(11,35,51,.14);
+    }
+    .membership-card .eyebrow { color:#ca3150; }
+    .membership-card.featured .eyebrow { color:#90e6e6; }
+    .membership-card h3 { margin:8px 0 10px;font-size:25px; }
+    .membership-card p { margin:0;color:var(--muted);line-height:1.55; }
+    .membership-card.featured p { color:rgba(248,243,234,.7); }
+    .membership-card ul { margin:18px 0 0;padding:0;list-style:none; }
+    .membership-card li {
+      padding:9px 0;
+      border-top:1px solid rgba(157,111,67,.14);
+      font-size:13px;
+      font-weight:700;
+    }
+    .membership-card.featured li { border-color:rgba(255,255,255,.11); }
+    .membership-card strong.pack-count {
+      display:block;
+      margin-top:18px;
+      color:#ca3150;
+      font:700 34px/1 Didot,Georgia,serif;
+    }
+    .membership-card.featured strong.pack-count { color:#ffc370; }
+    .home-function-menu.platform-product-layer { margin-top:30px; }
+    .platform-product-layer .home-function-head h2 { max-width:760px; }
+    .platform-product-layer .home-function-code-note span { background:#10293a;color:#fff; }
     @media (max-width:860px) {
+      .full-stack-experience,.membership-system { padding:26px 20px; }
+      .full-stack-head,.membership-head { grid-template-columns:1fr; }
+      .full-stack-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .full-stack-step { min-height:170px;border-bottom:1px solid rgba(255,255,255,.1); }
+      .full-stack-step:nth-child(2n) { border-right:0; }
+      .full-stack-step::after { display:none; }
+      .membership-grid { grid-template-columns:1fr; }
       .personalization-proof-head,
       .personalization-proof-grid,
       .personalization-flow {
@@ -5683,6 +5821,11 @@
       .results-deep-dive > summary {
         align-items:flex-start;
       }
+    }
+    @media (max-width:560px) {
+      .full-stack-grid { grid-template-columns:1fr; }
+      .full-stack-step { min-height:auto;border-right:0; }
+      .full-stack-step b { margin-bottom:18px; }
     }
     @media (prefers-reduced-motion:reduce) {
       .hero > div:first-child::before,
@@ -5723,54 +5866,108 @@
     </header>
     <section class="hero" id="uploadHero">
       <div>
-        <div class="eyebrow">Fluids early access</div>
-          <h1>Eight daily blends. One custom path.</h1>
-        <p class="lead">Pick the function you want now, or use your labs to build a custom nutrient vector.</p>
+        <div class="eyebrow">Closed-loop personalized nutrition</div>
+          <h1>Your bloodwork, translated into a daily nutrition system.</h1>
+        <p class="lead">Start with a FLUIDS at-home blood test or upload recent labs. FLUIDS turns your biomarkers into a personalized nutrient vector, formulates a whole-food powder blend, and uses repeat testing to improve what comes next.</p>
         <div class="consumer-hero-actions">
-          <button type="button" data-quick-mode="upload">Start custom profile</button>
-          <button type="button" class="secondary" data-quick-mode="upload">Generate custom blend</button>
+          <button type="button" data-quick-mode="upload">Build my nutrient vector</button>
+          <a class="platform-hero-link" href="#fullStackExperience">See the full platform</a>
         </div>
         <div class="consumer-proof-row" aria-label="Product promises">
-          <span>8 function blends</span>
-          <span>V10 population modeling</span>
-          <span>lab-based customization</span>
+          <span>FLUIDS-branded at-home collection</span>
+          <span>30-nutrient model</span>
+          <span>whole-food powder delivery</span>
         </div>
       </div>
       <div class="hero-side landing-brief">
         <div class="landing-brief-card">
-          <div class="eyebrow">Two product paths</div>
-          <strong>Start with a standard function or build from your labs.</strong>
-          <p>Explore any formula, then upload bloodwork when you want a custom nutrient vector.</p>
+          <div class="eyebrow">One FLUIDS experience</div>
+          <strong>Test. Personalize. Deliver. Measure again.</strong>
+          <p>The customer sees one premium system. Each cycle makes the next nutrition decision more personal.</p>
           <div class="landing-brief-steps" aria-label="How Fluids works">
-            <div><b>01</b><span>Pick a function blend</span></div>
-            <div><b>02</b><span>Explore its nutrient vector</span></div>
-            <div><b>03</b><span>Customize from bloodwork</span></div>
+            <div><b>01</b><span>Collect or upload bloodwork</span></div>
+            <div><b>02</b><span>Build the nutrient vector</span></div>
+            <div><b>03</b><span>Deliver, retest, and adapt</span></div>
           </div>
         </div>
       </div>
     </section>
-    <section class="launch-offer-strip" id="launchOffer" aria-label="Custom blend profile">
-      <div>
-        <div class="eyebrow">Custom profile</div>
-        <h2>Want a blend built from your labs?</h2>
-        <p>Upload a blood-test PDF to turn your markers into a custom nutrient vector and fruit-forward formula.</p>
+    <section class="full-stack-experience" id="fullStackExperience" aria-label="FLUIDS full-stack platform">
+      <div class="full-stack-head">
+        <div>
+          <div class="eyebrow">The FLUIDS loop</div>
+          <h2>One platform from blood collection to powder delivery.</h2>
+          <p>FLUIDS owns the customer journey, the intelligence layer, the formulation logic, and the ongoing relationship—not just the drink mix.</p>
+        </div>
+        <div class="full-stack-promise">
+          <span>The compounding advantage</span>
+          <strong>Every retest connects a formula to a measured biological response.</strong>
+        </div>
       </div>
-      <button type="button" class="launch-offer-button" data-quick-mode="upload">Start custom profile</button>
+      <div class="full-stack-grid">
+        <article class="full-stack-step"><b>01</b><strong>Collect</strong><span>A FLUIDS-branded at-home blood test arrives at the customer’s door.</span></article>
+        <article class="full-stack-step"><b>02</b><strong>Analyze</strong><span>Structured biomarkers return from a qualified clinical laboratory.</span></article>
+        <article class="full-stack-step"><b>03</b><strong>Personalize</strong><span>The model converts the profile into a coordinated nutrient vector.</span></article>
+        <article class="full-stack-step"><b>04</b><strong>Formulate</strong><span>Product-feasible optimization translates that vector into whole-food powders.</span></article>
+        <article class="full-stack-step"><b>05</b><strong>Deliver</strong><span>The selected daily system arrives in a simple monthly pack.</span></article>
+        <article class="full-stack-step"><b>06</b><strong>Improve</strong><span>Repeat testing measures response and informs the next formula.</span></article>
+      </div>
+      <p class="platform-partner-note">Blood collection, processing, and certified laboratory services are performed by qualified white-label partners inside the FLUIDS-branded experience. FLUIDS owns the consumer interface, data orchestration, nutrient intelligence, formulation system, and powder-delivery relationship.</p>
     </section>
-    <section class="home-function-menu" id="homeFunctionMenu" aria-label="Standard function blend menu">
+    <section class="launch-offer-strip" id="launchOffer" aria-label="Upload recent labs">
+      <div>
+        <div class="eyebrow">Already have recent bloodwork?</div>
+        <h2>Skip collection and start with the labs you already have.</h2>
+        <p>Upload a blood-test PDF to preview the same nutrient-vector and whole-food formulation experience today.</p>
+      </div>
+      <button type="button" class="launch-offer-button" data-quick-mode="upload">Upload recent labs</button>
+    </section>
+    <section class="home-function-menu platform-product-layer" id="homeFunctionMenu" aria-label="FLUIDS product system">
       <div class="home-function-head">
         <div>
-          <div class="eyebrow">Standard blend menu</div>
-          <h2>Start with the function that fits your day.</h2>
-          <p>Five population-derived families plus Hydration, Vitamin C, and Performance—each with a distinct nutrient vector and a simple path into custom personalization. Biological-age values are modeled 12-week planning proxies, not clinical outcomes.</p>
+          <div class="eyebrow">The product layer</div>
+          <h2>The formula adapts. The daily ritual stays simple.</h2>
+          <p>Five population-derived foundation blends cover the most common nutrient-vector families. Hydration supports the everyday baseline; Vitamin C and Performance add focused moments. A custom formula is built when the individual vector calls for it. Biological-age values are modeled 12-week planning proxies, not clinical outcomes.</p>
         </div>
         <div class="home-function-cta home-function-code-note" aria-label="Formula collection">
-          <span>8 blends</span>
-          <b>Fruit-forward formulas with modeled nutrient vectors</b>
+          <span>5 + 3 system</span>
+          <b>Five foundations, daily hydration, and two focused boosters</b>
         </div>
       </div>
       <div class="home-function-grid" id="homeFunctionGrid">
         <div class="home-function-empty">Loading the standard function blends…</div>
+      </div>
+    </section>
+    <section class="membership-system" id="membershipSystem" aria-label="FLUIDS membership system">
+      <div class="membership-head">
+        <div>
+          <div class="eyebrow">The membership system</div>
+          <h2>Premium personalization without a complicated daily routine.</h2>
+        </div>
+        <p>The blood test sets the direction. The monthly pack turns that direction into a repeatable habit, while scheduled monitoring closes the loop.</p>
+      </div>
+      <div class="membership-grid">
+        <article class="membership-card">
+          <div class="eyebrow">Foundation</div>
+          <h3>Daily personalized nutrition</h3>
+          <p>A selected standard family or custom whole-food formula anchored to the customer’s nutrient vector.</p>
+          <strong class="pack-count">30 sticks</strong>
+          <ul><li>One daily foundation blend</li><li>Personal nutrient-vector dashboard</li><li>Formula review at each new lab cycle</li></ul>
+        </article>
+        <article class="membership-card featured">
+          <div class="eyebrow">Complete</div>
+          <h3>The full monthly system</h3>
+          <p>Foundation nutrition plus everyday hydration and focused support for immunity and performance.</p>
+          <strong class="pack-count">76 sticks</strong>
+          <ul><li>30 daily foundation blends</li><li>30 daily Hydration blends</li><li>8 Vitamin C + 8 Performance</li></ul>
+        </article>
+        <article class="membership-card">
+          <div class="eyebrow">Monitoring</div>
+          <h3>The closed-loop upgrade</h3>
+          <p>A FLUIDS at-home blood test measures response and gives the next formula a better starting point.</p>
+          <strong class="pack-count">Retest + adapt</strong>
+          <ul><li>FLUIDS-branded collection kit</li><li>Longitudinal biomarker dashboard</li><li>Updated nutrient vector and blend</li></ul>
+        </article>
       </div>
     </section>
     <div class="home-vector-modal" id="homeVectorModal" hidden>
@@ -5798,7 +5995,7 @@
     </div>
     <section class="vector-manifesto" id="vectorStory" aria-label="Personalized nutrient vector customer experience">
       <div class="vector-copy">
-        <div class="eyebrow">Your custom experience</div>
+        <div class="eyebrow">Personalization in action</div>
         <h2>From a blood test to a daily blend built around you.</h2>
         <p>Upload routine labs, review the extracted markers, and see the coordinated nutrient targets Fluids builds from your bloodwork, age-score inputs, and personal context.</p>
         <div class="vector-definition">
@@ -5889,11 +6086,11 @@
     </section>
     <section class="homepage-flow-intro" id="homepageFlowIntro" aria-label="Build your blend workflow">
       <div>
-        <div class="eyebrow">Start here</div>
-        <h2>Start your custom blend in four steps.</h2>
-        <p>Upload your bloodwork, review the extracted markers, answer a short context questionnaire, then see the nutrient vector and the powder formula designed around it.</p>
+        <div class="eyebrow">Have labs ready?</div>
+        <h2>Start the intelligence experience today.</h2>
+        <p>Upload your bloodwork, review the extracted markers, answer a short context questionnaire, then see the nutrient vector and whole-food powder formula designed around it.</p>
       </div>
-      <button type="button" data-quick-mode="upload">Upload blood test</button>
+      <button type="button" data-quick-mode="upload">Upload recent bloodwork</button>
     </section>
     <div class="steps" id="flowProgress">
       <div class="step active" data-flow-step="0"><div class="step-num">1</div><h3>Upload</h3><p>Add your bloodwork</p></div>
@@ -6718,6 +6915,8 @@
         });
       },{threshold:[0.28,0.55]});
       [
+        ["fullStackExperience","full_stack_platform","Full-stack platform loop"],
+        ["membershipSystem","membership_system","Membership system"],
         ["vectorStory","model_story","How the nutrient model works"],
         ["homepageFlowIntro","personalization_intro","Personalized blend introduction"],
         ["homeFunctionMenu","standard_blends","Standard blend collection"],
@@ -7013,6 +7212,10 @@
         document.getElementById("uploadHero").style.display = name === "upload" ? "grid" : "none";
         const launchOffer=document.getElementById("launchOffer");
         if (launchOffer) launchOffer.style.display = name === "upload" ? "grid" : "none";
+        const fullStackExperience=document.getElementById("fullStackExperience");
+        if (fullStackExperience) fullStackExperience.style.display = name === "upload" ? "block" : "none";
+        const membershipSystem=document.getElementById("membershipSystem");
+        if (membershipSystem) membershipSystem.style.display = name === "upload" ? "block" : "none";
         const consumerLanding=document.getElementById("consumerLanding");
         if (consumerLanding) consumerLanding.style.display = name === "upload" ? "grid" : "none";
         const vectorStory=document.getElementById("vectorStory");
@@ -9675,6 +9878,40 @@
       vectorMatrixScenes.forEach(item=>item.resize());
       scienceRunnerVisual?.resize?.();
     }
+    const HOME_VECTOR_FOUNDATION_ID="K5-S2";
+    const HOME_VECTOR_FOUNDATION_FALLBACK={
+      id:HOME_VECTOR_FOUNDATION_ID,
+      function_name:"Daily Vitality",
+      modeled_nutrient_count:30,
+      nutrient_vector_preview:[
+        {nutrient:"vitamin_k_mcg",amount:32.8814,unit:"mcg",conditional_reward_contribution:.1613876,function:"Supports normal clotting and healthy tissue maintenance."},
+        {nutrient:"vitamin_e_mg",amount:.4173,unit:"mg",conditional_reward_contribution:.1353293,function:"Cell-membrane antioxidant support delivered through the fruit and vegetable matrix."},
+        {nutrient:"copper_mg",amount:.0751,unit:"mg",conditional_reward_contribution:.1010299,function:"Mineral cofactor support for normal energy metabolism and antioxidant enzymes."},
+        {nutrient:"fiber_g",amount:2.6404,unit:"g",conditional_reward_contribution:.1004004,function:"Whole-food matrix support for gut function, glucose response, and fullness."},
+        {nutrient:"carbohydrate_g",amount:10.7669,unit:"g",conditional_reward_contribution:.0831850,function:"Fruit- and vegetable-derived carbohydrate supporting daily energy."},
+        {nutrient:"potassium_mg",amount:217.5933,unit:"mg",conditional_reward_contribution:.0787609,function:"Supports fluid balance and normal muscle function."},
+        {nutrient:"magnesium_mg",amount:20.6662,unit:"mg",conditional_reward_contribution:.0605448,function:"Supports normal muscle, nerve, and energy metabolism."},
+        {nutrient:"zinc_mg",amount:.2606,unit:"mg",conditional_reward_contribution:.0500457,function:"Trace-mineral support within the broader whole-food nutrient pattern."}
+      ]
+    };
+    async function initHomeVectorMatrix() {
+      const mount=document.getElementById("homeVectorMatrix");
+      if (!mount || mount.dataset.ready) return;
+      mount.dataset.ready="true";
+      const foundation=HOME_VECTOR_FOUNDATION_FALLBACK;
+      const blendName=standardDisplayName(foundation);
+      renderVectorMatrix(
+        laneVectorItems(foundation).slice(0,8),
+        mount,
+        {
+          stageClass:"hero-matrix",
+          kicker:`${blendName} · whole-food standard`,
+          title:"Eight signals from a 30-nutrient model",
+          countLabel:"8 of 30 modeled",
+          ariaLabel:`Eight selected signals from the ${blendName} 30-nutrient model vector`
+        }
+      );
+    }
     function initScienceRunnerMatrix() {
       const canvas=document.getElementById("scienceRunnerCanvas");
       if (!canvas || scienceRunnerVisual) return;
@@ -11681,6 +11918,7 @@
       card.append(copy,doseEl); parent.appendChild(card);
     }
     initPremiumExperience();
+    initHomeVectorMatrix();
     loadHomeFunctionMenu().catch(() => {});
     initFounderAccess();
     loadSpecs().catch(error => console.warn("Lab schema unavailable until the custom blend API is reachable.",error));
