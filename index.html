@@ -5476,11 +5476,11 @@
         padding:6px;
       }
       #results .results-top-nav .jump-button {
-        flex:1 1 0;
-        min-width:0;
-        padding:8px 4px;
-        font-size:.61rem;
-      }
+	        flex:0 0 auto;
+	        min-width:90px;
+	        padding:8px 4px;
+	        font-size:.61rem;
+	      }
       .results-head {
         flex-direction:column;
         align-items:flex-start;
@@ -5537,6 +5537,438 @@
       .custom-full-vector-grid {
         grid-template-columns:repeat(2,minmax(0,1fr));
       }
+    }
+    .biomarker-dashboard {
+      position:relative;
+      overflow:hidden;
+      margin:18px 0 22px;
+      padding:clamp(22px,3vw,34px);
+      border:1px solid rgba(92,32,49,.16);
+      border-radius:32px;
+      background:
+        radial-gradient(circle at 96% 2%,rgba(198,43,79,.10),transparent 24rem),
+        radial-gradient(circle at 0% 100%,rgba(50,151,159,.09),transparent 24rem),
+        linear-gradient(145deg,#fffdf9,#f8f1e8);
+      box-shadow:0 24px 64px rgba(42,13,25,.08);
+    }
+    .biomarker-dashboard::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity:.28;
+      background-image:
+        linear-gradient(rgba(42,13,25,.03) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(42,13,25,.03) 1px,transparent 1px);
+      background-size:44px 44px;
+      mask-image:linear-gradient(90deg,#000,transparent 74%);
+    }
+    .biomarker-dashboard > * { position:relative;z-index:1; }
+    .biomarker-dashboard[hidden] { display:none; }
+    .biomarker-dashboard-head {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:24px;
+      align-items:start;
+    }
+    .biomarker-dashboard-head h3 {
+      max-width:760px;
+      margin:5px 0 8px;
+      color:var(--ink);
+      font-family:var(--display-font);
+      font-size:clamp(2rem,3.5vw,3.15rem);
+      font-weight:500;
+      line-height:.98;
+      letter-spacing:-.052em;
+    }
+    .biomarker-dashboard-head p {
+      max-width:780px;
+      margin:0;
+      color:var(--muted);
+      font-size:.92rem;
+      line-height:1.58;
+    }
+    .biomarker-baseline-seal {
+      min-width:116px;
+      padding:12px 14px;
+      border:1px solid rgba(92,32,49,.14);
+      border-radius:18px;
+      text-align:right;
+      background:rgba(255,255,255,.65);
+      box-shadow:inset 0 1px 0 #fff;
+    }
+    .biomarker-baseline-seal span,
+    .biomarker-baseline-seal strong { display:block; }
+    .biomarker-baseline-seal span {
+      color:var(--muted);
+      font-size:.58rem;
+      font-weight:900;
+      letter-spacing:.11em;
+      text-transform:uppercase;
+    }
+    .biomarker-baseline-seal strong {
+      margin-top:4px;
+      color:var(--ink);
+      font-size:.95rem;
+    }
+    .biomarker-overview {
+      display:grid;
+      grid-template-columns:1.15fr repeat(3,minmax(0,1fr));
+      gap:9px;
+      margin-top:24px;
+    }
+    .biomarker-overview-card {
+      min-height:108px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      padding:15px 16px;
+      border:1px solid rgba(92,32,49,.11);
+      border-radius:19px;
+      background:rgba(255,255,255,.68);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
+    }
+    .biomarker-overview-card:first-child {
+      color:#fffaf3;
+      border-color:rgba(42,13,25,.3);
+      background:linear-gradient(145deg,#2a0d19,#5c2031);
+    }
+    .biomarker-overview-card small {
+      color:var(--muted);
+      font-size:.58rem;
+      font-weight:950;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+    .biomarker-overview-card:first-child small,
+    .biomarker-overview-card:first-child span { color:rgba(255,250,243,.7); }
+    .biomarker-overview-card strong {
+      display:block;
+      margin:6px 0 2px;
+      color:var(--ink);
+      font-family:var(--display-font);
+      font-size:2.25rem;
+      font-weight:500;
+      letter-spacing:-.05em;
+      line-height:1;
+    }
+    .biomarker-overview-card:first-child strong { color:#fffaf3; }
+    .biomarker-overview-card span {
+      color:var(--muted);
+      font-size:.66rem;
+      line-height:1.35;
+    }
+    .biomarker-overview-card.on-point strong { color:#276548; }
+    .biomarker-overview-card.optimize strong { color:#9b6722; }
+    .biomarker-overview-card.attention strong { color:#aa3148; }
+    .biomarker-priority-note {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-top:10px;
+      padding:12px 14px;
+      border:1px solid rgba(92,32,49,.11);
+      border-radius:16px;
+      color:#51464a;
+      background:rgba(255,255,255,.57);
+      font-size:.76rem;
+      line-height:1.45;
+    }
+    .biomarker-priority-note::before {
+      content:"";
+      width:9px;
+      height:9px;
+      flex:0 0 9px;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--raspberry),var(--carrot));
+      box-shadow:0 0 0 5px rgba(198,43,79,.08);
+    }
+    .biomarker-category-grid {
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:8px;
+      margin-top:18px;
+    }
+    .biomarker-category-card {
+      min-height:104px;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      justify-content:space-between;
+      padding:12px;
+      border:1px solid rgba(92,32,49,.11);
+      border-radius:17px;
+      color:var(--ink);
+      text-align:left;
+      background:rgba(255,255,255,.58);
+      box-shadow:none;
+      transition:transform .18s ease,border-color .18s ease,background .18s ease;
+    }
+    .biomarker-category-card:hover,
+    .biomarker-category-card.active {
+      transform:translateY(-2px);
+      border-color:rgba(92,32,49,.28);
+      background:#fff;
+    }
+    .biomarker-category-card strong {
+      font-size:.74rem;
+      line-height:1.25;
+    }
+    .biomarker-category-card span {
+      color:var(--muted);
+      font-size:.61rem;
+      line-height:1.35;
+    }
+    .biomarker-category-dots { display:flex;gap:4px;margin-top:10px; }
+    .biomarker-category-dots i {
+      width:7px;
+      height:7px;
+      border-radius:999px;
+      background:#b8d8c7;
+    }
+    .biomarker-category-dots i.optimize { background:#e9bd72; }
+    .biomarker-category-dots i.attention { background:#d35a70; }
+    .biomarker-toolbar {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin:20px 0 10px;
+    }
+    .biomarker-filters { display:flex;gap:6px;flex-wrap:wrap; }
+    .biomarker-filter {
+      min-height:34px;
+      padding:7px 11px;
+      border:1px solid rgba(92,32,49,.12);
+      border-radius:999px;
+      color:#66595d;
+      background:rgba(255,255,255,.58);
+      box-shadow:none;
+      font-size:.65rem;
+      font-weight:900;
+    }
+    .biomarker-filter.active {
+      color:#fffaf3;
+      border-color:var(--ink);
+      background:var(--ink);
+    }
+    #biomarkerVisibleCount {
+      color:var(--muted);
+      font-size:.65rem;
+      font-weight:850;
+      white-space:nowrap;
+    }
+    .biomarker-list { display:grid;gap:8px; }
+    .biomarker-marker {
+      overflow:hidden;
+      border:1px solid rgba(92,32,49,.11);
+      border-radius:18px;
+      background:rgba(255,255,255,.72);
+      box-shadow:0 9px 22px rgba(42,13,25,.035);
+    }
+    .biomarker-marker > summary {
+      display:grid;
+      grid-template-columns:minmax(190px,.78fr) minmax(240px,1.22fr) auto;
+      gap:18px;
+      align-items:center;
+      min-height:88px;
+      padding:13px 15px;
+      cursor:pointer;
+      list-style:none;
+    }
+    .biomarker-marker > summary::-webkit-details-marker { display:none; }
+    .biomarker-marker > summary:focus { outline:none; }
+    .biomarker-marker > summary:focus-visible {
+      outline:2px solid rgba(92,32,49,.72);
+      outline-offset:-3px;
+      border-radius:15px;
+    }
+    .biomarker-marker[open] > summary { background:rgba(249,242,233,.68); }
+    .biomarker-marker-name,
+    .biomarker-marker-value,
+    .biomarker-marker-range { display:block; }
+    .biomarker-marker-name {
+      color:var(--ink);
+      font-size:.83rem;
+      font-weight:950;
+    }
+    .biomarker-marker-value {
+      margin-top:5px;
+      color:var(--ink);
+      font-family:var(--display-font);
+      font-size:1.55rem;
+      font-weight:500;
+      letter-spacing:-.035em;
+    }
+    .biomarker-marker-value small {
+      margin-left:4px;
+      color:var(--muted);
+      font-family:var(--body-font);
+      font-size:.61rem;
+      font-weight:800;
+      letter-spacing:0;
+    }
+    .biomarker-range-wrap { display:grid;gap:7px; }
+    .biomarker-range-track {
+      position:relative;
+      height:9px;
+      border-radius:999px;
+      background:linear-gradient(
+        90deg,
+        #eaa6b2 0%,
+        #eaa6b2 var(--b-low),
+        #f0c982 var(--b-low),
+        #f0c982 var(--t-low),
+        #91ccb0 var(--t-low),
+        #91ccb0 var(--t-high),
+        #f0c982 var(--t-high),
+        #f0c982 var(--b-high),
+        #eaa6b2 var(--b-high),
+        #eaa6b2 100%
+      );
+      box-shadow:inset 0 0 0 1px rgba(42,13,25,.06);
+    }
+    .biomarker-range-track::after {
+      content:"";
+      position:absolute;
+      left:var(--value-position);
+      top:50%;
+      width:14px;
+      height:14px;
+      border:3px solid #fff;
+      border-radius:999px;
+      background:var(--marker-color,#2a0d19);
+      box-shadow:0 2px 8px rgba(42,13,25,.28);
+      transform:translate(-50%,-50%);
+    }
+    .biomarker-marker-range {
+      color:var(--muted);
+      font-size:.61rem;
+      font-weight:800;
+      line-height:1.3;
+    }
+    .biomarker-status {
+      min-width:112px;
+      padding:8px 10px;
+      border-radius:999px;
+      text-align:center;
+      color:#276548;
+      background:#e0f0e7;
+      font-size:.61rem;
+      font-weight:950;
+      letter-spacing:.035em;
+      white-space:nowrap;
+    }
+    .biomarker-status.optimize { color:#875916;background:#f7ead0; }
+    .biomarker-status.attention { color:#993046;background:#f7dde2; }
+    .biomarker-marker-chevron {
+      display:inline-block;
+      margin-left:7px;
+      color:currentColor;
+      transform:rotate(0);
+      transition:transform .18s ease;
+    }
+    .biomarker-marker[open] .biomarker-marker-chevron { transform:rotate(45deg); }
+    .biomarker-marker-body {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:0;
+      border-top:1px solid rgba(92,32,49,.09);
+      background:rgba(255,255,255,.55);
+    }
+    .biomarker-explainer {
+      min-height:132px;
+      padding:16px;
+    }
+    .biomarker-explainer + .biomarker-explainer { border-left:1px solid rgba(92,32,49,.09); }
+    .biomarker-explainer small {
+      display:block;
+      color:#98673f;
+      font-size:.56rem;
+      font-weight:950;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+    .biomarker-explainer strong {
+      display:block;
+      margin:6px 0 5px;
+      color:var(--ink);
+      font-size:.77rem;
+    }
+    .biomarker-explainer p {
+      margin:0;
+      color:var(--muted);
+      font-size:.68rem;
+      line-height:1.48;
+    }
+    .biomarker-age-tag {
+      display:inline-flex;
+      margin-top:9px;
+      padding:5px 7px;
+      border-radius:999px;
+      color:#7c2e42;
+      background:#f1e1e4;
+      font-size:.56rem;
+      font-weight:900;
+    }
+    .biomarker-trend-note {
+      display:flex;
+      align-items:center;
+      gap:13px;
+      margin-top:12px;
+      padding:13px 15px;
+      border:1px dashed rgba(92,32,49,.18);
+      border-radius:17px;
+      background:rgba(255,255,255,.42);
+    }
+    .biomarker-trend-icon {
+      width:34px;
+      height:34px;
+      display:grid;
+      flex:0 0 34px;
+      place-items:center;
+      border-radius:12px;
+      color:#fff;
+      background:linear-gradient(145deg,#2a0d19,#8b2945);
+      font-weight:950;
+    }
+    .biomarker-trend-note strong {
+      color:var(--ink);
+      font-size:.72rem;
+    }
+    .biomarker-trend-note p {
+      margin:3px 0 0;
+      color:var(--muted);
+      font-size:.66rem;
+      line-height:1.4;
+    }
+    .biomarker-disclaimer {
+      margin:12px 2px 0;
+      color:#827579;
+      font-size:.61rem;
+      line-height:1.48;
+    }
+    @media (max-width:900px) {
+      .biomarker-overview { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .biomarker-category-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+      .biomarker-marker > summary { grid-template-columns:minmax(170px,.8fr) minmax(220px,1.2fr); }
+      .biomarker-status { grid-column:1 / -1;justify-self:start; }
+    }
+    @media (max-width:620px) {
+      .biomarker-dashboard { padding:20px 14px;border-radius:26px; }
+      .biomarker-dashboard-head { grid-template-columns:1fr;gap:14px; }
+      .biomarker-baseline-seal { justify-self:start;text-align:left; }
+      .biomarker-overview { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .biomarker-overview-card { min-height:96px;padding:13px; }
+      .biomarker-overview-card strong { font-size:1.9rem; }
+      .biomarker-category-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .biomarker-category-card { min-height:92px; }
+      .biomarker-toolbar { align-items:flex-start;flex-direction:column; }
+      .biomarker-marker > summary { grid-template-columns:1fr;gap:11px; }
+      .biomarker-status { grid-column:auto;justify-self:start; }
+      .biomarker-marker-body { grid-template-columns:1fr; }
+      .biomarker-explainer { min-height:auto; }
+      .biomarker-explainer + .biomarker-explainer { border-left:0;border-top:1px solid rgba(92,32,49,.09); }
     }
     .personalization-proof {
       position:relative;
@@ -6611,6 +7043,7 @@
     <section class="results app-view" id="results">
       <nav class="jump-nav results-top-nav" id="resultsTopNav" aria-label="Results sections">
         <button type="button" class="jump-button active" data-scroll-target="resultsAgeHero">Age outlook</button>
+        <button type="button" class="jump-button" data-scroll-target="biomarkerDashboard">Blood markers</button>
         <button type="button" class="jump-button" data-scroll-target="customBlendHero">Your blend</button>
         <button type="button" class="jump-button" data-scroll-target="personalizationProofPanel">Why personalized</button>
         <button type="button" class="jump-button" data-scroll-target="customFullNutrientVector">Target + delivery</button>
@@ -6645,7 +7078,30 @@
           <strong id="projectedBioAgeBasis">Model-estimated direction</strong>
           <span id="projectedBioAgeNote">This is a planning projection, not a guaranteed clinical outcome. Repeat labs are how the direction is confirmed.</span>
         </div>
-        <div class="results-age-next"><span>Next</span><strong>Your selected custom blend</strong><b>↓</b></div>
+        <div class="results-age-next"><span>Next</span><strong>Your bloodwork report</strong><b>↓</b></div>
+      </section>
+      <section class="biomarker-dashboard section-anchor" id="biomarkerDashboard" aria-labelledby="biomarkerDashboardTitle">
+        <header class="biomarker-dashboard-head">
+          <div>
+            <div class="eyebrow">Your bloodwork report</div>
+            <h3 id="biomarkerDashboardTitle">The markers shaping your plan.</h3>
+            <p id="biomarkerDashboardIntro">A concise view of what is on point, what is worth optimizing, and which markers contribute to your biological-age calculation.</p>
+          </div>
+          <div class="biomarker-baseline-seal"><span>Current test</span><strong>Baseline</strong></div>
+        </header>
+        <div class="biomarker-overview" id="biomarkerOverview" aria-label="Biomarker status summary"></div>
+        <div class="biomarker-priority-note" id="biomarkerPriorityNote" aria-live="polite"></div>
+        <div class="biomarker-category-grid" id="biomarkerCategoryGrid" aria-label="Biomarker categories"></div>
+        <div class="biomarker-toolbar">
+          <div class="biomarker-filters" id="biomarkerFilters" aria-label="Filter biomarker report"></div>
+          <span id="biomarkerVisibleCount"></span>
+        </div>
+        <div class="biomarker-list" id="biomarkerList"></div>
+        <div class="biomarker-trend-note">
+          <span class="biomarker-trend-icon" aria-hidden="true">↗</span>
+          <div><strong>Your baseline is established.</strong><p>Future FLUIDS tests will add change-over-time context here so direction matters more than a single snapshot.</p></div>
+        </div>
+        <p class="biomarker-disclaimer" id="biomarkerDisclaimer"></p>
       </section>
       <div class="custom-blend-hero section-anchor" id="customBlendHero"></div>
       <section class="personalization-proof section-anchor" id="personalizationProofPanel">
@@ -8414,6 +8870,178 @@
         : "";
       projectedNote.textContent=`This is a model-estimated planning direction, not a guaranteed clinical outcome.${windowText} Repeat labs are how the direction is confirmed.`;
     }
+    function formatBiomarkerNumber(value) {
+      const number=Number(value);
+      if (!Number.isFinite(number)) return "—";
+      const magnitude=Math.abs(number);
+      if (magnitude>=100) return number.toFixed(0);
+      if (magnitude>=10) return number.toFixed(1).replace(/\.0$/,"");
+      return number.toFixed(2).replace(/0+$/,"").replace(/\.$/,"");
+    }
+    function biomarkerRangeText(marker) {
+      const low=formatBiomarkerNumber(marker?.target_low);
+      const high=formatBiomarkerNumber(marker?.target_high);
+      return `FLUIDS target ${low}–${high} ${marker?.unit || ""}`.trim();
+    }
+    function renderBiomarkerDashboard(report) {
+      const dashboard=document.getElementById("biomarkerDashboard");
+      const markers=Array.isArray(report?.markers) ? report.markers.filter(item=>item && item.key) : [];
+      if (!dashboard || !markers.length) {
+        if (dashboard) dashboard.hidden=true;
+        return;
+      }
+      dashboard.hidden=false;
+      const overview=document.getElementById("biomarkerOverview");
+      const priorityNote=document.getElementById("biomarkerPriorityNote");
+      const categoryGrid=document.getElementById("biomarkerCategoryGrid");
+      const filters=document.getElementById("biomarkerFilters");
+      const list=document.getElementById("biomarkerList");
+      const visibleCount=document.getElementById("biomarkerVisibleCount");
+      const disclaimer=document.getElementById("biomarkerDisclaimer");
+      overview.textContent="";
+      categoryGrid.textContent="";
+      filters.textContent="";
+      list.textContent="";
+      const overviewItems=[
+        {
+          label:"Markers reviewed",
+          value:Number(report.marker_count || markers.length),
+          detail:`${Number(report.age_model_marker_count || 0)} used in the age calculation`,
+          tone:""
+        },
+        {label:"On point",value:Number(report.on_point_count || 0),detail:"Inside the model target band",tone:"on-point"},
+        {label:"Optimize",value:Number(report.optimize_count || 0),detail:"Near the target band",tone:"optimize"},
+        {label:"High / low",value:Number(report.attention_count || 0),detail:"Outside the broader planning band",tone:"attention"}
+      ];
+      overviewItems.forEach(item=>{
+        const card=document.createElement("article"); card.className=`biomarker-overview-card ${item.tone}`.trim();
+        const label=document.createElement("small"); label.textContent=item.label;
+        const value=document.createElement("strong"); value.textContent=String(item.value);
+        const detail=document.createElement("span"); detail.textContent=item.detail;
+        card.append(label,value,detail); overview.appendChild(card);
+      });
+      const attentionMarkers=markers.filter(item=>item.status_group==="attention");
+      const optimizeMarkers=markers.filter(item=>item.status_group==="optimize");
+      const focusMarkers=[...attentionMarkers,...optimizeMarkers];
+      const priorityNames=focusMarkers.slice(0,3).map(item=>item.label).join(", ");
+      priorityNote.textContent=attentionMarkers.length
+        ? `Start with ${priorityNames}. ${attentionMarkers.length===1 ? "One marker sits" : `${attentionMarkers.length} markers sit`} outside the broader planning band; use the reporting lab’s range and clinical context before drawing a conclusion.`
+        : optimizeMarkers.length
+        ? `${priorityNames} ${optimizeMarkers.length===1 ? "is" : "are"} closest to the edge of the FLUIDS target band. These are optimization signals, not diagnoses.`
+        : "Every reviewed marker sits inside its FLUIDS model target band. Repeat testing will show whether that pattern remains stable.";
+      disclaimer.textContent=report.disclaimer || "FLUIDS target bands are wellness-planning context, not diagnostic reference intervals. Use the reporting laboratory’s ranges and a qualified clinician for medical interpretation.";
+
+      let activeFilter=focusMarkers.length ? "focus" : "all";
+      const categoryButtons=[];
+      const filterButtons=[];
+      const categories=Array.isArray(report.categories) ? report.categories : [];
+      categories.forEach(category=>{
+        const button=document.createElement("button");
+        button.type="button"; button.className="biomarker-category-card";
+        button.dataset.filter=category.key;
+        button.title=String(category.description || "");
+        const name=document.createElement("strong"); name.textContent=category.label || category.key;
+        const status=document.createElement("span");
+        const reviewCount=Number(category.optimize_count || 0)+Number(category.attention_count || 0);
+        status.textContent=`${Number(category.marker_count || 0)} marker${Number(category.marker_count || 0)===1 ? "" : "s"}${reviewCount ? ` · ${reviewCount} to review` : " · on point"}`;
+        const dots=document.createElement("div"); dots.className="biomarker-category-dots";
+        for (let index=0;index<Number(category.on_point_count || 0);index+=1) dots.appendChild(Object.assign(document.createElement("i"),{className:"on-point"}));
+        for (let index=0;index<Number(category.optimize_count || 0);index+=1) dots.appendChild(Object.assign(document.createElement("i"),{className:"optimize"}));
+        for (let index=0;index<Number(category.attention_count || 0);index+=1) dots.appendChild(Object.assign(document.createElement("i"),{className:"attention"}));
+        button.append(name,status,dots);
+        categoryButtons.push(button);
+        categoryGrid.appendChild(button);
+      });
+      const filterDefinitions=[
+        {key:"focus",label:`Focus · ${focusMarkers.length}`},
+        {key:"all",label:`All markers · ${markers.length}`},
+        {key:"on_point",label:`On point · ${Number(report.on_point_count || 0)}`}
+      ];
+      filterDefinitions.forEach(item=>{
+        const button=document.createElement("button");
+        button.type="button"; button.className="biomarker-filter"; button.dataset.filter=item.key; button.textContent=item.label;
+        filterButtons.push(button); filters.appendChild(button);
+      });
+
+      const showMarker=marker=>{
+        if (activeFilter==="all") return true;
+        if (activeFilter==="focus") return marker.status_group!=="on_point";
+        if (activeFilter==="on_point") return marker.status_group==="on_point";
+        return marker.category===activeFilter;
+      };
+      const renderList=()=>{
+        list.textContent="";
+        filterButtons.forEach(button=>{
+          const active=button.dataset.filter===activeFilter;
+          button.classList.toggle("active",active);
+          button.setAttribute("aria-pressed",String(active));
+        });
+        categoryButtons.forEach(button=>{
+          const active=button.dataset.filter===activeFilter;
+          button.classList.toggle("active",active);
+          button.setAttribute("aria-pressed",String(active));
+        });
+        const visible=markers.filter(showMarker);
+        visibleCount.textContent=`Showing ${visible.length} of ${markers.length}`;
+        visible.forEach(marker=>{
+          const details=document.createElement("details");
+          details.className=`biomarker-marker ${marker.status_group || "on_point"}`;
+          details.dataset.markerKey=marker.key;
+          const summary=document.createElement("summary");
+          const identity=document.createElement("div");
+          const name=document.createElement("span"); name.className="biomarker-marker-name"; name.textContent=marker.label || marker.key;
+          const value=document.createElement("strong"); value.className="biomarker-marker-value";
+          value.append(formatBiomarkerNumber(marker.value));
+          const unit=document.createElement("small"); unit.textContent=marker.unit || ""; value.appendChild(unit);
+          identity.append(name,value);
+          const range=document.createElement("div"); range.className="biomarker-range-wrap";
+          const track=document.createElement("div"); track.className="biomarker-range-track";
+          const scale=marker.scale || {};
+          track.style.setProperty("--b-low",`${Number(scale.borderline_low_position_pct || 0)}%`);
+          track.style.setProperty("--t-low",`${Number(scale.target_low_position_pct || 0)}%`);
+          track.style.setProperty("--t-high",`${Number(scale.target_high_position_pct || 100)}%`);
+          track.style.setProperty("--b-high",`${Number(scale.borderline_high_position_pct || 100)}%`);
+          track.style.setProperty("--value-position",`${Number(scale.value_position_pct || 0)}%`);
+          track.style.setProperty("--marker-color",marker.status_group==="attention" ? "#aa3148" : marker.status_group==="optimize" ? "#a46b1d" : "#276548");
+          track.setAttribute("role","img");
+          track.setAttribute("aria-label",`${marker.label}: ${formatBiomarkerNumber(marker.value)} ${marker.unit || ""}; ${biomarkerRangeText(marker)}`);
+          const rangeLabel=document.createElement("span"); rangeLabel.className="biomarker-marker-range"; rangeLabel.textContent=biomarkerRangeText(marker);
+          range.append(track,rangeLabel);
+          const badge=document.createElement("span"); badge.className=`biomarker-status ${marker.status_group || "on_point"}`;
+          badge.append(marker.status_label || "Reviewed");
+          const chevron=document.createElement("b"); chevron.className="biomarker-marker-chevron"; chevron.textContent="+"; chevron.setAttribute("aria-hidden","true"); badge.appendChild(chevron);
+          summary.append(identity,range,badge);
+          const body=document.createElement("div"); body.className="biomarker-marker-body";
+          const explainerData=[
+            {label:"What it measures",title:marker.definition,copy:""},
+            {label:"Why it matters",title:marker.why_it_matters,copy:""},
+            {label:"Interpret with context",title:marker.interpretation,copy:marker.context_note}
+          ];
+          explainerData.forEach((item,index)=>{
+            const section=document.createElement("section"); section.className="biomarker-explainer";
+            const label=document.createElement("small"); label.textContent=item.label;
+            const title=document.createElement("strong"); title.textContent=item.title || "";
+            section.append(label,title);
+            if (item.copy) { const copy=document.createElement("p"); copy.textContent=item.copy; section.appendChild(copy); }
+            if (index===0 && marker.age_model_marker) {
+              const ageTag=document.createElement("span"); ageTag.className="biomarker-age-tag"; ageTag.textContent="Included in PhenoAge"; section.appendChild(ageTag);
+            }
+            body.appendChild(section);
+          });
+          details.append(summary,body);
+          details.addEventListener("toggle",()=>{
+            if (details.open) trackEvent("biomarker_detail_opened",{marker:marker.key,status:marker.status,category:marker.category});
+          });
+          list.appendChild(details);
+        });
+      };
+      [...filterButtons,...categoryButtons].forEach(button=>button.addEventListener("click",()=>{
+        activeFilter=button.dataset.filter || "all";
+        renderList();
+        trackEvent("biomarker_filter_changed",{filter:activeFilter,marker_count:markers.filter(showMarker).length});
+      }));
+      renderList();
+    }
     function renderResults(data) {
       const age = data.biological_age || {ok:false};
       const ageScores = data.age_scores || {};
@@ -8466,6 +9094,7 @@
         : "Unavailable";
       renderAgeScores(ageScores);
       renderResultsAgeHero(data,blendOptions[0] || null);
+      renderBiomarkerDashboard(data.biomarker_report || {});
       renderCustomBlendHero(blendOptions[0] || null,data);
       renderPersonalizationProof(data,blendOptions[0] || null);
 	      const nav = document.getElementById("portfolioNav");
