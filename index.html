@@ -7086,7 +7086,7 @@
         <div class="founder-console-live"><i aria-hidden="true"></i><span id="founderConsoleRefreshState">Founder session active</span></div>
       </header>
       <div class="founder-console-tabs" role="tablist" aria-label="Founder model views">
-        <button type="button" class="founder-console-tab active" id="founderResearchTab" role="tab" aria-selected="true" aria-controls="founderResearchPanel" data-founder-console-tab="research">V11 live learning</button>
+        <button type="button" class="founder-console-tab active" id="founderResearchTab" role="tab" aria-selected="true" aria-controls="founderResearchPanel" data-founder-console-tab="research">Live research</button>
         <button type="button" class="founder-console-tab" id="founderProductionTab" role="tab" aria-selected="false" aria-controls="founderProductionPanel" data-founder-console-tab="production">Production V10 KPIs</button>
       </div>
       <div class="founder-console-panel" id="founderResearchPanel" role="tabpanel" aria-labelledby="founderResearchTab">
@@ -7103,18 +7103,18 @@
           <article class="founder-console-card">
             <h3>Validation learning curves</h3>
             <p>Lower loss is better during training. Held-out R² below is the more important decision metric.</p>
-            <div class="founder-console-chart" id="founderResearchLossChart"><div class="founder-console-empty">Waiting for live V11 points.</div></div>
+            <div class="founder-console-chart" id="founderResearchLossChart"><div class="founder-console-empty">Waiting for live research points.</div></div>
           </article>
           <aside class="founder-console-card">
             <h3>Convergence and compute</h3>
             <p>Checks whether the model is still learning and whether the GPU is healthy.</p>
-            <div id="founderResearchHealth"><div class="founder-console-empty">Waiting for live V11 telemetry.</div></div>
+            <div id="founderResearchHealth"><div class="founder-console-empty">Waiting for live research telemetry.</div></div>
           </aside>
         </div>
         <article class="founder-console-card" style="margin-top:12px">
           <h3>Fold-by-fold record</h3>
           <p>Internal validation behavior by held-out survey cycle. These losses are not clinical outcomes.</p>
-          <div class="founder-console-table-wrap"><table class="founder-console-folds"><thead><tr><th>Phase</th><th>Epoch</th><th>First loss</th><th>Best loss</th><th>Improvement</th><th>Patience left</th></tr></thead><tbody id="founderResearchFoldRows"><tr><td colspan="6">Waiting for V11.</td></tr></tbody></table></div>
+          <div class="founder-console-table-wrap"><table class="founder-console-folds"><thead><tr><th>Phase</th><th>Epoch</th><th>First loss</th><th>Best loss</th><th>Improvement</th><th>Patience left</th></tr></thead><tbody id="founderResearchFoldRows"><tr><td colspan="6">Waiting for the active research run.</td></tr></tbody></table></div>
         </article>
         <p class="founder-console-boundary" id="founderResearchBoundary">Live engineering telemetry only. Held-out R² matters more than epoch loss; neither establishes causal or clinical benefit.</p>
       </div>
@@ -7966,7 +7966,7 @@
         points:(Array.isArray(group.points) ? group.points : []).filter(point=>Number.isFinite(Number(point.validation_loss)))
       })).filter(group=>group.points.length);
       if (!valid.length) {
-        const empty=document.createElement("div"); empty.className="founder-console-empty"; empty.textContent="Waiting for live V11 points.";
+        const empty=document.createElement("div"); empty.className="founder-console-empty"; empty.textContent="Waiting for live research points.";
         root.appendChild(empty); return;
       }
       const all=valid.flatMap(group=>group.points.map(point=>Number(point.validation_loss)));
@@ -7975,7 +7975,7 @@
       const maxEpoch=Math.max(...valid.flatMap(group=>group.points.map(point=>Number(point.epoch)||1)),1);
       const x=epoch=>L+(W-L-R)*(Number(epoch)-1)/Math.max(maxEpoch-1,1);
       const y=value=>T+(H-T-B)*(high-Number(value))/Math.max(high-low,.001);
-      const svg=document.createElementNS("http://www.w3.org/2000/svg","svg"); svg.setAttribute("viewBox",`0 0 ${W} ${H}`); svg.setAttribute("role","img"); svg.setAttribute("aria-label","V11 validation loss by training epoch");
+      const svg=document.createElementNS("http://www.w3.org/2000/svg","svg"); svg.setAttribute("viewBox",`0 0 ${W} ${H}`); svg.setAttribute("role","img"); svg.setAttribute("aria-label","Research validation loss by training epoch");
       for (let index=0;index<5;index+=1) {
         const yy=T+(H-T-B)*index/4;
         const line=document.createElementNS(svg.namespaceURI,"line"); line.setAttribute("x1",L); line.setAttribute("x2",W-R); line.setAttribute("y1",yy); line.setAttribute("y2",yy); line.setAttribute("stroke","#e8d9d4"); line.setAttribute("stroke-width","1"); svg.appendChild(line);
@@ -7998,16 +7998,27 @@
       root.appendChild(svg);
     }
     function renderFounderResearchMonitor(data) {
-      document.getElementById("founderResearchHeadline").textContent=data.headline || "V11 research monitor";
+      document.getElementById("founderResearchHeadline").textContent=data.headline || "Research monitor";
       document.getElementById("founderResearchDetail").textContent=data.detail || "Waiting for the next research snapshot.";
       const current=data?.training?.current || null;
-      document.getElementById("founderResearchStage").textContent=current ? `${current.epoch} / ${current.epochs}` : String(data.stage || "—").replaceAll("_"," ");
+      const isDecomposition=String(data.stage || "").startsWith("signal_decomposition");
+      const decomposition=data?.decomposition || {},provisional=decomposition?.provisional || {};
+      document.getElementById("founderResearchStage").textContent=isDecomposition ? `${decomposition.completed_new_shards ?? 0} / ${decomposition.total_new_shards ?? 24} shards` : (current ? `${current.epoch} / ${current.epochs}` : String(data.stage || "—").replaceAll("_"," "));
       const received=data.received_at ? new Date(data.received_at) : null;
       document.getElementById("founderResearchUpdated").textContent=received && Number.isFinite(received.getTime()) ? `Snapshot ${received.toLocaleTimeString()}` : "Snapshot time unavailable";
       const delta=data?.held_out?.comparison?.mean_delta_r2;
       const phenoage=data?.held_out?.comparison?.phenoage || {};
       const phenoageStatus=data?.held_out?.partial ? "Partial held-out cycles" : "Completed held-out cycles";
-      founderMetricGrid("founderResearchKpis",[
+      const researchKpis=isDecomposition ? [
+        {label:"New shards complete",value:`${decomposition.completed_new_shards ?? 0} / ${decomposition.total_new_shards ?? 24}`,detail:`${decomposition.completed_context_shards ?? 0} context · ${decomposition.completed_nutrient_shards ?? 0} nutrient`},
+        {label:"Current mode",value:String(current?.mode || "—").replaceAll("_"," "),detail:current ? `Seed ${current.seed} · ${current.held_out_cycle}` : "Waiting"},
+        {label:"Current epoch",value:current ? `${current.epoch} / ${current.epochs}` : "—",detail:data?.training?.convergence || "Waiting"},
+        {label:"Best validation loss",value:founderMetricValue(current?.best_loss,4),detail:`Current ${founderMetricValue(current?.current_loss,4)}`},
+        {label:"Provisional nutrient ΔR²",value:founderMetricValue(provisional.mean_incremental_r2,4,true),detail:`Full model minus context only`},
+        {label:"Positive outcome cells",value:Number.isFinite(Number(provisional.positive_rate_pct)) ? `${Number(provisional.positive_rate_pct).toFixed(1)}%` : "—",detail:`${provisional.paired_cells ?? 0} paired cells`},
+        {label:"Primary-age nutrient ΔR²",value:founderMetricValue(provisional.primary_age_mean_incremental_r2,4,true),detail:`${provisional.matched_shards ?? 0} matched shards`},
+        {label:"PhenoAge nutrient ΔR²",value:founderMetricValue(provisional.phenoage_mean_incremental_r2,4,true),detail:"Provisional until all seeds and cycles finish"}
+      ] : [
         {label:"Epoch",value:current ? `${current.epoch} / ${current.epochs}` : "—",detail:data?.training?.convergence || "Waiting"},
         {label:"Best validation loss",value:founderMetricValue(current?.best_loss,4),detail:`Current ${founderMetricValue(current?.current_loss,4)}`},
         {label:"Loss improvement",value:Number.isFinite(Number(current?.improvement_pct)) ? `${Number(current.improvement_pct).toFixed(1)}%` : "—",detail:"From first epoch"},
@@ -8016,7 +8027,8 @@
         {label:"V11 Δ vs V10",value:founderMetricValue(delta,4,true),detail:`${data?.held_out?.comparison?.paired_cells ?? 0} paired cells`},
         {label:"V11 PhenoAge R²",value:founderMetricValue(phenoage.v11_mean_r2),detail:`${phenoageStatus} · ${phenoage.paired_cycles ?? 0} matched`},
         {label:"PhenoAge Δ vs V10",value:founderMetricValue(phenoage.mean_delta_r2,4,true),detail:`Matched V10 ${founderMetricValue(phenoage.v10_mean_r2)}`}
-      ]);
+      ];
+      founderMetricGrid("founderResearchKpis",researchKpis);
       renderFounderLossChart(data?.training?.groups || []);
       const health=document.getElementById("founderResearchHealth"); health.textContent="";
       if (current) {
@@ -8039,7 +8051,7 @@
       const tbody=document.getElementById("founderResearchFoldRows"); tbody.textContent="";
       const groups=Array.isArray(data?.training?.groups) ? data.training.groups : [];
       if (!groups.length) {
-        const row=document.createElement("tr"); const cell=document.createElement("td"); cell.colSpan=6; cell.textContent="Waiting for V11."; row.appendChild(cell); tbody.appendChild(row);
+        const row=document.createElement("tr"); const cell=document.createElement("td"); cell.colSpan=6; cell.textContent="Waiting for the active research run."; row.appendChild(cell); tbody.appendChild(row);
       } else {
         groups.forEach(group=>{
           const row=document.createElement("tr");
@@ -8048,7 +8060,7 @@
         });
       }
       document.getElementById("founderResearchBoundary").textContent=data.interpretation_boundary || "Live engineering telemetry only—not clinical evidence.";
-      document.getElementById("founderConsoleRefreshState").textContent=data.stage==="complete" ? "V11 benchmark complete" : "Live · refreshes every 3 minutes";
+      document.getElementById("founderConsoleRefreshState").textContent=data.stage==="signal_decomposition_complete" ? "Signal decomposition complete" : (data.stage==="complete" ? "V11 benchmark complete" : "Live · refreshes every 3 minutes");
     }
     async function refreshFounderResearchMonitor() {
       if (!founderDemoAuthenticated) return;
