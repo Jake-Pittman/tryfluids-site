@@ -8048,7 +8048,7 @@
         });
       }
       document.getElementById("founderResearchBoundary").textContent=data.interpretation_boundary || "Live engineering telemetry only—not clinical evidence.";
-      document.getElementById("founderConsoleRefreshState").textContent=data.stage==="complete" ? "V11 benchmark complete" : "Live · refreshes every 10 seconds";
+      document.getElementById("founderConsoleRefreshState").textContent=data.stage==="complete" ? "V11 benchmark complete" : "Live · refreshes every 3 minutes";
     }
     async function refreshFounderResearchMonitor() {
       if (!founderDemoAuthenticated) return;
@@ -8120,7 +8120,7 @@
       loadFounderProductionKpis();
       refreshFounderResearchMonitor();
       if (!founderConsolePollTimer) {
-        founderConsolePollTimer=window.setInterval(()=>{if (!document.hidden) refreshFounderResearchMonitor();},10000);
+        founderConsolePollTimer=window.setInterval(()=>{if (!document.hidden) refreshFounderResearchMonitor();},180000);
       }
     }
     function stopFounderConsole() {
