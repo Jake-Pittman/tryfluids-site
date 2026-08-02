@@ -904,6 +904,7 @@
     .founder-console-stage strong { display:block; font-family:Georgia,serif; font-size:2rem; font-weight:500; }
     .founder-console-stage span { color:#e8c7d0; font-size:.68rem; font-weight:850; text-transform:uppercase; letter-spacing:.09em; }
     .founder-console-kpis { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:9px; margin:12px 0; }
+    .founder-console-kpis-eight { grid-template-columns:repeat(4,minmax(0,1fr)); }
     .founder-console-kpi { min-width:0; padding:14px; border:1px solid rgba(138,11,47,.12); border-radius:17px; background:rgba(255,253,249,.88); }
     .founder-console-kpi small { display:block; min-height:2.3em; color:var(--muted); font-size:.58rem; font-weight:900; text-transform:uppercase; letter-spacing:.07em; line-height:1.25; }
     .founder-console-kpi strong { display:block; margin-top:7px; font-family:Georgia,serif; font-size:1.5rem; font-weight:500; font-variant-numeric:tabular-nums; }
@@ -7097,7 +7098,7 @@
           </div>
           <div class="founder-console-stage"><strong id="founderResearchStage">—</strong><span id="founderResearchUpdated">Waiting for telemetry</span></div>
         </div>
-        <div class="founder-console-kpis" id="founderResearchKpis"></div>
+        <div class="founder-console-kpis founder-console-kpis-eight" id="founderResearchKpis"></div>
         <div class="founder-console-grid">
           <article class="founder-console-card">
             <h3>Validation learning curves</h3>
@@ -8004,13 +8005,17 @@
       const received=data.received_at ? new Date(data.received_at) : null;
       document.getElementById("founderResearchUpdated").textContent=received && Number.isFinite(received.getTime()) ? `Snapshot ${received.toLocaleTimeString()}` : "Snapshot time unavailable";
       const delta=data?.held_out?.comparison?.mean_delta_r2;
+      const phenoage=data?.held_out?.comparison?.phenoage || {};
+      const phenoageStatus=data?.held_out?.partial ? "Partial held-out cycles" : "Completed held-out cycles";
       founderMetricGrid("founderResearchKpis",[
         {label:"Epoch",value:current ? `${current.epoch} / ${current.epochs}` : "—",detail:data?.training?.convergence || "Waiting"},
         {label:"Best validation loss",value:founderMetricValue(current?.best_loss,4),detail:`Current ${founderMetricValue(current?.current_loss,4)}`},
         {label:"Loss improvement",value:Number.isFinite(Number(current?.improvement_pct)) ? `${Number(current.improvement_pct).toFixed(1)}%` : "—",detail:"From first epoch"},
         {label:"V10 held-out R²",value:founderMetricValue(data?.held_out?.v10?.mean_r2),detail:`${data?.held_out?.v10?.cells ?? 0} outcome-cycles`},
         {label:"V11 held-out R²",value:founderMetricValue(data?.held_out?.v11?.mean_r2),detail:data?.held_out?.partial ? "Partial folds" : "Completed folds"},
-        {label:"V11 Δ vs V10",value:founderMetricValue(delta,4,true),detail:`${data?.held_out?.comparison?.paired_cells ?? 0} paired cells`}
+        {label:"V11 Δ vs V10",value:founderMetricValue(delta,4,true),detail:`${data?.held_out?.comparison?.paired_cells ?? 0} paired cells`},
+        {label:"V11 PhenoAge R²",value:founderMetricValue(phenoage.v11_mean_r2),detail:`${phenoageStatus} · ${phenoage.paired_cycles ?? 0} matched`},
+        {label:"PhenoAge Δ vs V10",value:founderMetricValue(phenoage.mean_delta_r2,4,true),detail:`Matched V10 ${founderMetricValue(phenoage.v10_mean_r2)}`}
       ]);
       renderFounderLossChart(data?.training?.groups || []);
       const health=document.getElementById("founderResearchHealth"); health.textContent="";
