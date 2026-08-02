@@ -1755,6 +1755,76 @@
       align-self:stretch;
       display:grid;
     }
+    .hero-collection-visual {
+      position:relative;
+      display:grid;
+      grid-template-rows:minmax(0,1fr) auto;
+      min-height:570px;
+      margin:0;
+      overflow:hidden;
+      border:1px solid rgba(157,111,67,.17);
+      border-radius:30px;
+      background:
+        radial-gradient(circle at 50% 24%,rgba(198,43,79,.08),transparent 18rem),
+        linear-gradient(145deg,#fff,#f8f2e9);
+      box-shadow:0 28px 68px rgba(13,27,42,.11);
+    }
+    .hero-collection-visual::before {
+      content:"FLUIDS at-home collection";
+      position:absolute;
+      z-index:2;
+      top:18px;
+      left:18px;
+      padding:9px 12px;
+      border:1px solid rgba(122,8,45,.12);
+      border-radius:999px;
+      color:#7a082d;
+      background:rgba(255,253,248,.88);
+      box-shadow:0 12px 28px rgba(13,27,42,.08);
+      backdrop-filter:blur(12px);
+      font-size:.63rem;
+      font-weight:950;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+    .hero-collection-visual img {
+      width:100%;
+      height:430px;
+      padding:8px 10px 0;
+      object-fit:contain;
+      object-position:center;
+      display:block;
+    }
+    .hero-collection-visual figcaption {
+      position:relative;
+      display:grid;
+      gap:7px;
+      padding:22px 24px 24px;
+      color:#fff9f2;
+      background:
+        radial-gradient(circle at 100% 0,rgba(211,173,97,.26),transparent 15rem),
+        linear-gradient(135deg,#410d22,#7a082d);
+    }
+    .hero-collection-visual figcaption span {
+      color:#e8c27a;
+      font-size:.62rem;
+      font-weight:950;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+    .hero-collection-visual figcaption strong {
+      font-family:var(--display-font);
+      font-size:1.68rem;
+      font-weight:500;
+      line-height:1.02;
+      letter-spacing:-.02em;
+    }
+    .hero-collection-visual figcaption p {
+      margin:0;
+      color:rgba(255,249,242,.74);
+      font-size:.78rem;
+      line-height:1.45;
+    }
     .landing-brief-card {
       position:relative;
       display:grid;
@@ -4214,6 +4284,16 @@
       }
       .hero h1 { font-size:4.35rem; }
       .landing-brief-card { min-height:0; }
+      .hero-collection-visual {
+        grid-template-columns:minmax(220px,.72fr) minmax(0,1fr);
+        grid-template-rows:1fr;
+        min-height:340px;
+      }
+      .hero-collection-visual img { height:340px; }
+      .hero-collection-visual figcaption {
+        align-content:center;
+        padding:28px;
+      }
       .hero-product-card { min-height:330px; }
       .consumer-hero-product-card { min-height:500px; }
       .hero-product-family { right:-18%; width:108%; }
@@ -4386,13 +4466,21 @@
         padding:20px;
         border-radius:24px;
       }
-      .landing-brief { display:none; }
+      .landing-brief { display:grid; }
       .landing-brief-card > strong { font-size:1.48rem; }
       .landing-brief-card p { font-size:.84rem; }
       .landing-brief-steps div {
         grid-template-columns:38px minmax(0,1fr);
         padding:8px;
       }
+      .hero-collection-visual {
+        grid-template-columns:minmax(180px,.62fr) minmax(0,1fr);
+        min-height:300px;
+        border-radius:24px;
+      }
+      .hero-collection-visual img { height:300px; }
+      .hero-collection-visual figcaption { padding:22px; }
+      .hero-collection-visual figcaption strong { font-size:1.46rem; }
       .hero-product-card { min-height:265px; border-radius:28px; }
       .consumer-hero-product-card { padding:12px; }
       .consumer-photo-pour { min-height:300px; }
@@ -6830,6 +6918,11 @@
     }
     @media (max-width:520px) {
       .brand-logo { width:146px;max-width:62vw; }
+      .hero-collection-visual {
+        grid-template-columns:1fr;
+        grid-template-rows:auto auto;
+      }
+      .hero-collection-visual img { height:350px; }
     }
     @media (prefers-reduced-motion:reduce) {
       .hero > div:first-child::before,
@@ -6884,16 +6977,14 @@
         </div>
       </div>
       <div class="hero-side landing-brief">
-        <div class="landing-brief-card">
-          <div class="eyebrow">One FLUIDS experience</div>
-          <strong>Test. Personalize. Deliver. Measure again.</strong>
-          <p>The customer sees one premium system. Each cycle makes the next nutrition decision more personal.</p>
-          <div class="landing-brief-steps" aria-label="How Fluids works">
-            <div><b>01</b><span>Collect or upload bloodwork</span></div>
-            <div><b>02</b><span>Build your nutrition blueprint</span></div>
-            <div><b>03</b><span>Deliver, retest, and adapt</span></div>
-          </div>
-        </div>
+        <figure class="hero-collection-visual">
+          <img src="/assets/fluids/fluids-at-home-collection-device.jpg" alt="FLUIDS-branded at-home blood collection device">
+          <figcaption>
+            <span>One vertically integrated FLUIDS experience</span>
+            <strong>Collect → personalize → deliver → retest</strong>
+            <p>A branded entry point into the closed-loop nutrition platform.</p>
+          </figcaption>
+        </figure>
       </div>
     </section>
     <section class="full-stack-experience" id="fullStackExperience" aria-label="FLUIDS full-stack platform">
