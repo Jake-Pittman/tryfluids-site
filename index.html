@@ -879,6 +879,59 @@
     .founder-note { padding:18px; border-radius:18px; background:#f4fafb; border:1px solid var(--line); }
     .founder-note h4 { margin:0 0 10px; }
     .founder-note ul { margin:0; padding-left:18px; color:var(--muted); font-size:.8rem; line-height:1.55; }
+    .founder-model-console {
+      position:relative; overflow:hidden; margin-top:22px; padding:28px;
+      border:1px solid rgba(138,11,47,.24); border-radius:30px;
+      background:
+        radial-gradient(circle at 100% 0%,rgba(211,173,97,.17),transparent 27rem),
+        linear-gradient(145deg,#fffdf9,#f7ece8);
+      box-shadow:0 24px 64px rgba(67,13,34,.10);
+    }
+    .founder-model-console[hidden] { display:none; }
+    .founder-console-head { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+    .founder-console-head h2 { max-width:720px; margin:7px 0 8px; font-size:clamp(2rem,4.4vw,3.5rem); }
+    .founder-console-head p { max-width:760px; margin:0; color:var(--muted); line-height:1.55; }
+    .founder-console-live { display:flex; align-items:center; gap:9px; flex:0 0 auto; padding:10px 14px; border:1px solid rgba(138,11,47,.16); border-radius:999px; background:rgba(255,253,249,.82); color:#6f102e; font-size:.74rem; font-weight:900; }
+    .founder-console-live i { width:8px; height:8px; border-radius:50%; background:#27775a; box-shadow:0 0 0 5px rgba(39,119,90,.12); }
+    .founder-console-tabs { display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 16px; }
+    .founder-console-tab { padding:9px 13px; border:1px solid rgba(138,11,47,.16); border-radius:999px; background:#f3e5e4; color:#551226; box-shadow:none; font-size:.72rem; }
+    .founder-console-tab:hover,.founder-console-tab.active { color:white; background:linear-gradient(135deg,#720420,#98133a); transform:none; }
+    .founder-console-panel[hidden] { display:none; }
+    .founder-console-status { display:grid; grid-template-columns:minmax(0,1.4fr) minmax(220px,.6fr); gap:16px; align-items:center; padding:20px 22px; border-radius:22px; background:linear-gradient(135deg,#390d20,#771234); color:white; }
+    .founder-console-status h3 { margin:5px 0 6px; font-family:Georgia,serif; font-size:1.7rem; font-weight:500; }
+    .founder-console-status p { margin:0; color:rgba(255,255,255,.7); font-size:.78rem; line-height:1.45; }
+    .founder-console-stage { text-align:right; }
+    .founder-console-stage strong { display:block; font-family:Georgia,serif; font-size:2rem; font-weight:500; }
+    .founder-console-stage span { color:#e8c7d0; font-size:.68rem; font-weight:850; text-transform:uppercase; letter-spacing:.09em; }
+    .founder-console-kpis { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:9px; margin:12px 0; }
+    .founder-console-kpi { min-width:0; padding:14px; border:1px solid rgba(138,11,47,.12); border-radius:17px; background:rgba(255,253,249,.88); }
+    .founder-console-kpi small { display:block; min-height:2.3em; color:var(--muted); font-size:.58rem; font-weight:900; text-transform:uppercase; letter-spacing:.07em; line-height:1.25; }
+    .founder-console-kpi strong { display:block; margin-top:7px; font-family:Georgia,serif; font-size:1.5rem; font-weight:500; font-variant-numeric:tabular-nums; }
+    .founder-console-kpi em { display:block; overflow:hidden; margin-top:4px; color:#27775a; font-size:.6rem; font-style:normal; line-height:1.35; text-overflow:ellipsis; }
+    .founder-console-grid { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr); gap:12px; }
+    .founder-console-card { min-width:0; padding:18px; border:1px solid rgba(138,11,47,.12); border-radius:20px; background:rgba(255,253,249,.90); }
+    .founder-console-card h3 { margin:0 0 5px; font-size:1.05rem; }
+    .founder-console-card > p { margin:0 0 14px; color:var(--muted); font-size:.7rem; line-height:1.45; }
+    .founder-console-chart { width:100%; min-height:245px; }
+    .founder-console-chart svg { display:block; width:100%; height:245px; overflow:visible; }
+    .founder-console-empty { display:grid; min-height:180px; place-items:center; padding:20px; border:1px dashed rgba(138,11,47,.2); border-radius:16px; color:var(--muted); text-align:center; }
+    .founder-console-meter { margin:12px 0; }
+    .founder-console-meter div { display:flex; justify-content:space-between; gap:12px; margin-bottom:6px; color:var(--muted); font-size:.66rem; font-weight:800; }
+    .founder-console-meter span { display:block; overflow:hidden; height:9px; border-radius:999px; background:#eaded9; }
+    .founder-console-meter i { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,#8a0b2f,#d3ad61); }
+    .founder-console-folds,.founder-kpi-table { width:100%; border-collapse:collapse; font-size:.69rem; }
+    .founder-console-folds th,.founder-console-folds td,.founder-kpi-table th,.founder-kpi-table td { padding:9px 8px; border-bottom:1px solid rgba(138,11,47,.10); text-align:left; font-variant-numeric:tabular-nums; }
+    .founder-console-folds th,.founder-kpi-table th { color:var(--muted); font-size:.57rem; text-transform:uppercase; letter-spacing:.07em; }
+    .founder-console-table-wrap { overflow:auto; margin-top:12px; border:1px solid rgba(138,11,47,.1); border-radius:16px; }
+    .founder-kpi-table { min-width:760px; background:rgba(255,253,249,.82); }
+    .founder-kpi-table td:first-child { font-weight:850; }
+    .founder-kpi-band { display:inline-flex; padding:4px 7px; border-radius:999px; background:#f1e4df; color:#6f102e; font-size:.57rem; font-weight:900; white-space:nowrap; }
+    .founder-kpi-band.stronger { color:#24674f; background:#e3f1e9; }
+    .founder-kpi-band.unsupported { color:#8c2433; background:#f7e1e3; }
+    .founder-console-toolbar { display:flex; justify-content:space-between; gap:12px; align-items:center; margin:16px 0 8px; }
+    .founder-console-toolbar p { margin:0; color:var(--muted); font-size:.72rem; }
+    .founder-console-toolbar select { min-width:210px; padding:9px 11px; border:1px solid rgba(138,11,47,.18); border-radius:12px; background:#fffdf9; color:var(--ink); font:inherit; font-size:.72rem; font-weight:800; }
+    .founder-console-boundary { margin:14px 2px 0; color:var(--muted); font-size:.65rem; line-height:1.45; }
     .variant-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-top:18px; }
     .variant-card { padding:16px; border:1px solid var(--line); border-radius:18px; background:linear-gradient(180deg,#fff,#f6fbfc); box-shadow:0 10px 24px rgba(8,47,59,.06); }
     .variant-card strong { display:block; margin-bottom:4px; font-size:.95rem; }
@@ -1392,6 +1445,11 @@
       .substitution-controls,.substitution-grid { grid-template-columns:1fr; }
       .builder-row,.builder-kpis,.builder-comparison-grid,.builder-nudge-grid,.builder-columns { grid-template-columns:1fr; }
       .founder-grid,.founder-columns { grid-template-columns:1fr; }
+      .founder-console-head,.founder-console-status { display:grid; grid-template-columns:1fr; }
+      .founder-console-live { justify-self:start; }
+      .founder-console-stage { text-align:left; }
+      .founder-console-kpis { grid-template-columns:repeat(3,1fr); }
+      .founder-console-grid { grid-template-columns:1fr; }
       .archetype-grid,.archetype-report-grid { grid-template-columns:1fr; }
       .archetype-report-head { grid-template-columns:1fr; }
       .graph-head,.graph-shell { display:block; }
@@ -1410,6 +1468,13 @@
       .vector-experience-card { min-height:0; }
     }
     @media (max-width:520px) {
+      .founder-model-console { padding:18px 14px; border-radius:24px; }
+      .founder-console-head h2 { font-size:2.15rem; }
+      .founder-console-kpis { grid-template-columns:repeat(2,1fr); }
+      .founder-console-kpi strong { font-size:1.35rem; }
+      .founder-console-toolbar { align-items:stretch; flex-direction:column; }
+      .founder-console-toolbar select { width:100%; min-width:0; }
+      .founder-console-chart,.founder-console-chart svg { min-height:220px; height:220px; }
       .standard-kpis { grid-template-columns:1fr; }
       .nutrient-source-column { grid-template-columns:1fr; }
       .atom-graphic { min-height:360px; overflow:hidden; }
@@ -7010,6 +7075,66 @@
       </div>
       <p class="platform-partner-note">Blood collection, processing, and certified laboratory services are performed by qualified white-label partners inside the FLUIDS-branded experience. FLUIDS owns the consumer interface, data orchestration, nutrient intelligence, formulation system, and powder-delivery relationship.</p>
     </section>
+    <section class="founder-model-console" id="founderModelConsole" aria-labelledby="founderModelConsoleTitle" hidden>
+      <header class="founder-console-head">
+        <div>
+          <div class="eyebrow">Private founder intelligence</div>
+          <h2 id="founderModelConsoleTitle">Production KPIs and live model research.</h2>
+          <p>The frozen model serving customers stays separate from experimental training. This console makes that boundary—and the evidence behind each—easy to see from your phone.</p>
+        </div>
+        <div class="founder-console-live"><i aria-hidden="true"></i><span id="founderConsoleRefreshState">Founder session active</span></div>
+      </header>
+      <div class="founder-console-tabs" role="tablist" aria-label="Founder model views">
+        <button type="button" class="founder-console-tab active" id="founderResearchTab" role="tab" aria-selected="true" aria-controls="founderResearchPanel" data-founder-console-tab="research">V11 live learning</button>
+        <button type="button" class="founder-console-tab" id="founderProductionTab" role="tab" aria-selected="false" aria-controls="founderProductionPanel" data-founder-console-tab="production">Production V10 KPIs</button>
+      </div>
+      <div class="founder-console-panel" id="founderResearchPanel" role="tabpanel" aria-labelledby="founderResearchTab">
+        <div class="founder-console-status">
+          <div>
+            <div class="eyebrow" style="color:#e9bec9">Current experiment</div>
+            <h3 id="founderResearchHeadline">Connecting to the isolated research run…</h3>
+            <p id="founderResearchDetail">The monitor will populate when a fresh training snapshot arrives.</p>
+          </div>
+          <div class="founder-console-stage"><strong id="founderResearchStage">—</strong><span id="founderResearchUpdated">Waiting for telemetry</span></div>
+        </div>
+        <div class="founder-console-kpis" id="founderResearchKpis"></div>
+        <div class="founder-console-grid">
+          <article class="founder-console-card">
+            <h3>Validation learning curves</h3>
+            <p>Lower loss is better during training. Held-out R² below is the more important decision metric.</p>
+            <div class="founder-console-chart" id="founderResearchLossChart"><div class="founder-console-empty">Waiting for live V11 points.</div></div>
+          </article>
+          <aside class="founder-console-card">
+            <h3>Convergence and compute</h3>
+            <p>Checks whether the model is still learning and whether the GPU is healthy.</p>
+            <div id="founderResearchHealth"><div class="founder-console-empty">Waiting for live V11 telemetry.</div></div>
+          </aside>
+        </div>
+        <article class="founder-console-card" style="margin-top:12px">
+          <h3>Fold-by-fold record</h3>
+          <p>Internal validation behavior by held-out survey cycle. These losses are not clinical outcomes.</p>
+          <div class="founder-console-table-wrap"><table class="founder-console-folds"><thead><tr><th>Phase</th><th>Epoch</th><th>First loss</th><th>Best loss</th><th>Improvement</th><th>Patience left</th></tr></thead><tbody id="founderResearchFoldRows"><tr><td colspan="6">Waiting for V11.</td></tr></tbody></table></div>
+        </article>
+        <p class="founder-console-boundary" id="founderResearchBoundary">Live engineering telemetry only. Held-out R² matters more than epoch loss; neither establishes causal or clinical benefit.</p>
+      </div>
+      <div class="founder-console-panel" id="founderProductionPanel" role="tabpanel" aria-labelledby="founderProductionTab" hidden>
+        <div class="founder-console-status">
+          <div>
+            <div class="eyebrow" style="color:#e9bec9">Serving model</div>
+            <h3>V10 structured nutrition transformer · depth 8</h3>
+            <p>Frozen in the production RunPod Serverless image. Experimental benchmarks do not change these numbers until a model is formally promoted.</p>
+          </div>
+          <div class="founder-console-stage"><strong id="founderProductionMeanR2">—</strong><span>Mean held-out R²</span></div>
+        </div>
+        <div class="founder-console-kpis" id="founderProductionKpis"></div>
+        <div class="founder-console-toolbar">
+          <p id="founderProductionTableSummary">Loading the production outcome panel…</p>
+          <select id="founderProductionDomainFilter" aria-label="Filter production outcomes"><option value="all">All domains</option></select>
+        </div>
+        <div class="founder-console-table-wrap"><table class="founder-kpi-table"><thead><tr><th>Outcome</th><th>Domain</th><th>Mean R²</th><th>Worst cycle</th><th>Δ vs ridge</th><th>Cycles</th><th>Internal reading</th></tr></thead><tbody id="founderProductionRows"><tr><td colspan="7">Loading production KPIs.</td></tr></tbody></table></div>
+        <p class="founder-console-boundary" id="founderProductionBoundary">Held-out predictive engineering evidence only—not proof of causation, clinical efficacy, diagnostic accuracy, or guaranteed biological response.</p>
+      </div>
+    </section>
     <section class="launch-offer-strip" id="launchOffer" aria-label="Upload recent labs">
       <div>
         <div class="eyebrow">Already have recent bloodwork?</div>
@@ -7731,7 +7856,8 @@
         </form>
         <div class="founder-session-panel" id="founderSessionPanel" hidden>
           <strong>Production view is unlocked</strong>
-          <p>Exact formulation percentages and gram tables will be returned for custom blend demos on this browser.</p>
+          <p>Exact formulation percentages, production KPIs, and private research telemetry are available on this browser.</p>
+          <button type="button" id="founderOpenConsoleButton">Open model console</button>
           <button type="button" class="secondary" id="founderLogoutButton">Lock founder view</button>
         </div>
         <div class="founder-login-status" id="founderLoginStatus" aria-live="polite"></div>
@@ -7792,12 +7918,214 @@
     let founderDemoAuthenticated = false;
     let lastCustomBlendJobId = "";
     let lastCustomBlendResult = null;
+    let founderConsolePollTimer = null;
+    let founderProductionKpiData = null;
     function apiUrl(path) {
       if (!path || /^https?:\/\//i.test(path)) return path;
       return path.startsWith("/api/") ? `${configuredApiBase}${path}` : path;
     }
     function wait(ms) {
       return new Promise(resolve => window.setTimeout(resolve, ms));
+    }
+    function founderMetricValue(value,digits=3,signed=false) {
+      const number=Number(value);
+      if (!Number.isFinite(number)) return "—";
+      return `${signed && number>=0 ? "+" : ""}${number.toFixed(digits)}`;
+    }
+    function founderMetricGrid(rootId,items) {
+      const root=document.getElementById(rootId);
+      if (!root) return;
+      root.textContent="";
+      items.forEach(item=>{
+        const card=document.createElement("article"); card.className="founder-console-kpi";
+        const label=document.createElement("small"); label.textContent=item.label;
+        const value=document.createElement("strong"); value.textContent=item.value;
+        const detail=document.createElement("em"); detail.textContent=item.detail || "";
+        card.append(label,value,detail); root.appendChild(card);
+      });
+    }
+    function founderMeter(label,value,text) {
+      const row=document.createElement("div"); row.className="founder-console-meter";
+      const head=document.createElement("div");
+      const name=document.createElement("b"); name.textContent=label;
+      const amount=document.createElement("b"); amount.textContent=text;
+      head.append(name,amount);
+      const track=document.createElement("span");
+      const fill=document.createElement("i");
+      fill.style.width=`${Math.max(0,Math.min(100,Number(value)||0))}%`;
+      track.appendChild(fill); row.append(head,track);
+      return row;
+    }
+    function renderFounderLossChart(groups) {
+      const root=document.getElementById("founderResearchLossChart");
+      if (!root) return;
+      root.textContent="";
+      const valid=(Array.isArray(groups) ? groups : []).map(group=>({
+        ...group,
+        points:(Array.isArray(group.points) ? group.points : []).filter(point=>Number.isFinite(Number(point.validation_loss)))
+      })).filter(group=>group.points.length);
+      if (!valid.length) {
+        const empty=document.createElement("div"); empty.className="founder-console-empty"; empty.textContent="Waiting for live V11 points.";
+        root.appendChild(empty); return;
+      }
+      const all=valid.flatMap(group=>group.points.map(point=>Number(point.validation_loss)));
+      const min=Math.min(...all),max=Math.max(...all),pad=Math.max((max-min)*.12,.005);
+      const low=min-pad,high=max+pad,W=760,H=245,L=48,R=15,T=14,B=30;
+      const maxEpoch=Math.max(...valid.flatMap(group=>group.points.map(point=>Number(point.epoch)||1)),1);
+      const x=epoch=>L+(W-L-R)*(Number(epoch)-1)/Math.max(maxEpoch-1,1);
+      const y=value=>T+(H-T-B)*(high-Number(value))/Math.max(high-low,.001);
+      const svg=document.createElementNS("http://www.w3.org/2000/svg","svg"); svg.setAttribute("viewBox",`0 0 ${W} ${H}`); svg.setAttribute("role","img"); svg.setAttribute("aria-label","V11 validation loss by training epoch");
+      for (let index=0;index<5;index+=1) {
+        const yy=T+(H-T-B)*index/4;
+        const line=document.createElementNS(svg.namespaceURI,"line"); line.setAttribute("x1",L); line.setAttribute("x2",W-R); line.setAttribute("y1",yy); line.setAttribute("y2",yy); line.setAttribute("stroke","#e8d9d4"); line.setAttribute("stroke-width","1"); svg.appendChild(line);
+        const label=document.createElementNS(svg.namespaceURI,"text"); label.setAttribute("x",L-7); label.setAttribute("y",yy+4); label.setAttribute("text-anchor","end"); label.setAttribute("fill","#81736f"); label.setAttribute("font-size","10"); label.textContent=(high-(high-low)*index/4).toFixed(3); svg.appendChild(label);
+      }
+      const colors=["#8a0b2f","#b9563d","#748a48","#3f7e86","#d3ad61"];
+      valid.forEach((group,index)=>{
+        const line=document.createElementNS(svg.namespaceURI,"polyline");
+        line.setAttribute("points",group.points.map(point=>`${x(point.epoch)},${y(point.validation_loss)}`).join(" "));
+        line.setAttribute("fill","none"); line.setAttribute("stroke",colors[index%colors.length]); line.setAttribute("stroke-width",index===valid.length-1 ? "3" : "1.8"); line.setAttribute("opacity",index===valid.length-1 ? "1" : ".55"); line.setAttribute("stroke-linejoin","round"); line.setAttribute("stroke-linecap","round"); svg.appendChild(line);
+      });
+      const active=valid.at(-1);
+      const bestLine=document.createElementNS(svg.namespaceURI,"polyline");
+      bestLine.setAttribute("points",active.points.map(point=>`${x(point.epoch)},${y(point.best_loss)}`).join(" "));
+      bestLine.setAttribute("fill","none"); bestLine.setAttribute("stroke","#25121a"); bestLine.setAttribute("stroke-width","1.4"); bestLine.setAttribute("stroke-dasharray","5 5"); svg.appendChild(bestLine);
+      for (let index=0;index<5;index+=1) {
+        const epoch=1+(maxEpoch-1)*index/4;
+        const label=document.createElementNS(svg.namespaceURI,"text"); label.setAttribute("x",x(epoch)); label.setAttribute("y",H-7); label.setAttribute("text-anchor","middle"); label.setAttribute("fill","#81736f"); label.setAttribute("font-size","10"); label.textContent=Math.round(epoch); svg.appendChild(label);
+      }
+      root.appendChild(svg);
+    }
+    function renderFounderResearchMonitor(data) {
+      document.getElementById("founderResearchHeadline").textContent=data.headline || "V11 research monitor";
+      document.getElementById("founderResearchDetail").textContent=data.detail || "Waiting for the next research snapshot.";
+      const current=data?.training?.current || null;
+      document.getElementById("founderResearchStage").textContent=current ? `${current.epoch} / ${current.epochs}` : String(data.stage || "—").replaceAll("_"," ");
+      const received=data.received_at ? new Date(data.received_at) : null;
+      document.getElementById("founderResearchUpdated").textContent=received && Number.isFinite(received.getTime()) ? `Snapshot ${received.toLocaleTimeString()}` : "Snapshot time unavailable";
+      const delta=data?.held_out?.comparison?.mean_delta_r2;
+      founderMetricGrid("founderResearchKpis",[
+        {label:"Epoch",value:current ? `${current.epoch} / ${current.epochs}` : "—",detail:data?.training?.convergence || "Waiting"},
+        {label:"Best validation loss",value:founderMetricValue(current?.best_loss,4),detail:`Current ${founderMetricValue(current?.current_loss,4)}`},
+        {label:"Loss improvement",value:Number.isFinite(Number(current?.improvement_pct)) ? `${Number(current.improvement_pct).toFixed(1)}%` : "—",detail:"From first epoch"},
+        {label:"V10 held-out R²",value:founderMetricValue(data?.held_out?.v10?.mean_r2),detail:`${data?.held_out?.v10?.cells ?? 0} outcome-cycles`},
+        {label:"V11 held-out R²",value:founderMetricValue(data?.held_out?.v11?.mean_r2),detail:data?.held_out?.partial ? "Partial folds" : "Completed folds"},
+        {label:"V11 Δ vs V10",value:founderMetricValue(delta,4,true),detail:`${data?.held_out?.comparison?.paired_cells ?? 0} paired cells`}
+      ]);
+      renderFounderLossChart(data?.training?.groups || []);
+      const health=document.getElementById("founderResearchHealth"); health.textContent="";
+      if (current) {
+        health.append(
+          founderMeter("Epoch progress",100*Number(current.epoch)/Math.max(Number(current.epochs),1),`${current.epoch} / ${current.epochs}`),
+          founderMeter("Patience consumed",100*Number(current.stale)/Math.max(Number(current.patience),1),`${current.stale} / ${current.patience}`)
+        );
+      }
+      const gpu=data?.gpu || {};
+      if (gpu.available) {
+        health.append(
+          founderMeter("GPU utilization",gpu.utilization_pct,`${founderMetricValue(gpu.utilization_pct,0)}%`),
+          founderMeter("GPU memory",100*Number(gpu.memory_used_mb)/Math.max(Number(gpu.memory_total_mb),1),`${founderMetricValue(Number(gpu.memory_used_mb)/1024,1)} / ${founderMetricValue(Number(gpu.memory_total_mb)/1024,1)} GB`)
+        );
+        const note=document.createElement("p"); note.textContent=`${gpu.name || "GPU"} · ${founderMetricValue(gpu.temperature_c,0)}°C · ${founderMetricValue(gpu.power_w,0)} W`; health.appendChild(note);
+      }
+      if (!health.children.length) {
+        const empty=document.createElement("div"); empty.className="founder-console-empty"; empty.textContent="Compute telemetry is unavailable."; health.appendChild(empty);
+      }
+      const tbody=document.getElementById("founderResearchFoldRows"); tbody.textContent="";
+      const groups=Array.isArray(data?.training?.groups) ? data.training.groups : [];
+      if (!groups.length) {
+        const row=document.createElement("tr"); const cell=document.createElement("td"); cell.colSpan=6; cell.textContent="Waiting for V11."; row.appendChild(cell); tbody.appendChild(row);
+      } else {
+        groups.forEach(group=>{
+          const row=document.createElement("tr");
+          [group.label,`${group.epoch} / ${group.epochs}`,founderMetricValue(group.first_loss,4),founderMetricValue(group.best_loss,4),`${founderMetricValue(group.improvement_pct,1)}%`,String(group.patience_remaining ?? "—")].forEach(value=>{const cell=document.createElement("td"); cell.textContent=value; row.appendChild(cell);});
+          tbody.appendChild(row);
+        });
+      }
+      document.getElementById("founderResearchBoundary").textContent=data.interpretation_boundary || "Live engineering telemetry only—not clinical evidence.";
+      document.getElementById("founderConsoleRefreshState").textContent=data.stage==="complete" ? "V11 benchmark complete" : "Live · refreshes every 10 seconds";
+    }
+    async function refreshFounderResearchMonitor() {
+      if (!founderDemoAuthenticated) return;
+      try {
+        const response=await fetch(apiUrl("/api/founder/research-monitor"),{headers:{"Accept":"application/json"},credentials:"include",cache:"no-store"});
+        const data=await response.json();
+        if (!response.ok || !data.ok) throw new Error(data?.error || "Research telemetry unavailable");
+        renderFounderResearchMonitor(data);
+      } catch (error) {
+        document.getElementById("founderConsoleRefreshState").textContent="Waiting for research snapshot";
+      }
+    }
+    function renderFounderProductionRows() {
+      const data=founderProductionKpiData;
+      if (!data) return;
+      const filter=document.getElementById("founderProductionDomainFilter")?.value || "all";
+      const outcomes=(Array.isArray(data.outcomes) ? data.outcomes : []).filter(item=>filter==="all" || item.domain===filter);
+      const tbody=document.getElementById("founderProductionRows"); tbody.textContent="";
+      outcomes.forEach(item=>{
+        const row=document.createElement("tr");
+        const values=[item.label,item.domain,founderMetricValue(item.mean_r2),founderMetricValue(item.worst_cycle_r2),founderMetricValue(item.delta_r2_vs_ridge,3,true),String(item.held_out_cycles)];
+        values.forEach(value=>{const cell=document.createElement("td"); cell.textContent=value; row.appendChild(cell);});
+        const bandCell=document.createElement("td"); const band=document.createElement("span"); band.className=`founder-kpi-band ${item.signal_band || ""}`; band.textContent=item.signal_label || "Reviewed"; bandCell.appendChild(band); row.appendChild(bandCell); tbody.appendChild(row);
+      });
+      document.getElementById("founderProductionTableSummary").textContent=`Showing ${outcomes.length} of ${data.outcomes.length} modeled outcomes.`;
+    }
+    function renderFounderProductionKpis(data) {
+      founderProductionKpiData=data;
+      const model=data.model || {},summary=data.summary || {};
+      document.getElementById("founderProductionMeanR2").textContent=founderMetricValue(summary.mean_held_out_r2);
+      founderMetricGrid("founderProductionKpis",[
+        {label:"Training rows",value:Number(model.training_rows || 0).toLocaleString(),detail:"Full production cohort"},
+        {label:"Modeled outcomes",value:String(model.outcomes || "—"),detail:"4 age + 24 biomarkers"},
+        {label:"Positive R²",value:`${summary.positive_r2_outcomes || 0} / ${model.outcomes || 0}`,detail:"Held-out outcome means"},
+        {label:"ΔR² vs ridge",value:founderMetricValue(summary.mean_delta_r2_vs_ridge,4,true),detail:`${summary.outcomes_beating_ridge || 0} outcomes win`},
+        {label:"Embedding width",value:String(model.embedding_width || "—"),detail:`${model.layers || "—"} layers · ${model.attention_heads || "—"} heads`},
+        {label:"Parameters",value:Number.isFinite(Number(model.parameters)) ? `${(Number(model.parameters)/1e6).toFixed(2)}M` : "—",detail:`${model.input_features || "—"} input features`}
+      ]);
+      const select=document.getElementById("founderProductionDomainFilter");
+      if (select && select.options.length===1) {
+        [...new Set(data.outcomes.map(item=>item.domain))].forEach(domain=>{const option=document.createElement("option"); option.value=domain; option.textContent=domain; select.appendChild(option);});
+      }
+      document.getElementById("founderProductionBoundary").textContent=data.interpretation_boundary || "Held-out predictive engineering evidence only.";
+      renderFounderProductionRows();
+    }
+    async function loadFounderProductionKpis() {
+      if (!founderDemoAuthenticated || founderProductionKpiData) return;
+      try {
+        const response=await fetch(apiUrl("/api/founder/production-model-kpis"),{headers:{"Accept":"application/json"},credentials:"include",cache:"no-store"});
+        const data=await response.json();
+        if (!response.ok || !data.model) throw new Error(data?.error || "Production KPIs unavailable");
+        renderFounderProductionKpis(data);
+      } catch (error) {
+        document.getElementById("founderProductionTableSummary").textContent="Production KPI snapshot is temporarily unavailable.";
+      }
+    }
+    function selectFounderConsoleTab(tabName) {
+      document.querySelectorAll("[data-founder-console-tab]").forEach(button=>{
+        const active=button.dataset.founderConsoleTab===tabName;
+        button.classList.toggle("active",active); button.setAttribute("aria-selected",String(active));
+      });
+      const research=document.getElementById("founderResearchPanel");
+      const production=document.getElementById("founderProductionPanel");
+      if (research) research.hidden=tabName!=="research";
+      if (production) production.hidden=tabName!=="production";
+      if (tabName==="production") loadFounderProductionKpis();
+    }
+    function startFounderConsole() {
+      loadFounderProductionKpis();
+      refreshFounderResearchMonitor();
+      if (!founderConsolePollTimer) {
+        founderConsolePollTimer=window.setInterval(()=>{if (!document.hidden) refreshFounderResearchMonitor();},10000);
+      }
+    }
+    function stopFounderConsole() {
+      if (founderConsolePollTimer) window.clearInterval(founderConsolePollTimer);
+      founderConsolePollTimer=null;
+    }
+    function openFounderConsole() {
+      if (!founderDemoAuthenticated) return;
+      closeFounderModal();
+      document.getElementById("founderModelConsole")?.scrollIntoView({behavior:"smooth",block:"start"});
     }
     function syncFounderAccessUi() {
       const accessButton=document.getElementById("founderAccessButton");
@@ -7810,7 +8138,10 @@
       }
       if (loginForm) loginForm.hidden=founderDemoAuthenticated;
       if (sessionPanel) sessionPanel.hidden=!founderDemoAuthenticated;
+      const modelConsole=document.getElementById("founderModelConsole");
+      if (modelConsole) modelConsole.hidden=!founderDemoAuthenticated;
       document.documentElement.dataset.founderView=founderDemoAuthenticated ? "true" : "false";
+      if (founderDemoAuthenticated) startFounderConsole(); else stopFounderConsole();
       refreshFounderStandardViews();
     }
     function refreshFounderStandardViews() {
@@ -7906,6 +8237,9 @@
       const form=document.getElementById("founderLoginForm");
       const password=document.getElementById("founderPassword");
       document.getElementById("founderAccessButton")?.addEventListener("click",openFounderModal);
+      document.getElementById("founderOpenConsoleButton")?.addEventListener("click",openFounderConsole);
+      document.querySelectorAll("[data-founder-console-tab]").forEach(button=>button.addEventListener("click",()=>selectFounderConsoleTab(button.dataset.founderConsoleTab)));
+      document.getElementById("founderProductionDomainFilter")?.addEventListener("change",renderFounderProductionRows);
       document.getElementById("founderModalClose")?.addEventListener("click",closeFounderModal);
       modal?.addEventListener("click",event=>{
         if (event.target===modal) closeFounderModal();
