@@ -7364,7 +7364,8 @@
           <p class="section-copy">Blank numeric fields use the training-population median.</p>
           <div class="context-grid">
             <div><label for="sleepHours">Sleep hours</label><small class="field-help">Your average nightly sleep over a typical recent week—not just last night.</small><input id="sleepHours" type="number" min="2" max="14" step=".1"></div>
-            <div><label for="activityMet">Activity MET-min/week</label><small class="field-help">Weekly activity intensity × minutes. Example: 150 minutes of moderate exercise is about 600 MET-min. Leave blank if unsure.</small><input id="activityMet" type="number" min="0" max="30000" step="10"></div>
+            <div><label for="moderateActivityMinutesWeek">Moderate activity minutes/week</label><small class="field-help">Include brisk walking, easy cycling, active work, and exercise that raises your breathing while still letting you talk. For example, 30 minutes on 5 days is 150.</small><input id="moderateActivityMinutesWeek" type="number" min="0" max="3000" step="5" inputmode="numeric" placeholder="e.g. 150"></div>
+            <div><label for="vigorousActivityMinutesWeek">Vigorous activity minutes/week</label><small class="field-help">Include running, HIIT, hard cycling, and demanding activity that makes speaking more than a few words difficult. Enter 0 if you do none.</small><input id="vigorousActivityMinutesWeek" type="number" min="0" max="3000" step="5" inputmode="numeric" placeholder="e.g. 60"></div>
             <div><label for="sedentaryMinutes">Sedentary min/day</label><small class="field-help">Average waking time spent sitting or reclining, including work, driving, and screen time.</small><input id="sedentaryMinutes" type="number" min="0" max="1440"></div>
             <div><label for="alcoholDrinks">Alcohol drinks/day</label><small class="field-help">Your average across the full week. Enter 0 if you do not currently drink.</small><input id="alcoholDrinks" type="number" min="0" max="25" step=".1"></div>
             <div><label for="cigarettesDay">Cigarettes/day</label><small class="field-help">Current average per day. Enter 0 if you do not currently smoke cigarettes.</small><input id="cigarettesDay" type="number" min="0" max="200"></div>
@@ -7419,6 +7420,7 @@
         <div class="question-actions">
           <button type="button" class="secondary" id="questionBack">Back</button>
           <div class="loader" id="analysisLoader"><span class="spinner"></span> Building your custom blend…</div>
+          <button type="button" class="secondary" id="resumeAnalysisBtn" hidden>Check queued result</button>
           <button type="button" id="questionNext">Continue</button>
           <button type="button" id="analyzeBtn" style="display:none">Generate custom blend</button>
         </div>
@@ -7917,7 +7919,35 @@
       configuredApiMode === "auto" && Boolean(configuredApiBase)
     );
     let founderDemoAuthenticated = false;
-    let lastCustomBlendJobId = "";
+    const pendingCustomBlendJobStorageKey="fluids_pending_custom_blend_job_v1";
+    function storedPendingCustomBlendJobId() {
+      try { return String(window.sessionStorage.getItem(pendingCustomBlendJobStorageKey) || ""); }
+      catch (_) { return ""; }
+    }
+    function rememberPendingCustomBlendJob(jobId) {
+      lastCustomBlendJobId=String(jobId || "");
+      try {
+        if (lastCustomBlendJobId) window.sessionStorage.setItem(pendingCustomBlendJobStorageKey,lastCustomBlendJobId);
+        else window.sessionStorage.removeItem(pendingCustomBlendJobStorageKey);
+      } catch (_) {}
+      syncPendingAnalysisUi();
+    }
+    function clearPendingCustomBlendJob({retainLast=false}={}) {
+      try { window.sessionStorage.removeItem(pendingCustomBlendJobStorageKey); } catch (_) {}
+      if (!retainLast) lastCustomBlendJobId="";
+      syncPendingAnalysisUi();
+    }
+    function pendingAnalysisError() {
+      const error=new Error("Your analysis is still safely queued. Tap ‘Check queued result’ in a minute—your blood test does not need to be uploaded again.");
+      error.analysisPending=true;
+      return error;
+    }
+    function syncPendingAnalysisUi() {
+      const button=document.getElementById("resumeAnalysisBtn");
+      if (!button) return;
+      button.hidden=!storedPendingCustomBlendJobId();
+    }
+    let lastCustomBlendJobId = storedPendingCustomBlendJobId();
     let lastCustomBlendResult = null;
     let founderConsolePollTimer = null;
     let founderProductionKpiData = null;
@@ -8779,7 +8809,7 @@
       }
     }));
     function startNewPersonalizedAnalysis() {
-      lastCustomBlendJobId="";
+      clearPendingCustomBlendJob();
       lastCustomBlendResult=null;
       selectedFile=null;
       personalizedView="upload";
@@ -8940,6 +8970,14 @@
 	      }
 	    }
     function numberOrNull(id) { const v = document.getElementById(id).value; return v === "" ? null : Number(v); }
+    function calculatedActivityMetMinutesWeek() {
+      const moderateMinutes = numberOrNull("moderateActivityMinutesWeek");
+      const vigorousMinutes = numberOrNull("vigorousActivityMinutesWeek");
+      if (moderateMinutes === null && vigorousMinutes === null) return null;
+      const estimate = (Math.max(0, moderateMinutes || 0) * 4) +
+        (Math.max(0, vigorousMinutes || 0) * 8);
+      return Math.min(30000, Math.round(estimate));
+    }
     function convertedNumberOrNull(id,multiplier) {
       const value=numberOrNull(id);
       return value===null ? null : Number((value*multiplier).toFixed(4));
@@ -9118,7 +9156,7 @@
         kidney_or_potassium_risk:document.getElementById("kidneyRisk").checked,
         pregnant_or_breastfeeding:document.getElementById("pregnant").checked,
         weight_kg:convertedNumberOrNull("weightPounds",0.45359237), sleep_hours:numberOrNull("sleepHours"),
-        activity_met_minutes_week:numberOrNull("activityMet"), sedentary_minutes_day:numberOrNull("sedentaryMinutes"),
+        activity_met_minutes_week:calculatedActivityMetMinutesWeek(), sedentary_minutes_day:numberOrNull("sedentaryMinutes"),
         alcohol_drinks_day:numberOrNull("alcoholDrinks"), fasting_hours:numberOrNull("fastingHours"),
         prescription_count:numberOrNull("prescriptionCount"), supplement_count:numberOrNull("supplementCount"),
         cigarettes_per_day:numberOrNull("cigarettesDay"),
@@ -9166,6 +9204,15 @@
           runtime_source:useAnalysisJobs ? "job" : "direct"
         }));
       } catch (error) {
+        if (error && error.analysisPending) {
+          trackEvent("custom_blend_still_queued",{
+            lab_count:Object.keys(labs).length,
+            use_jobs:useAnalysisJobs
+          });
+          syncPendingAnalysisUi();
+          showError(error.message);
+          return;
+        }
         trackEvent("custom_blend_failed",{
           lab_count:Object.keys(labs).length,
           use_jobs:useAnalysisJobs,
@@ -9174,6 +9221,34 @@
         showError(error.message); window.scrollTo({top:0,behavior:"smooth"});
       }
       finally { syncAnalysisConsent(); setLoading("analysisLoader", false); stopScienceRunner(); }
+    });
+    document.getElementById("resumeAnalysisBtn")?.addEventListener("click",async event=>{
+      const button=event.currentTarget;
+      showError("");
+      button.disabled=true;
+      setLoading("analysisLoader",true);
+      startScienceRunner();
+      try {
+        const data=await runCustomBlendAnalysisJob(null);
+        renderResults(data);
+        lastCustomBlendResult=data;
+        const firstBlend=(data.blend_options || [])[0] || {};
+        trackEvent("custom_blend_completed",customBlendAnalyticsMetadata(data,firstBlend,{
+          runtime_source:"resumed_job"
+        }));
+      } catch (error) {
+        if (error && error.analysisPending) {
+          trackEvent("custom_blend_still_queued",{use_jobs:true,resumed:true});
+        } else {
+          trackEvent("custom_blend_failed",{use_jobs:true,error:"resumed_analysis_failed"});
+        }
+        showError(error.message);
+      } finally {
+        button.disabled=false;
+        syncPendingAnalysisUi();
+        setLoading("analysisLoader",false);
+        stopScienceRunner();
+      }
     });
     async function runCustomBlendAnalysis(payload) {
       if (useAnalysisJobs) return runCustomBlendAnalysisJob(payload);
@@ -9192,35 +9267,59 @@
       throw new Error(((data && data.message) || "Analysis could not be completed.") + missing);
     }
     async function runCustomBlendAnalysisJob(payload) {
-      const createResponse = await fetch(apiUrl("/api/jobs/analyze"), {
-        method:"POST",
-        headers:{"Content-Type":"application/json","Accept":"application/json"},
-        credentials:"include",
-        body:JSON.stringify(payload)
-      });
-      const created = await createResponse.json();
-      if (!createResponse.ok || !created.ok) throwAnalysisError(created);
-      const jobId = created.job_id;
-      lastCustomBlendJobId=jobId;
-      const pollMs = Math.max(1200, Number(created.poll_interval_seconds || 2) * 1000);
-      trackEvent("custom_blend_job_queued",{poll_interval_seconds:Number(created.poll_interval_seconds || 2)});
-      updateAnalysisJobReadout({status:"queued",message:"Queued for cloud analysis."});
-      for (let attempt = 0; attempt < 240; attempt += 1) {
-        await wait(pollMs);
-        const statusResponse = await fetch(apiUrl(`/api/jobs/${encodeURIComponent(jobId)}`), {
-          headers:{"Accept":"application/json"},
-          credentials:"include"
+      let jobId=storedPendingCustomBlendJobId();
+      let pollMs=5000;
+      if (!jobId) {
+        if (!payload) throw new Error("No queued analysis was found. Please upload your blood test again.");
+        const createResponse = await fetch(apiUrl("/api/jobs/analyze"), {
+          method:"POST",
+          headers:{"Content-Type":"application/json","Accept":"application/json"},
+          credentials:"include",
+          body:JSON.stringify(payload)
         });
-        const job = await statusResponse.json();
-        if (!statusResponse.ok || !job.ok) throwAnalysisError(job);
-        updateAnalysisJobReadout(job);
-        if (job.status === "completed") {
-          if (!job.result || !job.result.ok) throwAnalysisError(job.result || job);
-          return job.result;
-        }
-        if (job.status === "failed") throwAnalysisError(job.result || job);
+        const created = await createResponse.json();
+        if (!createResponse.ok || !created.ok) throwAnalysisError(created);
+        jobId=created.job_id;
+        pollMs=Math.max(3000,Math.min(5000,Number(created.poll_interval_seconds || 5)*1000));
+        rememberPendingCustomBlendJob(jobId);
+        trackEvent("custom_blend_job_queued",{poll_interval_seconds:pollMs/1000});
+      } else {
+        lastCustomBlendJobId=jobId;
+        trackEvent("custom_blend_job_resumed",{});
       }
-      throw new Error("The cloud model is still running. Try again in a minute.");
+      updateAnalysisJobReadout({status:"queued",message:"Queued for cloud analysis."});
+      const pollDeadline=Date.now()+(20*60*1000);
+      let transientFailures=0;
+      let firstCheck=true;
+      while (Date.now()<pollDeadline) {
+        if (!firstCheck) await wait(pollMs);
+        firstCheck=false;
+        try {
+          const statusResponse = await fetch(apiUrl(`/api/jobs/${encodeURIComponent(jobId)}`), {
+            headers:{"Accept":"application/json"},
+            credentials:"include"
+          });
+          const job = await statusResponse.json();
+          if (!statusResponse.ok || !job.ok) throwAnalysisError(job);
+          transientFailures=0;
+          updateAnalysisJobReadout(job);
+          if (job.status === "completed") {
+            if (!job.result || !job.result.ok) throwAnalysisError(job.result || job);
+            clearPendingCustomBlendJob({retainLast:true});
+            return job.result;
+          }
+          if (["failed","cancelled","timed_out"].includes(String(job.status))) {
+            clearPendingCustomBlendJob();
+            throwAnalysisError(job.result || job);
+          }
+        } catch (error) {
+          if (error && error.analysisPending) throw error;
+          transientFailures+=1;
+          if (transientFailures>=3) throw error;
+          await wait(pollMs);
+        }
+      }
+      throw pendingAnalysisError();
     }
     function updateAnalysisJobReadout(job) {
       const elapsed=Number.isFinite(Number(job.elapsed_seconds)) ? `${Number(job.elapsed_seconds).toFixed(0)}s` : "";
@@ -13773,6 +13872,13 @@
     initHomeVectorMatrix();
     loadHomeFunctionMenu().catch(() => {});
     initFounderAccess();
+    syncPendingAnalysisUi();
+    if (storedPendingCustomBlendJobId()) {
+      personalizedView="questionnaire";
+      showView("questionnaire");
+      showQuestion(3);
+      showError("Your custom blend is still processing. Tap ‘Check queued result’ to continue watching it without uploading again.");
+    }
     loadSpecs().catch(error => console.warn("Lab schema unavailable until the custom blend API is reachable.",error));
   </script>
 </body>
