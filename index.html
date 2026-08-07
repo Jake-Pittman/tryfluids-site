@@ -4038,6 +4038,14 @@
       font-size:1.55rem;
       text-transform:uppercase;
     }
+    .custom-ingredient-visual.lime-photo,
+    .home-ingredient-thumb.lime-photo {
+      background-image:url("/assets/fluids/ingredients/lime-photoreal-v1.png?v=1");
+      background-position:center;
+      background-repeat:no-repeat;
+      background-size:92%;
+      background-color:#fffdf8;
+    }
     .custom-ingredient-name {
       max-width:100%;
       overflow:hidden;
@@ -4047,6 +4055,114 @@
       line-height:1.2;
       text-align:center;
       text-overflow:ellipsis;
+    }
+    .custom-dv-showcase {
+      margin:-6px 0 20px;
+      padding:18px;
+      border:1px solid rgba(255,253,248,.14);
+      border-radius:26px;
+      background:
+        radial-gradient(circle at 4% 100%,rgba(79,155,142,.15),transparent 18rem),
+        rgba(255,253,248,.08);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .custom-dv-head {
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:14px;
+    }
+    .custom-dv-head span,
+    .custom-dv-head strong,
+    .custom-dv-head small { display:block; }
+    .custom-dv-head span {
+      color:#f1c989;
+      font-size:.62rem;
+      font-weight:900;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+    .custom-dv-head strong {
+      margin-top:4px;
+      color:#fffdf8;
+      font-family:var(--display-font);
+      font-size:1.45rem;
+      font-weight:500;
+      letter-spacing:-.035em;
+    }
+    .custom-dv-head small {
+      max-width:480px;
+      color:#bfcbd0;
+      font-size:.67rem;
+      line-height:1.4;
+      text-align:right;
+    }
+    .custom-dv-gallery {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(128px,1fr));
+      gap:8px;
+    }
+    .custom-dv-tile {
+      --dv-color:#71d8dc;
+      min-width:0;
+      display:grid;
+      grid-template-columns:44px minmax(0,1fr);
+      gap:10px;
+      align-items:center;
+      min-height:94px;
+      padding:11px;
+      border:1px solid rgba(255,253,248,.12);
+      border-radius:18px;
+      background:linear-gradient(150deg,rgba(255,255,255,.12),rgba(255,255,255,.04));
+    }
+    .custom-dv-icon {
+      width:44px;
+      height:44px;
+      display:grid;
+      place-items:center;
+      border:1px solid color-mix(in srgb,var(--dv-color) 48%,transparent);
+      border-radius:50%;
+      color:#071c25;
+      background:var(--dv-color);
+      font-size:.76rem;
+      font-weight:950;
+      box-shadow:0 8px 18px color-mix(in srgb,var(--dv-color) 18%,transparent);
+    }
+    .custom-dv-copy strong,
+    .custom-dv-copy b,
+    .custom-dv-copy small { display:block; }
+    .custom-dv-copy strong {
+      overflow-wrap:anywhere;
+      color:#fffdf8;
+      font-size:.7rem;
+      line-height:1.2;
+    }
+    .custom-dv-copy b {
+      margin:4px 0 2px;
+      color:var(--dv-color);
+      font-family:var(--display-font);
+      font-size:1.35rem;
+      font-weight:500;
+      line-height:1;
+    }
+    .custom-dv-copy small {
+      color:#aebfc4;
+      font-size:.55rem;
+      line-height:1.25;
+    }
+    .custom-dv-footnote {
+      margin:11px 2px 0;
+      color:#aebfc4;
+      font-size:.58rem;
+      line-height:1.42;
+    }
+    @media (max-width:620px) {
+      .custom-dv-head { align-items:flex-start;flex-direction:column;gap:7px; }
+      .custom-dv-head small { text-align:left; }
+      .custom-dv-gallery { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .custom-dv-tile { grid-template-columns:36px minmax(0,1fr);padding:9px; }
+      .custom-dv-icon { width:36px;height:36px;font-size:.65rem; }
     }
     .custom-product-reveal {
       display:block;
@@ -5062,7 +5178,7 @@
     body.analysis-running {
       overflow:hidden;
     }
-    body.analysis-running header,
+    body.analysis-running > header,
     body.analysis-running #flowProgress,
     body.analysis-running #globalError {
       visibility:hidden;
@@ -5191,6 +5307,317 @@
     @keyframes analysisSweep {
       0%,100% { transform:translateX(-18%) rotate(0deg); opacity:.22; }
       50% { transform:translateX(18%) rotate(0deg); opacity:.55; }
+    }
+    /* Progressive analysis room: useful results first, formulation second. */
+    .science-runner.active {
+      display:block;
+      overflow-x:hidden;
+      overflow-y:auto;
+      padding:clamp(16px,3vw,38px);
+    }
+    .science-runner.active::after { content:none; }
+    .analysis-waiting-shell {
+      position:relative;
+      z-index:1;
+      width:min(1180px,100%);
+      margin:0 auto;
+      padding:clamp(18px,3vw,34px);
+      border:1px solid rgba(111,60,69,.14);
+      border-radius:34px;
+      background:rgba(255,253,248,.82);
+      box-shadow:0 28px 80px rgba(78,35,44,.10);
+      backdrop-filter:blur(18px);
+    }
+    .analysis-waiting-head {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:24px;
+      align-items:end;
+    }
+    .analysis-waiting-head .science-brand-logo {
+      width:min(150px,38vw);
+      margin-bottom:18px;
+    }
+    .analysis-waiting-head h3 {
+      max-width:820px;
+      margin:8px 0 10px;
+      color:#28151b;
+      font-family:var(--display-font);
+      font-size:clamp(2rem,4.2vw,4.45rem);
+      font-weight:500;
+      line-height:.96;
+      letter-spacing:-.05em;
+      text-wrap:balance;
+    }
+    .analysis-waiting-head p {
+      max-width:760px;
+      margin:0;
+      color:#685b58;
+      font-size:.9rem;
+      line-height:1.55;
+    }
+    .analysis-waiting-model-status {
+      min-width:240px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px 16px;
+      border:1px solid rgba(143,22,55,.15);
+      border-radius:18px;
+      background:#fffaf3;
+      box-shadow:0 12px 28px rgba(78,35,44,.06);
+    }
+    .analysis-waiting-model-status .spinner {
+      width:22px;
+      height:22px;
+      flex:0 0 22px;
+      border-color:#e3c9c0;
+      border-top-color:#8f1637;
+    }
+    .analysis-waiting-model-status small,
+    .analysis-waiting-model-status strong { display:block; }
+    .analysis-waiting-model-status small {
+      color:#8c7b78;
+      font-size:.56rem;
+      font-weight:950;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+    .analysis-waiting-model-status strong {
+      margin-top:4px;
+      color:#8f1637;
+      font-size:.72rem;
+      line-height:1.3;
+    }
+    .science-runner.active .analysis-waiting-shell > .science-progress {
+      max-width:none;
+      height:8px;
+      margin:20px 0;
+      background:rgba(97,45,55,.10);
+    }
+    .analysis-waiting-age {
+      display:grid;
+      grid-template-columns:minmax(260px,1fr) repeat(2,minmax(170px,.48fr));
+      gap:12px;
+      align-items:stretch;
+      padding:18px;
+      border:1px solid rgba(157,111,67,.16);
+      border-radius:26px;
+      background:
+        radial-gradient(circle at 92% 0%,rgba(213,165,66,.15),transparent 18rem),
+        linear-gradient(145deg,#f7eee2,#fffaf3);
+    }
+    .analysis-waiting-age-copy {
+      align-self:center;
+      padding:6px 10px 6px 2px;
+    }
+    .analysis-waiting-age-copy h4 {
+      margin:6px 0 7px;
+      color:#28151b;
+      font-family:var(--display-font);
+      font-size:clamp(1.65rem,3vw,2.6rem);
+      font-weight:500;
+      line-height:1;
+      letter-spacing:-.045em;
+    }
+    .analysis-waiting-age-copy p {
+      margin:0;
+      color:#756763;
+      font-size:.72rem;
+      line-height:1.45;
+    }
+    .analysis-waiting-age-stat {
+      display:flex;
+      min-height:136px;
+      flex-direction:column;
+      justify-content:center;
+      padding:16px;
+      border:1px solid rgba(111,60,69,.12);
+      border-radius:20px;
+      background:rgba(255,255,255,.66);
+    }
+    .analysis-waiting-age-stat.primary {
+      color:#fffaf3;
+      border-color:#51172a;
+      background:linear-gradient(145deg,#2a0d19,#6c1e37);
+    }
+    .analysis-waiting-age-stat small {
+      color:#8c7b78;
+      font-size:.56rem;
+      font-weight:950;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+    }
+    .analysis-waiting-age-stat.primary small,
+    .analysis-waiting-age-stat.primary span { color:rgba(255,250,243,.68); }
+    .analysis-waiting-age-stat strong {
+      display:block;
+      margin:7px 0 5px;
+      color:#28151b;
+      font-family:var(--display-font);
+      font-size:clamp(1.8rem,3.1vw,3rem);
+      font-weight:500;
+      line-height:.95;
+      letter-spacing:-.045em;
+    }
+    .analysis-waiting-age-stat.primary strong { color:#fffaf3; }
+    .analysis-waiting-age-stat span {
+      color:#756763;
+      font-size:.62rem;
+      line-height:1.35;
+    }
+    .analysis-waiting-report {
+      margin-top:14px;
+      padding:18px;
+      border:1px solid rgba(111,60,69,.12);
+      border-radius:26px;
+      background:rgba(255,255,255,.58);
+    }
+    .analysis-waiting-report > header {
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:18px;
+    }
+    .analysis-waiting-report h4 {
+      margin:5px 0 0;
+      color:#28151b;
+      font-family:var(--display-font);
+      font-size:clamp(1.45rem,2.6vw,2.25rem);
+      font-weight:500;
+      letter-spacing:-.04em;
+    }
+    #waitingBiomarkerCount {
+      padding:7px 10px;
+      border-radius:999px;
+      color:#76203a;
+      background:#f1e1e4;
+      font-size:.6rem;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .analysis-waiting-overview {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:8px;
+      margin-top:14px;
+    }
+    .analysis-waiting-overview article {
+      min-height:84px;
+      padding:12px;
+      border:1px solid rgba(111,60,69,.10);
+      border-radius:16px;
+      background:#fffaf3;
+    }
+    .analysis-waiting-overview small,
+    .analysis-waiting-overview strong,
+    .analysis-waiting-overview span { display:block; }
+    .analysis-waiting-overview small {
+      color:#8c7b78;
+      font-size:.52rem;
+      font-weight:950;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .analysis-waiting-overview strong {
+      margin:5px 0 2px;
+      color:#28151b;
+      font-family:var(--display-font);
+      font-size:1.75rem;
+      font-weight:500;
+      line-height:1;
+    }
+    .analysis-waiting-overview span {
+      color:#81736f;
+      font-size:.56rem;
+      line-height:1.25;
+    }
+    .analysis-waiting-overview .on-point strong { color:#276548; }
+    .analysis-waiting-overview .optimize strong { color:#9b6722; }
+    .analysis-waiting-overview .attention strong { color:#aa3148; }
+    .analysis-waiting-priority {
+      margin:9px 0 12px;
+      padding:10px 12px;
+      border-radius:14px;
+      color:#5e5150;
+      background:#f7eee2;
+      font-size:.68rem;
+      line-height:1.42;
+    }
+    .analysis-waiting-marker-grid {
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:7px;
+    }
+    .analysis-waiting-marker {
+      overflow:hidden;
+      border:1px solid rgba(111,60,69,.10);
+      border-radius:16px;
+      background:#fff;
+    }
+    .analysis-waiting-marker summary {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:12px;
+      align-items:center;
+      padding:11px 12px;
+      cursor:pointer;
+      list-style:none;
+    }
+    .analysis-waiting-marker summary::-webkit-details-marker { display:none; }
+    .analysis-waiting-marker-name,
+    .analysis-waiting-marker-value,
+    .analysis-waiting-marker-status { display:block; }
+    .analysis-waiting-marker-name {
+      color:#28151b;
+      font-size:.7rem;
+      font-weight:900;
+    }
+    .analysis-waiting-marker-value {
+      margin-top:3px;
+      color:#4e4140;
+      font-size:.67rem;
+    }
+    .analysis-waiting-marker-status {
+      padding:6px 8px;
+      border-radius:999px;
+      color:#276548;
+      background:#e0f0e7;
+      font-size:.55rem;
+      font-weight:950;
+      white-space:nowrap;
+    }
+    .analysis-waiting-marker-status.optimize { color:#875916;background:#f7ead0; }
+    .analysis-waiting-marker-status.attention { color:#993046;background:#f7dde2; }
+    .analysis-waiting-marker p {
+      margin:0;
+      padding:0 12px 12px;
+      color:#756763;
+      font-size:.62rem;
+      line-height:1.43;
+    }
+    .analysis-waiting-disclaimer {
+      margin:11px 2px 0;
+      color:#887a76;
+      font-size:.58rem;
+      line-height:1.42;
+    }
+    @media (max-width:820px) {
+      .science-runner.active { padding:0; }
+      .analysis-waiting-shell { min-height:100%;border:0;border-radius:0;padding:18px 14px 28px; }
+      .analysis-waiting-head { grid-template-columns:1fr;gap:14px; }
+      .analysis-waiting-model-status { min-width:0; }
+      .analysis-waiting-age { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .analysis-waiting-age-copy { grid-column:1 / -1; }
+      .analysis-waiting-overview { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .analysis-waiting-marker-grid { grid-template-columns:1fr; }
+    }
+    @media (max-width:480px) {
+      .analysis-waiting-head h3 { font-size:2.15rem; }
+      .analysis-waiting-age { grid-template-columns:1fr; }
+      .analysis-waiting-age-copy { grid-column:auto; }
+      .analysis-waiting-age-stat { min-height:112px; }
+      .analysis-waiting-report > header { align-items:flex-start;flex-direction:column;gap:9px; }
     }
     #results {
       margin-top:0;
@@ -7140,7 +7567,7 @@
       <div>
         <div class="eyebrow">Already have recent bloodwork?</div>
         <h2>Skip collection and start with the labs you already have.</h2>
-        <p>Upload a blood-test PDF to preview the same personalized blueprint and whole-food formulation experience today.</p>
+        <p>Upload a blood-test PDF or clear report photos to preview the same personalized blueprint and whole-food formulation experience today.</p>
       </div>
       <button type="button" class="launch-offer-button" data-quick-mode="upload">Upload recent labs</button>
     </section>
@@ -7325,13 +7752,13 @@
     <div class="wizard-stage" id="wizardStage">
       <main class="panel section app-view active upload-panel" id="uploadView">
         <div class="section-head">
-          <div><h2>Build your personalized blend</h2><p class="section-copy">Start with your blood-test PDF. We’ll temporarily extract the markers, then delete the original file and turn the reviewed values into a drinkable nutrition plan.</p></div>
+          <div><h2>Build your personalized blend</h2><p class="section-copy">Start with a blood-test PDF or clear photos of a printed report. We’ll temporarily extract the markers, delete the original files, and turn the values you confirm into a drinkable nutrition plan.</p></div>
           <button id="extractBtn" disabled>Start analysis</button>
         </div>
         <label class="drop" id="dropZone" for="pdfInput">
-          <input id="pdfInput" type="file" accept="application/pdf,.pdf">
-          <strong id="fileLabel">Drop your blood-test PDF here</strong>
-          <small>or click to choose your report</small>
+          <input id="pdfInput" type="file" accept="application/pdf,image/jpeg,image/png,.pdf,.jpg,.jpeg,.png" multiple>
+          <strong id="fileLabel">Drop your blood-test PDF or photos here</strong>
+          <small>PDF, JPG, or PNG · select every page together · use original full-resolution photos</small>
         </label>
         <div class="inline-help"><strong>What happens next:</strong> the app extracts common biological-age and wellness markers, asks you to confirm the values, then uses your context answers to generate a personalized nutrition blueprint and blend.</div>
         <div class="actions">
@@ -7425,41 +7852,50 @@
           <button type="button" id="analyzeBtn" style="display:none">Generate custom blend</button>
         </div>
         <div class="science-runner" id="scienceRunner" aria-live="polite">
-          <div class="science-visual" aria-hidden="true">
-            <canvas class="science-runner-canvas" id="scienceRunnerCanvas"></canvas>
-            <div class="science-vector-counter">
-              <span>Decision layers</span>
-              <strong id="scienceRunnerPointCount">0 / 6</strong>
-            </div>
-            <div class="science-model-readout">
-              <span>Current decision</span>
-              <b id="scienceRunnerReadout">initializing</b>
-            </div>
-          </div>
-          <div class="science-copy">
-            <img class="science-brand-logo" src="/assets/fluids/fluids_logo_wordmark_premium.svg?v=burgundy-1" alt="Fluids">
-            <div class="eyebrow">Fluids decision engine</div>
-            <h3 id="scienceRunnerTitle">Turning your bloodwork into a product decision.</h3>
-            <p id="scienceRunnerBody">The engine evaluates your reviewed labs as one connected profile, builds a coordinated nutrient direction, and tests how that direction can be delivered through a realistic whole-food formula.</p>
-            <div class="science-principles" aria-label="Decision engine principles">
-              <span>Whole-profile view</span><span>Safety-aware</span><span>Product-feasible</span>
-            </div>
-            <div class="science-progress" aria-hidden="true"><i id="scienceRunnerProgress"></i></div>
-            <div class="science-vector-build" aria-live="polite">
-              <div class="science-vector-build-head">
-                <span>Decision trace</span>
-                <span id="scienceRunnerBackendStatus">waiting for model</span>
+          <div class="analysis-waiting-shell">
+            <header class="analysis-waiting-head">
+              <div>
+                <img class="science-brand-logo" src="/assets/fluids/fluids_logo_wordmark_premium.svg?v=burgundy-1" alt="Fluids">
+                <div class="eyebrow">Your bloodwork report</div>
+                <h3>Your biomarker picture is ready. Your blend is being built.</h3>
+                <p>Review your current PhenoAge and blood-marker priorities while Fluids tests whole-food formulas against your personalized nutrition blueprint.</p>
               </div>
-              <div class="science-vector-points" id="scienceRunnerPointList"></div>
-            </div>
-          </div>
-          <div class="science-step-grid" id="scienceStepGrid">
-            <div class="science-step active"><b>1</b><strong>Profile</strong><span>Structure reviewed labs and context.</span></div>
-            <div class="science-step"><b>2</b><strong>Priorities</strong><span>Weigh patterns, confidence, and guardrails.</span></div>
-            <div class="science-step"><b>3</b><strong>Nutrients</strong><span>Build a coordinated nutrient vector.</span></div>
-            <div class="science-step"><b>4</b><strong>Ingredients</strong><span>Test whole-food delivery feasibility.</span></div>
-            <div class="science-step"><b>5</b><strong>Options</strong><span>Compare custom and ready-made paths.</span></div>
-            <div class="science-step"><b>6</b><strong>Plan</strong><span>Prepare your result and baseline.</span></div>
+              <div class="analysis-waiting-model-status">
+                <span class="spinner" aria-hidden="true"></span>
+                <div><small>Powder recommendation</small><strong id="scienceRunnerBackendStatus">starting model</strong></div>
+              </div>
+            </header>
+            <div class="science-progress" aria-label="Powder recommendation progress"><i id="scienceRunnerProgress"></i></div>
+            <section class="analysis-waiting-age" aria-labelledby="analysisWaitingAgeTitle">
+              <div class="analysis-waiting-age-copy">
+                <div class="eyebrow">Biological age baseline</div>
+                <h4 id="analysisWaitingAgeTitle">Your current PhenoAge</h4>
+                <p id="waitingPhenoAgeBasis">Calculating from your reviewed blood markers.</p>
+              </div>
+              <article class="analysis-waiting-age-stat primary">
+                <small>Current PhenoAge</small>
+                <strong id="waitingPhenoAge">Calculating</strong>
+                <span id="waitingPhenoAgeStatus">Report loading</span>
+              </article>
+              <article class="analysis-waiting-age-stat">
+                <small>Chronological age</small>
+                <strong id="waitingChronologicalAge">—</strong>
+                <span id="waitingAgeDifference">Comparison pending</span>
+              </article>
+            </section>
+            <section class="analysis-waiting-report" aria-labelledby="analysisWaitingReportTitle">
+              <header>
+                <div>
+                  <div class="eyebrow">Reviewed markers</div>
+                  <h4 id="analysisWaitingReportTitle">The signals shaping your nutrition plan</h4>
+                </div>
+                <span id="waitingBiomarkerCount">Preparing report</span>
+              </header>
+              <div class="analysis-waiting-overview" id="waitingBiomarkerOverview"></div>
+              <p class="analysis-waiting-priority" id="waitingBiomarkerPriority">Reading your reviewed values and target bands.</p>
+              <div class="analysis-waiting-marker-grid" id="waitingBiomarkerList"></div>
+              <p class="analysis-waiting-disclaimer" id="waitingBiomarkerDisclaimer">FLUIDS target bands are wellness-planning context, not diagnostic reference intervals.</p>
+            </section>
           </div>
         </div>
       </aside>
@@ -7884,7 +8320,7 @@
     const questionNext = document.getElementById("questionNext");
     let specs = {};
     let customBlendMinimum = {minimum_core_markers:7,total_core_markers:9,maximum_imputed_core_markers:2,core_markers:[]};
-    let selectedFile = null;
+    let selectedFiles = [];
     let currentQuestion = 0;
     const dataLoopConsentVersion = "2026-07-29-v1";
     const viewIds = ["uploadView","reviewView","questionnaireView","results","standardView","discoveryView"];
@@ -8811,11 +9247,11 @@
     function startNewPersonalizedAnalysis() {
       clearPendingCustomBlendJob();
       lastCustomBlendResult=null;
-      selectedFile=null;
+      selectedFiles=[];
       personalizedView="upload";
       currentQuestion=0;
       pdfInput.value="";
-      document.getElementById("fileLabel").textContent="Drop your blood-test PDF here";
+      document.getElementById("fileLabel").textContent="Drop your blood-test PDF or photos here";
       extractBtn.disabled=true;
       dataLoopConsent.checked=false;
       syncAnalysisConsent();
@@ -8880,6 +9316,101 @@
       box.textContent = message; box.style.display = message ? "block" : "none";
     }
     function setLoading(id, active) { document.getElementById(id).style.display = active ? "flex" : "none"; }
+    function resetAnalysisWaitingRoom(payload={}) {
+      const chronological=Number(payload?.age);
+      document.getElementById("waitingPhenoAge").textContent="Calculating";
+      document.getElementById("waitingPhenoAgeStatus").textContent="Report loading";
+      document.getElementById("waitingChronologicalAge").textContent=Number.isFinite(chronological)
+        ? `${chronological.toFixed(0)} yr`
+        : "—";
+      document.getElementById("waitingAgeDifference").textContent="Comparison pending";
+      document.getElementById("waitingPhenoAgeBasis").textContent="Calculating from your reviewed blood markers.";
+      document.getElementById("waitingBiomarkerCount").textContent="Preparing report";
+      document.getElementById("waitingBiomarkerPriority").textContent="Reading your reviewed values and target bands.";
+      document.getElementById("waitingBiomarkerDisclaimer").textContent="FLUIDS target bands are wellness-planning context, not diagnostic reference intervals.";
+      const overview=document.getElementById("waitingBiomarkerOverview");
+      overview.textContent="";
+      ["Markers reviewed","On point","Optimize","High / low"].forEach((label,index)=>{
+        const card=document.createElement("article");
+        card.className=index===1 ? "on-point" : index===2 ? "optimize" : index===3 ? "attention" : "";
+        const small=document.createElement("small"); small.textContent=label;
+        const strong=document.createElement("strong"); strong.textContent=index===0 && payload?.labs ? String(Object.keys(payload.labs).length) : "—";
+        const detail=document.createElement("span"); detail.textContent=index===0 ? "Reviewed panel" : "Classifying";
+        card.append(small,strong,detail); overview.appendChild(card);
+      });
+      const list=document.getElementById("waitingBiomarkerList");
+      list.textContent="";
+      const placeholder=document.createElement("div");
+      placeholder.className="analysis-waiting-priority";
+      placeholder.textContent="Your marker-by-marker report will appear here before formula selection is complete.";
+      list.appendChild(placeholder);
+    }
+    async function runAnalysisPreflight(payload) {
+      const response=await fetch(apiUrl("/api/analysis-preflight"),{
+        method:"POST",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        credentials:"include",
+        body:JSON.stringify(payload)
+      });
+      const data=await response.json();
+      if (!response.ok || !data.ok) throwAnalysisError(data);
+      return data;
+    }
+    function renderAnalysisWaitingRoom(data) {
+      const pheno=data?.age_scores?.scores?.phenoage || data?.age_scores?.primary || {};
+      const age=Number(pheno.age_years ?? pheno.biological_age ?? data?.biological_age?.biological_age);
+      const chronological=Number(pheno.chronological_age ?? data?.biological_age?.chronological_age);
+      const difference=Number(pheno.age_difference ?? data?.biological_age?.age_difference);
+      document.getElementById("waitingPhenoAge").textContent=Number.isFinite(age) ? `${age.toFixed(1)} yr` : "Unavailable";
+      document.getElementById("waitingPhenoAgeStatus").textContent=pheno.status_label
+        ? `${pheno.status_label} from reviewed markers`
+        : Number.isFinite(age) ? "Calculated from reviewed markers" : "Missing required markers";
+      document.getElementById("waitingChronologicalAge").textContent=Number.isFinite(chronological) ? `${chronological.toFixed(0)} yr` : "—";
+      document.getElementById("waitingAgeDifference").textContent=Number.isFinite(difference)
+        ? `${difference>=0 ? "+" : ""}${difference.toFixed(1)} years vs. chronological age`
+        : "Comparison unavailable";
+      document.getElementById("waitingPhenoAgeBasis").textContent=pheno.basis || "Published PhenoAge formula applied to the reviewed marker set.";
+
+      const report=data?.biomarker_report || {};
+      const markers=Array.isArray(report.markers) ? report.markers : [];
+      document.getElementById("waitingBiomarkerCount").textContent=`${markers.length} marker${markers.length===1 ? "" : "s"} reviewed`;
+      const overview=document.getElementById("waitingBiomarkerOverview");
+      overview.textContent="";
+      [
+        {label:"Markers reviewed",value:Number(report.marker_count || markers.length),detail:`${Number(report.age_model_marker_count || 0)} inform PhenoAge`,tone:""},
+        {label:"On point",value:Number(report.on_point_count || 0),detail:"Inside target band",tone:"on-point"},
+        {label:"Optimize",value:Number(report.optimize_count || 0),detail:"Near target band",tone:"optimize"},
+        {label:"High / low",value:Number(report.attention_count || 0),detail:"Needs context",tone:"attention"}
+      ].forEach(item=>{
+        const card=document.createElement("article"); card.className=item.tone;
+        const label=document.createElement("small"); label.textContent=item.label;
+        const value=document.createElement("strong"); value.textContent=String(item.value);
+        const detail=document.createElement("span"); detail.textContent=item.detail;
+        card.append(label,value,detail); overview.appendChild(card);
+      });
+      const focus=markers.filter(marker=>marker.status_group!=="on_point");
+      const focusNames=focus.slice(0,4).map(marker=>marker.label).join(", ");
+      document.getElementById("waitingBiomarkerPriority").textContent=focus.length
+        ? `${focusNames} ${focus.length===1 ? "is" : "are"} most worth reviewing in context. These are nutrition-planning signals, not diagnoses.`
+        : "Every reviewed marker sits inside its FLUIDS model target band. Repeat testing will show whether that pattern remains stable.";
+      const list=document.getElementById("waitingBiomarkerList");
+      list.textContent="";
+      markers.forEach(marker=>{
+        const details=document.createElement("details"); details.className="analysis-waiting-marker";
+        const summary=document.createElement("summary");
+        const identity=document.createElement("div");
+        const name=document.createElement("span"); name.className="analysis-waiting-marker-name"; name.textContent=marker.label || marker.key;
+        const value=document.createElement("span"); value.className="analysis-waiting-marker-value";
+        value.textContent=`${formatBiomarkerNumber(marker.value)} ${marker.unit || ""} · ${biomarkerRangeText(marker)}`.trim();
+        identity.append(name,value);
+        const badge=document.createElement("span"); badge.className=`analysis-waiting-marker-status ${marker.status_group || "on_point"}`; badge.textContent=marker.status_label || "Reviewed";
+        summary.append(identity,badge);
+        const copy=document.createElement("p");
+        copy.textContent=[marker.why_it_matters,marker.interpretation].filter(Boolean).join(" ");
+        details.append(summary,copy); list.appendChild(details);
+      });
+      document.getElementById("waitingBiomarkerDisclaimer").textContent=report.disclaimer || "FLUIDS target bands are wellness-planning context, not diagnostic reference intervals.";
+    }
     function renderScienceRunnerStep(index) {
       const runner=document.getElementById("scienceRunner");
       if (!runner) return;
@@ -8928,7 +9459,7 @@
         });
       }
     }
-	    function startScienceRunner() {
+	    function startScienceRunner(payload={}) {
 	      const runner=document.getElementById("scienceRunner");
 	      if (!runner) return;
 	      clearInterval(scienceRunnerTimer);
@@ -8936,6 +9467,7 @@
 	      scienceRunnerBuildCount=1;
 	      scienceRunnerStartedAt=performance.now();
 	      scienceRunnerBackendStatus="starting model";
+	      resetAnalysisWaitingRoom(payload);
 	      renderScienceRunnerStep(scienceRunnerStep);
 	      if (!scienceRunnerPlaceholder && runner.parentNode !== document.body) {
 	        scienceRunnerPlaceholder=document.createComment("science-runner-home");
@@ -8945,8 +9477,6 @@
 	      document.body.classList.add("analysis-running");
 	      runner.setAttribute("aria-busy","true");
 	      runner.classList.add("active");
-      initScienceRunnerMatrix();
-      requestAnimationFrame(resizeVectorMatrices);
       scienceRunnerTimer=setInterval(()=>{
         scienceRunnerStep=(scienceRunnerStep+1)%scienceRunnerSignals.length;
         scienceRunnerBuildCount=Math.min(scienceRunnerSignals.length,scienceRunnerBuildCount+1);
@@ -8982,21 +9512,38 @@
       const value=numberOrNull(id);
       return value===null ? null : Number((value*multiplier).toFixed(4));
     }
-    function selectFile(file) {
-      if (!file) return;
-      selectedFile = file;
-      document.getElementById("fileLabel").textContent = file.name;
+    function isSupportedLabFile(file) {
+      const name=(file?.name || "").toLowerCase();
+      return ["application/pdf","image/jpeg","image/png"].includes(file?.type) ||
+        [".pdf",".jpg",".jpeg",".png"].some(extension=>name.endsWith(extension));
+    }
+    function selectFiles(fileList) {
+      const files=Array.from(fileList || []).slice(0,10);
+      if (!files.length) return;
+      const invalid=files.find(file=>!isSupportedLabFile(file) || file.size > 14*1024*1024);
+      if (invalid) {
+        selectedFiles=[];
+        pdfInput.value="";
+        extractBtn.disabled=true;
+        showError(`${invalid.name || "A selected file"} must be a PDF, JPG, or PNG under 14 MB.`);
+        return;
+      }
+      selectedFiles = files;
+      document.getElementById("fileLabel").textContent = files.length === 1
+        ? files[0].name
+        : `${files.length} lab page photos selected`;
       extractBtn.disabled = false;
       showError("");
       trackEvent("upload_selected",{
-        file_type:file.type || "application/pdf",
-        file_size_kb:Math.round((file.size || 0) / 1024)
+        file_count:files.length,
+        file_types:Array.from(new Set(files.map(file=>file.type || "unknown"))).join(","),
+        file_size_kb:Math.round(files.reduce((total,file)=>total+(file.size || 0),0) / 1024)
       });
     }
-    pdfInput.addEventListener("change", e => selectFile(e.target.files[0]));
+    pdfInput.addEventListener("change", e => selectFiles(e.target.files));
     ["dragenter","dragover"].forEach(name => dropZone.addEventListener(name, e => { e.preventDefault(); dropZone.classList.add("drag"); }));
     ["dragleave","drop"].forEach(name => dropZone.addEventListener(name, e => { e.preventDefault(); dropZone.classList.remove("drag"); }));
-    dropZone.addEventListener("drop", e => selectFile(e.dataTransfer.files[0]));
+    dropZone.addEventListener("drop", e => selectFiles(e.dataTransfer.files));
 
     async function loadSpecs() {
       const response = await fetch(apiUrl("/api/specs"));
@@ -9079,29 +9626,50 @@
             : "Continue with measured custom blend";
     }
     extractBtn.addEventListener("click", async () => {
-      if (!selectedFile) return;
+      if (!selectedFiles.length) return;
       showError(""); extractBtn.disabled = true; setLoading("extractLoader", true);
       trackEvent("pdf_extract_started",{
-        file_type:selectedFile.type || "application/pdf",
-        file_size_kb:Math.round((selectedFile.size || 0) / 1024)
+        file_count:selectedFiles.length,
+        file_types:Array.from(new Set(selectedFiles.map(file=>file.type || "unknown"))).join(","),
+        file_size_kb:Math.round(selectedFiles.reduce((total,file)=>total+(file.size || 0),0) / 1024)
       });
       try {
-        const response = await fetch(apiUrl("/api/extract"), {
-          method:"POST",
-          headers:{
-            "Content-Type": selectedFile.type || "application/pdf",
-            "X-File-Name": encodeURIComponent(selectedFile.name),
-            "X-Fluids-Session": analyticsSessionId
-          },
-          body:selectedFile
-        });
-        const data = await response.json();
-        if (!response.ok || !data.ok) throw new Error(data.message || "Extraction failed.");
-        renderLabs(data.labs);
-        document.getElementById("extractMeta").textContent = `${data.method === "local_ocr" ? "Local OCR" : "Embedded text"} · ${Object.keys(data.labs).length} markers found`;
+        const mergedLabs={};
+        const methods=new Set();
+        const failures=[];
+        for (const file of selectedFiles) {
+          const response = await fetch(apiUrl("/api/extract"), {
+            method:"POST",
+            headers:{
+              "Content-Type": file.type || "application/octet-stream",
+              "X-File-Name": encodeURIComponent(file.name),
+              "X-Fluids-Session": analyticsSessionId
+            },
+            body:file
+          });
+          const data = await response.json();
+          if (!response.ok || !data.ok) {
+            failures.push(data.message || `${file.name} could not be read.`);
+            continue;
+          }
+          methods.add(data.method || "unknown");
+          Object.entries(data.labs || {}).forEach(([key,lab])=>{
+            if (!mergedLabs[key] || Number(lab.confidence || 0) > Number(mergedLabs[key].confidence || 0)) {
+              mergedLabs[key]=lab;
+            }
+          });
+        }
+        if (!Object.keys(mergedLabs).length) throw new Error(failures[0] || "No supported lab markers could be read. Try a brighter, straighter photo.");
+        renderLabs(mergedLabs);
+        const methodLabels={image_ocr:"Photo OCR",local_ocr:"Scanned PDF OCR",embedded_text:"PDF text"};
+        const methodText=Array.from(methods).map(method=>methodLabels[method] || "Document OCR").join(" + ");
+        const readCount=selectedFiles.length-failures.length;
+        document.getElementById("extractMeta").textContent = `${methodText} · ${Object.keys(mergedLabs).length} markers found · ${readCount}/${selectedFiles.length} files read`;
         trackEvent("pdf_extract_success",{
-          method:data.method || "unknown",
-          marker_count:Object.keys(data.labs || {}).length
+          method:Array.from(methods).join(",") || "unknown",
+          marker_count:Object.keys(mergedLabs).length,
+          file_count:selectedFiles.length,
+          files_read:readCount
         });
         showView("review");
       } catch (error) {
@@ -9143,7 +9711,7 @@
         dataLoopConsent.focus();
         return;
       }
-      showError(""); analyzeBtn.disabled = true; setLoading("analysisLoader", true); startScienceRunner();
+      showError(""); analyzeBtn.disabled = true; setLoading("analysisLoader", true);
       const labs = {}; fieldOrder.forEach(key => { const input = document.getElementById(`lab-${key}`); if (input && input.value !== "") labs[key] = Number(input.value); });
       const analysisStartedAt = performance.now();
       const payload = {
@@ -9190,7 +9758,24 @@
         phenoage_input_count:Object.keys(labs).filter(key=>specs[key]?.phenoage_required).length,
         use_jobs:useAnalysisJobs
       });
+      startScienceRunner(payload);
       try {
+        try {
+          scienceRunnerBackendStatus="building biomarker report";
+          renderScienceRunnerStep(scienceRunnerStep);
+          const preflight=await runAnalysisPreflight(payload);
+          renderAnalysisWaitingRoom(preflight);
+          scienceRunnerBackendStatus="testing powder formulas";
+          renderScienceRunnerStep(scienceRunnerStep);
+          trackEvent("analysis_preflight_viewed",{
+            marker_count:Number(preflight?.biomarker_report?.marker_count || 0),
+            phenoage_available:Boolean(preflight?.age_scores?.scores?.phenoage?.available)
+          });
+        } catch (preflightError) {
+          scienceRunnerBackendStatus="building full report + formula";
+          renderScienceRunnerStep(scienceRunnerStep);
+          console.warn("Progressive biomarker report was unavailable; continuing the full analysis.",preflightError);
+        }
         const data = await runCustomBlendAnalysis(payload);
         if (data.app_revision && !String(data.app_revision).includes("product-layer")) {
           console.warn("App revision changed while this page was open.", data.app_revision);
@@ -10383,7 +10968,9 @@
         visual.className="custom-ingredient-visual";
         visual.setAttribute("aria-hidden","true");
         const position=ingredientAtlasPosition(itemName);
-        if (position) {
+        if (isLimeIngredient(itemName)) {
+          visual.classList.add("lime-photo");
+        } else if (position) {
           visual.style.setProperty("--ingredient-x",position[0]);
           visual.style.setProperty("--ingredient-y",position[1]);
         } else {
@@ -10399,6 +10986,85 @@
       });
       showcase.append(head,gallery);
       parent.appendChild(showcase);
+    }
+    const nutrientDailyValueReference={
+      carbohydrate_g:{value:275,unit:"g",symbol:"Carb"},
+      fiber_g:{value:28,unit:"g",symbol:"Fi"},
+      protein_g:{value:50,unit:"g",symbol:"P"},
+      total_fat_g:{value:78,unit:"g",symbol:"Fat"},
+      saturated_fat_g:{value:20,unit:"g",symbol:"Sat"},
+      vitamin_a_rae_mcg:{value:900,unit:"mcg",symbol:"A"},
+      vitamin_c_mg:{value:90,unit:"mg",symbol:"C"},
+      vitamin_d_mcg:{value:20,unit:"mcg",symbol:"D"},
+      vitamin_e_mg:{value:15,unit:"mg",symbol:"E"},
+      vitamin_k_mcg:{value:120,unit:"mcg",symbol:"K"},
+      thiamin_mg:{value:1.2,unit:"mg",symbol:"B1"},
+      riboflavin_mg:{value:1.3,unit:"mg",symbol:"B2"},
+      niacin_mg:{value:16,unit:"mg",symbol:"B3"},
+      vitamin_b6_mg:{value:1.7,unit:"mg",symbol:"B6"},
+      folate_dfe_mcg:{value:400,unit:"mcg",symbol:"B9"},
+      vitamin_b12_mcg:{value:2.4,unit:"mcg",symbol:"B12"},
+      choline_mg:{value:550,unit:"mg",symbol:"Ch"},
+      calcium_mg:{value:1300,unit:"mg",symbol:"Ca"},
+      phosphorus_mg:{value:1250,unit:"mg",symbol:"P"},
+      magnesium_mg:{value:420,unit:"mg",symbol:"Mg"},
+      iron_mg:{value:18,unit:"mg",symbol:"Fe"},
+      zinc_mg:{value:11,unit:"mg",symbol:"Zn"},
+      copper_mg:{value:.9,unit:"mg",symbol:"Cu"},
+      potassium_mg:{value:4700,unit:"mg",symbol:"K+"},
+      sodium_mg:{value:2300,unit:"mg",symbol:"Na"},
+      selenium_mcg:{value:55,unit:"mcg",symbol:"Se"}
+    };
+    function formulaDailyValueRows(option) {
+      return formulaDeliveryNutrientVector(option)
+        .map(item=>{
+          const reference=nutrientDailyValueReference[item.nutrient];
+          const amount=Number(item.amount);
+          if (!reference || !Number.isFinite(amount) || amount<=0) return null;
+          return {...item,reference,dailyValuePercent:amount/reference.value*100};
+        })
+        .filter(Boolean)
+        .sort((a,b)=>Number(b.dailyValuePercent)-Number(a.dailyValuePercent));
+    }
+    function formatDailyValuePercent(value) {
+      const percent=Number(value);
+      if (!Number.isFinite(percent)) return "—";
+      if (percent>0 && percent<1) return "<1%";
+      return `${Math.round(percent).toLocaleString()}%`;
+    }
+    function formatDailyValueAmount(item) {
+      const amount=Number(item?.amount);
+      if (!Number.isFinite(amount)) return "—";
+      const digits=Math.abs(amount)>=100 ? 0 : Math.abs(amount)>=10 ? 1 : Math.abs(amount)>=1 ? 2 : 3;
+      return `${amount.toFixed(digits)} ${item?.reference?.unit || item?.unit || ""}`.trim();
+    }
+    function renderCustomDailyValueShowcase(option,parent) {
+      const rows=formulaDailyValueRows(option);
+      if (!rows.length) return;
+      const showcase=document.createElement("section");
+      showcase.className="custom-dv-showcase";
+      showcase.setAttribute("aria-label","Estimated Daily Value contribution from one selected-blend serving");
+      const head=document.createElement("div"); head.className="custom-dv-head";
+      const heading=document.createElement("div");
+      const kicker=document.createElement("span"); kicker.textContent="Nutrients in one serving";
+      const title=document.createElement("strong"); title.textContent="How much of the Daily Value this blend delivers";
+      heading.append(kicker,title);
+      const note=document.createElement("small");
+      note.textContent="Shown only for nutrients this formula is designed to increase. Recipe percentages stay private.";
+      head.append(heading,note);
+      const gallery=document.createElement("div"); gallery.className="custom-dv-gallery";
+      rows.forEach(item=>{
+        const tile=document.createElement("article"); tile.className="custom-dv-tile"; tile.style.setProperty("--dv-color",nutrientColor(item.nutrient));
+        const icon=document.createElement("i"); icon.className="custom-dv-icon"; icon.textContent=item.reference.symbol;
+        const copy=document.createElement("div"); copy.className="custom-dv-copy";
+        const name=document.createElement("strong"); name.textContent=nutrientLabel(item.nutrient);
+        const percent=document.createElement("b"); percent.textContent=formatDailyValuePercent(item.dailyValuePercent);
+        const amount=document.createElement("small"); amount.textContent=`${formatDailyValueAmount(item)} per modeled serving`;
+        copy.append(name,percent,amount); tile.append(icon,copy); gallery.appendChild(tile);
+      });
+      const footnote=document.createElement("p"); footnote.className="custom-dv-footnote";
+      footnote.textContent="Estimated % Daily Value uses FDA adult and children age 4+ reference values and modeled ingredient composition. It is not a personalized dose target. Final label values require production-batch assay and serving-size confirmation.";
+      showcase.append(head,gallery,footnote); parent.appendChild(showcase);
     }
     function normalizePositiveNutrientVector(rows) {
       const merged=new Map();
@@ -10555,6 +11221,7 @@
       metricStack.append(agePill);
       top.append(copy,metricStack); hero.appendChild(top);
       renderCustomIngredientShowcase(option,hero);
+      renderCustomDailyValueShowcase(option,hero);
       renderCustomFullNutrientVector(data,option,hero);
       const body=document.createElement("div"); body.className="custom-blend-body fingerprint-only";
       const vector=document.createElement("div"); vector.className="custom-blend-card vector-primary";
@@ -12602,14 +13269,20 @@
       "carrot":["66.667%","100%"],
       "turmeric":["100%","100%"]
     };
-    function ingredientAtlasPosition(value) {
-      const normalized=String(value || "")
+    function normalizedIngredientVisualName(value) {
+      return String(value || "")
         .toLowerCase()
         .replace(/\b(powder|juice|concentrate)\b/g," ")
         .replace(/[^a-z]+/g," ")
         .replace(/\s+/g," ")
         .trim();
+    }
+    function ingredientAtlasPosition(value) {
+      const normalized=normalizedIngredientVisualName(value);
       return ingredientAtlasPositions[normalized] || null;
+    }
+    function isLimeIngredient(value) {
+      return normalizedIngredientVisualName(value)==="lime";
     }
     function createIngredientReference(ingredient) {
       const itemName=String(ingredient?.item || "Ingredient");
@@ -12617,12 +13290,16 @@
       chip.className="home-ingredient-reference";
       chip.setAttribute("aria-label",itemName);
       const position=ingredientAtlasPosition(itemName);
-      if (position) {
+      if (position || isLimeIngredient(itemName)) {
         const thumbnail=document.createElement("i");
         thumbnail.className="home-ingredient-thumb";
         thumbnail.setAttribute("aria-hidden","true");
-        thumbnail.style.setProperty("--ingredient-x",position[0]);
-        thumbnail.style.setProperty("--ingredient-y",position[1]);
+        if (isLimeIngredient(itemName)) {
+          thumbnail.classList.add("lime-photo");
+        } else {
+          thumbnail.style.setProperty("--ingredient-x",position[0]);
+          thumbnail.style.setProperty("--ingredient-y",position[1]);
+        }
         chip.appendChild(thumbnail);
       }
       const copy=document.createElement("span");
