@@ -36,8 +36,8 @@
     }
     header { order:0; }
     #uploadHero { order:1; }
-    #fullStackExperience { order:2; }
-    #launchOffer { order:3; }
+    #dailyFoundation { order:2; }
+    #fullStackExperience { order:3; }
     #homeFunctionMenu { order:4; }
     #membershipSystem { order:5; }
     #vectorStory { order:6; margin-top:16px; }
@@ -7437,6 +7437,315 @@
         transform:none !important;
       }
     }
+
+    /* Daily Foundation launch path and intentional product-interest capture */
+    .daily-foundation-feature {
+      position:relative;
+      display:grid;
+      grid-template-columns:minmax(280px,.82fr) minmax(0,1.18fr);
+      gap:clamp(24px,4vw,58px);
+      align-items:center;
+      margin:12px 0 28px;
+      padding:clamp(24px,4vw,52px);
+      overflow:hidden;
+      border:1px solid rgba(122,8,45,.18);
+      border-radius:38px;
+      color:#fff9f2;
+      background:
+        radial-gradient(circle at 4% 92%,rgba(242,190,55,.18),transparent 24rem),
+        radial-gradient(circle at 100% 0,rgba(209,85,80,.24),transparent 27rem),
+        linear-gradient(135deg,#2a0b17,#5f102d 62%,#7a082d);
+      box-shadow:0 34px 86px rgba(70,15,36,.18);
+      isolation:isolate;
+    }
+    .daily-foundation-feature::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      z-index:-1;
+      opacity:.22;
+      background:
+        linear-gradient(90deg,rgba(255,255,255,.08) 1px,transparent 1px) 0 0 / 76px 76px,
+        linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px) 0 0 / 76px 76px;
+      mask-image:linear-gradient(90deg,black,transparent 74%);
+    }
+    .daily-foundation-visual {
+      position:relative;
+      min-height:430px;
+      border:1px solid rgba(255,255,255,.17);
+      border-radius:30px;
+      background:
+        radial-gradient(circle at 50% 50%,rgba(255,249,242,.17),transparent 17rem),
+        rgba(255,255,255,.055);
+    }
+    .daily-foundation-visual img {
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      padding:18px;
+      object-fit:contain;
+      filter:drop-shadow(0 30px 30px rgba(0,0,0,.28));
+    }
+    .daily-foundation-visual span {
+      position:absolute;
+      left:18px;
+      bottom:18px;
+      display:inline-flex;
+      padding:9px 12px;
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:999px;
+      color:#fff8ed;
+      background:rgba(36,8,18,.52);
+      backdrop-filter:blur(12px);
+      font-size:.62rem;
+      font-weight:950;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+    .daily-foundation-copy { position:relative; z-index:1; }
+    .daily-foundation-copy .eyebrow { color:#efcb91; }
+    .daily-foundation-copy h2 {
+      margin:10px 0 12px;
+      max-width:670px;
+      font-family:var(--display-font);
+      font-size:clamp(3rem,5.3vw,5.8rem);
+      font-weight:500;
+      line-height:.91;
+      letter-spacing:-.045em;
+    }
+    .daily-foundation-copy > p {
+      max-width:650px;
+      margin:0;
+      color:rgba(255,249,242,.76);
+      font-size:1rem;
+      line-height:1.62;
+    }
+    .daily-foundation-positioning {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:9px;
+      margin:22px 0;
+    }
+    .daily-foundation-positioning div {
+      display:grid;
+      gap:4px;
+      padding:12px 13px;
+      border:1px solid rgba(255,255,255,.13);
+      border-radius:17px;
+      background:rgba(255,255,255,.07);
+    }
+    .daily-foundation-positioning strong {
+      color:#fffdf8;
+      font-size:.8rem;
+      line-height:1.2;
+    }
+    .daily-foundation-positioning span {
+      color:rgba(255,249,242,.63);
+      font-size:.66rem;
+      line-height:1.35;
+    }
+    .daily-foundation-ingredients {
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin:0 0 22px;
+    }
+    .daily-foundation-ingredients span {
+      padding:7px 9px;
+      border-radius:999px;
+      color:#f8e4c3;
+      background:rgba(255,255,255,.09);
+      font-size:.65rem;
+      font-weight:850;
+    }
+    .daily-foundation-actions {
+      display:flex;
+      flex-wrap:wrap;
+      gap:11px;
+      align-items:center;
+    }
+    .daily-foundation-actions button {
+      min-height:52px;
+      justify-content:center;
+      color:#491020;
+      background:linear-gradient(135deg,#f7d9a0,#fff1cf);
+      box-shadow:0 18px 38px rgba(0,0,0,.18);
+    }
+    .daily-foundation-actions button.secondary {
+      color:#fffaf4;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.08);
+      box-shadow:none;
+    }
+    .daily-foundation-actions small {
+      flex-basis:100%;
+      color:rgba(255,249,242,.58);
+      font-size:.68rem;
+      line-height:1.45;
+    }
+    .results-commerce {
+      margin:18px 0;
+      padding:clamp(22px,4vw,44px);
+      border:1px solid rgba(122,8,45,.18);
+      border-radius:32px;
+      background:
+        radial-gradient(circle at 100% 0,rgba(213,165,66,.16),transparent 22rem),
+        linear-gradient(145deg,#fffdf8,#f5e9dd);
+      box-shadow:0 24px 70px rgba(86,42,50,.08);
+    }
+    .results-commerce-head {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:18px;
+      align-items:end;
+      margin-bottom:20px;
+    }
+    .results-commerce-head h3 {
+      margin:7px 0 6px;
+      font-family:var(--display-font);
+      font-size:clamp(2rem,4vw,4rem);
+      font-weight:500;
+      line-height:.96;
+      letter-spacing:-.045em;
+    }
+    .results-commerce-head p {
+      max-width:780px;
+      margin:0;
+      color:#71625e;
+      line-height:1.55;
+    }
+    .results-commerce-badge {
+      padding:10px 12px;
+      border:1px solid rgba(122,8,45,.16);
+      border-radius:999px;
+      color:#7a082d;
+      background:rgba(255,255,255,.66);
+      font-size:.66rem;
+      font-weight:950;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+    .results-commerce-grid {
+      display:grid;
+      grid-template-columns:minmax(0,1.35fr) minmax(260px,.65fr);
+      gap:12px;
+    }
+    .results-commerce-card {
+      display:grid;
+      gap:13px;
+      align-content:start;
+      padding:22px;
+      border:1px solid rgba(122,8,45,.14);
+      border-radius:24px;
+      background:rgba(255,255,255,.68);
+    }
+    .results-commerce-card.primary {
+      grid-template-columns:minmax(0,1fr) minmax(170px,.42fr);
+      color:#fff9f2;
+      background:
+        radial-gradient(circle at 100% 0,rgba(242,190,55,.19),transparent 17rem),
+        linear-gradient(135deg,#38101f,#761334);
+    }
+    .results-commerce-card h4 {
+      margin:4px 0 6px;
+      font-family:var(--display-font);
+      font-size:1.85rem;
+      font-weight:500;
+      line-height:1;
+    }
+    .results-commerce-card p {
+      margin:0;
+      color:#71625e;
+      font-size:.82rem;
+      line-height:1.52;
+    }
+    .results-commerce-card.primary p { color:rgba(255,249,242,.72); }
+    .results-commerce-card small {
+      color:#9a724f;
+      font-size:.62rem;
+      font-weight:950;
+      letter-spacing:.11em;
+      text-transform:uppercase;
+    }
+    .results-commerce-card.primary small { color:#efcb91; }
+    .results-commerce-card button {
+      width:100%;
+      justify-content:center;
+      margin-top:auto;
+      color:#fffdf8;
+      background:linear-gradient(135deg,#8f1637,#d24c43);
+    }
+    .results-commerce-card.primary button {
+      color:#491020;
+      background:linear-gradient(135deg,#f4d69e,#fff0cf);
+    }
+    .results-commerce-product {
+      display:grid;
+      place-items:center;
+      min-height:210px;
+      border:1px solid rgba(255,255,255,.13);
+      border-radius:20px;
+      background:rgba(255,255,255,.06);
+    }
+    .results-commerce-product img {
+      width:100%;
+      height:210px;
+      object-fit:contain;
+      filter:drop-shadow(0 22px 22px rgba(0,0,0,.25));
+    }
+    .results-commerce-meta {
+      display:flex;
+      flex-wrap:wrap;
+      gap:7px;
+      margin-top:12px;
+    }
+    .results-commerce-meta span {
+      padding:6px 8px;
+      border-radius:999px;
+      color:#ffe9c4;
+      background:rgba(255,255,255,.09);
+      font-size:.62rem;
+      font-weight:800;
+    }
+    .standard-fit-interest-button {
+      grid-column:2 / 4;
+      width:100%;
+      min-height:40px;
+      margin-top:2px;
+      justify-content:center;
+      color:#fffdf8;
+      background:linear-gradient(135deg,#8f1637,#c63d43);
+      box-shadow:none;
+    }
+    .interest-privacy-note {
+      margin-top:2px !important;
+      color:#867972 !important;
+      font-size:.68rem !important;
+      line-height:1.45 !important;
+    }
+    .waitlist-modal-panel[data-intent="daily_foundation_reservation"] .waitlist-submit {
+      background:linear-gradient(135deg,#7a082d,#c63d43);
+    }
+    @media (max-width:900px) {
+      .daily-foundation-feature { grid-template-columns:1fr; }
+      .daily-foundation-visual { min-height:360px; }
+      .results-commerce-head,.results-commerce-grid { grid-template-columns:1fr; }
+    }
+    @media (max-width:620px) {
+      .daily-foundation-feature { padding:20px; border-radius:28px; }
+      .daily-foundation-visual { min-height:300px; }
+      .daily-foundation-copy h2 { font-size:3rem; }
+      .daily-foundation-positioning { grid-template-columns:1fr; }
+      .daily-foundation-actions { display:grid; }
+      .daily-foundation-actions button { width:100%; }
+      .results-commerce { padding:18px; border-radius:26px; }
+      .results-commerce-card.primary { grid-template-columns:1fr; }
+      .results-commerce-product { min-height:170px; }
+      .results-commerce-product img { height:170px; }
+      .results-commerce-badge { justify-self:start; }
+      .standard-fit-interest-button { grid-column:1 / -1; }
+    }
   </style>
 </head>
 <body>
@@ -7448,7 +7757,7 @@
       <div class="header-actions">
         <nav class="mode-switch" aria-label="Recommendation mode">
           <button type="button" class="mode-button active" data-app-mode="personalized">My Blend</button>
-          <button type="button" class="mode-button" data-app-mode="standard">Standard Blend</button>
+          <button type="button" class="mode-button" data-app-mode="standard">Explore Blends</button>
         </nav>
         <div class="app-pill">Daily drink mix</div>
         <div class="privacy">● Encrypted analysis</div>
@@ -7462,7 +7771,7 @@
         <p class="lead">Start with a Fluids at-home blood test or upload recent labs. Fluids turns your biomarkers into a personalized nutrition blueprint, formulates a whole-food powder blend, and uses repeat testing to refine what comes next.</p>
         <div class="consumer-hero-actions">
           <button type="button" data-quick-mode="upload">Build my nutrition blueprint</button>
-          <a class="platform-hero-link" href="#fullStackExperience">See the full platform</a>
+          <a class="platform-hero-link" href="#dailyFoundation">Start with Daily Foundation</a>
         </div>
         <div class="consumer-proof-row" aria-label="Product promises">
           <span>FLUIDS-branded at-home collection</span>
@@ -7479,6 +7788,30 @@
             <p>A branded entry point into the closed-loop nutrition platform.</p>
           </figcaption>
         </figure>
+      </div>
+    </section>
+    <section class="daily-foundation-feature" id="dailyFoundation" aria-labelledby="dailyFoundationTitle">
+      <div class="daily-foundation-visual">
+        <img src="/assets/fluids/daily_foundation_stick_glass_v2.png" alt="Fluids Daily Foundation stick pack beside a prepared drink">
+        <span>Broad-fit daily whole-food nutrition</span>
+      </div>
+      <div class="daily-foundation-copy">
+        <div class="eyebrow">The easiest way to start</div>
+        <h2 id="dailyFoundationTitle">Meet Daily Foundation.</h2>
+        <p>A bright carrot-citrus whole-food blend designed as the broad-fit starting point for Fluids. It gives people a simple daily product now, while the personalized engine remains available for anyone ready to upload bloodwork.</p>
+        <div class="daily-foundation-positioning" aria-label="Daily Foundation product details">
+          <div><strong>30 daily sticks</strong><span>One simple mix-with-water routine.</span></div>
+          <div><strong>Planned at $89</strong><span>Launch pricing, not charged today.</span></div>
+          <div><strong>84.5% strong target fit</strong><span>Locked 1,000-profile development benchmark.</span></div>
+        </div>
+        <div class="daily-foundation-ingredients" aria-label="Daily Foundation ingredients">
+          <span>Carrot</span><span>Lemon</span><span>Beet</span><span>Mango</span><span>Ginger</span><span>Turmeric</span>
+        </div>
+        <div class="daily-foundation-actions">
+          <button type="button" data-open-waitlist data-interest-type="daily_foundation_reservation" data-interest-source="homepage_daily_foundation" data-blend-id="daily_foundation" data-blend-name="Daily Foundation">Reserve my first box</button>
+          <button type="button" class="secondary" data-quick-mode="upload">Personalize from my labs</button>
+          <small>A reservation records interest only. No payment is collected today, and launch timing will be confirmed before any order is placed. Fit is predictive formulation-development evidence, not clinical efficacy.</small>
+        </div>
       </div>
     </section>
     <section class="full-stack-experience" id="fullStackExperience" aria-label="FLUIDS full-stack platform">
@@ -7562,14 +7895,6 @@
         <div class="founder-console-table-wrap"><table class="founder-kpi-table"><thead><tr><th>Outcome</th><th>Domain</th><th>Mean R²</th><th>Worst cycle</th><th>Δ vs ridge</th><th>Cycles</th><th>Internal reading</th></tr></thead><tbody id="founderProductionRows"><tr><td colspan="7">Loading production KPIs.</td></tr></tbody></table></div>
         <p class="founder-console-boundary" id="founderProductionBoundary">Held-out predictive engineering evidence only—not proof of causation, clinical efficacy, diagnostic accuracy, or guaranteed biological response.</p>
       </div>
-    </section>
-    <section class="launch-offer-strip" id="launchOffer" aria-label="Upload recent labs">
-      <div>
-        <div class="eyebrow">Already have recent bloodwork?</div>
-        <h2>Skip collection and start with the labs you already have.</h2>
-        <p>Upload a blood-test PDF or clear report photos to preview the same personalized blueprint and whole-food formulation experience today.</p>
-      </div>
-      <button type="button" class="launch-offer-button" data-quick-mode="upload">Upload recent labs</button>
     </section>
     <section class="home-function-menu platform-product-layer" id="homeFunctionMenu" aria-label="FLUIDS product system">
       <div class="home-function-head">
@@ -7737,7 +8062,7 @@
       <div>
         <div class="eyebrow">Have labs ready?</div>
         <h2>Start the intelligence experience today.</h2>
-        <p>Upload your bloodwork, review the extracted markers, answer a short context questionnaire, then see the nutrition blueprint and whole-food powder formula designed around you.</p>
+        <p>Upload your bloodwork, review the extracted markers, add the personal context the model needs, then see the nutrition blueprint and whole-food powder formula designed around you.</p>
       </div>
       <button type="button" data-quick-mode="upload">Upload recent bloodwork</button>
     </section>
@@ -7920,6 +8245,7 @@
         <button type="button" class="jump-button active" data-scroll-target="resultsAgeHero">Age outlook</button>
         <button type="button" class="jump-button" data-scroll-target="biomarkerDashboard">Blood markers</button>
         <button type="button" class="jump-button" data-scroll-target="customBlendHero">Your blend</button>
+        <button type="button" class="jump-button" data-scroll-target="resultsCommerce">Get started</button>
         <button type="button" class="jump-button" data-scroll-target="personalizedOfferComparison">Formula paths</button>
         <button type="button" class="jump-button" data-scroll-target="standardFitDashboard">Membership fit</button>
         <button type="button" class="jump-button" data-scroll-target="personalizationProofPanel">Why personalized</button>
@@ -7981,6 +8307,36 @@
         <p class="biomarker-disclaimer" id="biomarkerDisclaimer"></p>
       </section>
       <div class="custom-blend-hero section-anchor" id="customBlendHero"></div>
+      <section class="results-commerce section-anchor" id="resultsCommerce" aria-labelledby="resultsCommerceTitle">
+        <header class="results-commerce-head">
+          <div>
+            <div class="eyebrow">Choose your next step</div>
+            <h3 id="resultsCommerceTitle">Start broad today. Stay in line for precision.</h3>
+            <p>Daily Foundation is the first Fluids product moving toward launch. Reserve it as your simple starting point, or join the waitlist for the exact personalized formula generated from this analysis.</p>
+          </div>
+          <div class="results-commerce-badge">No payment today</div>
+        </header>
+        <div class="results-commerce-grid">
+          <article class="results-commerce-card primary">
+            <div>
+              <small>Recommended launch path</small>
+              <h4>Daily Foundation</h4>
+              <p>A carrot-lemon whole-food baseline with beet, mango, ginger, and turmeric. It is the fastest path into the Fluids daily ritual while custom manufacturing develops.</p>
+              <div class="results-commerce-meta"><span>30 sticks</span><span>Planned at $89</span><span>Carrot-citrus</span></div>
+              <button type="button" data-open-waitlist data-interest-type="daily_foundation_reservation" data-interest-source="results_daily_foundation" data-blend-id="daily_foundation" data-blend-name="Daily Foundation">Reserve Daily Foundation</button>
+            </div>
+            <div class="results-commerce-product"><img src="/assets/fluids/daily_foundation_stick_glass_v2.png" alt="Fluids Daily Foundation stick pack and prepared drink"></div>
+          </article>
+          <article class="results-commerce-card">
+            <div>
+              <small>Your highest-personalization path</small>
+              <h4 id="resultsCustomWaitlistName">Your custom formula</h4>
+              <p id="resultsCustomWaitlistCopy">Save your place for the exact blend built from this analysis. We will contact you when custom production opens.</p>
+            </div>
+            <button type="button" id="resultsCustomWaitlistCta" data-open-waitlist data-interest-type="custom_blend_waitlist" data-interest-source="results_custom_blend" data-blend-id="custom" data-blend-name="Custom blend">Join my custom blend waitlist</button>
+          </article>
+        </div>
+      </section>
       <section class="personalized-offer-comparison section-anchor" id="personalizedOfferComparison" hidden>
         <header class="offer-comparison-head">
           <div>
@@ -8278,6 +8634,28 @@
       </div>
     </section>
 
+    <div class="waitlist-modal" id="waitlistModal" hidden>
+      <div class="waitlist-modal-backdrop" data-close-waitlist></div>
+      <section class="waitlist-modal-panel" role="dialog" aria-modal="true" aria-labelledby="waitlistModalTitle" aria-describedby="waitlistModalDescription">
+        <button type="button" class="waitlist-modal-close" data-close-waitlist>Close</button>
+        <div class="waitlist-modal-kicker">Fluids early access</div>
+        <h3 id="waitlistModalTitle">Reserve Daily Foundation.</h3>
+        <p id="waitlistModalDescription">Leave your email and we will contact you before launch. No payment is collected today.</p>
+        <div class="waitlist-selected"><span id="waitlistBlendName">Daily Foundation</span><span id="waitlistIntentLabel">Reservation</span></div>
+        <form class="waitlist-form" id="waitlistForm">
+          <input id="waitlistBlendId" type="hidden" value="daily_foundation">
+          <input id="waitlistInterestType" type="hidden" value="daily_foundation_reservation">
+          <input id="waitlistInterestSource" type="hidden" value="website_interest">
+          <div class="waitlist-field"><label for="waitlistName">Name <span style="font-weight:500">(optional)</span></label><input id="waitlistName" name="name" autocomplete="name" maxlength="120"></div>
+          <div class="waitlist-field"><label for="waitlistEmail">Email</label><input id="waitlistEmail" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"></div>
+          <button type="submit" class="waitlist-submit">Reserve my first box</button>
+          <div class="waitlist-status" id="waitlistStatus" aria-live="polite"></div>
+          <a class="waitlist-mail-link" id="waitlistMailLink" href="mailto:jakepittman2@gmail.com">Send the request by email instead</a>
+          <p class="interest-privacy-note">No survey and no payment. By submitting, you agree to receive Fluids launch updates. You can unsubscribe at any time.</p>
+        </form>
+      </section>
+    </div>
+
     <div class="founder-modal" id="founderModal" hidden>
       <section class="founder-dialog" role="dialog" aria-modal="true" aria-labelledby="founderDialogTitle">
         <div class="founder-dialog-head">
@@ -8329,7 +8707,6 @@
     let homeFunctionMenuLanes = [];
     let lastHomeVectorModalTrigger = null;
     let lastWaitlistModalTrigger = null;
-    const launchDiscountCode = "FLUIDS100";
     const publicWaitlistEndpoint = "https://formsubmit.co/ajax/jakepittman2@gmail.com";
     const productionApiHost = ["tryfluids.com","www.tryfluids.com"].includes(window.location.hostname);
     const liveApiBase = "https://api.tryfluids.com";
@@ -9173,8 +9550,8 @@
         const index = {upload:0,review:1,questionnaire:2,results:3,standard:4,discovery:5}[name];
         viewIds.forEach((id,itemIndex) => document.getElementById(id).classList.toggle("active", itemIndex === index));
         document.getElementById("uploadHero").style.display = name === "upload" ? "grid" : "none";
-        const launchOffer=document.getElementById("launchOffer");
-        if (launchOffer) launchOffer.style.display = name === "upload" ? "grid" : "none";
+        const dailyFoundation=document.getElementById("dailyFoundation");
+        if (dailyFoundation) dailyFoundation.style.display = name === "upload" ? "grid" : "none";
         const fullStackExperience=document.getElementById("fullStackExperience");
         if (fullStackExperience) fullStackExperience.style.display = name === "upload" ? "block" : "none";
         const membershipSystem=document.getElementById("membershipSystem");
@@ -10584,9 +10961,38 @@
         const value=document.createElement("strong"); value.textContent=`${Math.round(Number(item.profile_fit_percent || 0))}`;
         const label=document.createElement("span"); label.textContent=item.fit_label || "Profile fit";
         score.append(value,label);
-        card.append(rank,main,score);
+        const interest=document.createElement("button");
+        interest.type="button";
+        interest.className="standard-fit-interest-button";
+        interest.textContent="Join early access";
+        interest.dataset.openWaitlist="";
+        interest.dataset.interestType="standard_blend_early_access";
+        interest.dataset.interestSource="results_standard_fit";
+        interest.dataset.blendId=String(item.id || item.name || "standard");
+        interest.dataset.blendName=String(item.name || item.id || "Standard blend");
+        card.append(rank,main,score,interest);
         grid.appendChild(card);
       });
+    }
+    function renderResultsCommerce(data,option) {
+      const panel=document.getElementById("resultsCommerce");
+      const customName=document.getElementById("resultsCustomWaitlistName");
+      const customCopy=document.getElementById("resultsCustomWaitlistCopy");
+      const customCta=document.getElementById("resultsCustomWaitlistCta");
+      if (!panel || !customCta) return;
+      const name=customFunctionName(option) || "Your custom formula";
+      if (customName) customName.textContent=name;
+      if (customCopy) {
+        customCopy.textContent=option
+          ? "Save your place for the exact blend built from this analysis. We will contact you when custom production opens."
+          : "Custom production is not open yet. Join the list and we will contact you when personalized formulation becomes available.";
+      }
+      customCta.dataset.blendName=name;
+      customCta.dataset.blendId="custom";
+      trackEvent("product_path_offers_viewed",customBlendAnalyticsMetadata(data || {},option || {},{
+        daily_foundation_available:true,
+        custom_waitlist_available:true
+      }));
     }
     function renderResults(data) {
       const age = data.biological_age || {ok:false};
@@ -10642,6 +11048,7 @@
       renderResultsAgeHero(data,blendOptions[0] || null);
       renderBiomarkerDashboard(data.biomarker_report || {});
       renderCustomBlendHero(blendOptions[0] || null,data);
+      renderResultsCommerce(data,blendOptions[0] || null);
       renderPersonalizedOfferComparison(blendOptions.slice(0,4));
       renderStandardFitDashboard(data.standard_blend_profile_scores || []);
       renderPersonalizationProof(data,blendOptions[0] || null);
@@ -13388,93 +13795,95 @@
       modal.style.setProperty("--lane-b",palette[1]);
       modal.style.setProperty("--lane-c",palette[2]);
       const blendId=lane?.id || "custom";
-      const blendName=blendId === "custom" ? "Custom blend profile" : standardDisplayName(lane);
+      const blendName=blendId === "custom"
+        ? String(lane?.function_name || lane?.name || "Custom blend profile")
+        : standardDisplayName(lane);
+      const interestType=String(trigger?.dataset.interestType || (blendId === "custom" ? "custom_blend_waitlist" : "standard_blend_early_access"));
+      const interestSource=String(trigger?.dataset.interestSource || "website_product_interest");
       const blendNameEl=document.getElementById("waitlistBlendName");
       const blendIdEl=document.getElementById("waitlistBlendId");
-      const codeEl=document.getElementById("waitlistDiscountCode");
+      const interestTypeEl=document.getElementById("waitlistInterestType");
+      const interestSourceEl=document.getElementById("waitlistInterestSource");
+      const intentLabel=document.getElementById("waitlistIntentLabel");
       const title=document.getElementById("waitlistModalTitle");
       const description=document.getElementById("waitlistModalDescription");
       const status=document.getElementById("waitlistStatus");
       const mailLink=document.getElementById("waitlistMailLink");
-      const isCustom=blendId === "custom";
-      if (title) title.textContent=isCustom ? "Get your free custom blend profile." : `Join ${blendName}.`;
-      if (description) {
-        description.textContent=isCustom
-          ? `Drop your email and we will save ${launchDiscountCode} for a free bloodwork-based analysis and custom blend profile.`
-          : `Drop your email to join the early list for ${blendName}. ${launchDiscountCode} stays attached for your free custom profile.`;
-      }
+      const submit=document.querySelector("#waitlistForm .waitlist-submit");
+      const isDailyFoundation=interestType === "daily_foundation_reservation";
+      const isCustom=interestType === "custom_blend_waitlist" || blendId === "custom";
+      if (title) title.textContent=isDailyFoundation
+        ? "Reserve your first box of Daily Foundation."
+        : isCustom
+          ? "Save your place for this custom blend."
+          : `Join early access for ${blendName}.`;
+      if (description) description.textContent=isDailyFoundation
+        ? "Leave your email and we will contact you before launch. The planned first box includes 30 sticks at $89, and no payment is collected today."
+        : isCustom
+          ? "Leave your email to keep this personalized formula on your radar. We will contact you when custom production opens."
+          : `Leave your email and we will contact you when ${blendName} becomes available.`;
       if (blendNameEl) blendNameEl.textContent=blendName;
       if (blendIdEl) blendIdEl.value=blendId;
-      if (codeEl) codeEl.value=launchDiscountCode;
+      if (interestTypeEl) interestTypeEl.value=interestType;
+      if (interestSourceEl) interestSourceEl.value=interestSource;
+      if (intentLabel) intentLabel.textContent=isDailyFoundation ? "Reservation" : "Early access";
+      if (submit) {
+        submit.disabled=false;
+        submit.textContent=isDailyFoundation ? "Reserve my first box" : isCustom ? "Join my custom blend waitlist" : "Join early access";
+      }
       if (status) status.textContent="";
       if (mailLink) {
         mailLink.href="mailto:jakepittman2@gmail.com";
         mailLink.classList.remove("active");
       }
+      modal.dataset.intent=interestType;
       modal.hidden=false;
       document.body.classList.add("waitlist-modal-open");
+      trackEvent("product_interest_opened",{
+        blend_id:blendId,
+        blend_name:blendName,
+        interest_type:interestType,
+        interest_source:interestSource
+      });
       trackEvent("waitlist_modal_opened",{
         blend_id:blendId,
         blend_name:blendName,
-        modal_source:trigger ? "user_cta" : "auto_launch",
+        modal_source:"user_cta",
+        interest_type:interestType,
+        interest_source:interestSource,
         is_custom:isCustom
       });
       setTimeout(()=>document.getElementById("waitlistEmail")?.focus({preventScroll:true}),60);
-    }
-    function maybeOpenLaunchCodeModal() {
-      try {
-        if (sessionStorage.getItem("fluidsLaunchCodeModalSeen") === "1") return;
-        sessionStorage.setItem("fluidsLaunchCodeModalSeen","1");
-      } catch (error) {
-        console.warn("Launch modal session tracking skipped",error);
-      }
-      window.setTimeout(()=>{
-        const waitlist=document.getElementById("waitlistModal");
-        const vector=document.getElementById("homeVectorModal");
-        if (!waitlist || !waitlist.hidden || (vector && !vector.hidden)) return;
-        openWaitlistModal({
-          id:"custom",
-          function_name:"Free custom blend profile"
-        },0,null);
-      },900);
     }
     function closeWaitlistModal() {
       const modal=document.getElementById("waitlistModal");
       if (!modal || modal.hidden) return;
       const blendId=String(document.getElementById("waitlistBlendId")?.value || "custom");
       const blendName=String(document.getElementById("waitlistBlendName")?.textContent || "Custom blend profile");
+      const interestType=String(document.getElementById("waitlistInterestType")?.value || "product_interest");
       const emailStarted=Boolean(String(document.getElementById("waitlistEmail")?.value || "").trim());
       modal.hidden=true;
       document.body.classList.remove("waitlist-modal-open");
       trackEvent("waitlist_modal_closed",{
         blend_id:blendId,
         blend_name:blendName,
+        interest_type:interestType,
         email_started:emailStarted
       });
       lastWaitlistModalTrigger?.focus?.({preventScroll:true});
       lastWaitlistModalTrigger=null;
     }
-    function saveWaitlistLeadLocally(lead) {
-      try {
-        const key="fluidsWaitlistLeads";
-        const leads=JSON.parse(localStorage.getItem(key) || "[]");
-        leads.push(lead);
-        localStorage.setItem(key,JSON.stringify(leads.slice(-250)));
-      } catch (error) {
-        console.warn("Local waitlist save skipped",error);
-      }
-    }
     function waitlistMailHref(lead) {
-      const subject=`Fluids waitlist: ${lead.blend_name}`;
+      const subject=`Fluids product interest: ${lead.blend_name}`;
       const body=[
-        "I want to join the Fluids early list.",
+        "I want to register my interest with Fluids.",
         "",
         `Blend: ${lead.blend_name}`,
-        `Code: ${lead.discount_code}`,
+        `Interest: ${lead.source}`,
         `Email: ${lead.email}`,
         lead.name ? `Name: ${lead.name}` : "",
         "",
-        "Please keep me posted when this blend and the custom profile open."
+        "Please keep me posted when this product becomes available."
       ].filter(Boolean).join("\n");
       return `mailto:jakepittman2@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }
@@ -13488,33 +13897,41 @@
       const name=String(document.getElementById("waitlistName")?.value || "").trim();
       const blendId=String(document.getElementById("waitlistBlendId")?.value || "custom").trim();
       const blendName=String(document.getElementById("waitlistBlendName")?.textContent || "Custom blend profile").trim();
+      const interestType=String(document.getElementById("waitlistInterestType")?.value || "product_interest").trim();
+      const interestSource=String(document.getElementById("waitlistInterestSource")?.value || "website_product_interest").trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        trackEvent("waitlist_invalid_email",{blend_id:blendId,blend_name:blendName});
-        if (status) status.textContent="Drop in a valid email and we will hold your code.";
+        trackEvent("waitlist_invalid_email",{blend_id:blendId,blend_name:blendName,interest_type:interestType});
+        if (status) status.textContent="Enter a valid email so we can save your place.";
         return;
       }
       const lead={
         lead_id:`lead_${Date.now()}_${Math.random().toString(36).slice(2,8)}`,
         created_at:new Date().toISOString(),
-        source:"website_waitlist",
+        source:`${interestType}:${interestSource}`,
         analytics_session_id:analyticsSessionId,
         blend_id:blendId,
         blend_name:blendName,
-        discount_code:launchDiscountCode,
+        discount_code:"NONE",
         email,
         name,
-        _subject:"New Fluids waitlist lead",
+        _subject:`New Fluids product interest: ${blendName}`,
         _template:"table",
         _captcha:"false",
         _replyto:email,
-        message:`New waitlist request for ${blendName} with ${launchDiscountCode}.`
+        message:`New ${interestType.replaceAll("_"," ")} request for ${blendName}.`
       };
+      trackEvent("product_interest_submitted",{
+        blend_id:blendId,
+        blend_name:blendName,
+        interest_type:interestType,
+        interest_source:interestSource
+      });
       trackEvent("waitlist_submitted",{
         blend_id:blendId,
         blend_name:blendName,
-        discount_code:launchDiscountCode
+        interest_type:interestType,
+        interest_source:interestSource
       });
-      saveWaitlistLeadLocally(lead);
       if (submit) {
         submit.disabled=true;
         submit.textContent="Saving...";
@@ -13553,35 +13970,58 @@
           trackEvent("waitlist_fallback_saved",{
             blend_id:blendId,
             blend_name:blendName,
+            interest_type:interestType,
             remote_saved:remoteSaved
           });
         } catch (error) {
-          trackEvent("waitlist_fallback_failed",{blend_id:blendId,blend_name:blendName});
+          trackEvent("waitlist_fallback_failed",{blend_id:blendId,blend_name:blendName,interest_type:interestType});
         }
       }
+      trackEvent("product_interest_saved",{
+        blend_id:blendId,
+        blend_name:blendName,
+        interest_type:interestType,
+        interest_source:interestSource,
+        remote_saved:remoteSaved
+      });
       trackEvent("waitlist_saved",{
         blend_id:blendId,
         blend_name:blendName,
+        interest_type:interestType,
         remote_saved:remoteSaved
       });
       if (remoteSaved) {
-        if (status) status.textContent=`You are on the early list. ${launchDiscountCode} is saved for your free custom profile.`;
+        if (status) status.textContent=interestType === "daily_foundation_reservation"
+          ? "Your reservation is saved. We will contact you before launch and before any payment."
+          : "You are on the early-access list. We will keep you posted.";
         if (mailLink) mailLink.classList.remove("active");
       } else {
-        trackEvent("waitlist_save_failed",{blend_id:blendId,blend_name:blendName});
+        trackEvent("waitlist_save_failed",{blend_id:blendId,blend_name:blendName,interest_type:interestType});
         const href=waitlistMailHref(lead);
         if (mailLink) {
           mailLink.href=href;
           mailLink.classList.add("active");
         }
-        if (status) status.textContent="Your email app is opening. Send that note to lock in the code.";
+        if (status) status.textContent="We could not save this automatically. Send the prepared email to save your place.";
         window.location.href=href;
       }
       if (submit) {
-        submit.disabled=false;
-        submit.textContent="Join waitlist";
+        submit.disabled=remoteSaved;
+        submit.textContent=remoteSaved
+          ? interestType === "daily_foundation_reservation" ? "Reservation saved" : "Early access saved"
+          : "Try saving again";
       }
     }
+    document.addEventListener("click",event=>{
+      const trigger=event.target.closest?.("[data-open-waitlist]");
+      if (!trigger) return;
+      event.preventDefault();
+      openWaitlistModalFromTrigger(trigger);
+    });
+    document.querySelectorAll("[data-close-waitlist]").forEach(item=>{
+      item.addEventListener("click",closeWaitlistModal);
+    });
+    document.getElementById("waitlistForm")?.addEventListener("submit",submitWaitlistLead);
     function renderHomeFunctionMenu(lanes) {
       const grid=document.getElementById("homeFunctionGrid");
       if (!grid) return;
@@ -13689,7 +14129,16 @@
           });
           openHomeVectorModal(lane,index,button);
         });
-        actions.append(button);
+        const interest=document.createElement("button");
+        interest.type="button";
+        interest.textContent="Join early access";
+        interest.className="home-function-waitlist-button";
+        interest.dataset.openWaitlist="";
+        interest.dataset.interestType="standard_blend_early_access";
+        interest.dataset.interestSource="homepage_standard_blend";
+        interest.dataset.blendId=String(lane.id || `standard-${index+1}`);
+        interest.dataset.blendName=standardDisplayName(lane);
+        actions.append(interest,button);
         card.append(title,kicker,purpose);
         if (modelMetrics.childNodes.length) card.appendChild(modelMetrics);
         card.append(visual,nutrients,ingredients,actions);
@@ -13736,6 +14185,7 @@
     document.addEventListener("keydown",event=>{
       if (event.key === "Escape") {
         closeHomeVectorModal();
+        closeWaitlistModal();
       }
     });
     async function loadV7Discovery() {
