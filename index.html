@@ -7206,6 +7206,98 @@
       font:700 34px/1 Didot,Georgia,serif;
     }
     .membership-card.featured strong.pack-count { color:#ffc370; }
+    .membership-card-media {
+      display:grid;
+      place-items:center;
+      min-height:210px;
+      margin:-8px -8px 18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:20px;
+      background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.2),transparent 62%);
+    }
+    .membership-card-media img {
+      width:100%;
+      height:210px;
+      object-fit:contain;
+      filter:drop-shadow(0 22px 26px rgba(0,0,0,.24));
+    }
+    .membership-card-actions {
+      display:grid;
+      gap:9px;
+      margin-top:20px;
+    }
+    .membership-card-actions button {
+      width:100%;
+      min-height:48px;
+      justify-content:center;
+    }
+    .membership-card-actions .secondary {
+      color:#7a082d;
+      border:1px solid rgba(122,8,45,.2);
+      background:rgba(255,255,255,.7);
+      box-shadow:none;
+    }
+    .membership-card.featured .membership-card-actions button {
+      color:#491020;
+      background:linear-gradient(135deg,#f7d9a0,#fff1cf);
+    }
+    .membership-card-note {
+      display:block;
+      margin-top:10px;
+      color:#8c7d76;
+      font-size:.67rem;
+      line-height:1.4;
+    }
+    .membership-card.featured .membership-card-note { color:rgba(248,243,234,.58); }
+    .hero-start-card {
+      display:grid;
+      gap:16px;
+      padding:clamp(24px,3.4vw,38px);
+      border:1px solid rgba(122,8,45,.16);
+      border-radius:30px;
+      background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(248,237,225,.88));
+      box-shadow:0 24px 64px rgba(72,31,43,.11);
+    }
+    .hero-start-card > strong {
+      font-family:var(--display-font);
+      font-size:clamp(2rem,3.4vw,3.5rem);
+      font-weight:500;
+      line-height:.95;
+      letter-spacing:-.04em;
+    }
+    .hero-start-options { display:grid; gap:9px; }
+    .hero-start-option {
+      display:grid;
+      grid-template-columns:auto minmax(0,1fr);
+      gap:12px;
+      align-items:start;
+      padding:13px 14px;
+      border:1px solid rgba(122,8,45,.12);
+      border-radius:17px;
+      color:inherit;
+      background:rgba(255,255,255,.66);
+      text-decoration:none;
+    }
+    .hero-start-option b {
+      display:grid;
+      width:30px;
+      height:30px;
+      place-items:center;
+      border-radius:10px;
+      color:#fff;
+      background:#7a082d;
+      font-size:.7rem;
+    }
+    .hero-start-option strong { display:block; font-size:.85rem; }
+    .hero-start-option span { display:block; margin-top:3px; color:#786a64; font-size:.69rem; line-height:1.35; }
+    .upload-start-actions { display:flex; flex-wrap:wrap; gap:9px; justify-content:flex-end; }
+    .upload-start-actions .secondary {
+      color:#7a082d;
+      border:1px solid rgba(122,8,45,.2);
+      background:rgba(255,255,255,.75);
+      box-shadow:none;
+    }
     .home-function-menu.platform-product-layer { margin-top:30px; }
     .platform-product-layer .home-function-head h2 { max-width:760px; }
     .platform-product-layer .home-function-code-note span { background:#10293a;color:#fff; }
@@ -7545,6 +7637,17 @@
       font-size:.66rem;
       line-height:1.35;
     }
+    .daily-foundation-why {
+      margin:0 0 20px;
+      padding:15px 16px;
+      border-left:3px solid #efcb91;
+      border-radius:0 16px 16px 0;
+      color:rgba(255,249,242,.72);
+      background:rgba(255,255,255,.06);
+      font-size:.78rem;
+      line-height:1.55;
+    }
+    .daily-foundation-why strong { color:#fffdf8; }
     .daily-foundation-ingredients {
       display:flex;
       flex-wrap:wrap;
@@ -7727,6 +7830,10 @@
     .waitlist-modal-panel[data-intent="daily_foundation_reservation"] .waitlist-submit {
       background:linear-gradient(135deg,#7a082d,#c63d43);
     }
+    .waitlist-modal-panel[data-intent="foundation_membership_reservation"] .waitlist-submit {
+      color:#491020;
+      background:linear-gradient(135deg,#f2c87d,#fff0cf);
+    }
     @media (max-width:900px) {
       .daily-foundation-feature { grid-template-columns:1fr; }
       .daily-foundation-visual { min-height:360px; }
@@ -7739,6 +7846,10 @@
       .daily-foundation-positioning { grid-template-columns:1fr; }
       .daily-foundation-actions { display:grid; }
       .daily-foundation-actions button { width:100%; }
+      .consumer-hero-actions { display:grid; }
+      .consumer-hero-actions button,.consumer-hero-actions a { width:100%; justify-content:center; }
+      .upload-start-actions { width:100%; display:grid; }
+      .upload-start-actions button { width:100%; }
       .results-commerce { padding:18px; border-radius:26px; }
       .results-commerce-card.primary { grid-template-columns:1fr; }
       .results-commerce-product { min-height:170px; }
@@ -7768,26 +7879,28 @@
       <div>
         <div class="eyebrow">Closed-loop personalized nutrition</div>
           <h1>Your bloodwork, translated into a daily nutrition system.</h1>
-        <p class="lead">Start with a Fluids at-home blood test or upload recent labs. Fluids turns your biomarkers into a personalized nutrition blueprint, formulates a whole-food powder blend, and uses repeat testing to refine what comes next.</p>
+        <p class="lead">Upload recent labs or enter your values manually. Fluids turns the biomarkers you confirm into a personalized nutrition blueprint and a practical whole-food powder blend.</p>
         <div class="consumer-hero-actions">
-          <button type="button" data-quick-mode="upload">Build my nutrition blueprint</button>
+          <button type="button" data-quick-mode="upload">Upload labs</button>
+          <button type="button" class="secondary" data-manual-labs data-manual-source="hero">Enter manually</button>
           <a class="platform-hero-link" href="#dailyFoundation">Start with Daily Foundation</a>
         </div>
         <div class="consumer-proof-row" aria-label="Product promises">
-          <span>FLUIDS-branded at-home collection</span>
-          <span>30-nutrient model</span>
-          <span>whole-food powder delivery</span>
+          <span>Use the labs you already have</span>
+          <span>Enter values without a PDF</span>
+          <span>Get a whole-food powder recommendation</span>
         </div>
       </div>
       <div class="hero-side landing-brief">
-        <figure class="hero-collection-visual">
-          <img src="/assets/fluids/fluids-at-home-collection-device-cream.png" alt="FLUIDS-branded at-home blood collection device">
-          <figcaption>
-            <span>One vertically integrated FLUIDS experience</span>
-            <strong>Collect → personalize → deliver → retest</strong>
-            <p>A branded entry point into the closed-loop nutrition platform.</p>
-          </figcaption>
-        </figure>
+        <article class="hero-start-card" aria-label="Ways to start with Fluids">
+          <div class="eyebrow">Choose your starting point</div>
+          <strong>Start with the level of support that fits you.</strong>
+          <div class="hero-start-options">
+            <a class="hero-start-option" href="#uploadView"><b>01</b><span><strong>Use your existing labs</strong><span>Upload a report or enter the values manually.</span></span></a>
+            <a class="hero-start-option" href="#dailyFoundation"><b>02</b><span><strong>Daily Foundation · $89</strong><span>Thirty daily sticks of broad whole-food support.</span></span></a>
+            <a class="hero-start-option" href="#membershipSystem"><b>03</b><span><strong>Foundation Membership · $299</strong><span>At-home test, Daily Foundation, and a day-30 retest.</span></span></a>
+          </div>
+        </article>
       </div>
     </section>
     <section class="daily-foundation-feature" id="dailyFoundation" aria-labelledby="dailyFoundationTitle">
@@ -7796,21 +7909,23 @@
         <span>Broad-fit daily whole-food nutrition</span>
       </div>
       <div class="daily-foundation-copy">
-        <div class="eyebrow">The easiest way to start</div>
+        <div class="eyebrow">Everyday whole-food support</div>
         <h2 id="dailyFoundationTitle">Meet Daily Foundation.</h2>
-        <p>A bright carrot-citrus whole-food blend designed as the broad-fit starting point for Fluids. It gives people a simple daily product now, while the personalized engine remains available for anyone ready to upload bloodwork.</p>
+        <p>A bright carrot-lemon drink made to add a dependable layer of fruit- and vegetable-derived nutrition to the routine you already have. Its food-derived vitamin A and vitamin C support normal immune function, fiber supports digestion, and potassium and vitamin B6 support everyday muscle and energy metabolism.</p>
         <div class="daily-foundation-positioning" aria-label="Daily Foundation product details">
-          <div><strong>30 daily sticks</strong><span>One simple mix-with-water routine.</span></div>
-          <div><strong>Planned at $89</strong><span>Launch pricing, not charged today.</span></div>
-          <div><strong>84.5% strong target fit</strong><span>Locked 1,000-profile development benchmark.</span></div>
+          <div><strong>Everyday nourishment</strong><span>Vitamins A, C, B6 and K plus potassium from recognizable food ingredients.</span></div>
+          <div><strong>Digestive support</strong><span>Fiber from fruit, vegetable, and root powders in one daily routine.</span></div>
+          <div><strong>Antioxidant variety</strong><span>Six colorful produce and root ingredients with complementary plant compounds.</span></div>
         </div>
+        <p class="daily-foundation-why"><strong>Why it is the foundation:</strong> “Strong targeted fit” means the formula covers several common everyday nutrition priorities at once. It was chosen as the daily starting point because it delivers useful nutritional variety without turning the routine into a cabinet full of pills.</p>
         <div class="daily-foundation-ingredients" aria-label="Daily Foundation ingredients">
           <span>Carrot</span><span>Lemon</span><span>Beet</span><span>Mango</span><span>Ginger</span><span>Turmeric</span>
         </div>
+        <p class="daily-foundation-why"><strong>Taste:</strong> Bright lemon first, smooth carrot and mango through the middle, earthy beet underneath, and a light ginger-turmeric finish.</p>
         <div class="daily-foundation-actions">
-          <button type="button" data-open-waitlist data-interest-type="daily_foundation_reservation" data-interest-source="homepage_daily_foundation" data-blend-id="daily_foundation" data-blend-name="Daily Foundation">Reserve my first box</button>
+          <button type="button" data-open-waitlist data-interest-type="daily_foundation_reservation" data-interest-source="homepage_daily_foundation" data-blend-id="daily_foundation" data-blend-name="Daily Foundation" data-product-price="$89">Reserve 30 sticks · $89</button>
           <button type="button" class="secondary" data-quick-mode="upload">Personalize from my labs</button>
-          <small>A reservation records interest only. No payment is collected today, and launch timing will be confirmed before any order is placed. Fit is predictive formulation-development evidence, not clinical efficacy.</small>
+          <small>A reservation records your interest. No payment is collected today; we will confirm timing and fulfillment before taking payment.</small>
         </div>
       </div>
     </section>
@@ -7827,7 +7942,7 @@
         </div>
       </div>
       <div class="full-stack-grid">
-        <article class="full-stack-step"><b>01</b><strong>Collect</strong><span>A FLUIDS-branded at-home blood test arrives at the customer’s door.</span></article>
+        <article class="full-stack-step"><b>01</b><strong>Collect</strong><span>Foundation Membership begins with a FLUIDS-branded at-home blood test.</span></article>
         <article class="full-stack-step"><b>02</b><strong>Analyze</strong><span>Structured biomarkers return from a qualified clinical laboratory.</span></article>
         <article class="full-stack-step"><b>03</b><strong>Personalize</strong><span>The model converts the profile into a coordinated nutrition blueprint.</span></article>
         <article class="full-stack-step"><b>04</b><strong>Formulate</strong><span>Product-feasible optimization translates that blueprint into whole-food powders.</span></article>
@@ -7915,32 +8030,41 @@
     <section class="membership-system" id="membershipSystem" aria-label="FLUIDS membership system">
       <div class="membership-head">
         <div>
-          <div class="eyebrow">The membership system</div>
-          <h2>Premium personalization without a complicated daily routine.</h2>
+          <div class="eyebrow">Choose how you begin</div>
+          <h2>Start with the product. Add the measurement loop when you want it.</h2>
         </div>
-        <p>The blood test sets the direction. The monthly pack turns that direction into a repeatable habit, while scheduled monitoring closes the loop.</p>
+        <p>Daily Foundation is the simple product entry. Foundation Membership adds the complete test, drink, and retest experience. Existing labs can always be uploaded or entered manually.</p>
       </div>
       <div class="membership-grid">
         <article class="membership-card">
-          <div class="eyebrow">Foundation</div>
-          <h3>Daily personalized nutrition</h3>
-          <p>A selected standard family or custom whole-food formula anchored to the customer’s nutrition blueprint.</p>
-          <strong class="pack-count">30 sticks</strong>
-          <ul><li>One daily foundation blend</li><li>Personal nutrition dashboard</li><li>Formula review at each new lab cycle</li></ul>
+          <div class="eyebrow">Daily Foundation</div>
+          <h3>The daily product</h3>
+          <p>A bright carrot-lemon whole-food blend for broad everyday nutritional support.</p>
+          <strong class="pack-count">$89</strong>
+          <ul><li>30 Daily Foundation sticks</li><li>Carrot, lemon, beet, mango, ginger, and turmeric</li><li>One simple mix-with-water routine</li></ul>
+          <div class="membership-card-actions"><button type="button" data-open-waitlist data-interest-type="daily_foundation_reservation" data-interest-source="membership_daily_foundation" data-blend-id="daily_foundation" data-blend-name="Daily Foundation" data-product-price="$89">Reserve Daily Foundation</button></div>
+          <small class="membership-card-note">No payment is collected until timing and fulfillment are confirmed.</small>
         </article>
         <article class="membership-card featured">
-          <div class="eyebrow">Complete</div>
-          <h3>The full monthly system</h3>
-          <p>Foundation nutrition plus everyday hydration and focused support for immunity and performance.</p>
-          <strong class="pack-count">76 sticks</strong>
-          <ul><li>30 daily foundation blends</li><li>30 daily Hydration blends</li><li>8 Vitamin C + 8 Performance</li></ul>
+          <div class="membership-card-media"><img src="/assets/fluids/fluids-at-home-collection-device-cream.png" alt="FLUIDS-branded at-home blood collection device included with Foundation Membership"></div>
+          <div class="eyebrow">Foundation Membership</div>
+          <h3>Test → drink → retest</h3>
+          <p>The high-touch 30-day Fluids experience, from a baseline blood test through the first measured follow-up.</p>
+          <strong class="pack-count">$299</strong>
+          <ul><li>FLUIDS at-home baseline blood test</li><li>30 Daily Foundation sticks and personal dashboard</li><li>Second at-home blood test at day 30</li><li>Before-and-after biomarker review</li></ul>
+          <div class="membership-card-actions"><button type="button" data-open-waitlist data-interest-type="foundation_membership_reservation" data-interest-source="homepage_membership" data-blend-id="foundation_membership" data-blend-name="Foundation Membership" data-product-price="$299">Request Foundation Membership</button></div>
+          <small class="membership-card-note">One complete 30-day cycle. We confirm eligibility, testing availability, and fulfillment before payment.</small>
         </article>
         <article class="membership-card">
-          <div class="eyebrow">Monitoring</div>
-          <h3>The closed-loop upgrade</h3>
-          <p>A FLUIDS at-home blood test measures response and gives the next formula a better starting point.</p>
-          <strong class="pack-count">Retest + adapt</strong>
-          <ul><li>FLUIDS-branded collection kit</li><li>Longitudinal biomarker dashboard</li><li>Updated nutrition blueprint and blend</li></ul>
+          <div class="eyebrow">Existing labs</div>
+          <h3>Bring your own bloodwork</h3>
+          <p>Use a recent lab report to see the nutrition blueprint and product paths Fluids builds from your markers.</p>
+          <strong class="pack-count">Upload or type</strong>
+          <ul><li>Upload a PDF or clear report photos</li><li>Enter lab values manually</li><li>Review your markers before analysis</li></ul>
+          <div class="membership-card-actions">
+            <button type="button" data-quick-mode="upload">Upload labs</button>
+            <button type="button" class="secondary" data-manual-labs data-manual-source="membership">Enter manually</button>
+          </div>
         </article>
       </div>
     </section>
@@ -8062,12 +8186,15 @@
       <div>
         <div class="eyebrow">Have labs ready?</div>
         <h2>Start the intelligence experience today.</h2>
-        <p>Upload your bloodwork, review the extracted markers, add the personal context the model needs, then see the nutrition blueprint and whole-food powder formula designed around you.</p>
+        <p>Upload your bloodwork or enter the values manually, confirm the markers, add the personal context the model needs, then see the nutrition blueprint and whole-food powder formula designed around you.</p>
       </div>
-      <button type="button" data-quick-mode="upload">Upload recent bloodwork</button>
+      <div class="upload-start-actions">
+        <button type="button" data-quick-mode="upload">Upload recent bloodwork</button>
+        <button type="button" class="secondary" data-manual-labs data-manual-source="homepage_flow">Enter manually</button>
+      </div>
     </section>
     <div class="steps" id="flowProgress">
-      <div class="step active" data-flow-step="0"><div class="step-num">1</div><h3>Upload</h3><p>Add your bloodwork</p></div>
+      <div class="step active" data-flow-step="0"><div class="step-num">1</div><h3>Add labs</h3><p>Upload or enter values</p></div>
       <div class="step" data-flow-step="1"><div class="step-num">2</div><h3>Review</h3><p>Confirm your markers</p></div>
       <div class="step" data-flow-step="2"><div class="step-num">3</div><h3>Personalize</h3><p>Tell us your context</p></div>
       <div class="step" data-flow-step="3"><div class="step-num">4</div><h3>Blend</h3><p>Get your daily mix</p></div>
@@ -8077,8 +8204,11 @@
     <div class="wizard-stage" id="wizardStage">
       <main class="panel section app-view active upload-panel" id="uploadView">
         <div class="section-head">
-          <div><h2>Build your personalized blend</h2><p class="section-copy">Start with a blood-test PDF or clear photos of a printed report. We’ll temporarily extract the markers, delete the original files, and turn the values you confirm into a drinkable nutrition plan.</p></div>
-          <button id="extractBtn" disabled>Start analysis</button>
+          <div><h2>Build your personalized blend</h2><p class="section-copy">Upload a blood-test PDF or clear photos of a printed report, or enter the values yourself. We turn the markers you confirm into a drinkable nutrition plan.</p></div>
+          <div class="upload-start-actions">
+            <button id="extractBtn" disabled>Analyze uploaded labs</button>
+            <button type="button" class="secondary" data-manual-labs data-manual-source="upload_panel">Enter manually</button>
+          </div>
         </div>
         <label class="drop" id="dropZone" for="pdfInput">
           <input id="pdfInput" type="file" accept="application/pdf,image/jpeg,image/png,.pdf,.jpg,.jpeg,.png" multiple>
@@ -8227,7 +8357,7 @@
 
       <section class="panel section lab-wrap app-view" id="reviewView">
         <div class="section-head">
-          <div><h2>Review extracted markers</h2><p class="section-copy">Correct any extraction error. A custom blend needs at least 7 of the 9 core markers; with 7–8, up to two missing values are estimated from matched NHANES medians and clearly labeled. Below 7, we’ll guide you to a standard blend.</p></div>
+          <div><h2>Enter or review lab markers</h2><p class="section-copy">Add the values shown on your report or correct any extraction error. A custom blend needs at least 7 of the 9 core markers; with 7–8, up to two missing values are estimated and clearly labeled. Below 7, we’ll guide you to a standard blend.</p></div>
           <button id="reviewContinueBtn">Continue to questionnaire</button>
         </div>
         <div class="lab-summary" id="labReviewSummary" aria-live="polite"></div>
@@ -8321,9 +8451,9 @@
             <div>
               <small>Recommended launch path</small>
               <h4>Daily Foundation</h4>
-              <p>A carrot-lemon whole-food baseline with beet, mango, ginger, and turmeric. It is the fastest path into the Fluids daily ritual while custom manufacturing develops.</p>
-              <div class="results-commerce-meta"><span>30 sticks</span><span>Planned at $89</span><span>Carrot-citrus</span></div>
-              <button type="button" data-open-waitlist data-interest-type="daily_foundation_reservation" data-interest-source="results_daily_foundation" data-blend-id="daily_foundation" data-blend-name="Daily Foundation">Reserve Daily Foundation</button>
+              <p>A bright carrot-lemon whole-food blend with beet, mango, ginger, and turmeric for everyday nourishment, digestive support, and antioxidant variety.</p>
+              <div class="results-commerce-meta"><span>30 sticks</span><span>$89</span><span>Carrot-citrus</span></div>
+              <button type="button" data-open-waitlist data-interest-type="daily_foundation_reservation" data-interest-source="results_daily_foundation" data-blend-id="daily_foundation" data-blend-name="Daily Foundation" data-product-price="$89">Reserve Daily Foundation</button>
             </div>
             <div class="results-commerce-product"><img src="/assets/fluids/daily_foundation_stick_glass_v2.png" alt="Fluids Daily Foundation stick pack and prepared drink"></div>
           </article>
@@ -9641,6 +9771,21 @@
       window.setTimeout(()=>scrollToTarget("uploadView"),140);
     }
     document.getElementById("startNewAnalysisBtn")?.addEventListener("click",startNewPersonalizedAnalysis);
+    async function startManualLabEntry(trigger) {
+      showError("");
+      if (!Object.keys(specs).length) await loadSpecs();
+      renderLabs({});
+      document.getElementById("extractMeta").textContent="Manual entry · add the values available on your lab report";
+      trackEvent("manual_lab_entry_started",{
+        source:trigger?.dataset.manualSource || "website"
+      });
+      showView("review");
+    }
+    document.querySelectorAll("[data-manual-labs]").forEach(item=>item.addEventListener("click",()=>{
+      startManualLabEntry(item).catch(()=>{
+        showError("We could not load the manual lab form. Refresh the page and try again.");
+      });
+    }));
     document.querySelectorAll("[data-quick-mode]").forEach(item=>item.addEventListener("click",()=>{
       const mode=item.dataset.quickMode || "personalized";
       trackEvent("cta_clicked",{cta:"quick_mode",mode});
@@ -13811,25 +13956,30 @@
       const mailLink=document.getElementById("waitlistMailLink");
       const submit=document.querySelector("#waitlistForm .waitlist-submit");
       const isDailyFoundation=interestType === "daily_foundation_reservation";
+      const isFoundationMembership=interestType === "foundation_membership_reservation";
       const isCustom=interestType === "custom_blend_waitlist" || blendId === "custom";
-      if (title) title.textContent=isDailyFoundation
-        ? "Reserve your first box of Daily Foundation."
-        : isCustom
+      if (title) title.textContent=isFoundationMembership
+        ? "Request your Foundation Membership."
+        : isDailyFoundation
+          ? "Reserve your first box of Daily Foundation."
+          : isCustom
           ? "Save your place for this custom blend."
           : `Join early access for ${blendName}.`;
-      if (description) description.textContent=isDailyFoundation
-        ? "Leave your email and we will contact you before launch. The planned first box includes 30 sticks at $89, and no payment is collected today."
-        : isCustom
+      if (description) description.textContent=isFoundationMembership
+        ? "The $299 30-day experience includes a baseline at-home blood test, 30 Daily Foundation sticks, and a second at-home test at day 30. Leave your email and we will confirm testing availability and fulfillment before payment."
+        : isDailyFoundation
+          ? "The first $89 box includes 30 Daily Foundation sticks. Leave your email and we will confirm timing and fulfillment before payment."
+          : isCustom
           ? "Leave your email to keep this personalized formula on your radar. We will contact you when custom production opens."
           : `Leave your email and we will contact you when ${blendName} becomes available.`;
       if (blendNameEl) blendNameEl.textContent=blendName;
       if (blendIdEl) blendIdEl.value=blendId;
       if (interestTypeEl) interestTypeEl.value=interestType;
       if (interestSourceEl) interestSourceEl.value=interestSource;
-      if (intentLabel) intentLabel.textContent=isDailyFoundation ? "Reservation" : "Early access";
+      if (intentLabel) intentLabel.textContent=isFoundationMembership ? "Membership request" : isDailyFoundation ? "Reservation" : "Early access";
       if (submit) {
         submit.disabled=false;
-        submit.textContent=isDailyFoundation ? "Reserve my first box" : isCustom ? "Join my custom blend waitlist" : "Join early access";
+        submit.textContent=isFoundationMembership ? "Request Foundation Membership" : isDailyFoundation ? "Reserve my first box" : isCustom ? "Join my custom blend waitlist" : "Join early access";
       }
       if (status) status.textContent="";
       if (mailLink) {
@@ -13899,6 +14049,7 @@
       const blendName=String(document.getElementById("waitlistBlendName")?.textContent || "Custom blend profile").trim();
       const interestType=String(document.getElementById("waitlistInterestType")?.value || "product_interest").trim();
       const interestSource=String(document.getElementById("waitlistInterestSource")?.value || "website_product_interest").trim();
+      const offerPrice=String(lastWaitlistModalTrigger?.dataset.productPrice || "").trim();
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         trackEvent("waitlist_invalid_email",{blend_id:blendId,blend_name:blendName,interest_type:interestType});
         if (status) status.textContent="Enter a valid email so we can save your place.";
@@ -13914,11 +14065,12 @@
         discount_code:"NONE",
         email,
         name,
+        offer_price:offerPrice,
         _subject:`New Fluids product interest: ${blendName}`,
         _template:"table",
         _captcha:"false",
         _replyto:email,
-        message:`New ${interestType.replaceAll("_"," ")} request for ${blendName}.`
+        message:`New ${interestType.replaceAll("_"," ")} request for ${blendName}${offerPrice ? ` at ${offerPrice}` : ""}.`
       };
       trackEvent("product_interest_submitted",{
         blend_id:blendId,
@@ -13991,9 +14143,11 @@
         remote_saved:remoteSaved
       });
       if (remoteSaved) {
-        if (status) status.textContent=interestType === "daily_foundation_reservation"
-          ? "Your reservation is saved. We will contact you before launch and before any payment."
-          : "You are on the early-access list. We will keep you posted.";
+        if (status) status.textContent=interestType === "foundation_membership_reservation"
+          ? "Your membership request is saved. We will confirm testing availability and fulfillment before payment."
+          : interestType === "daily_foundation_reservation"
+            ? "Your reservation is saved. We will confirm timing and fulfillment before payment."
+            : "You are on the early-access list. We will keep you posted.";
         if (mailLink) mailLink.classList.remove("active");
       } else {
         trackEvent("waitlist_save_failed",{blend_id:blendId,blend_name:blendName,interest_type:interestType});
@@ -14008,7 +14162,7 @@
       if (submit) {
         submit.disabled=remoteSaved;
         submit.textContent=remoteSaved
-          ? interestType === "daily_foundation_reservation" ? "Reservation saved" : "Early access saved"
+          ? interestType === "foundation_membership_reservation" ? "Membership request saved" : interestType === "daily_foundation_reservation" ? "Reservation saved" : "Early access saved"
           : "Try saving again";
       }
     }
