@@ -7292,6 +7292,11 @@
     .hero-start-option strong { display:block; font-size:.85rem; }
     .hero-start-option span { display:block; margin-top:3px; color:#786a64; font-size:.69rem; line-height:1.35; }
     .upload-start-actions { display:flex; flex-wrap:wrap; gap:9px; justify-content:flex-end; }
+    .upload-panel .section-head {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      align-items:start;
+    }
     .upload-start-actions .secondary {
       color:#7a082d;
       border:1px solid rgba(122,8,45,.2);
@@ -7846,10 +7851,9 @@
       .daily-foundation-positioning { grid-template-columns:1fr; }
       .daily-foundation-actions { display:grid; }
       .daily-foundation-actions button { width:100%; }
-      .consumer-hero-actions { display:grid; }
-      .consumer-hero-actions button,.consumer-hero-actions a { width:100%; justify-content:center; }
       .upload-start-actions { width:100%; display:grid; }
       .upload-start-actions button { width:100%; }
+      .upload-panel .section-head { grid-template-columns:1fr; }
       .results-commerce { padding:18px; border-radius:26px; }
       .results-commerce-card.primary { grid-template-columns:1fr; }
       .results-commerce-product { min-height:170px; }
@@ -7882,7 +7886,6 @@
         <p class="lead">Upload recent labs or enter your values manually. Fluids turns the biomarkers you confirm into a personalized nutrition blueprint and a practical whole-food powder blend.</p>
         <div class="consumer-hero-actions">
           <button type="button" data-quick-mode="upload">Upload labs</button>
-          <button type="button" class="secondary" data-manual-labs data-manual-source="hero">Enter manually</button>
           <a class="platform-hero-link" href="#dailyFoundation">Start with Daily Foundation</a>
         </div>
         <div class="consumer-proof-row" aria-label="Product promises">
@@ -8061,10 +8064,7 @@
           <p>Use a recent lab report to see the nutrition blueprint and product paths Fluids builds from your markers.</p>
           <strong class="pack-count">Upload or type</strong>
           <ul><li>Upload a PDF or clear report photos</li><li>Enter lab values manually</li><li>Review your markers before analysis</li></ul>
-          <div class="membership-card-actions">
-            <button type="button" data-quick-mode="upload">Upload labs</button>
-            <button type="button" class="secondary" data-manual-labs data-manual-source="membership">Enter manually</button>
-          </div>
+          <div class="membership-card-actions"><button type="button" data-quick-mode="upload">Add my labs</button></div>
         </article>
       </div>
     </section>
@@ -8188,10 +8188,7 @@
         <h2>Start the intelligence experience today.</h2>
         <p>Upload your bloodwork or enter the values manually, confirm the markers, add the personal context the model needs, then see the nutrition blueprint and whole-food powder formula designed around you.</p>
       </div>
-      <div class="upload-start-actions">
-        <button type="button" data-quick-mode="upload">Upload recent bloodwork</button>
-        <button type="button" class="secondary" data-manual-labs data-manual-source="homepage_flow">Enter manually</button>
-      </div>
+      <button type="button" data-quick-mode="upload">Add recent bloodwork</button>
     </section>
     <div class="steps" id="flowProgress">
       <div class="step active" data-flow-step="0"><div class="step-num">1</div><h3>Add labs</h3><p>Upload or enter values</p></div>
