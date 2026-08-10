@@ -8124,26 +8124,86 @@
     .daily-foundation-positioning {
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:9px;
-      margin:22px 0;
+      gap:11px;
+      margin:10px 0 24px;
     }
     .daily-foundation-positioning div {
-      display:grid;
-      gap:4px;
-      padding:12px 13px;
-      border:1px solid rgba(255,255,255,.13);
-      border-radius:17px;
-      background:rgba(255,255,255,.07);
+      position:relative;
+      display:flex;
+      min-height:180px;
+      flex-direction:column;
+      align-items:flex-start;
+      padding:18px 17px 19px;
+      overflow:hidden;
+      border:1px solid rgba(247,217,160,.25);
+      border-radius:23px;
+      background:
+        radial-gradient(circle at 100% 0,rgba(247,217,160,.16),transparent 9rem),
+        linear-gradient(145deg,rgba(255,255,255,.13),rgba(255,255,255,.055));
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 14px 30px rgba(29,3,13,.12);
+    }
+    .daily-foundation-positioning div::after {
+      content:"";
+      position:absolute;
+      left:17px;
+      right:17px;
+      bottom:0;
+      height:3px;
+      border-radius:999px 999px 0 0;
+      background:linear-gradient(90deg,#efcb91,#d96756);
+    }
+    .daily-foundation-positioning i {
+      min-width:42px;
+      min-height:42px;
+      display:inline-grid;
+      place-items:center;
+      margin-bottom:15px;
+      padding:0 9px;
+      border:1px solid rgba(255,255,255,.24);
+      border-radius:999px;
+      color:#4d1021;
+      background:linear-gradient(135deg,#efcb91,#fff0ce);
+      box-shadow:0 9px 20px rgba(17,2,8,.2);
+      font-size:.65rem;
+      font-style:normal;
+      font-weight:950;
+      letter-spacing:.03em;
     }
     .daily-foundation-positioning strong {
       color:#fffdf8;
-      font-size:.8rem;
-      line-height:1.2;
+      font-family:var(--display-font);
+      font-size:1.22rem;
+      font-weight:500;
+      letter-spacing:-.025em;
+      line-height:1.05;
     }
     .daily-foundation-positioning span {
-      color:rgba(255,249,242,.63);
-      font-size:.66rem;
-      line-height:1.35;
+      display:block;
+      margin-top:8px;
+      color:rgba(255,249,242,.76);
+      font-size:.76rem;
+      line-height:1.48;
+    }
+    .daily-foundation-benefit-head {
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:16px;
+      margin-top:25px;
+    }
+    .daily-foundation-benefit-head span {
+      color:#efcb91;
+      font-size:.58rem;
+      font-weight:950;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+    }
+    .daily-foundation-benefit-head strong {
+      max-width:360px;
+      color:#fffdf8;
+      font-size:.88rem;
+      line-height:1.25;
+      text-align:right;
     }
     .daily-foundation-why {
       margin:0 0 20px;
@@ -8356,7 +8416,10 @@
       .daily-foundation-feature { padding:20px; border-radius:28px; }
       .daily-foundation-visual { min-height:300px; }
       .daily-foundation-copy h2 { font-size:3rem; }
+      .daily-foundation-benefit-head { display:block; }
+      .daily-foundation-benefit-head strong { display:block; margin-top:6px; text-align:left; }
       .daily-foundation-positioning { grid-template-columns:1fr; }
+      .daily-foundation-positioning div { min-height:0; }
       .daily-foundation-actions { display:grid; }
       .daily-foundation-actions button { width:100%; }
       .full-loop-hero-card { min-height:0; }
@@ -8436,10 +8499,14 @@
         <div class="eyebrow">Everyday whole-food support</div>
         <h2 id="dailyFoundationTitle">Meet Daily Foundation.</h2>
         <p>A bright carrot-lemon drink made to add a dependable layer of fruit- and vegetable-derived nutrition to the routine you already have. Its food-derived vitamin A and vitamin C support normal immune function, fiber supports digestion, and potassium and vitamin B6 support everyday muscle and energy metabolism.</p>
+        <div class="daily-foundation-benefit-head">
+          <span>What one daily stick supports</span>
+          <strong>Three layers of everyday whole-food nutrition.</strong>
+        </div>
         <div class="daily-foundation-positioning" aria-label="Daily Foundation product details">
-          <div><strong>Everyday nourishment</strong><span>Vitamins A, C, B6 and K plus potassium from recognizable food ingredients.</span></div>
-          <div><strong>Digestive support</strong><span>Fiber from fruit, vegetable, and root powders in one daily routine.</span></div>
-          <div><strong>Antioxidant variety</strong><span>Six colorful produce and root ingredients with complementary plant compounds.</span></div>
+          <div><i aria-hidden="true">A + C</i><strong>Everyday nourishment</strong><span>Vitamins A, C, B6 and K plus potassium from recognizable food ingredients.</span></div>
+          <div><i aria-hidden="true">Fiber</i><strong>Digestive support</strong><span>Fiber from fruit, vegetable, and root powders in one daily routine.</span></div>
+          <div><i aria-hidden="true">6 foods</i><strong>Antioxidant variety</strong><span>Six colorful produce and root ingredients with complementary plant compounds.</span></div>
         </div>
         <p class="daily-foundation-why"><strong>Why it is the foundation:</strong> “Strong targeted fit” means the formula covers several common everyday nutrition priorities at once. It was chosen as the daily starting point because it delivers useful nutritional variety without turning the routine into a cabinet full of pills.</p>
         <div class="daily-foundation-ingredients" aria-label="Daily Foundation ingredients">
