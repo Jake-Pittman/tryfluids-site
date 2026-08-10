@@ -4056,114 +4056,293 @@
       text-align:center;
       text-overflow:ellipsis;
     }
-    .custom-dv-showcase {
-      margin:-6px 0 20px;
-      padding:18px;
-      border:1px solid rgba(255,253,248,.14);
-      border-radius:26px;
-      background:
-        radial-gradient(circle at 4% 100%,rgba(79,155,142,.15),transparent 18rem),
-        rgba(255,253,248,.08);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+    .custom-nutrient-stats {
+      flex:0 0 auto;
+      display:grid;
+      grid-template-columns:repeat(3,minmax(102px,1fr));
+      gap:8px;
     }
-    .custom-dv-head {
+    .custom-nutrient-stat {
+      min-width:102px;
+      padding:11px 12px;
+      border:1px solid rgba(255,253,248,.13);
+      border-radius:17px;
+      color:#fffdf8;
+      background:linear-gradient(145deg,rgba(113,216,220,.13),rgba(255,255,255,.045));
+    }
+    .custom-nutrient-stat b {
+      display:block;
+      font-family:var(--display-font);
+      font-size:1.85rem;
+      font-weight:500;
+      line-height:.9;
+    }
+    .custom-nutrient-stat span {
+      display:block;
+      margin-top:6px;
+      color:#bdc9cd;
+      font-size:.52rem;
+      font-weight:850;
+      letter-spacing:.07em;
+      line-height:1.25;
+      text-transform:uppercase;
+    }
+    .custom-nutrient-section-head {
       display:flex;
       align-items:end;
       justify-content:space-between;
       gap:18px;
-      margin-bottom:14px;
+      margin:22px 0 11px;
     }
-    .custom-dv-head span,
-    .custom-dv-head strong,
-    .custom-dv-head small { display:block; }
-    .custom-dv-head span {
-      color:#f1c989;
-      font-size:.62rem;
-      font-weight:900;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-    }
-    .custom-dv-head strong {
-      margin-top:4px;
+    .custom-nutrient-section-head strong {
       color:#fffdf8;
-      font-family:var(--display-font);
-      font-size:1.45rem;
-      font-weight:500;
-      letter-spacing:-.035em;
+      font-size:.9rem;
     }
-    .custom-dv-head small {
-      max-width:480px;
-      color:#bfcbd0;
+    .custom-nutrient-section-head span {
+      max-width:650px;
+      color:#bdc9cd;
       font-size:.67rem;
       line-height:1.4;
       text-align:right;
     }
-    .custom-dv-gallery {
+    .custom-priority-grid {
       display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(128px,1fr));
-      gap:8px;
-    }
-    .custom-dv-tile {
-      --dv-color:#71d8dc;
-      min-width:0;
-      display:grid;
-      grid-template-columns:44px minmax(0,1fr);
+      grid-template-columns:repeat(4,minmax(0,1fr));
       gap:10px;
-      align-items:center;
-      min-height:94px;
-      padding:11px;
-      border:1px solid rgba(255,253,248,.12);
-      border-radius:18px;
-      background:linear-gradient(150deg,rgba(255,255,255,.12),rgba(255,255,255,.04));
     }
-    .custom-dv-icon {
-      width:44px;
-      height:44px;
+    .custom-priority-card {
+      --nutrient-color:#71d8dc;
+      position:relative;
+      min-width:0;
+      min-height:190px;
+      padding:15px;
+      overflow:hidden;
+      border:1px solid color-mix(in srgb,var(--nutrient-color) 32%,rgba(255,253,248,.12));
+      border-radius:21px;
+      background:
+        radial-gradient(circle at 100% 0%,color-mix(in srgb,var(--nutrient-color) 19%,transparent),transparent 9rem),
+        linear-gradient(150deg,rgba(255,255,255,.13),rgba(255,255,255,.04));
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.08);
+    }
+    .custom-priority-card::after {
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      height:4px;
+      background:var(--nutrient-color);
+    }
+    .custom-priority-card-top {
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .custom-priority-icon {
+      width:42px;
+      height:42px;
       display:grid;
+      flex:0 0 auto;
       place-items:center;
-      border:1px solid color-mix(in srgb,var(--dv-color) 48%,transparent);
       border-radius:50%;
       color:#071c25;
-      background:var(--dv-color);
-      font-size:.76rem;
+      background:var(--nutrient-color);
+      font-size:.67rem;
+      font-style:normal;
       font-weight:950;
-      box-shadow:0 8px 18px color-mix(in srgb,var(--dv-color) 18%,transparent);
+      box-shadow:0 10px 22px color-mix(in srgb,var(--nutrient-color) 18%,transparent);
     }
-    .custom-dv-copy strong,
-    .custom-dv-copy b,
-    .custom-dv-copy small { display:block; }
-    .custom-dv-copy strong {
-      overflow-wrap:anywhere;
+    .custom-priority-card-top strong {
+      display:block;
       color:#fffdf8;
-      font-size:.7rem;
-      line-height:1.2;
+      font-size:.78rem;
+      line-height:1.15;
     }
-    .custom-dv-copy b {
-      margin:4px 0 2px;
-      color:var(--dv-color);
+    .custom-priority-card-top span {
+      display:block;
+      margin-top:3px;
+      color:var(--nutrient-color);
+      font-size:.5rem;
+      font-weight:900;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .custom-priority-amount {
+      display:block;
+      margin:14px 0 10px;
+      color:#fffdf8;
       font-family:var(--display-font);
-      font-size:1.35rem;
+      font-size:1.55rem;
       font-weight:500;
       line-height:1;
     }
-    .custom-dv-copy small {
+    .custom-priority-amount small {
+      display:block;
+      margin-top:5px;
+      color:#bdc9cd;
+      font-family:var(--body-font);
+      font-size:.54rem;
+      font-weight:700;
+    }
+    .custom-target-coverage {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:7px;
+      align-items:center;
+    }
+    .custom-target-coverage i {
+      height:6px;
+      overflow:hidden;
+      border-radius:999px;
+      background:rgba(255,255,255,.11);
+    }
+    .custom-target-coverage i::after {
+      content:"";
+      display:block;
+      width:var(--coverage-width,0%);
+      height:100%;
+      border-radius:inherit;
+      background:var(--nutrient-color);
+    }
+    .custom-target-coverage b {
+      color:#fffdf8;
+      font-size:.62rem;
+      font-variant-numeric:tabular-nums;
+    }
+    .custom-priority-meta {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin-top:8px;
       color:#aebfc4;
-      font-size:.55rem;
+      font-size:.52rem;
       line-height:1.25;
     }
-    .custom-dv-footnote {
-      margin:11px 2px 0;
-      color:#aebfc4;
+    .custom-spectrum-groups {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+    }
+    .custom-spectrum-group {
+      min-width:0;
+      padding:14px;
+      border:1px solid rgba(255,253,248,.12);
+      border-radius:19px;
+      background:rgba(255,255,255,.045);
+    }
+    .custom-spectrum-group h5 {
+      margin:0 0 10px;
+      color:#f1c989;
       font-size:.58rem;
-      line-height:1.42;
+      letter-spacing:.11em;
+      text-transform:uppercase;
     }
-    @media (max-width:620px) {
-      .custom-dv-head { align-items:flex-start;flex-direction:column;gap:7px; }
-      .custom-dv-head small { text-align:left; }
-      .custom-dv-gallery { grid-template-columns:repeat(2,minmax(0,1fr)); }
-      .custom-dv-tile { grid-template-columns:36px minmax(0,1fr);padding:9px; }
-      .custom-dv-icon { width:36px;height:36px;font-size:.65rem; }
+    .custom-spectrum-list {
+      display:grid;
+      gap:5px;
     }
+    .custom-spectrum-row {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:10px;
+      align-items:baseline;
+      padding:7px 0;
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+    .custom-spectrum-row:last-child { border-bottom:0; }
+    .custom-spectrum-row strong {
+      min-width:0;
+      color:#fffdf8;
+      font-size:.65rem;
+      line-height:1.2;
+    }
+    .custom-spectrum-row span {
+      color:#b7e9e8;
+      font-size:.58rem;
+      font-variant-numeric:tabular-nums;
+      text-align:right;
+      white-space:nowrap;
+    }
+    .custom-spectrum-row small {
+      grid-column:1 / -1;
+      margin-top:-5px;
+      color:#93a9b0;
+      font-size:.49rem;
+    }
+    .custom-bioactive-grid,
+    .custom-function-grid {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:8px;
+    }
+    .custom-bioactive-card,
+    .custom-function-card {
+      min-width:0;
+      padding:13px;
+      border:1px solid rgba(255,253,248,.12);
+      border-radius:17px;
+      background:linear-gradient(145deg,rgba(241,201,137,.09),rgba(255,255,255,.035));
+    }
+    .custom-bioactive-card strong,
+    .custom-function-card strong {
+      display:block;
+      color:#fffdf8;
+      font-size:.68rem;
+      line-height:1.2;
+    }
+    .custom-bioactive-card span,
+    .custom-function-card span {
+      display:block;
+      margin-top:5px;
+      color:#bdc9cd;
+      font-size:.54rem;
+      line-height:1.4;
+    }
+    .custom-bioactive-card em {
+      display:block;
+      margin-top:7px;
+      color:#f1c989;
+      font-size:.48rem;
+      font-style:normal;
+      font-weight:850;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+    .custom-formula-footnote {
+      margin:11px 1px 0;
+      color:#9fb3b9;
+      font-size:.55rem;
+      line-height:1.45;
+    }
+    .custom-target-details {
+      margin-top:20px;
+      padding-top:17px;
+      border-top:1px solid rgba(255,253,248,.14);
+    }
+    .custom-target-details > summary {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:11px 13px;
+      cursor:pointer;
+      list-style:none;
+      border:1px solid rgba(255,253,248,.12);
+      border-radius:15px;
+      color:#fffdf8;
+      background:rgba(255,255,255,.05);
+      font-size:.68rem;
+      font-weight:850;
+    }
+    .custom-target-details > summary::-webkit-details-marker { display:none; }
+    .custom-target-details > summary::after {
+      content:"+";
+      color:#71d8dc;
+      font-size:1rem;
+    }
+    .custom-target-details[open] > summary::after { content:"−"; }
+    .custom-target-details .custom-vector-layer { margin-top:14px; }
     .custom-product-reveal {
       display:block;
       margin:-6px 0 20px;
@@ -4552,6 +4731,28 @@
       .custom-full-vector-counts {
         justify-self:start;
       }
+      .custom-nutrient-stats {
+        width:100%;
+        justify-self:stretch;
+      }
+      .custom-priority-grid {
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+      .custom-spectrum-groups {
+        grid-template-columns:1fr;
+      }
+      .custom-bioactive-grid,
+      .custom-function-grid {
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+      .custom-nutrient-section-head {
+        display:grid;
+        gap:4px;
+      }
+      .custom-nutrient-section-head span {
+        max-width:none;
+        text-align:left;
+      }
       .custom-vector-layer-head {
         display:grid;
         gap:4px;
@@ -4610,6 +4811,32 @@
       .custom-product-reveal {
         padding:16px;
         scroll-margin-top:176px;
+      }
+      .custom-nutrient-stats {
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:6px;
+      }
+      .custom-nutrient-stat {
+        min-width:0;
+        padding:9px 8px;
+      }
+      .custom-nutrient-stat b { font-size:1.45rem; }
+      .custom-nutrient-stat span { font-size:.43rem; }
+      .custom-priority-grid { gap:7px; }
+      .custom-priority-card {
+        min-height:178px;
+        padding:12px 10px;
+      }
+      .custom-priority-icon {
+        width:35px;
+        height:35px;
+        font-size:.58rem;
+      }
+      .custom-priority-card-top strong { font-size:.68rem; }
+      .custom-priority-amount { font-size:1.3rem; }
+      .custom-bioactive-grid,
+      .custom-function-grid {
+        grid-template-columns:1fr;
       }
       .custom-full-vector-grid {
         grid-template-columns:repeat(3,minmax(0,1fr));
@@ -8672,7 +8899,7 @@
         <button type="button" class="jump-button" data-scroll-target="personalizedOfferComparison">Formula paths</button>
         <button type="button" class="jump-button" data-scroll-target="standardFitDashboard">Membership fit</button>
         <button type="button" class="jump-button" data-scroll-target="personalizationProofPanel">Why personalized</button>
-        <button type="button" class="jump-button" data-scroll-target="customFullNutrientVector">Target + delivery</button>
+        <button type="button" class="jump-button" data-scroll-target="customFullNutrientVector">Nutrient delivery</button>
       </nav>
       <div class="results-head">
         <div><div class="eyebrow">Personalized nutrition vector</div><h2>Your personalized nutrient blueprint.</h2></div>
@@ -12026,7 +12253,7 @@
       selenium_mcg:{value:55,unit:"mcg",symbol:"Se"}
     };
     function formulaDailyValueRows(option) {
-      return formulaDeliveryNutrientVector(option)
+      return formulaFullNutrientDeliveryVector(option)
         .map(item=>{
           const reference=nutrientDailyValueReference[item.nutrient];
           const amount=Number(item.amount);
@@ -12047,34 +12274,6 @@
       if (!Number.isFinite(amount)) return "—";
       const digits=Math.abs(amount)>=100 ? 0 : Math.abs(amount)>=10 ? 1 : Math.abs(amount)>=1 ? 2 : 3;
       return `${amount.toFixed(digits)} ${item?.reference?.unit || item?.unit || ""}`.trim();
-    }
-    function renderCustomDailyValueShowcase(option,parent) {
-      const rows=formulaDailyValueRows(option);
-      if (!rows.length) return;
-      const showcase=document.createElement("section");
-      showcase.className="custom-dv-showcase";
-      showcase.setAttribute("aria-label","Estimated Daily Value contribution from one selected-blend serving");
-      const head=document.createElement("div"); head.className="custom-dv-head";
-      const heading=document.createElement("div");
-      const kicker=document.createElement("span"); kicker.textContent="Nutrients in one serving";
-      const title=document.createElement("strong"); title.textContent="How much of the Daily Value this blend delivers";
-      heading.append(kicker,title);
-      const note=document.createElement("small");
-      note.textContent="Shown only for nutrients this formula is designed to increase. Recipe percentages stay private.";
-      head.append(heading,note);
-      const gallery=document.createElement("div"); gallery.className="custom-dv-gallery";
-      rows.forEach(item=>{
-        const tile=document.createElement("article"); tile.className="custom-dv-tile"; tile.style.setProperty("--dv-color",nutrientColor(item.nutrient));
-        const icon=document.createElement("i"); icon.className="custom-dv-icon"; icon.textContent=item.reference.symbol;
-        const copy=document.createElement("div"); copy.className="custom-dv-copy";
-        const name=document.createElement("strong"); name.textContent=nutrientLabel(item.nutrient);
-        const percent=document.createElement("b"); percent.textContent=formatDailyValuePercent(item.dailyValuePercent);
-        const amount=document.createElement("small"); amount.textContent=`${formatDailyValueAmount(item)} per modeled serving`;
-        copy.append(name,percent,amount); tile.append(icon,copy); gallery.appendChild(tile);
-      });
-      const footnote=document.createElement("p"); footnote.className="custom-dv-footnote";
-      footnote.textContent="Estimated % Daily Value uses FDA adult and children age 4+ reference values and modeled ingredient composition. It is not a personalized dose target. Final label values require production-batch assay and serving-size confirmation.";
-      showcase.append(head,gallery,footnote); parent.appendChild(showcase);
     }
     function normalizePositiveNutrientVector(rows) {
       const merged=new Map();
@@ -12111,6 +12310,51 @@
     }
     function formulaDeliveryNutrientVector(option) {
       return normalizePositiveNutrientVector(option?.nutrient_opportunities || []);
+    }
+    function formulaFullNutrientDeliveryVector(option) {
+      const full=normalizePositiveNutrientVector(option?.full_nutrient_delivery || []);
+      return full.length ? full : formulaDeliveryNutrientVector(option);
+    }
+    function deliverySpectrumCategory(nutrient) {
+      const key=String(nutrient || "");
+      if (key.startsWith("vitamin_") || ["thiamin_mg","riboflavin_mg","niacin_mg","folate_dfe_mcg"].includes(key)) return "Vitamins";
+      if (["calcium_mg","copper_mg","iron_mg","magnesium_mg","phosphorus_mg","potassium_mg","selenium_mcg","sodium_mg","zinc_mg"].includes(key)) return "Minerals";
+      return "Supporting nutrients";
+    }
+    function ingredientBioactiveRows(option) {
+      const ingredients=(option?.ingredients || [])
+        .filter(item=>item?.item)
+        .map(item=>({name:String(item.item).trim(),key:String(item.item).trim().toLowerCase()}));
+      const definitions=[
+        {name:"Carotenoids",tokens:["carrot","mango","acerola","spinach","kale"],detail:"Colorful plant pigments associated with the fruit, root, and leafy-green matrix."},
+        {name:"Anthocyanins",tokens:["raspberry","blueberry","strawberry","cranberry","elderberry","tart cherry","purple carrot","grape","pomegranate"],detail:"Berry and red-purple plant pigments within the selected ingredient matrix."},
+        {name:"Ellagitannins",tokens:["raspberry","strawberry"],detail:"A polyphenol family associated with raspberry and strawberry ingredients."},
+        {name:"Citrus flavanones",tokens:["lemon","lime","orange","grapefruit"],detail:"Citrus-associated flavonoids contributed by the formula’s citrus ingredients."},
+        {name:"Betalains",tokens:["beet"],detail:"Red-violet and yellow pigments associated with beet ingredients."},
+        {name:"Dietary nitrates",tokens:["beet","spinach","kale"],detail:"Naturally occurring plant compounds associated with beet and leafy greens."},
+        {name:"Curcuminoids",tokens:["turmeric"],detail:"The characteristic polyphenol family associated with turmeric root."},
+        {name:"Gingerols + shogaols",tokens:["ginger"],detail:"Pungent aromatic compounds associated with ginger root."},
+        {name:"Lutein + zeaxanthin",tokens:["spinach","kale"],detail:"Leafy-green carotenoids associated with spinach and kale."}
+      ];
+      return definitions.map(definition=>{
+        const sources=ingredients.filter(item=>definition.tokens.some(token=>item.key.includes(token))).map(item=>item.name);
+        return sources.length ? {...definition,sources:Array.from(new Set(sources))} : null;
+      }).filter(Boolean);
+    }
+    function nutrientFunctionRows(delivery) {
+      const delivered=new Set((delivery || []).map(item=>item.nutrient));
+      const definitions=[
+        {name:"Antioxidant systems",nutrients:["vitamin_c_mg","vitamin_e_mg","selenium_mcg"],detail:"Supports normal antioxidant activity and protection from oxidative stress."},
+        {name:"Energy metabolism",nutrients:["thiamin_mg","riboflavin_mg","niacin_mg","vitamin_b6_mg","iron_mg","magnesium_mg"],detail:"Supports the pathways that convert food into usable cellular energy."},
+        {name:"Immune + tissue function",nutrients:["vitamin_a_rae_mcg","vitamin_c_mg","zinc_mg"],detail:"Supports normal immune function, collagen formation, and tissue maintenance."},
+        {name:"Muscle + nerve function",nutrients:["magnesium_mg","potassium_mg","calcium_mg"],detail:"Supports normal muscle contraction, nerve signaling, and fluid balance."},
+        {name:"Bone + cellular function",nutrients:["vitamin_k_mcg","calcium_mg","phosphorus_mg","folate_dfe_mcg","choline_mg"],detail:"Supports normal bone proteins, cell membranes, and cell division."},
+        {name:"Digestive support",nutrients:["fiber_g"],detail:"Adds food-derived fiber that supports normal digestive function."}
+      ];
+      return definitions.map(definition=>{
+        const matches=definition.nutrients.filter(nutrient=>delivered.has(nutrient));
+        return matches.length ? {...definition,matches} : null;
+      }).filter(Boolean).slice(0,5);
     }
     function completePersonalizedNutrientVector(data) {
       return biomarkerTargetNutrientVector(data);
@@ -12164,36 +12408,159 @@
     }
     function renderCustomFullNutrientVector(data,option,parent) {
       const targets=biomarkerTargetNutrientVector(data);
-      const delivery=formulaDeliveryNutrientVector(option);
+      const priorityDelivery=formulaDeliveryNutrientVector(option);
+      const delivery=formulaFullNutrientDeliveryVector(option);
+      const targetMap=new Map(targets.map(item=>[item.nutrient,item]));
+      const deliveryMap=new Map(delivery.map(item=>[item.nutrient,item]));
+      const priorityRows=priorityDelivery.map(item=>{
+        const delivered=deliveryMap.get(item.nutrient) || item;
+        const target=targetMap.get(item.nutrient);
+        const targetAmount=Number(item.target_optimized_amount ?? target?.amount);
+        const amount=Number(delivered.amount);
+        const reference=nutrientDailyValueReference[item.nutrient];
+        return {
+          ...item,
+          ...delivered,
+          target,
+          targetAmount,
+          reference,
+          targetCoverage:Number.isFinite(targetAmount) && targetAmount>0 && Number.isFinite(amount) ? amount/targetAmount*100 : NaN,
+          dailyValuePercent:reference && Number.isFinite(amount) ? amount/reference.value*100 : NaN
+        };
+      });
+      const bioactives=ingredientBioactiveRows(option);
+      const functions=nutrientFunctionRows(delivery);
       const shell=document.createElement("section");
       shell.className="custom-product-reveal";
       shell.id="customFullNutrientVector";
       const head=document.createElement("div"); head.className="custom-full-vector-head";
       const copy=document.createElement("div"); copy.className="custom-product-reveal-copy";
-      const kicker=document.createElement("span"); kicker.className="custom-product-reveal-kicker"; kicker.textContent="Why this formula";
-      const title=document.createElement("strong"); title.textContent="From biomarker targets to whole-food delivery";
+      const kicker=document.createElement("span"); kicker.className="custom-product-reveal-kicker"; kicker.textContent="Your custom nutrient delivery";
+      const title=document.createElement("strong"); title.textContent="The nutrients your formula brings together for you";
       const detail=document.createElement("small");
-      detail.textContent="Your biomarkers determine the target vector first. The selected formula is then evaluated for the positive nutrient increases it can deliver. Target and delivery amounts are labeled separately so the recommendation stays transparent.";
+      detail.textContent="Your biomarkers and personal context identified the nutrients worth prioritizing. This whole-food formula was selected for how well it delivers those priorities together, while also contributing a broader spectrum of vitamins, minerals, and plant compounds.";
       copy.append(kicker,title,detail);
-      const counts=document.createElement("div"); counts.className="custom-full-vector-counts";
-      counts.append(
-        createCustomVectorCount(targets.length,"Biomarker targets"),
-        createCustomVectorCount(delivery.length,"Formula nutrients")
-      );
-      head.append(copy,counts);
+      const stats=document.createElement("div"); stats.className="custom-nutrient-stats";
+      [
+        [priorityRows.length,"Personalized priorities delivered"],
+        [delivery.length,"Quantified nutrients"],
+        [bioactives.length,"Whole-food compound families"]
+      ].forEach(([value,label])=>{
+        const stat=document.createElement("div"); stat.className="custom-nutrient-stat";
+        const number=document.createElement("b"); number.textContent=String(value);
+        const text=document.createElement("span"); text.textContent=label;
+        stat.append(number,text); stats.appendChild(stat);
+      });
+      head.append(copy,stats);
       shell.appendChild(head);
-      renderCustomVectorLayer(targets,shell,{
-        title:"1 · Your biomarker-derived targets",
-        detail:"The modeled nutrient increases requested by the reviewed labs and personal context.",
-        label:"Biomarker-derived target",
-        kind:"target"
+
+      if (priorityRows.length) {
+        const priorityHead=document.createElement("div"); priorityHead.className="custom-nutrient-section-head";
+        const priorityTitle=document.createElement("strong"); priorityTitle.textContent="Your biggest personalized deliveries";
+        const priorityDetail=document.createElement("span"); priorityDetail.textContent="Formula delivery is compared with your modeled nutrient priority. Daily Value is shown only as familiar general context.";
+        priorityHead.append(priorityTitle,priorityDetail); shell.appendChild(priorityHead);
+        const priorityGrid=document.createElement("div"); priorityGrid.className="custom-priority-grid";
+        priorityRows.slice(0,4).forEach(item=>{
+          const card=document.createElement("article"); card.className="custom-priority-card"; card.style.setProperty("--nutrient-color",nutrientColor(item.nutrient));
+          const top=document.createElement("div"); top.className="custom-priority-card-top";
+          const icon=document.createElement("i"); icon.className="custom-priority-icon"; icon.textContent=item.reference?.symbol || nutrientLabel(item.nutrient,true).slice(0,3);
+          const label=document.createElement("div");
+          const name=document.createElement("strong"); name.textContent=nutrientLabel(item.nutrient);
+          const role=document.createElement("span"); role.textContent="Personalized priority";
+          label.append(name,role); top.append(icon,label);
+          const amount=document.createElement("b"); amount.className="custom-priority-amount"; amount.textContent=formatFullVectorTarget(item);
+          const amountLabel=document.createElement("small"); amountLabel.textContent="modeled formula delivery per serving"; amount.appendChild(amountLabel);
+          card.append(top,amount);
+          if (Number.isFinite(item.targetCoverage)) {
+            const coverage=document.createElement("div"); coverage.className="custom-target-coverage";
+            coverage.style.setProperty("--coverage-width",`${Math.max(0,Math.min(100,item.targetCoverage))}%`);
+            const track=document.createElement("i");
+            const value=document.createElement("b"); value.textContent=`${Math.round(item.targetCoverage)}%`;
+            coverage.append(track,value); card.appendChild(coverage);
+          }
+          const meta=document.createElement("div"); meta.className="custom-priority-meta";
+          const targetLabel=document.createElement("span"); targetLabel.textContent=Number.isFinite(item.targetCoverage) ? "of modeled target" : "selected delivery signal";
+          const dv=document.createElement("span"); dv.textContent=Number.isFinite(item.dailyValuePercent) ? `${formatDailyValuePercent(item.dailyValuePercent)} Daily Value` : "Personalized target only";
+          meta.append(targetLabel,dv); card.appendChild(meta);
+          priorityGrid.appendChild(card);
+        });
+        shell.appendChild(priorityGrid);
+      }
+
+      const spectrumHead=document.createElement("div"); spectrumHead.className="custom-nutrient-section-head";
+      const spectrumTitle=document.createElement("strong"); spectrumTitle.textContent="The complete quantified nutrient spectrum";
+      const spectrumDetail=document.createElement("span"); spectrumDetail.textContent="Every positive vitamin, mineral, and supporting nutrient amount returned for this finished modeled formula.";
+      spectrumHead.append(spectrumTitle,spectrumDetail); shell.appendChild(spectrumHead);
+      const groups=document.createElement("div"); groups.className="custom-spectrum-groups";
+      ["Vitamins","Minerals","Supporting nutrients"].forEach(category=>{
+        const items=delivery.filter(item=>deliverySpectrumCategory(item.nutrient)===category);
+        if (!items.length) return;
+        const group=document.createElement("section"); group.className="custom-spectrum-group";
+        const title=document.createElement("h5"); title.textContent=category;
+        const list=document.createElement("div"); list.className="custom-spectrum-list";
+        items.forEach(item=>{
+          const row=document.createElement("div"); row.className="custom-spectrum-row";
+          const name=document.createElement("strong"); name.textContent=nutrientLabel(item.nutrient);
+          const amount=document.createElement("span"); amount.textContent=formatFullVectorTarget(item);
+          row.append(name,amount);
+          const reference=nutrientDailyValueReference[item.nutrient];
+          if (reference) {
+            const dv=document.createElement("small"); dv.textContent=`${formatDailyValuePercent(Number(item.amount)/reference.value*100)} Daily Value`;
+            row.appendChild(dv);
+          }
+          list.appendChild(row);
+        });
+        group.append(title,list); groups.appendChild(group);
       });
-      renderCustomVectorLayer(delivery,shell,{
-        title:"2 · What the selected formula delivers",
-        detail:"All positive nutrient increases modeled from the finished whole-food formula—not ingredient recipe percentages.",
-        label:"Modeled formula delivery",
-        kind:"delivery"
-      });
+      shell.appendChild(groups);
+
+      if (bioactives.length) {
+        const bioHead=document.createElement("div"); bioHead.className="custom-nutrient-section-head";
+        const bioTitle=document.createElement("strong"); bioTitle.textContent="Whole-food compounds in the ingredient matrix";
+        const bioDetail=document.createElement("span"); bioDetail.textContent="These ingredient-associated phytonutrient families show what comes with the whole-food delivery system beyond the quantified essential nutrients.";
+        bioHead.append(bioTitle,bioDetail); shell.appendChild(bioHead);
+        const bioGrid=document.createElement("div"); bioGrid.className="custom-bioactive-grid";
+        bioactives.forEach(item=>{
+          const card=document.createElement("article"); card.className="custom-bioactive-card";
+          const name=document.createElement("strong"); name.textContent=item.name;
+          const detail=document.createElement("span"); detail.textContent=item.detail;
+          const sources=document.createElement("em"); sources.textContent=`From ${item.sources.join(", ")}`;
+          card.append(name,detail,sources); bioGrid.appendChild(card);
+        });
+        shell.appendChild(bioGrid);
+      }
+
+      if (functions.length) {
+        const functionHead=document.createElement("div"); functionHead.className="custom-nutrient-section-head";
+        const functionTitle=document.createElement("strong"); functionTitle.textContent="What this nutrient combination supports";
+        const functionDetail=document.createElement("span"); functionDetail.textContent="Plain-language nutrient functions, not predicted or guaranteed clinical outcomes.";
+        functionHead.append(functionTitle,functionDetail); shell.appendChild(functionHead);
+        const functionGrid=document.createElement("div"); functionGrid.className="custom-function-grid";
+        functions.forEach(item=>{
+          const card=document.createElement("article"); card.className="custom-function-card";
+          const name=document.createElement("strong"); name.textContent=item.name;
+          const detail=document.createElement("span"); detail.textContent=`${item.detail} Delivered here through ${item.matches.map(nutrient=>nutrientLabel(nutrient)).join(", ")}.`;
+          card.append(name,detail); functionGrid.appendChild(card);
+        });
+        shell.appendChild(functionGrid);
+      }
+
+      const footnote=document.createElement("p"); footnote.className="custom-formula-footnote";
+      footnote.textContent="Nutrient amounts and % Daily Value are estimates based on modeled ingredient composition and FDA adult reference values. Final label values require production-batch assay and serving-size confirmation. Ingredient-associated phytonutrient families are shown qualitatively; their presence and quantity in the finished product have not yet been individually assayed.";
+      shell.appendChild(footnote);
+
+      if (targets.length) {
+        const details=document.createElement("details"); details.className="custom-target-details";
+        const summary=document.createElement("summary"); summary.textContent=`See all ${targets.length} biomarker-informed nutrient priorities`;
+        details.appendChild(summary);
+        renderCustomVectorLayer(targets,details,{
+          title:"Your complete nutrition blueprint",
+          detail:"The modeled nutrient increases derived from the reviewed labs and personal context. These are planning targets, not diagnosed deficiencies or prescribed doses.",
+          label:"Biomarker-informed target",
+          kind:"target"
+        });
+        shell.appendChild(details);
+      }
       parent.appendChild(shell);
     }
     function openResultsDeepDive(targetId) {
@@ -12231,7 +12598,6 @@
       metricStack.append(agePill);
       top.append(copy,metricStack); hero.appendChild(top);
       renderCustomIngredientShowcase(option,hero);
-      renderCustomDailyValueShowcase(option,hero);
       renderCustomFullNutrientVector(data,option,hero);
       const body=document.createElement("div"); body.className="custom-blend-body fingerprint-only";
       const vector=document.createElement("div"); vector.className="custom-blend-card vector-primary";
@@ -12263,7 +12629,7 @@
         trackEvent("result_detail_clicked",{detail:"formula_blend",top_function:displayFunction});
         openResultsDeepDive("personalPortfolioSection");
       });
-      const vectorButton=document.createElement("button"); vectorButton.type="button"; vectorButton.textContent="View targets + delivery"; vectorButton.className="secondary";
+      const vectorButton=document.createElement("button"); vectorButton.type="button"; vectorButton.textContent="View nutrient delivery"; vectorButton.className="secondary";
       vectorButton.addEventListener("click",()=>{
         trackEvent("result_detail_clicked",{detail:"full_nutrient_vector",top_function:displayFunction});
         scrollToTarget("customFullNutrientVector");
