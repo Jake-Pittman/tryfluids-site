@@ -6173,6 +6173,199 @@
     .closest-standard-score { text-align:right; }
     .closest-standard-score strong { display:block; color:#8f1637; font-family:var(--display-font); font-size:1.8rem; font-weight:500; line-height:1; }
     .closest-standard-score span { display:block; max-width:90px; margin-top:4px; color:#685955; font-size:.6rem; font-weight:850; }
+
+    /* Personalized 90-day nutrition plan */
+    .nutrition-plan {
+      position:relative;
+      overflow:hidden;
+      margin:18px 0 22px;
+      padding:clamp(24px,4vw,48px);
+      border:1px solid rgba(117,23,52,.18);
+      border-radius:34px;
+      background:
+        radial-gradient(circle at 100% 0%,rgba(211,165,73,.16),transparent 24rem),
+        radial-gradient(circle at 0% 100%,rgba(79,155,142,.10),transparent 24rem),
+        linear-gradient(145deg,#fffaf1,#f6ede2);
+      box-shadow:0 28px 76px rgba(72,20,38,.09);
+    }
+    .nutrition-plan[hidden] { display:none; }
+    .nutrition-plan::before {
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background-image:linear-gradient(rgba(101,69,60,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(101,69,60,.035) 1px,transparent 1px);
+      background-size:54px 54px;
+      mask-image:linear-gradient(to bottom,black,transparent 75%);
+    }
+    .nutrition-plan > * { position:relative; z-index:1; }
+    .nutrition-plan-head {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      align-items:end;
+      gap:24px;
+      margin-bottom:24px;
+    }
+    .nutrition-plan-head h3 {
+      max-width:850px;
+      margin:7px 0 8px;
+      color:#28151b;
+      font-family:var(--display-font);
+      font-size:clamp(2.35rem,4.6vw,5rem);
+      font-weight:500;
+      line-height:.92;
+      letter-spacing:-.055em;
+    }
+    .nutrition-plan-head p {
+      max-width:800px;
+      margin:0;
+      color:#766762;
+      font-size:.88rem;
+      line-height:1.6;
+    }
+    .nutrition-plan-seal {
+      min-width:154px;
+      padding:15px 17px;
+      border:1px solid rgba(122,8,45,.18);
+      border-radius:19px;
+      color:#7a082d;
+      background:rgba(255,255,255,.62);
+      text-align:right;
+    }
+    .nutrition-plan-seal span,
+    .nutrition-plan-seal strong { display:block; }
+    .nutrition-plan-seal span { color:#8b7772; font-size:.59rem; font-weight:900; letter-spacing:.11em; text-transform:uppercase; }
+    .nutrition-plan-seal strong { margin-top:4px; font-size:.92rem; }
+    .nutrition-plan-focus-grid {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+      margin-bottom:12px;
+    }
+    .nutrition-plan-focus-card {
+      min-height:146px;
+      padding:18px;
+      border:1px solid rgba(116,72,74,.14);
+      border-radius:21px;
+      background:rgba(255,255,255,.66);
+    }
+    .nutrition-plan-focus-card small {
+      display:block;
+      color:#9a7b72;
+      font-size:.58rem;
+      font-weight:900;
+      letter-spacing:.11em;
+      text-transform:uppercase;
+    }
+    .nutrition-plan-focus-card strong {
+      display:block;
+      margin:8px 0 6px;
+      color:#371722;
+      font-size:.92rem;
+      line-height:1.25;
+    }
+    .nutrition-plan-focus-card p { margin:0; color:#796b66; font-size:.7rem; line-height:1.48; }
+    .nutrition-plan-focus-markers { display:flex; flex-wrap:wrap; gap:5px; margin-top:10px; }
+    .nutrition-plan-focus-markers span { padding:5px 7px; border-radius:999px; color:#6d3b47; background:#f2e4df; font-size:.56rem; font-weight:800; }
+    .nutrition-plan-core {
+      display:grid;
+      grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);
+      gap:12px;
+      margin-top:12px;
+    }
+    .nutrition-plan-product,
+    .nutrition-plan-foods {
+      min-height:320px;
+      padding:clamp(20px,2.8vw,30px);
+      border-radius:25px;
+    }
+    .nutrition-plan-product {
+      color:#fff8f0;
+      background:
+        radial-gradient(circle at 100% 0%,rgba(239,200,145,.18),transparent 18rem),
+        linear-gradient(145deg,#350c1b,#771635);
+    }
+    .nutrition-plan-product small,
+    .nutrition-plan-foods > small { display:block; font-size:.6rem; font-weight:900; letter-spacing:.12em; text-transform:uppercase; }
+    .nutrition-plan-product small { color:#efcb91; }
+    .nutrition-plan-foods > small { color:#8f1637; }
+    .nutrition-plan-product h4,
+    .nutrition-plan-foods h4 { margin:8px 0 8px; font-family:var(--display-font); font-size:clamp(1.75rem,3vw,2.65rem); font-weight:500; line-height:.98; }
+    .nutrition-plan-product p { margin:0; color:rgba(255,248,240,.72); font-size:.77rem; line-height:1.55; }
+    .nutrition-plan-product-stat {
+      display:flex;
+      align-items:baseline;
+      gap:8px;
+      margin:22px 0 13px;
+    }
+    .nutrition-plan-product-stat strong { font-family:var(--display-font); font-size:2.8rem; font-weight:500; line-height:.9; }
+    .nutrition-plan-product-stat span { max-width:150px; color:rgba(255,248,240,.67); font-size:.66rem; line-height:1.35; }
+    .nutrition-plan-nutrients { display:flex; flex-wrap:wrap; gap:6px; }
+    .nutrition-plan-nutrients span { padding:7px 9px; border:1px solid rgba(255,255,255,.1); border-radius:999px; color:#fff9f2; background:rgba(255,255,255,.09); font-size:.59rem; font-weight:800; }
+    .nutrition-plan-product-note { display:block; margin-top:16px; color:rgba(255,248,240,.47); font-size:.58rem; line-height:1.45; }
+    .nutrition-plan-foods { border:1px solid rgba(116,72,74,.14); background:rgba(255,255,255,.72); }
+    .nutrition-plan-food-list { display:grid; gap:8px; margin-top:14px; }
+    .nutrition-plan-food-action {
+      display:grid;
+      grid-template-columns:34px minmax(0,1fr);
+      gap:11px;
+      align-items:start;
+      padding:12px;
+      border:1px solid rgba(116,72,74,.12);
+      border-radius:16px;
+      background:#fffdf9;
+    }
+    .nutrition-plan-food-action b { display:grid; width:34px; height:34px; place-items:center; border-radius:12px; color:#fff; background:#7a082d; font-size:.66rem; }
+    .nutrition-plan-food-action strong { display:block; color:#341823; font-size:.75rem; line-height:1.35; }
+    .nutrition-plan-food-action p { margin:4px 0 0; color:#7a6d68; font-size:.63rem; line-height:1.4; }
+    .nutrition-plan-actions {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:9px;
+      margin-top:12px;
+    }
+    .nutrition-plan-action {
+      min-height:118px;
+      padding:16px;
+      border:1px solid rgba(116,72,74,.14);
+      border-radius:18px;
+      background:rgba(255,255,255,.63);
+    }
+    .nutrition-plan-action small { color:#8f1637; font-size:.59rem; font-weight:900; letter-spacing:.11em; text-transform:uppercase; }
+    .nutrition-plan-action p { margin:8px 0 0; color:#594b49; font-size:.7rem; line-height:1.48; }
+    .nutrition-plan-timeline {
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:1px;
+      margin-top:20px;
+      overflow:hidden;
+      border:1px solid rgba(116,72,74,.14);
+      border-radius:20px;
+      background:rgba(116,72,74,.12);
+    }
+    .nutrition-plan-timeline article { min-height:142px; padding:16px; background:#fffaf3; }
+    .nutrition-plan-timeline small { color:#9a7a71; font-size:.57rem; font-weight:900; letter-spacing:.1em; text-transform:uppercase; }
+    .nutrition-plan-timeline strong { display:block; margin:8px 0 6px; color:#361923; font-size:.75rem; }
+    .nutrition-plan-timeline p { margin:0; color:#796c67; font-size:.61rem; line-height:1.43; }
+    .nutrition-plan-retest {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(260px,.42fr);
+      gap:12px;
+      margin-top:12px;
+      padding:20px;
+      border-radius:22px;
+      color:#f8f5ed;
+      background:#112a32;
+    }
+    .nutrition-plan-retest small { color:#83d1d1; font-size:.59rem; font-weight:900; letter-spacing:.11em; text-transform:uppercase; }
+    .nutrition-plan-retest h4 { margin:7px 0 6px; font-family:var(--display-font); font-size:1.75rem; font-weight:500; }
+    .nutrition-plan-retest p { margin:0; color:rgba(248,245,237,.68); font-size:.7rem; line-height:1.5; }
+    .nutrition-plan-marker-chips { display:flex; flex-wrap:wrap; gap:6px; align-content:flex-start; }
+    .nutrition-plan-marker-chips span { padding:7px 9px; border-radius:999px; color:#eafafa; background:rgba(110,208,208,.11); font-size:.58rem; font-weight:800; }
+    .nutrition-plan-guardrails { display:grid; gap:6px; margin-top:12px; }
+    .nutrition-plan-guardrail { padding:11px 13px; border-radius:14px; color:#6d4c28; background:#f7ead2; font-size:.65rem; line-height:1.45; }
+    .nutrition-plan-guardrail.review { color:#7a2539; background:#f7dfe3; }
+    .nutrition-plan-disclaimer { margin:14px 0 0; color:#8a7b76; font-size:.63rem; line-height:1.5; }
 	    @media (max-width:860px) {
         .results-age-hero {
           grid-template-columns:1fr;
@@ -6249,6 +6442,14 @@
       .standard-fit-seal { justify-self:start; text-align:left; }
       .personalized-path-arrow { min-height:34px; transform:none; }
       .standard-fit-grid { grid-template-columns:1fr; }
+      .nutrition-plan-head,
+      .nutrition-plan-core,
+      .nutrition-plan-retest { grid-template-columns:1fr; }
+      .nutrition-plan-seal { justify-self:start; text-align:left; }
+      .nutrition-plan-focus-grid,
+      .nutrition-plan-actions { grid-template-columns:1fr; }
+      .nutrition-plan-timeline { grid-template-columns:1fr; }
+      .nutrition-plan-timeline article { min-height:auto; }
       .graph-shell {
         display:grid;
         grid-template-columns:1fr;
@@ -6325,6 +6526,9 @@
       .results-age-next {
         justify-content:flex-start;
       }
+      .nutrition-plan { padding:20px 14px; border-radius:26px; }
+      .nutrition-plan-product,
+      .nutrition-plan-foods { min-height:0; padding:20px 17px; }
     }
     @media (max-width:340px) {
       .results-age-grid {
@@ -8433,6 +8637,7 @@
         <button type="button" class="jump-button active" data-scroll-target="resultsAgeHero">Age outlook</button>
         <button type="button" class="jump-button" data-scroll-target="biomarkerDashboard">Blood markers</button>
         <button type="button" class="jump-button" data-scroll-target="customBlendHero">Your blend</button>
+        <button type="button" class="jump-button" data-scroll-target="nutritionPlan">90-day plan</button>
         <button type="button" class="jump-button" data-scroll-target="resultsCommerce">Get started</button>
         <button type="button" class="jump-button" data-scroll-target="personalizedOfferComparison">Formula paths</button>
         <button type="button" class="jump-button" data-scroll-target="standardFitDashboard">Membership fit</button>
@@ -8495,6 +8700,30 @@
         <p class="biomarker-disclaimer" id="biomarkerDisclaimer"></p>
       </section>
       <div class="custom-blend-hero section-anchor" id="customBlendHero"></div>
+      <section class="nutrition-plan section-anchor" id="nutritionPlan" aria-labelledby="nutritionPlanTitle" hidden>
+        <header class="nutrition-plan-head">
+          <div>
+            <div class="eyebrow">Your complete action plan</div>
+            <h3 id="nutritionPlanTitle">Your 90-Day Nutrition Plan</h3>
+            <p id="nutritionPlanSubtitle">One daily product, three practical food actions, and a repeat test that determines what changes next.</p>
+          </div>
+          <div class="nutrition-plan-seal"><span>Full Loop</span><strong id="nutritionPlanStatus">Personalized</strong></div>
+        </header>
+        <div class="nutrition-plan-focus-grid" id="nutritionPlanFocus"></div>
+        <div class="nutrition-plan-core">
+          <article class="nutrition-plan-product" id="nutritionPlanProduct"></article>
+          <article class="nutrition-plan-foods">
+            <small>Complete the blueprint</small>
+            <h4>Your food actions</h4>
+            <div class="nutrition-plan-food-list" id="nutritionPlanFoods"></div>
+          </article>
+        </div>
+        <div class="nutrition-plan-actions" id="nutritionPlanActions"></div>
+        <div class="nutrition-plan-timeline" id="nutritionPlanTimeline"></div>
+        <div class="nutrition-plan-retest" id="nutritionPlanRetest"></div>
+        <div class="nutrition-plan-guardrails" id="nutritionPlanGuardrails"></div>
+        <p class="nutrition-plan-disclaimer" id="nutritionPlanDisclaimer"></p>
+      </section>
       <section class="results-commerce section-anchor" id="resultsCommerce" aria-labelledby="resultsCommerceTitle">
         <header class="results-commerce-head">
           <div>
@@ -10998,6 +11227,137 @@
       }));
       renderList();
     }
+    function nutritionPlanCoverageLabel(value) {
+      const coverage=Number(value);
+      if (!Number.isFinite(coverage) || coverage<=0) return "residual target";
+      if (coverage>=90) return "target covered";
+      if (coverage>=50) return "strong support";
+      if (coverage>=20) return "meaningful support";
+      return "supporting amount";
+    }
+    function renderNutritionPlan(plan) {
+      const panel=document.getElementById("nutritionPlan");
+      if (!panel) return;
+      if (!plan?.available) {
+        panel.hidden=true;
+        return;
+      }
+      panel.hidden=false;
+      const make=(tag,className,text)=>{
+        const element=document.createElement(tag);
+        if (className) element.className=className;
+        if (text!==undefined && text!==null) element.textContent=String(text);
+        return element;
+      };
+      document.getElementById("nutritionPlanTitle").textContent=plan.title || "Your 90-Day Nutrition Plan";
+      document.getElementById("nutritionPlanSubtitle").textContent=plan.subtitle || "Your daily product, practical food actions, and follow-up measurement in one plan.";
+      document.getElementById("nutritionPlanStatus").textContent=plan.status==="clinician_review_recommended" ? "Review first" : "Personalized";
+
+      const focus=document.getElementById("nutritionPlanFocus");
+      focus.textContent="";
+      (plan.focus_areas || []).slice(0,3).forEach((item,index)=>{
+        const card=make("article","nutrition-plan-focus-card");
+        card.append(
+          make("small","",item.source==="member_goal" ? "Your stated goal" : `Plan priority ${index+1}`),
+          make("strong","",item.label || "Nutrition priority"),
+          make("p","",item.reason || "This priority is linked to the reviewed profile.")
+        );
+        const markers=(item.markers || []).filter(Boolean).slice(0,4);
+        if (markers.length) {
+          const chips=make("div","nutrition-plan-focus-markers");
+          markers.forEach(marker=>chips.appendChild(make("span","",marker)));
+          card.appendChild(chips);
+        }
+        focus.appendChild(card);
+      });
+
+      const product=plan.daily_product || {};
+      const productCard=document.getElementById("nutritionPlanProduct");
+      productCard.textContent="";
+      productCard.append(
+        make("small","","Your daily product"),
+        make("h4","",product.name || "Daily Foundation"),
+        make("p","",product.instruction || "Use one serving daily.")
+      );
+      const targetCount=Number(product.target_count || 0);
+      const supportedCount=Number(product.meaningfully_supported_target_count || 0);
+      const stat=make("div","nutrition-plan-product-stat");
+      stat.append(
+        make("strong","",targetCount ? `${supportedCount}/${targetCount}` : "Daily"),
+        make("span","",targetCount ? "personalized nutrient targets meaningfully supported" : "one consistent whole-food routine")
+      );
+      productCard.appendChild(stat);
+      const nutrients=make("div","nutrition-plan-nutrients");
+      (product.top_target_contributions || []).slice(0,6).forEach(item=>{
+        const label=item.label || nutrientLabel(item.nutrient || "Nutrient");
+        nutrients.appendChild(make("span","",`${label} · ${nutritionPlanCoverageLabel(item.coverage_percent)}`));
+      });
+      if (nutrients.children.length) productCard.appendChild(nutrients);
+      productCard.appendChild(make("span","nutrition-plan-product-note",product.nutrition_status || "Nutrient values are formulation estimates pending finished-product assay confirmation."));
+
+      const foods=document.getElementById("nutritionPlanFoods");
+      foods.textContent="";
+      const foodActions=(plan.food_actions || []).slice(0,3);
+      if (!foodActions.length) {
+        foods.appendChild(make("p","", "No additional food action was generated from the available nutrient targets and restrictions."));
+      } else {
+        foodActions.forEach((item,index)=>{
+          const row=make("div","nutrition-plan-food-action");
+          const copy=make("div","");
+          copy.append(
+            make("strong","",item.action || item.label),
+            make("p","",item.why || "Selected to support the remaining nutrient targets.")
+          );
+          row.append(make("b","",String(index+1).padStart(2,"0")),copy);
+          foods.appendChild(row);
+        });
+      }
+
+      const actions=document.getElementById("nutritionPlanActions");
+      actions.textContent="";
+      (plan.action_summary || []).slice(0,3).forEach(item=>{
+        const card=make("article","nutrition-plan-action");
+        card.append(make("small","",item.label || "Action"),make("p","",item.action || ""));
+        actions.appendChild(card);
+      });
+
+      const timeline=document.getElementById("nutritionPlanTimeline");
+      timeline.textContent="";
+      (plan.timeline || []).slice(0,5).forEach(item=>{
+        const card=make("article","");
+        card.append(
+          make("small","",Number(item.day)===0 ? "Day 0" : `Day ${Number(item.day)}`),
+          make("strong","",item.label || "Plan checkpoint"),
+          make("p","",item.action || "")
+        );
+        timeline.appendChild(card);
+      });
+
+      const retest=plan.retest || {};
+      const retestPanel=document.getElementById("nutritionPlanRetest");
+      retestPanel.textContent="";
+      const retestCopy=make("div","");
+      retestCopy.append(
+        make("small","","The value of the loop"),
+        make("h4","",`Retest at day ${Number(retest.target_day || 90)}`),
+        make("p","",retest.instruction || "Repeat the same core panel and use the observed direction to update the next plan.")
+      );
+      const markerChips=make("div","nutrition-plan-marker-chips");
+      (retest.markers || []).slice(0,9).forEach(item=>markerChips.appendChild(make("span","",item.label || item.key)));
+      retestPanel.append(retestCopy,markerChips);
+
+      const guardrails=document.getElementById("nutritionPlanGuardrails");
+      guardrails.textContent="";
+      (plan.guardrails || []).forEach(item=>guardrails.appendChild(make("div",`nutrition-plan-guardrail ${item.level || "context"}`,item.message || "")));
+      document.getElementById("nutritionPlanDisclaimer").textContent=plan.disclaimer || "Nutrition and wellness decision support only; not diagnosis or treatment.";
+      trackEvent("nutrition_plan_viewed",{
+        plan_version:String(plan.version || "nutrition_plan_v1"),
+        plan_status:String(plan.status || "ready"),
+        focus_count:(plan.focus_areas || []).length,
+        food_action_count:foodActions.length,
+        retest_day:Number(retest.target_day || 90)
+      });
+    }
     function profileFitPercent(value) {
       const number=Number(value);
       return Number.isFinite(number) ? Math.max(0,Math.min(100,number)) : null;
@@ -11260,6 +11620,7 @@
       renderResultsAgeHero(data,blendOptions[0] || null);
       renderBiomarkerDashboard(data.biomarker_report || {});
       renderCustomBlendHero(blendOptions[0] || null,data);
+      renderNutritionPlan(data.nutrition_plan || {});
       renderResultsCommerce(data,blendOptions[0] || null);
       renderPersonalizedOfferComparison(blendOptions.slice(0,4));
       renderStandardFitDashboard(data.standard_blend_profile_scores || []);
