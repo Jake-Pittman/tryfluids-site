@@ -18,7 +18,7 @@ window.FLUIDS_PUBLIC_WAITLIST_ENDPOINT = window.FLUIDS_PUBLIC_WAITLIST_ENDPOINT 
 // hosted authentication routes are enabled in the target environment.
 window.FLUIDS_FEATURES = Object.assign(
   {
-    MEMBER_PORTAL: false,
+    MEMBER_PORTAL: true,
     REQUIRE_AUTH_FOR_LABS: false,
   },
   window.FLUIDS_FEATURES || {},
