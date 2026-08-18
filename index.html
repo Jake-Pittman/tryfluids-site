@@ -8528,6 +8528,457 @@
       .results-commerce-badge { justify-self:start; }
       .standard-fit-interest-button { grid-column:1 / -1; }
     }
+
+    /* Cookie-backed member portal. Hidden unless explicitly enabled at runtime. */
+    .member-auth-modal[hidden],
+    .member-auth-panel-state[hidden],
+    .member-dashboard-state[hidden],
+    .member-dashboard-status[hidden],
+    .member-test-context[hidden],
+    #memberProgressSection[hidden],
+    .longitudinal-comparison[hidden],
+    #longitudinalComparisonJump[hidden],
+    #memberAccessButton[hidden] { display:none !important; }
+    body.member-auth-modal-open { overflow:hidden; }
+    .member-auth-modal {
+      position:fixed;
+      inset:0;
+      z-index:140;
+      display:grid;
+      place-items:center;
+      padding:22px;
+    }
+    .member-auth-backdrop {
+      position:absolute;
+      inset:0;
+      background:rgba(39,18,26,.62);
+      backdrop-filter:blur(12px);
+    }
+    .member-auth-dialog {
+      position:relative;
+      z-index:1;
+      width:min(100%,560px);
+      max-height:calc(100vh - 44px);
+      overflow:auto;
+      padding:30px;
+      border:1px solid rgba(138,11,47,.16);
+      border-radius:30px;
+      color:var(--ink);
+      background:#fffaf4;
+      box-shadow:0 32px 100px rgba(43,15,25,.28);
+    }
+    .member-auth-dialog-head,
+    .member-dashboard-head,
+    .member-test-context,
+    .longitudinal-comparison-head {
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:18px;
+    }
+    .member-auth-dialog h2,
+    .member-dashboard-head h1,
+    .longitudinal-comparison h3 {
+      margin:6px 0 8px;
+      font-family:var(--display-font);
+      font-weight:500;
+      letter-spacing:-.035em;
+    }
+    .member-auth-dialog h2 { font-size:2.35rem; }
+    .member-auth-dialog p { color:var(--muted); line-height:1.55; }
+    .member-auth-close {
+      min-width:auto;
+      padding:8px 11px;
+      color:var(--ink);
+      background:transparent;
+      box-shadow:none;
+    }
+    .member-auth-actions,
+    .member-session-actions,
+    .member-dashboard-actions {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:20px;
+    }
+    .member-auth-action {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:42px;
+      padding:10px 18px;
+      border:1px solid transparent;
+      border-radius:14px;
+      color:#fff9f2;
+      background:linear-gradient(135deg,#75021f,#99143b);
+      font-size:.78rem;
+      font-weight:800;
+      text-decoration:none;
+    }
+    .member-auth-action.secondary {
+      color:var(--ink);
+      border-color:var(--line);
+      background:#fff;
+      box-shadow:none;
+    }
+    .member-auth-assurance {
+      margin-top:20px;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:17px;
+      background:rgba(255,255,255,.72);
+      color:var(--muted);
+      font-size:.7rem;
+      line-height:1.5;
+    }
+    .member-auth-status {
+      min-height:1.4em;
+      margin-top:14px;
+      color:var(--muted);
+      font-size:.72rem;
+      line-height:1.5;
+    }
+    .member-auth-status.error { color:var(--danger); }
+    .member-consent-form { display:grid; gap:12px; margin-top:18px; }
+    .member-consent-choice {
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:10px;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:17px;
+      background:#fff;
+    }
+    .member-consent-choice input { margin-top:3px; }
+    .member-consent-choice strong,
+    .member-consent-choice small { display:block; }
+    .member-consent-choice small { margin-top:4px; color:var(--muted); line-height:1.45; }
+    .member-session-identity {
+      padding:16px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fff;
+    }
+    .member-session-identity small,
+    .member-session-identity strong { display:block; }
+    .member-session-identity small { color:var(--muted); }
+    .member-session-identity strong { margin-top:5px; overflow-wrap:anywhere; }
+    .member-dashboard {
+      margin-top:28px;
+      padding:clamp(20px,4vw,42px);
+      border:1px solid rgba(138,11,47,.14);
+      border-radius:34px;
+      background:linear-gradient(145deg,#fffaf4,#fff 60%,#f8eee9);
+      box-shadow:var(--shadow);
+    }
+    .member-dashboard-head h1 { font-size:clamp(2.45rem,5vw,4.5rem); }
+    .member-dashboard-head p { margin:0; color:var(--muted); }
+    .member-dashboard-status {
+      margin-top:20px;
+      padding:14px 16px;
+      border:1px solid var(--line);
+      border-radius:17px;
+      color:var(--muted);
+      background:#fff;
+    }
+    .member-dashboard-status.error { color:var(--danger); border-color:rgba(179,54,72,.28); }
+    .member-dashboard-summary {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      margin-top:22px;
+    }
+    .member-summary-card,
+    .member-next-test-card,
+    .member-test-history-card {
+      padding:18px;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:rgba(255,255,255,.84);
+    }
+    .member-summary-card small,
+    .member-summary-card strong,
+    .member-summary-card span { display:block; }
+    .member-summary-card small { color:var(--muted); font-size:.65rem; text-transform:uppercase; letter-spacing:.08em; }
+    .member-summary-card strong { margin-top:8px; font-family:var(--display-font); font-size:1.7rem; }
+    .member-summary-card span { margin-top:4px; color:var(--muted); font-size:.7rem; }
+    .member-next-test-card { margin-top:14px; display:grid; grid-template-columns:1fr auto; gap:18px; align-items:center; }
+    .member-next-test-card h2 { margin:6px 0; font-family:var(--display-font); font-size:2rem; font-weight:500; }
+    .member-next-test-card p { margin:0; color:var(--muted); line-height:1.5; }
+    .member-progress-panel {
+      margin-top:26px;
+      padding:clamp(20px,4vw,36px);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:30px;
+      color:#fff9f2;
+      background:
+        radial-gradient(circle at 82% 8%,rgba(127,209,211,.16),transparent 34%),
+        linear-gradient(145deg,#132a35,#173743 58%,#3b2430);
+      box-shadow:0 24px 70px rgba(27,35,40,.16);
+    }
+    .member-progress-head {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(210px,.48fr);
+      gap:24px;
+      align-items:end;
+    }
+    .member-progress-head h2 {
+      margin:7px 0 8px;
+      font-family:var(--display-font);
+      font-size:clamp(2.1rem,4vw,3.6rem);
+      font-weight:500;
+      letter-spacing:-.035em;
+    }
+    .member-progress-head p { margin:0; color:rgba(255,249,242,.7); line-height:1.55; }
+    .member-progress-definition {
+      padding:14px 16px;
+      border:1px solid rgba(255,255,255,.13);
+      border-radius:18px;
+      color:rgba(255,249,242,.72);
+      background:rgba(255,255,255,.07);
+      font-size:.68rem;
+      line-height:1.5;
+    }
+    .member-progress-overview {
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:10px;
+      margin-top:22px;
+    }
+    .member-progress-stat {
+      min-width:0;
+      padding:14px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:17px;
+      background:rgba(255,255,255,.07);
+    }
+    .member-progress-stat small,
+    .member-progress-stat strong,
+    .member-progress-stat span { display:block; }
+    .member-progress-stat small { color:rgba(255,249,242,.58); font-size:.58rem; font-weight:900; letter-spacing:.09em; text-transform:uppercase; }
+    .member-progress-stat strong { margin-top:7px; font-family:var(--display-font); font-size:1.55rem; font-weight:500; }
+    .member-progress-stat span { margin-top:4px; color:rgba(255,249,242,.64); font-size:.62rem; line-height:1.4; }
+    .member-progress-metrics {
+      display:flex;
+      gap:8px;
+      margin-top:22px;
+      padding-bottom:4px;
+      overflow-x:auto;
+      scrollbar-width:thin;
+    }
+    .member-progress-metric {
+      flex:0 0 auto;
+      min-width:auto;
+      padding:8px 12px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:999px;
+      color:rgba(255,249,242,.74);
+      background:rgba(255,255,255,.06);
+      box-shadow:none;
+      font-size:.63rem;
+      font-weight:850;
+    }
+    .member-progress-metric[aria-pressed="true"] {
+      color:#18333e;
+      border-color:#a8e7e4;
+      background:#b8ece8;
+    }
+    .member-progress-chart-card {
+      margin-top:12px;
+      padding:18px;
+      border:1px solid rgba(255,255,255,.13);
+      border-radius:24px;
+      background:rgba(6,26,36,.34);
+    }
+    .member-progress-chart-head {
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      align-items:start;
+    }
+    .member-progress-chart-head small,
+    .member-progress-chart-head strong,
+    .member-progress-chart-head span { display:block; }
+    .member-progress-chart-head small { color:#9edfdc; font-size:.58rem; font-weight:900; letter-spacing:.09em; text-transform:uppercase; }
+    .member-progress-chart-head strong { margin-top:5px; font-family:var(--display-font); font-size:1.7rem; font-weight:500; }
+    .member-progress-chart-head span { color:rgba(255,249,242,.65); font-size:.64rem; }
+    .member-progress-current { text-align:right; }
+    .member-progress-current strong { font-size:1.5rem; }
+    .member-progress-chart-scroll { margin-top:12px; overflow-x:auto; }
+    .member-progress-chart {
+      display:block;
+      width:100%;
+      min-width:620px;
+      height:auto;
+    }
+    .member-progress-chart .grid-line { stroke:rgba(255,255,255,.11); stroke-width:1; }
+    .member-progress-chart .target-band { fill:rgba(126,218,211,.12); }
+    .member-progress-chart .trend-line { fill:none; stroke:#b3ebe7; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; }
+    .member-progress-chart .trend-point { fill:#fff9f2; stroke:#71d1d0; stroke-width:4; }
+    .member-progress-chart .point-label { fill:rgba(255,249,242,.86); font-size:14px; font-weight:800; text-anchor:middle; }
+    .member-progress-chart .date-label { fill:rgba(255,249,242,.56); font-size:11px; text-anchor:middle; }
+    .member-progress-chart .axis-label { fill:rgba(255,249,242,.52); font-size:11px; }
+    .member-progress-chart-empty {
+      margin-top:14px;
+      padding:18px;
+      border:1px dashed rgba(255,255,255,.17);
+      border-radius:17px;
+      color:rgba(255,249,242,.68);
+      font-size:.7rem;
+    }
+    .member-progress-callouts {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+      margin-top:14px;
+    }
+    .member-progress-callout {
+      padding:14px;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:17px;
+      background:rgba(255,255,255,.07);
+    }
+    .member-progress-callout.progression { border-color:rgba(151,235,202,.32); background:rgba(79,163,123,.14); }
+    .member-progress-callout.regression { border-color:rgba(255,195,125,.3); background:rgba(174,105,54,.13); }
+    .member-progress-callout small,
+    .member-progress-callout strong,
+    .member-progress-callout span { display:block; }
+    .member-progress-callout small { color:rgba(255,249,242,.56); font-size:.57rem; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
+    .member-progress-callout strong { margin-top:6px; font-size:.78rem; }
+    .member-progress-callout span { margin-top:5px; color:rgba(255,249,242,.68); font-size:.62rem; line-height:1.45; }
+    .member-progress-test-rail {
+      position:relative;
+      display:flex;
+      gap:10px;
+      margin-top:20px;
+      padding:18px 0 2px;
+      overflow-x:auto;
+    }
+    .member-progress-test-rail::before {
+      content:"";
+      position:absolute;
+      top:29px;
+      left:18px;
+      right:18px;
+      height:1px;
+      background:rgba(255,255,255,.2);
+    }
+    .member-progress-test-node {
+      position:relative;
+      z-index:1;
+      flex:1 0 150px;
+      min-width:150px;
+      padding-top:28px;
+      color:rgba(255,249,242,.72);
+      font-size:.62rem;
+    }
+    .member-progress-test-node::before {
+      content:"";
+      position:absolute;
+      top:5px;
+      left:7px;
+      width:13px;
+      height:13px;
+      border:4px solid #173440;
+      border-radius:50%;
+      background:#9fe3df;
+      box-shadow:0 0 0 1px rgba(255,255,255,.22);
+    }
+    .member-progress-test-node strong,
+    .member-progress-test-node span { display:block; }
+    .member-progress-test-node strong { color:#fff9f2; font-size:.72rem; }
+    .member-progress-test-node span { margin-top:3px; }
+    .member-progress-boundary {
+      margin:18px 0 0;
+      color:rgba(255,249,242,.54);
+      font-size:.59rem;
+      line-height:1.45;
+    }
+    .member-history-head { display:flex; justify-content:space-between; gap:16px; align-items:end; margin:28px 0 12px; }
+    .member-history-head h2 { margin:4px 0 0; font-family:var(--display-font); font-size:2rem; font-weight:500; }
+    .member-history-list { display:grid; gap:10px; }
+    .member-test-history-card { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:18px; align-items:center; }
+    .member-test-history-card h3 { margin:5px 0; font-size:1rem; }
+    .member-test-history-card p { margin:0; color:var(--muted); font-size:.7rem; line-height:1.45; }
+    .member-test-meta { display:flex; flex-wrap:wrap; gap:7px; }
+    .member-test-meta span { padding:5px 8px; border-radius:999px; background:#f3e7e2; color:#7b2941; font-size:.61rem; font-weight:800; }
+    .member-test-context {
+      margin:16px 0;
+      padding:16px 18px;
+      border:1px solid rgba(138,11,47,.18);
+      border-radius:20px;
+      background:linear-gradient(135deg,#fff5ef,#fff);
+    }
+    .member-test-context small,
+    .member-test-context strong,
+    .member-test-context span { display:block; }
+    .member-test-context small { color:#8f1637; font-weight:900; text-transform:uppercase; letter-spacing:.08em; }
+    .member-test-context strong { margin-top:5px; font-size:1rem; }
+    .member-test-context span { margin-top:4px; color:var(--muted); font-size:.68rem; }
+    .member-test-context button { min-width:auto; }
+    .member-collection-date {
+      display:grid;
+      gap:5px;
+      min-width:190px;
+      color:#6f5260;
+      font-size:.62rem;
+      font-weight:800;
+    }
+    .member-collection-date input {
+      width:100%;
+      padding:10px 12px;
+      border:1px solid rgba(138,11,47,.2);
+      border-radius:12px;
+      color:var(--ink);
+      background:#fff;
+      font:inherit;
+    }
+    .longitudinal-comparison {
+      margin:0 0 18px;
+      padding:clamp(20px,4vw,36px);
+      border-radius:30px;
+      color:#fff9f2;
+      background:linear-gradient(145deg,#40101f,#74122f 58%,#9f2943);
+      box-shadow:0 24px 70px rgba(78,8,33,.2);
+    }
+    .longitudinal-comparison h3 { font-size:clamp(2rem,4vw,3.25rem); }
+    .longitudinal-comparison-head p { max-width:700px; margin:0; color:rgba(255,249,242,.72); line-height:1.55; }
+    .longitudinal-comparison-period { padding:9px 12px; border:1px solid rgba(255,255,255,.18); border-radius:999px; white-space:nowrap; font-size:.67rem; font-weight:800; }
+    .longitudinal-summary-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:22px; }
+    .longitudinal-summary-card { padding:15px; border:1px solid rgba(255,255,255,.14); border-radius:18px; background:rgba(255,255,255,.08); }
+    .longitudinal-summary-card small,
+    .longitudinal-summary-card strong,
+    .longitudinal-summary-card span { display:block; }
+    .longitudinal-summary-card small { color:rgba(255,249,242,.62); font-size:.6rem; text-transform:uppercase; letter-spacing:.08em; }
+    .longitudinal-summary-card strong { margin-top:7px; font-family:var(--display-font); font-size:1.65rem; }
+    .longitudinal-summary-card span { margin-top:3px; color:rgba(255,249,242,.68); font-size:.65rem; }
+    .longitudinal-marker-list { display:grid; gap:8px; margin-top:18px; }
+    .longitudinal-marker-row { display:grid; grid-template-columns:minmax(140px,1.4fr) repeat(3,minmax(80px,.7fr)); gap:10px; align-items:center; padding:11px 13px; border-radius:14px; background:rgba(255,255,255,.08); font-size:.68rem; }
+    .longitudinal-marker-row strong { font-size:.74rem; }
+    .longitudinal-marker-row .favorable { color:#a9f1cf; }
+    .longitudinal-marker-row .caution { color:#ffd49c; }
+    .longitudinal-empty { margin-top:18px; padding:16px; border:1px solid rgba(255,255,255,.16); border-radius:17px; color:rgba(255,249,242,.76); }
+    @media (max-width:760px) {
+      .member-auth-dialog { padding:22px; border-radius:24px; }
+      .member-dashboard-head,
+      .member-test-context,
+      .longitudinal-comparison-head,
+      .member-progress-head { display:grid; }
+      .member-dashboard-summary { grid-template-columns:1fr; }
+      .member-next-test-card,
+      .member-test-history-card { grid-template-columns:1fr; }
+      .member-dashboard-actions button,
+      .member-next-test-card button,
+      .member-test-history-card button { width:100%; }
+      .longitudinal-summary-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .longitudinal-marker-row { grid-template-columns:1fr 1fr; }
+      .longitudinal-marker-row strong { grid-column:1 / -1; }
+      .member-progress-overview { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .member-progress-callouts { grid-template-columns:1fr; }
+      .member-progress-chart-head { display:grid; }
+      .member-progress-current { text-align:left; }
+    }
   </style>
 </head>
 <body>
@@ -8543,6 +8994,7 @@
         </nav>
         <div class="app-pill">Daily drink mix</div>
         <div class="privacy">● Encrypted analysis</div>
+        <button type="button" class="founder-access-button member-access-button" id="memberAccessButton" hidden>Member sign in</button>
         <button type="button" class="founder-access-button" id="founderAccessButton">Founder login</button>
       </div>
     </header>
@@ -8550,7 +9002,7 @@
       <div>
         <div class="eyebrow">The complete Fluids membership</div>
           <h1>Test. Drink. Retest. See what changes.</h1>
-        <p class="lead">The Full Loop Membership begins with a Fluids blood test, turns the results into a personalized 90-day nutrition plan and daily blend, then tests again at day 90 to show what changed and update what comes next.</p>
+        <p class="lead">The Full Loop Membership begins with a Fluids blood test, turns the results into a personalized 90-day nutrition plan and daily blend, then retests around day 90 to show what changed and update what comes next.</p>
         <div class="founding-member-offer" aria-label="Fluids founding membership invitation">
           <div class="founding-member-copy">
             <span>Founding member invitation</span>
@@ -8566,7 +9018,7 @@
           <span>Fluids baseline blood test</span>
           <span>90 Daily Foundation sticks</span>
           <span>Personalized 90-day nutrition plan</span>
-          <span>Day-90 retest + refreshed plan</span>
+          <span>Follow-up retest around day 90 + refreshed plan</span>
           <span class="founding-member-bonus">Complimentary Daily Hydration mix</span>
         </div>
       </div>
@@ -8732,7 +9184,7 @@
           <p>A blood test, personalized nutrition plan, daily product, and measured follow-up in one connected experience.</p>
           <strong class="pack-count">$299/month</strong>
           <div class="membership-plan-highlight"><span>Included with Full Loop</span><strong>Your personalized 90-day nutrition plan</strong><small>Biomarker priorities, food actions, Daily Foundation guidance, a weekly focus, and a plan refreshed after your retest.</small></div>
-          <ul><li>FLUIDS baseline blood test and personal dashboard</li><li>90 Daily Foundation sticks across three monthly deliveries</li><li>Second FLUIDS blood test at day 90</li><li>Before-and-after review and refreshed nutrition plan</li></ul>
+          <ul><li>FLUIDS baseline blood test and personal dashboard</li><li>90 Daily Foundation sticks across three monthly deliveries</li><li>Follow-up FLUIDS blood test around day 90</li><li>Before-and-after review and refreshed nutrition plan</li></ul>
           <div class="membership-card-actions"><button type="button" data-open-waitlist data-interest-type="full_loop_membership_reservation" data-interest-source="homepage_membership" data-blend-id="full_loop_membership" data-blend-name="Full Loop Membership" data-product-price="$299/month · 3 months">Start my Full Loop</button></div>
           <small class="membership-card-note">Three-month initial membership · $897 total. We confirm testing availability and fulfillment before payment.</small>
         </article>
@@ -8894,6 +9346,18 @@
             <button type="button" class="secondary" data-manual-labs data-manual-source="upload_panel">Enter manually</button>
           </div>
         </div>
+        <section class="member-test-context" id="memberTestContext" aria-live="polite" hidden>
+          <div>
+            <small>Saving securely to your member account</small>
+            <strong id="memberTestContextType">Baseline test</strong>
+            <span id="memberTestContextId">Your reviewed values and result will be attached to this test.</span>
+          </div>
+          <label class="member-collection-date" for="memberCollectionDate">
+            Specimen collection date
+            <input type="date" id="memberCollectionDate" autocomplete="off">
+          </label>
+          <button type="button" class="secondary" id="memberCancelTestButton">Back to dashboard</button>
+        </section>
         <label class="drop" id="dropZone" for="pdfInput">
           <input id="pdfInput" type="file" accept="application/pdf,image/jpeg,image/png,.pdf,.jpg,.jpeg,.png" multiple>
           <strong id="fileLabel">Drop your blood-test PDF or photos here</strong>
@@ -8986,9 +9450,9 @@
           <div class="model-run-consent">
             <label class="check" for="dataLoopConsent">
               <input id="dataLoopConsent" type="checkbox">
-              <span><strong>Save this analysis to improve Fluids.</strong>I consent to Fluids retaining my reviewed lab values, questionnaire answers, and generated recommendation for model evaluation and improvement.</span>
+              <span><strong id="dataLoopConsentTitle">Save this analysis to improve Fluids.</strong><span id="dataLoopConsentCopy">I consent to Fluids retaining my reviewed lab values, questionnaire answers, and generated recommendation for model evaluation and improvement.</span></span>
             </label>
-            <p>The record is encrypted and pseudonymous. The original PDF is deleted after extraction, and no name or email is attached to the model run.</p>
+            <p id="dataLoopConsentNote">The record is encrypted and pseudonymous. The original PDF is deleted after extraction, and no name or email is attached to the model run.</p>
           </div>
         </details>
         <div class="question-actions">
@@ -9064,6 +9528,7 @@
 
     <section class="results app-view" id="results">
       <nav class="jump-nav results-top-nav" id="resultsTopNav" aria-label="Results sections">
+        <button type="button" class="jump-button" id="longitudinalComparisonJump" data-scroll-target="longitudinalComparison" hidden>Progress</button>
         <button type="button" class="jump-button active" data-scroll-target="resultsAgeHero">Age outlook</button>
         <button type="button" class="jump-button" data-scroll-target="biomarkerDashboard">Blood markers</button>
         <button type="button" class="jump-button" data-scroll-target="customBlendHero">Your blend</button>
@@ -9081,6 +9546,19 @@
           <button type="button" class="secondary" id="startNewAnalysisBtn">Start a new analysis</button>
         </div>
       </div>
+      <section class="longitudinal-comparison section-anchor" id="longitudinalComparison" aria-labelledby="longitudinalComparisonTitle" hidden>
+        <header class="longitudinal-comparison-head">
+          <div>
+            <div class="eyebrow" style="color:#f0cfd6">Your measured progress</div>
+            <h3 id="longitudinalComparisonTitle">What changed between tests.</h3>
+            <p id="longitudinalComparisonIntro">Your repeat panel is compared with the prior test using matching markers and units.</p>
+          </div>
+          <div class="longitudinal-comparison-period" id="longitudinalComparisonPeriod">Previous test → current test</div>
+        </header>
+        <div class="longitudinal-summary-grid" id="longitudinalSummaryGrid"></div>
+        <div class="longitudinal-marker-list" id="longitudinalMarkerList"></div>
+        <div class="longitudinal-empty" id="longitudinalEmpty" hidden></div>
+      </section>
       <section class="results-age-hero section-anchor" id="resultsAgeHero">
         <div class="results-age-copy">
           <div class="eyebrow">Biological age outlook</div>
@@ -9168,7 +9646,7 @@
             <div>
               <small>Flagship membership</small>
               <h4>Full Loop Membership</h4>
-              <p>Baseline blood test, personal biomarker dashboard, 90 Daily Foundation sticks, a day-90 retest, and an updated nutrition plan.</p>
+              <p>Baseline blood test, personal biomarker dashboard, 90 Daily Foundation sticks, a follow-up retest, and an updated nutrition plan.</p>
               <div class="results-commerce-meta"><span>$299/month</span><span>3 months</span><span>$897 total</span></div>
               <button type="button" data-open-waitlist data-interest-type="full_loop_membership_reservation" data-interest-source="results_full_loop" data-blend-id="full_loop_membership" data-blend-name="Full Loop Membership" data-product-price="$299/month · 3 months">Start my Full Loop</button>
             </div>
@@ -9285,6 +9763,56 @@
       </div>
         </div>
       </details>
+    </section>
+
+    <section class="member-dashboard app-view" id="memberDashboard" aria-labelledby="memberDashboardTitle">
+      <header class="member-dashboard-head">
+        <div>
+          <div class="eyebrow">Your Fluids membership</div>
+          <h1 id="memberDashboardTitle">Your testing timeline.</h1>
+          <p id="memberDashboardEmail">Sign in to securely load your saved tests.</p>
+        </div>
+        <div class="member-dashboard-actions">
+          <button type="button" class="secondary" id="memberDashboardRefreshButton">Refresh</button>
+          <button type="button" class="secondary" id="memberDashboardAccountButton">Account</button>
+          <button type="button" class="secondary" id="memberDashboardLogoutButton">Sign out</button>
+        </div>
+      </header>
+      <div class="member-dashboard-status" id="memberDashboardStatus" role="status" aria-live="polite">Loading your member timeline…</div>
+      <div class="member-dashboard-summary member-dashboard-state" id="memberDashboardSummary" hidden></div>
+      <article class="member-next-test-card member-dashboard-state" id="memberNextTestCard" hidden></article>
+      <section class="member-progress-panel member-dashboard-state" id="memberProgressSection" aria-labelledby="memberProgressTitle" hidden>
+        <header class="member-progress-head">
+          <div>
+            <div class="eyebrow" style="color:#9fe3df">Your longitudinal record</div>
+            <h2 id="memberProgressTitle">See the whole trajectory.</h2>
+            <p>Your newest report compares with the previous test in detail. This view keeps every completed test visible so you can follow the longer pattern.</p>
+          </div>
+          <div class="member-progress-definition"><strong>How movement is labeled:</strong> progression means a targeted marker moved toward its Fluids model target band; regression means it moved away. Context-dependent markers are described only as increased, decreased, or stable.</div>
+        </header>
+        <div class="member-progress-overview" id="memberProgressOverview"></div>
+        <nav class="member-progress-metrics" id="memberProgressMetrics" aria-label="Choose a longitudinal marker"></nav>
+        <article class="member-progress-chart-card">
+          <header class="member-progress-chart-head">
+            <div><small id="memberProgressMetricType">Longitudinal marker</small><strong id="memberProgressMetricTitle">Choose a marker</strong><span id="memberProgressMetricSubtitle">Completed tests appear in specimen-date order.</span></div>
+            <div class="member-progress-current"><small>Latest recorded value</small><strong id="memberProgressCurrentValue">—</strong><span id="memberProgressCurrentMovement">No comparison yet</span></div>
+          </header>
+          <div class="member-progress-chart-scroll">
+            <svg class="member-progress-chart" id="memberProgressChart" viewBox="0 0 820 300" role="img" aria-labelledby="memberProgressMetricTitle memberProgressMetricSubtitle"></svg>
+          </div>
+          <div class="member-progress-chart-empty" id="memberProgressChartEmpty" hidden></div>
+        </article>
+        <div class="member-progress-callouts" id="memberProgressCallouts"></div>
+        <div class="member-progress-test-rail" id="memberProgressTestRail" aria-label="Completed test timeline"></div>
+        <p class="member-progress-boundary" id="memberProgressBoundary">Longitudinal movement is descriptive wellness-planning information. It does not establish causation, treatment effect, diagnosis, or clinical efficacy.</p>
+      </section>
+      <section class="member-dashboard-state" id="memberHistorySection" aria-labelledby="memberHistoryTitle" hidden>
+        <header class="member-history-head">
+          <div><div class="eyebrow">Saved securely</div><h2 id="memberHistoryTitle">Test history</h2></div>
+          <span class="section-copy" id="memberHistoryCount"></span>
+        </header>
+        <div class="member-history-list" id="memberTestHistory"></div>
+      </section>
     </section>
 
     <section class="standard-view app-view" id="standardView">
@@ -9506,9 +10034,74 @@
           <div class="waitlist-field"><label for="waitlistEmail">Email</label><input id="waitlistEmail" name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"></div>
           <button type="submit" class="waitlist-submit">Reserve my first box</button>
           <div class="waitlist-status" id="waitlistStatus" aria-live="polite"></div>
-          <a class="waitlist-mail-link" id="waitlistMailLink" href="mailto:jakepittman2@gmail.com">Send the request by email instead</a>
+          <a class="waitlist-mail-link" id="waitlistMailLink" href="mailto:">Send the request by email instead</a>
           <p class="interest-privacy-note">No survey and no payment. By submitting, you agree to receive Fluids launch updates. You can unsubscribe at any time.</p>
         </form>
+      </section>
+    </div>
+
+    <div class="member-auth-modal" id="memberAuthModal" hidden>
+      <div class="member-auth-backdrop" data-close-member-auth></div>
+      <section class="member-auth-dialog" role="dialog" aria-modal="true" aria-labelledby="memberAuthTitle" aria-describedby="memberAuthDescription">
+        <header class="member-auth-dialog-head">
+          <div>
+            <div class="eyebrow">Private member access</div>
+            <h2 id="memberAuthTitle">Your Fluids account.</h2>
+          </div>
+          <button type="button" class="member-auth-close" id="memberAuthClose" data-close-member-auth aria-label="Close member account">Close</button>
+        </header>
+        <p id="memberAuthDescription">Sign in to keep each blood test, plan, and follow-up comparison connected to you across devices.</p>
+
+        <div class="member-auth-panel-state" id="memberAuthLoadingPanel">
+          <p>Checking your secure member session…</p>
+        </div>
+
+        <div class="member-auth-panel-state" id="memberSignedOutPanel" hidden>
+          <div class="member-auth-actions">
+            <button type="button" id="memberLoginButton">Sign in</button>
+            <button type="button" class="secondary" id="memberSignupButton">Create an account</button>
+          </div>
+          <div class="member-auth-assurance"><strong>Email + password are handled by our hosted authentication service.</strong> Fluids receives a secure session cookie; this page never receives, logs, or stores your password.</div>
+        </div>
+
+        <div class="member-auth-panel-state" id="memberVerificationPanel" hidden>
+          <h3>Verify your email to continue.</h3>
+          <p>Open the verification message sent by the authentication service, then return here and check your account again.</p>
+          <div class="member-auth-actions">
+            <button type="button" id="memberVerificationRefreshButton">I verified my email</button>
+            <button type="button" class="secondary" data-member-login>Return to sign in</button>
+          </div>
+        </div>
+
+        <div class="member-auth-panel-state" id="memberConsentPanel" hidden>
+          <h3>Choose how Fluids may use your information.</h3>
+          <p>Service processing and longitudinal storage are required for the membership. Model improvement is optional.</p>
+          <form class="member-consent-form" id="memberConsentForm">
+            <label class="member-consent-choice">
+              <input type="checkbox" id="memberServiceProcessingConsent" required>
+              <span><strong>Service processing · required</strong><small>Analyze your labs and personal context to provide your bloodwork report, nutrition blueprint, formula, and plan.</small></span>
+            </label>
+            <label class="member-consent-choice">
+              <input type="checkbox" id="memberLongitudinalStorageConsent" required>
+              <span><strong>Longitudinal storage · required</strong><small>Securely retain completed tests so Fluids can compare your baseline with later retests.</small></span>
+            </label>
+            <label class="member-consent-choice">
+              <input type="checkbox" id="memberModelImprovementConsent">
+              <span><strong>Model improvement · optional</strong><small>Permit appropriately protected data from your analyses to support evaluation and improvement of Fluids models.</small></span>
+            </label>
+            <button type="submit" id="memberConsentSubmitButton">Save my choices</button>
+          </form>
+        </div>
+
+        <div class="member-auth-panel-state" id="memberSessionPanel" hidden>
+          <div class="member-session-identity"><small>Signed in securely</small><strong id="memberSessionEmail">Member account</strong></div>
+          <div class="member-session-actions">
+            <button type="button" id="memberOpenDashboardButton">Open my dashboard</button>
+            <button type="button" class="secondary" id="memberLogoutButton">Sign out</button>
+            <button type="button" class="secondary" id="memberLogoutAllButton">Sign out all devices</button>
+          </div>
+        </div>
+        <div class="member-auth-status" id="memberAuthStatus" role="status" aria-live="polite"></div>
       </section>
     </div>
 
@@ -9557,13 +10150,16 @@
     let selectedFiles = [];
     let currentQuestion = 0;
     const dataLoopConsentVersion = "2026-07-29-v1";
-    const viewIds = ["uploadView","reviewView","questionnaireView","results","standardView","discoveryView"];
+    const viewIds = ["uploadView","reviewView","questionnaireView","results","standardView","discoveryView","memberDashboard"];
     let standardBlendLoaded = false;
     let homeFunctionMenuLoaded = false;
     let homeFunctionMenuLanes = [];
     let lastHomeVectorModalTrigger = null;
     let lastWaitlistModalTrigger = null;
-    const publicWaitlistEndpoint = "https://formsubmit.co/ajax/jakepittman2@gmail.com";
+    const publicContactEmail = String(window.FLUIDS_CONTACT_EMAIL || "support@tryfluids.com").trim();
+    const publicWaitlistEndpoint = String(
+      window.FLUIDS_PUBLIC_WAITLIST_ENDPOINT || `https://formsubmit.co/ajax/${publicContactEmail}`
+    ).trim();
     const productionApiHost = ["tryfluids.com","www.tryfluids.com"].includes(window.location.hostname);
     const liveApiBase = "https://api.tryfluids.com";
     const waitlistEndpoint = window.FLUIDS_WAITLIST_ENDPOINT || (
@@ -9587,8 +10183,51 @@
     const useAnalysisJobs = configuredApiMode === "jobs" || (
       configuredApiMode === "auto" && Boolean(configuredApiBase)
     );
+    const runtimeFeatureFlags=window.FLUIDS_FEATURES || {};
+    const memberPortalEnabled=window.FLUIDS_MEMBER_PORTAL === true || runtimeFeatureFlags.MEMBER_PORTAL === true;
+    const requireMemberAuthForLabs=(
+      window.FLUIDS_REQUIRE_AUTH_FOR_LABS === true || runtimeFeatureFlags.REQUIRE_AUTH_FOR_LABS === true
+    );
+    const memberConsentVersion="2026-08-14-v1";
+    let memberSession={status:memberPortalEnabled ? "checking" : "disabled",authenticated:false,verified:false,consents_complete:false,member:null,csrf_token:"",session_expires_at:"",idle_expires_at:"",consent_version:""};
+    let memberTests=[];
+    let memberTimeline=null;
+    let memberTimelineMetricKey="phenoage";
+    let memberRecommendedTestType="";
+    let activeMemberTest=null;
+    let pendingMemberIntent="";
+    let lastMemberAccessTrigger=null;
     let founderDemoAuthenticated = false;
     const pendingCustomBlendJobStorageKey="fluids_pending_custom_blend_job_v1";
+    const pendingCustomBlendJobOwnerStorageKey="fluids_pending_custom_blend_job_owner_v1";
+    let memberSessionExpiryTimer=null;
+    let memberPrivacyIdleTimer=null;
+    let memberPrivacyGeneration=0;
+    const memberPrivacyIdleMs=15*60*1000;
+    function memberIdentityKey(session=memberSession) {
+      return String(session?.member?.member_id || session?.member?.id || session?.email || session?.member?.email || "").trim();
+    }
+    function invalidateMemberPrivacyContext() {
+      memberPrivacyGeneration=(memberPrivacyGeneration+1)%Number.MAX_SAFE_INTEGER;
+    }
+    function captureMemberPrivacyContext() {
+      if (!memberSession.authenticated) return null;
+      return {generation:memberPrivacyGeneration,identity:memberIdentityKey()};
+    }
+    function assertMemberPrivacyContext(context) {
+      if (!context) return;
+      const current=memberSession.authenticated &&
+        context.generation===memberPrivacyGeneration &&
+        context.identity===memberIdentityKey();
+      if (current) return;
+      const error=new Error("This private response belongs to a member session that is no longer active.");
+      error.memberPrivacyStale=true;
+      throw error;
+    }
+    function storedPendingCustomBlendJobOwner() {
+      try { return String(window.sessionStorage.getItem(pendingCustomBlendJobOwnerStorageKey) || ""); }
+      catch (_) { return ""; }
+    }
     function storedPendingCustomBlendJobId() {
       try { return String(window.sessionStorage.getItem(pendingCustomBlendJobStorageKey) || ""); }
       catch (_) { return ""; }
@@ -9596,13 +10235,23 @@
     function rememberPendingCustomBlendJob(jobId) {
       lastCustomBlendJobId=String(jobId || "");
       try {
-        if (lastCustomBlendJobId) window.sessionStorage.setItem(pendingCustomBlendJobStorageKey,lastCustomBlendJobId);
-        else window.sessionStorage.removeItem(pendingCustomBlendJobStorageKey);
+        if (lastCustomBlendJobId) {
+          window.sessionStorage.setItem(pendingCustomBlendJobStorageKey,lastCustomBlendJobId);
+          const owner=memberIdentityKey();
+          if (owner) window.sessionStorage.setItem(pendingCustomBlendJobOwnerStorageKey,owner);
+          else window.sessionStorage.removeItem(pendingCustomBlendJobOwnerStorageKey);
+        } else {
+          window.sessionStorage.removeItem(pendingCustomBlendJobStorageKey);
+          window.sessionStorage.removeItem(pendingCustomBlendJobOwnerStorageKey);
+        }
       } catch (_) {}
       syncPendingAnalysisUi();
     }
     function clearPendingCustomBlendJob({retainLast=false}={}) {
-      try { window.sessionStorage.removeItem(pendingCustomBlendJobStorageKey); } catch (_) {}
+      try {
+        window.sessionStorage.removeItem(pendingCustomBlendJobStorageKey);
+        window.sessionStorage.removeItem(pendingCustomBlendJobOwnerStorageKey);
+      } catch (_) {}
       if (!retainLast) lastCustomBlendJobId="";
       syncPendingAnalysisUi();
     }
@@ -9626,6 +10275,1230 @@
     }
     function wait(ms) {
       return new Promise(resolve => window.setTimeout(resolve, ms));
+    }
+    function memberIsReady() {
+      return Boolean(
+        memberPortalEnabled &&
+        memberSession.authenticated &&
+        memberSession.verified !== false &&
+        memberSession.consents_complete
+      );
+    }
+    function emptyMemberSession(status="ready") {
+      return {status,authenticated:false,verified:false,consents_complete:false,member:null,csrf_token:"",session_expires_at:"",idle_expires_at:"",consent_version:""};
+    }
+    function clearMemberSessionExpiryTimer() {
+      if (memberSessionExpiryTimer!==null) window.clearTimeout(memberSessionExpiryTimer);
+      if (memberPrivacyIdleTimer!==null) window.clearTimeout(memberPrivacyIdleTimer);
+      memberSessionExpiryTimer=null;
+      memberPrivacyIdleTimer=null;
+    }
+    function expireMemberSession(message="Your secure member session expired. Sign in again to view health information.") {
+      clearMemberSessionExpiryTimer();
+      memberSession=emptyMemberSession();
+      clearMemberPrivateState({navigate:true});
+      syncMemberSessionUi();
+      setMemberAuthStatus(message,true);
+    }
+    function scheduleMemberSessionExpiry() {
+      clearMemberSessionExpiryTimer();
+      if (!memberSession.authenticated || !memberSession.session_expires_at) return;
+      const expiresAt=Date.parse(memberSession.session_expires_at);
+      if (!Number.isFinite(expiresAt)) return;
+      const expectedIdentity=memberIdentityKey();
+      const expectedExpiry=memberSession.session_expires_at;
+      const delay=expiresAt-Date.now();
+      memberSessionExpiryTimer=window.setTimeout(()=>{
+        if (
+          memberSession.authenticated &&
+          memberIdentityKey()===expectedIdentity &&
+          memberSession.session_expires_at===expectedExpiry
+        ) expireMemberSession();
+      },Math.max(0,Math.min(delay,2147483647)));
+    }
+    function resetMemberPrivacyIdleLock() {
+      if (memberPrivacyIdleTimer!==null) window.clearTimeout(memberPrivacyIdleTimer);
+      memberPrivacyIdleTimer=null;
+      if (!memberSession.authenticated) return;
+      memberPrivacyIdleTimer=window.setTimeout(()=>{
+        if (memberSession.authenticated) {
+          expireMemberSession("Your member view was locked after 15 minutes of inactivity. Sign in again to view health information.");
+        }
+      },memberPrivacyIdleMs);
+    }
+    function memberResponseExpired(response,data={}) {
+      if (!memberPortalEnabled || !memberSession.authenticated) return false;
+      const code=String(data?.error || data?.code || "");
+      if (response?.status!==401 && !["member_authentication_required","session_expired","invalid_session"].includes(code)) return false;
+      expireMemberSession();
+      return true;
+    }
+    function analysisRequiresDataLoopConsent() {
+      return !memberIsReady();
+    }
+    function memberCsrfHeaders({json=false}={}) {
+      const headers={"Accept":"application/json"};
+      if (json) headers["Content-Type"]="application/json";
+      if (memberSession.csrf_token) headers["X-CSRF-Token"]=memberSession.csrf_token;
+      return headers;
+    }
+    function setMemberAuthStatus(message,error=false) {
+      const status=document.getElementById("memberAuthStatus");
+      if (!status) return;
+      status.textContent=message || "";
+      status.classList.toggle("error",Boolean(error));
+    }
+    function setMemberAuthPanel(panelName) {
+      const panelIds={
+        checking:"memberAuthLoadingPanel",
+        signed_out:"memberSignedOutPanel",
+        verification:"memberVerificationPanel",
+        consent:"memberConsentPanel",
+        session:"memberSessionPanel"
+      };
+      Object.values(panelIds).forEach(id=>{
+        const panel=document.getElementById(id);
+        if (panel) panel.hidden=id!==panelIds[panelName];
+      });
+    }
+    function memberEmail() {
+      return String(memberSession?.member?.email || memberSession?.email || "").trim();
+    }
+    function syncMemberDataLoopConsentCopy() {
+      const title=document.getElementById("dataLoopConsentTitle");
+      const copy=document.getElementById("dataLoopConsentCopy");
+      const note=document.getElementById("dataLoopConsentNote");
+      if (!title || !copy || !note) return;
+      if (memberIsReady()) {
+        title.textContent="Help improve Fluids (optional).";
+        copy.textContent="Allow this analysis to support model evaluation and improvement. Your membership service and longitudinal test history do not depend on this choice.";
+        note.textContent="Service processing and longitudinal storage are governed by your member consent choices. The original uploaded document is deleted after extraction under the service retention policy.";
+        return;
+      }
+      title.textContent="Save this analysis to improve Fluids.";
+      copy.textContent="I consent to Fluids retaining my reviewed lab values, questionnaire answers, and generated recommendation for model evaluation and improvement.";
+      note.textContent="The record is encrypted and pseudonymous. The original PDF is deleted after extraction, and no name or email is attached to the model run.";
+    }
+    function syncMemberSessionUi() {
+      const accessButton=document.getElementById("memberAccessButton");
+      if (accessButton) {
+        accessButton.hidden=!memberPortalEnabled;
+        accessButton.disabled=memberSession.status==="checking";
+        accessButton.textContent=memberSession.status==="checking"
+          ? "Checking account…"
+          : memberSession.authenticated
+            ? "My account"
+            : "Member sign in";
+        accessButton.classList.toggle("active",memberSession.authenticated);
+        accessButton.setAttribute("aria-pressed",String(memberSession.authenticated));
+      }
+      const email=memberEmail();
+      const sessionEmail=document.getElementById("memberSessionEmail");
+      const dashboardEmail=document.getElementById("memberDashboardEmail");
+      if (sessionEmail) sessionEmail.textContent=email || "Member account";
+      if (dashboardEmail) dashboardEmail.textContent=email
+        ? `Signed in as ${email}`
+        : "Sign in to securely load your saved tests.";
+      if (memberSession.status==="checking") setMemberAuthPanel("checking");
+      else if (!memberSession.authenticated) setMemberAuthPanel("signed_out");
+      else if (memberSession.verified===false) setMemberAuthPanel("verification");
+      else if (!memberSession.consents_complete) setMemberAuthPanel("consent");
+      else setMemberAuthPanel("session");
+      const serviceConsent=document.getElementById("memberServiceProcessingConsent");
+      const longitudinalConsent=document.getElementById("memberLongitudinalStorageConsent");
+      const modelConsent=document.getElementById("memberModelImprovementConsent");
+      const dataLoop=document.getElementById("dataLoopConsent");
+      const consentValue=Boolean(memberSession?.consents?.model_improvement);
+      if (serviceConsent && memberSession.consents) serviceConsent.checked=Boolean(memberSession.consents.service_processing);
+      if (longitudinalConsent && memberSession.consents) longitudinalConsent.checked=Boolean(memberSession.consents.longitudinal_storage);
+      if (modelConsent && memberSession.consents) modelConsent.checked=consentValue;
+      if (dataLoop && memberSession.consents) dataLoop.checked=consentValue;
+      syncMemberDataLoopConsentCopy();
+      syncAnalysisConsent();
+      renderMemberTestContext();
+      scheduleMemberSessionExpiry();
+      resetMemberPrivacyIdleLock();
+    }
+    function normalizeMemberSession(data,responseOk=true) {
+      const member=data?.member || data?.user || null;
+      const verificationRequired=data?.verification_required===true || data?.status==="verification_required";
+      const authenticated=Boolean(responseOk && (data?.authenticated ?? member ?? verificationRequired));
+      const verified=authenticated
+        ? !(
+            verificationRequired ||
+            data?.email_verified===false ||
+            data?.verified===false ||
+            member?.email_verified===false ||
+            member?.verified===false
+          )
+        : false;
+      const consents=data?.consents || member?.consents || null;
+      const hasConsentShape=Boolean(
+        consents && (
+          Object.prototype.hasOwnProperty.call(consents,"service_processing") ||
+          Object.prototype.hasOwnProperty.call(consents,"longitudinal_storage")
+        )
+      );
+      const consentsComplete=authenticated && verified && (
+        typeof data?.consents_complete === "boolean"
+          ? data.consents_complete
+          : hasConsentShape
+            ? Boolean(consents.service_processing && consents.longitudinal_storage)
+            : true
+      );
+      return {
+        status:"ready",
+        authenticated,
+        verified,
+        consents_complete:consentsComplete,
+        member,
+        email:String(data?.email || member?.email || ""),
+        consents,
+        csrf_token:String(data?.csrf_token || ""),
+        session_expires_at:String(data?.session_expires_at || data?.absolute_expires_at || ""),
+        idle_expires_at:String(data?.idle_expires_at || ""),
+        consent_version:String(data?.consent_version || "")
+      };
+    }
+    function memberReturnPath(intent="dashboard") {
+      const url=new URL(window.location.href);
+      url.searchParams.set("member_intent",intent || "dashboard");
+      return `${url.pathname}${url.search}${url.hash}`;
+    }
+    function startHostedMemberAuth(action,intent=pendingMemberIntent || "dashboard") {
+      if (!memberPortalEnabled) return;
+      const route=action==="signup" ? "/api/auth/signup" : "/api/auth/login";
+      const returnTo=memberReturnPath(intent);
+      window.location.assign(apiUrl(`${route}?return_to=${encodeURIComponent(returnTo)}`));
+    }
+    function consumeMemberReturnIntent() {
+      if (!memberPortalEnabled) return "";
+      const url=new URL(window.location.href);
+      const intent=String(url.searchParams.get("member_intent") || "");
+      if (!intent) return "";
+      url.searchParams.delete("member_intent");
+      window.history.replaceState(window.history.state,"",`${url.pathname}${url.search}${url.hash}`);
+      return ["dashboard","full_loop","upload"].includes(intent) ? intent : "dashboard";
+    }
+    function consumeMemberAuthNotice() {
+      if (!memberPortalEnabled) return "";
+      const url=new URL(window.location.href);
+      const notice=String(url.searchParams.get("member_auth") || "");
+      if (!notice) return "";
+      url.searchParams.delete("member_auth");
+      window.history.replaceState(window.history.state,"",`${url.pathname}${url.search}${url.hash}`);
+      return ["verification_required","error"].includes(notice) ? notice : "error";
+    }
+    function openMemberAuthModal(intent="dashboard",trigger=null) {
+      if (!memberPortalEnabled) return;
+      pendingMemberIntent=intent || pendingMemberIntent || "dashboard";
+      lastMemberAccessTrigger=trigger || document.activeElement || null;
+      const modal=document.getElementById("memberAuthModal");
+      if (!modal) return;
+      modal.hidden=false;
+      document.body.classList.add("member-auth-modal-open");
+      setMemberAuthStatus("");
+      syncMemberSessionUi();
+      window.setTimeout(()=>{
+        const target=memberSession.authenticated
+          ? document.getElementById(memberSession.consents_complete ? "memberOpenDashboardButton" : "memberServiceProcessingConsent")
+          : document.getElementById("memberLoginButton");
+        target?.focus({preventScroll:true});
+      },40);
+    }
+    function closeMemberAuthModal({restoreFocus=true}={}) {
+      const modal=document.getElementById("memberAuthModal");
+      if (!modal || modal.hidden) return;
+      modal.hidden=true;
+      document.body.classList.remove("member-auth-modal-open");
+      if (restoreFocus) {
+        pendingMemberIntent="";
+        lastMemberAccessTrigger?.focus?.({preventScroll:true});
+      }
+      lastMemberAccessTrigger=null;
+    }
+    async function routePendingMemberIntent() {
+      if (!memberIsReady()) return;
+      const intent=pendingMemberIntent || "";
+      pendingMemberIntent="";
+      if (!intent) return;
+      closeMemberAuthModal({restoreFocus:false});
+      if (intent==="upload") {
+        await loadMemberDashboard({show:false});
+        await startRecommendedMemberTest();
+        return;
+      }
+      await loadMemberDashboard({show:true});
+    }
+    async function checkMemberSession({routeIntent=true}={}) {
+      if (!memberPortalEnabled) return memberSession;
+      const privacyGenerationAtStart=memberPrivacyGeneration;
+      const previousIdentity=memberIdentityKey();
+      const existingPendingOwner=storedPendingCustomBlendJobOwner();
+      const hadMemberState=Boolean(
+        memberSession.authenticated || activeMemberTest || memberTests.length ||
+        existingPendingOwner
+      );
+      memberSession={...memberSession,status:"checking"};
+      syncMemberSessionUi();
+      try {
+        const response=await fetch(apiUrl("/api/member/session"),{
+          headers:{"Accept":"application/json"},
+          credentials:"include"
+        });
+        let data={};
+        try { data=await response.json(); } catch (_) {}
+        if (privacyGenerationAtStart!==memberPrivacyGeneration) return memberSession;
+        const nextSession=normalizeMemberSession(data,response.ok || data?.verification_required===true);
+        const nextIdentity=memberIdentityKey(nextSession);
+        const pendingOwner=storedPendingCustomBlendJobOwner();
+        const identityChanged=Boolean(previousIdentity && nextIdentity && previousIdentity!==nextIdentity);
+        const pendingBelongsElsewhere=Boolean(
+          nextSession.authenticated && storedPendingCustomBlendJobId() && pendingOwner!==nextIdentity
+        );
+        if (identityChanged || pendingBelongsElsewhere || (!nextSession.authenticated && hadMemberState)) {
+          clearMemberPrivateState({navigate:true});
+        }
+        memberSession=nextSession;
+        setMemberAuthStatus("");
+      } catch (error) {
+        if (privacyGenerationAtStart!==memberPrivacyGeneration) return memberSession;
+        memberSession=emptyMemberSession();
+        if (hadMemberState) clearMemberPrivateState({navigate:true});
+        setMemberAuthStatus("Member sign-in is temporarily unavailable. The public Fluids experience is still available.",true);
+      }
+      syncMemberSessionUi();
+      if (routeIntent) {
+        try {
+          if (pendingMemberIntent && !memberIsReady()) openMemberAuthModal(pendingMemberIntent);
+          else await routePendingMemberIntent();
+        }
+        catch (error) { setMemberAuthStatus(error?.message || "Your member destination could not be opened.",true); }
+      }
+      return memberSession;
+    }
+    async function saveMemberConsents(event) {
+      event?.preventDefault?.();
+      const privacyContext=captureMemberPrivacyContext();
+      const service=Boolean(document.getElementById("memberServiceProcessingConsent")?.checked);
+      const longitudinal=Boolean(document.getElementById("memberLongitudinalStorageConsent")?.checked);
+      const modelImprovement=Boolean(document.getElementById("memberModelImprovementConsent")?.checked);
+      if (!service || !longitudinal) {
+        setMemberAuthStatus("Service processing and longitudinal storage are required for a Fluids membership.",true);
+        return;
+      }
+      if (memberSession.consent_version && memberSession.consent_version!==memberConsentVersion) {
+        setMemberAuthStatus("The consent terms changed. Refresh this page before saving your choices.",true);
+        return;
+      }
+      const submit=document.getElementById("memberConsentSubmitButton");
+      if (submit) submit.disabled=true;
+      setMemberAuthStatus("Saving your consent choices…");
+      try {
+        const response=await fetch(apiUrl("/api/member/consents"),{
+          method:"POST",
+          headers:memberCsrfHeaders({json:true}),
+          credentials:"include",
+          body:JSON.stringify({
+            consent_version:memberConsentVersion,
+            service_processing:service,
+            longitudinal_storage:longitudinal,
+            model_improvement:modelImprovement
+          })
+        });
+        let data={};
+        try { data=await response.json(); } catch (_) {}
+        assertMemberPrivacyContext(privacyContext);
+        if (memberResponseExpired(response,data)) return;
+        if (!response.ok || data?.ok===false) throw new Error(data?.message || "Your choices could not be saved.");
+        memberSession={
+          ...memberSession,
+          consents_complete:true,
+          consents:{service_processing:service,longitudinal_storage:longitudinal,model_improvement:modelImprovement},
+          csrf_token:String(data?.csrf_token || memberSession.csrf_token || ""),
+          consent_version:String(data?.consent_version || memberSession.consent_version || "")
+        };
+        setMemberAuthStatus("Your choices are saved.");
+        syncMemberSessionUi();
+        await routePendingMemberIntent();
+      } catch (error) {
+        if (error?.memberPrivacyStale) return;
+        setMemberAuthStatus(error.message || "Your choices could not be saved.",true);
+      } finally {
+        if (submit) submit.disabled=false;
+      }
+    }
+    function clearMemberHealthUi() {
+      document.querySelectorAll("#questionnaireView input,#questionnaireView select").forEach(field=>{
+        if (field.type==="checkbox" || field.type==="radio") field.checked=false;
+        else if (field.id==="age") field.value="40";
+        else if (field.tagName==="SELECT") field.selectedIndex=0;
+        else field.value="";
+      });
+      [
+        "labRows","labReviewSummary","extractMeta","recommendationStatus","resultsAgeTrajectory","waitingBiomarkerOverview","waitingBiomarkerList",
+        "biomarkerOverview","biomarkerPriorityNote","biomarkerCategoryGrid","biomarkerFilters","biomarkerVisibleCount","biomarkerList",
+        "customBlendHero","nutritionPlanFocus","nutritionPlanProduct","nutritionPlanFoods","nutritionPlanActions","nutritionPlanTimeline","nutritionPlanRetest","nutritionPlanGuardrails",
+        "personalizedOfferGrid","standardFitLead","standardFitGrid","personalizationProofGrid","personalizationFlow","profileFamilyContext",
+        "ageScorePanel","portfolioNav","blendDetail","archetypePrimaryCard","archetypeFitList","graphFilters","recommendationGraphSvg","graphDetails","nutrientActionMap"
+      ].forEach(id=>{
+        const element=document.getElementById(id);
+        if (element) element.textContent="";
+      });
+      const placeholders={
+        bioAgeLabel:"Biological age",bioAge:"—",bioAgeStatus:"",
+        projectedBioAge:"—",projectedBioAgeChange:"Modeled direction unavailable",
+        projectedBioAgeBasis:"",projectedBioAgeNote:"",
+        chronoAge:"—",ageDelta:"—",ageDeltaLabel:"Age difference",formulaSelectionKpi:"—",calculatedBmiReadout:"Add height + weight",
+        waitingPhenoAge:"Calculating",waitingChronologicalAge:"—",waitingAgeDifference:"Comparison pending",
+        resultsCustomWaitlistName:"Your custom formula",resultsCustomWaitlistCopy:"Save your place for the exact blend built from this analysis. We will contact you when custom production opens."
+      };
+      Object.entries(placeholders).forEach(([id,value])=>{
+        const element=document.getElementById(id);
+        if (element) element.textContent=value;
+      });
+      const nutritionPlan=document.getElementById("nutritionPlan");
+      const personalizedOffers=document.getElementById("personalizedOfferComparison");
+      const standardFit=document.getElementById("standardFitDashboard");
+      if (nutritionPlan) nutritionPlan.hidden=true;
+      if (personalizedOffers) personalizedOffers.hidden=true;
+      if (standardFit) standardFit.hidden=true;
+      const fileLabel=document.getElementById("fileLabel");
+      if (fileLabel) fileLabel.textContent="Drop your blood-test PDF or photos here";
+      const collectionDate=document.getElementById("memberCollectionDate");
+      if (collectionDate) {
+        collectionDate.value="";
+        collectionDate.removeAttribute("data-test-id");
+      }
+      showError("");
+      updateCalculatedBmiReadout();
+    }
+    function clearMemberPrivateState({navigate=true}={}) {
+      invalidateMemberPrivacyContext();
+      memberTests=[];
+      memberTimeline=null;
+      memberTimelineMetricKey="phenoage";
+      memberRecommendedTestType="";
+      activeMemberTest=null;
+      selectedFiles=[];
+      lastCustomBlendResult=null;
+      lastCustomBlendJobId="";
+      clearPendingCustomBlendJob();
+      personalizedView="upload";
+      if (pdfInput) pdfInput.value="";
+      const history=document.getElementById("memberTestHistory");
+      const summary=document.getElementById("memberDashboardSummary");
+      const next=document.getElementById("memberNextTestCard");
+      const progress=document.getElementById("memberProgressSection");
+      if (history) history.textContent="";
+      if (summary) { summary.textContent=""; summary.hidden=true; }
+      if (next) { next.textContent=""; next.hidden=true; }
+      if (progress) progress.hidden=true;
+      ["memberProgressOverview","memberProgressMetrics","memberProgressChart","memberProgressCallouts","memberProgressTestRail"].forEach(id=>{
+        const element=document.getElementById(id);
+        if (element) element.textContent="";
+      });
+      document.getElementById("memberHistorySection")?.setAttribute("hidden","");
+      clearMemberHealthUi();
+      renderMemberTestContext();
+      renderLongitudinalComparison(null);
+      if (navigate) showView("upload");
+    }
+    async function logoutMember({allDevices=false}={}) {
+      const logoutHeaders=memberCsrfHeaders();
+      invalidateMemberPrivacyContext();
+      const buttons=[document.getElementById("memberLogoutButton"),document.getElementById("memberLogoutAllButton"),document.getElementById("memberDashboardLogoutButton")].filter(Boolean);
+      buttons.forEach(button=>button.disabled=true);
+      setMemberAuthStatus("Signing out securely…");
+      clearMemberSessionExpiryTimer();
+      memberSession=emptyMemberSession();
+      clearMemberPrivateState({navigate:true});
+      syncMemberSessionUi();
+      pendingMemberIntent="";
+      let serverSessionClosed=true;
+      try {
+        const response=await fetch(apiUrl(allDevices ? "/api/auth/logout-all" : "/api/auth/logout"),{
+          method:"POST",
+          headers:logoutHeaders,
+          credentials:"include"
+        });
+        if (!response.ok && response.status!==401) serverSessionClosed=false;
+      } catch (_) {
+        serverSessionClosed=false;
+      } finally {
+        setMemberAuthStatus(
+          serverSessionClosed
+            ? allDevices ? "You are signed out on all devices." : "You are signed out."
+            : "This device has been cleared. The server could not confirm session closure, so sign out of all devices from your account when available.",
+          !serverSessionClosed
+        );
+        buttons.forEach(button=>button.disabled=false);
+      }
+    }
+    function memberTestId(test) {
+      return String(test?.test_id || test?.id || "");
+    }
+    function memberTestType(test) {
+      return String(test?.test_type || test?.type || "baseline").toLowerCase().replaceAll("-","_");
+    }
+    function memberTestTypeLabel(testOrType) {
+      const type=typeof testOrType==="string"
+        ? testOrType.toLowerCase().replaceAll("-","_")
+        : memberTestType(testOrType);
+      return {
+        baseline:"Baseline test",
+        day_90:"Follow-up retest",
+        day90:"Follow-up retest",
+        retest:"Follow-up retest",
+        day_180:"Day-180 retest",
+        annual:"Annual test",
+        ad_hoc:"Additional test"
+      }[type] || "Member test";
+    }
+    function memberTestStatus(test) {
+      return String(test?.status || "ready").toLowerCase().replaceAll("-","_");
+    }
+    function memberTestIsComplete(test) {
+      return ["complete","completed","analyzed","reviewed"].includes(memberTestStatus(test)) || Boolean(test?.result_available);
+    }
+    function memberTestRunStatus(test) {
+      return String(test?.run_status || test?.analysis_status || "").toLowerCase().replaceAll("-","_");
+    }
+    function memberTestHasResumableRun(test) {
+      return Boolean(test?.run_id && ["queued","running","in_queue","in_progress"].includes(memberTestRunStatus(test)));
+    }
+    function memberTestDate(test) {
+      const value=test?.collection_date || test?.result_date || test?.completed_at || test?.created_at;
+      if (!value) return "Date pending";
+      const raw=String(value);
+      const date=new Date(/^\d{4}-\d{2}-\d{2}$/.test(raw) ? `${raw}T12:00:00` : raw);
+      if (Number.isNaN(date.getTime())) return String(value);
+      return new Intl.DateTimeFormat(undefined,{month:"short",day:"numeric",year:"numeric"}).format(date);
+    }
+    function sortedMemberTests(tests) {
+      return [...(Array.isArray(tests) ? tests : [])].sort((left,right)=>{
+        const leftDate=new Date(left?.collection_date || left?.result_date || left?.created_at || 0).getTime();
+        const rightDate=new Date(right?.collection_date || right?.result_date || right?.created_at || 0).getTime();
+        return rightDate-leftDate;
+      });
+    }
+    function normalizeMemberTimeline(data) {
+      const value=data?.timeline && typeof data.timeline==="object" ? data.timeline : data;
+      if (!value || typeof value!=="object") return null;
+      return {
+        tests:Array.isArray(value.tests) ? value.tests : [],
+        phenoage_series:value.phenoage_series && typeof value.phenoage_series==="object" ? value.phenoage_series : null,
+        marker_series:Array.isArray(value.marker_series) ? value.marker_series : [],
+        adjacent_comparisons:Array.isArray(value.adjacent_comparisons) ? value.adjacent_comparisons : [],
+        current_vs_previous:value.current_vs_previous && typeof value.current_vs_previous==="object" ? value.current_vs_previous : null,
+        undated_test_count:Number(value.undated_test_count || 0),
+        interpretation_boundary:String(value.interpretation_boundary || "")
+      };
+    }
+    function memberTimelineSeries() {
+      if (!memberTimeline) return [];
+      const series=[];
+      const phenoage=memberTimeline.phenoage_series;
+      if (phenoage && Array.isArray(phenoage.points) && phenoage.points.length) {
+        series.push({...phenoage,key:String(phenoage.key || "phenoage"),label:String(phenoage.label || "PhenoAge"),series_type:"biological_age",targeted_ever:true});
+      }
+      memberTimeline.marker_series
+        .filter(item=>item && Array.isArray(item.points) && item.points.length)
+        .sort((left,right)=>{
+          const targeted=Number(Boolean(right.targeted_ever))-Number(Boolean(left.targeted_ever));
+          if (targeted) return targeted;
+          const pointCount=right.points.length-left.points.length;
+          if (pointCount) return pointCount;
+          return String(left.label || left.key).localeCompare(String(right.label || right.key));
+        })
+        .forEach(item=>series.push({...item,key:String(item.key || ""),label:String(item.label || item.key || "Marker"),series_type:"biomarker"}));
+      return series;
+    }
+    function memberTimelineNumeric(value) {
+      if (value===null || value===undefined || value==="") return null;
+      const number=Number(value);
+      return Number.isFinite(number) ? number : null;
+    }
+    function memberTimelineValue(value,unit="") {
+      const number=memberTimelineNumeric(value);
+      if (number===null) return "—";
+      const digits=Math.abs(number)>=100 ? 0 : Math.abs(number)>=10 ? 1 : 2;
+      const suffix=String(unit || "").trim();
+      return `${number.toFixed(digits)}${suffix ? ` ${suffix}` : ""}`;
+    }
+    function memberTimelineShortDate(value,index=0) {
+      if (!value) return `Test ${index+1}`;
+      const raw=String(value);
+      const date=new Date(/^\d{4}-\d{2}-\d{2}$/.test(raw) ? `${raw}T12:00:00` : raw);
+      if (Number.isNaN(date.getTime())) return `Test ${index+1}`;
+      return new Intl.DateTimeFormat(undefined,{month:"short",day:"numeric",year:"2-digit"}).format(date);
+    }
+    function memberTimelineMovement(value) {
+      return String(value || "").trim().toLowerCase().replace(/[\s-]+/g,"_");
+    }
+    function memberTimelineMovementLabel(value) {
+      return {
+        progression:"Moved toward target",
+        regression:"Moved away from target",
+        neutral:"Holding steady",
+        measured_increase:"Measured increase",
+        measured_decrease:"Measured decrease",
+        measured_stable:"Measured stable",
+        lower:"Lower than prior test",
+        higher:"Higher than prior test",
+        stable:"Stable vs prior test"
+      }[memberTimelineMovement(value)] || "Compared with prior test";
+    }
+    function memberTimelineTrend(point) {
+      return point?.trend_from_prior && typeof point.trend_from_prior==="object" ? point.trend_from_prior : null;
+    }
+    function memberTimelineLatestPoint(series) {
+      const points=Array.isArray(series?.points) ? series.points : [];
+      return [...points].reverse().find(point=>memberTimelineNumeric(point?.value)!==null) || null;
+    }
+    function memberTimelineAppendStat(parent,label,value,detail) {
+      const card=document.createElement("article"); card.className="member-progress-stat";
+      const small=document.createElement("small"); small.textContent=label;
+      const strong=document.createElement("strong"); strong.textContent=value;
+      const span=document.createElement("span"); span.textContent=detail;
+      card.append(small,strong,span); parent.appendChild(card);
+    }
+    function memberTimelineSpanDays(tests) {
+      const dated=(tests || []).map(test=>Date.parse(String(test?.collection_date || ""))).filter(Number.isFinite);
+      if (dated.length<2) return null;
+      return Math.round((Math.max(...dated)-Math.min(...dated))/86400000);
+    }
+    function memberTimelineSvg(tag,attributes={}) {
+      const node=document.createElementNS("http://www.w3.org/2000/svg",tag);
+      Object.entries(attributes).forEach(([key,value])=>node.setAttribute(key,String(value)));
+      return node;
+    }
+    function renderMemberProgressChart(series) {
+      const svg=document.getElementById("memberProgressChart");
+      const empty=document.getElementById("memberProgressChartEmpty");
+      if (!svg || !empty) return;
+      svg.textContent="";
+      const rawPoints=Array.isArray(series?.points) ? series.points : [];
+      const points=rawPoints
+        .map((point,index)=>({...point,_index:index,_value:memberTimelineNumeric(point?.value),_time:Date.parse(String(point?.date || ""))}))
+        .filter(point=>point._value!==null);
+      if (!points.length) {
+        svg.hidden=true;
+        empty.hidden=false;
+        empty.textContent="No comparable values are available for this marker yet.";
+        return;
+      }
+      svg.hidden=false;
+      empty.hidden=true;
+      empty.textContent="";
+      const width=820;
+      const height=300;
+      const margin={left:56,right:28,top:42,bottom:58};
+      const targetLows=points.map(point=>memberTimelineNumeric(point.target_low)).filter(value=>value!==null);
+      const targetHighs=points.map(point=>memberTimelineNumeric(point.target_high)).filter(value=>value!==null);
+      const domainValues=points.map(point=>point._value).concat(targetLows,targetHighs);
+      let minimum=Math.min(...domainValues);
+      let maximum=Math.max(...domainValues);
+      const rawRange=Math.max(maximum-minimum,Math.abs(maximum)*.05,1e-6);
+      minimum-=rawRange*.18;
+      maximum+=rawRange*.18;
+      const y=value=>margin.top+(maximum-value)/(maximum-minimum)*(height-margin.top-margin.bottom);
+      const dated=points.filter(point=>Number.isFinite(point._time));
+      const minTime=dated.length ? Math.min(...dated.map(point=>point._time)) : NaN;
+      const maxTime=dated.length ? Math.max(...dated.map(point=>point._time)) : NaN;
+      const x=(point,index)=>{
+        if (Number.isFinite(point._time) && Number.isFinite(minTime) && maxTime>minTime) {
+          return margin.left+(point._time-minTime)/(maxTime-minTime)*(width-margin.left-margin.right);
+        }
+        return points.length===1
+          ? width/2
+          : margin.left+index/(points.length-1)*(width-margin.left-margin.right);
+      };
+      for (let index=0;index<4;index+=1) {
+        const ratio=index/3;
+        const lineY=margin.top+ratio*(height-margin.top-margin.bottom);
+        svg.appendChild(memberTimelineSvg("line",{x1:margin.left,y1:lineY,x2:width-margin.right,y2:lineY,class:"grid-line"}));
+        const value=maximum-ratio*(maximum-minimum);
+        const label=memberTimelineSvg("text",{x:4,y:lineY+4,class:"axis-label"});
+        label.textContent=memberTimelineValue(value,"");
+        svg.appendChild(label);
+      }
+      const currentTargetLow=targetLows.length ? targetLows[targetLows.length-1] : null;
+      const currentTargetHigh=targetHighs.length ? targetHighs[targetHighs.length-1] : null;
+      if (currentTargetLow!==null && currentTargetHigh!==null && currentTargetHigh>=currentTargetLow) {
+        const top=Math.min(y(currentTargetHigh),y(currentTargetLow));
+        const bottom=Math.max(y(currentTargetHigh),y(currentTargetLow));
+        svg.appendChild(memberTimelineSvg("rect",{x:margin.left,y:top,width:width-margin.left-margin.right,height:Math.max(bottom-top,2),rx:8,class:"target-band"}));
+      }
+      const coordinates=points.map((point,index)=>({point,x:x(point,index),y:y(point._value)}));
+      if (coordinates.length>1) {
+        const polyline=memberTimelineSvg("polyline",{points:coordinates.map(item=>`${item.x},${item.y}`).join(" "),class:"trend-line"});
+        svg.appendChild(polyline);
+      }
+      coordinates.forEach(({point,x:pointX,y:pointY},index)=>{
+        const circle=memberTimelineSvg("circle",{cx:pointX,cy:pointY,r:7,class:"trend-point",tabindex:0});
+        const title=memberTimelineSvg("title");
+        title.textContent=`${memberTimelineShortDate(point.date,index)}: ${memberTimelineValue(point._value,point.unit || series.unit)}`;
+        circle.appendChild(title);
+        svg.appendChild(circle);
+        const valueLabel=memberTimelineSvg("text",{x:pointX,y:Math.max(pointY-15,18),class:"point-label"});
+        valueLabel.textContent=memberTimelineValue(point._value,"");
+        svg.appendChild(valueLabel);
+        const dateLabel=memberTimelineSvg("text",{x:pointX,y:height-20,class:"date-label"});
+        dateLabel.textContent=memberTimelineShortDate(point.date,index);
+        svg.appendChild(dateLabel);
+      });
+    }
+    function renderMemberProgressCallouts(series) {
+      const container=document.getElementById("memberProgressCallouts");
+      if (!container) return;
+      container.textContent="";
+      const points=(Array.isArray(series?.points) ? series.points : []).filter(point=>memberTimelineTrend(point));
+      points.slice(-3).forEach((point,index)=>{
+        const trend=memberTimelineTrend(point);
+        const movement=memberTimelineMovement(trend?.interpretation || trend?.movement);
+        const card=document.createElement("article");
+        card.className=`member-progress-callout ${["progression","regression"].includes(movement) ? movement : ""}`.trim();
+        const small=document.createElement("small"); small.textContent=memberTimelineShortDate(point.date,index);
+        const strong=document.createElement("strong"); strong.textContent=memberTimelineMovementLabel(movement);
+        const delta=memberTimelineNumeric(trend?.delta);
+        const detail=document.createElement("span");
+        detail.textContent=String(
+          trend?.interpretation_text || trend?.message ||
+          (delta===null
+            ? "Compared with the preceding completed test."
+            : `${delta>0 ? "+" : ""}${memberTimelineValue(delta,point.unit || series.unit)} from the preceding completed test.`)
+        );
+        card.append(small,strong,detail); container.appendChild(card);
+      });
+      if (!container.childNodes.length) {
+        const card=document.createElement("article"); card.className="member-progress-callout";
+        const small=document.createElement("small"); small.textContent="First recorded point";
+        const strong=document.createElement("strong"); strong.textContent="Baseline established";
+        const detail=document.createElement("span"); detail.textContent="Add another completed test to see movement and longer-term direction.";
+        card.append(small,strong,detail); container.appendChild(card);
+      }
+    }
+    function renderMemberProgressTestRail() {
+      const rail=document.getElementById("memberProgressTestRail");
+      if (!rail) return;
+      rail.textContent="";
+      (memberTimeline?.tests || []).forEach((test,index)=>{
+        const node=document.createElement("article"); node.className="member-progress-test-node";
+        const title=document.createElement("strong"); title.textContent=index===0 ? "Baseline" : `Follow-up ${index}`;
+        const date=document.createElement("span"); date.textContent=memberTimelineShortDate(test?.collection_date,index);
+        const age=memberTimelineNumeric(test?.phenoage ?? test?.phenoage_years);
+        const detail=document.createElement("span");
+        detail.textContent=age!==null ? `PhenoAge ${memberTimelineValue(age,"yr")}` : String(test?.blend_name || "Completed test");
+        node.append(title,date,detail); rail.appendChild(node);
+      });
+    }
+    function renderMemberProgressTimeline() {
+      const section=document.getElementById("memberProgressSection");
+      const overview=document.getElementById("memberProgressOverview");
+      const metrics=document.getElementById("memberProgressMetrics");
+      if (!section || !overview || !metrics) return;
+      const tests=memberTimeline?.tests || [];
+      const series=memberTimelineSeries();
+      section.hidden=!tests.length;
+      overview.textContent="";
+      metrics.textContent="";
+      if (!tests.length) return;
+      const targeted=memberTimeline?.marker_series?.filter(item=>item?.targeted_ever) || [];
+      const latestMovements=targeted.map(item=>{
+        const trend=memberTimelineTrend(memberTimelineLatestPoint(item));
+        return memberTimelineMovement(trend?.interpretation || trend?.movement);
+      }).filter(Boolean);
+      const spanDays=memberTimelineSpanDays(tests);
+      const currentComparison=memberTimeline.current_vs_previous;
+      const ageDelta=memberTimelineNumeric(currentComparison?.biological_age_change ?? currentComparison?.biological_age?.delta);
+      memberTimelineAppendStat(overview,"Completed tests",String(tests.length),"Every saved point in this member timeline");
+      memberTimelineAppendStat(overview,"Observed span",spanDays===null ? "Baseline" : `${spanDays} days`,spanDays===null ? "A second test starts the trend" : "Based on specimen collection dates");
+      memberTimelineAppendStat(overview,"Toward target",String(latestMovements.filter(value=>value==="progression").length),"Targeted markers vs the preceding test");
+      memberTimelineAppendStat(overview,"Latest PhenoAge change",ageDelta===null ? "—" : `${ageDelta>0 ? "+" : ""}${ageDelta.toFixed(1)} yr`,ageDelta===null ? "Comparable age scores required" : "Newest completed test vs previous");
+      if (!series.some(item=>item.key===memberTimelineMetricKey)) {
+        memberTimelineMetricKey=series.find(item=>item.key==="phenoage")?.key || series.find(item=>item.targeted_ever)?.key || series[0]?.key || "";
+      }
+      series.forEach(item=>{
+        const button=document.createElement("button");
+        button.type="button";
+        button.className="member-progress-metric";
+        button.setAttribute("aria-pressed",String(item.key===memberTimelineMetricKey));
+        button.textContent=item.series_type==="biological_age" ? item.label : `${item.label}${item.targeted_ever ? " · targeted" : ""}`;
+        button.addEventListener("click",()=>{
+          memberTimelineMetricKey=item.key;
+          renderMemberProgressTimeline();
+        });
+        metrics.appendChild(button);
+      });
+      const selected=series.find(item=>item.key===memberTimelineMetricKey) || series[0] || null;
+      const title=document.getElementById("memberProgressMetricTitle");
+      const type=document.getElementById("memberProgressMetricType");
+      const subtitle=document.getElementById("memberProgressMetricSubtitle");
+      const currentValue=document.getElementById("memberProgressCurrentValue");
+      const currentMovement=document.getElementById("memberProgressCurrentMovement");
+      if (title) title.textContent=selected?.label || "Longitudinal marker";
+      if (type) type.textContent=selected?.series_type==="biological_age" ? "Biological-age trajectory" : selected?.targeted_ever ? "Biomarker-derived target" : "Tracked biomarker";
+      if (subtitle) subtitle.textContent=selected?.directionality==="target_band"
+        ? "The shaded band is the Fluids wellness-planning target range, not a diagnostic interval."
+        : "Values are shown in specimen-date order without assuming every increase or decrease is favorable.";
+      const latest=memberTimelineLatestPoint(selected);
+      const latestTrend=memberTimelineTrend(latest);
+      const movement=memberTimelineMovement(latestTrend?.interpretation || latestTrend?.movement);
+      if (currentValue) currentValue.textContent=latest ? memberTimelineValue(latest.value,latest.unit || selected?.unit) : "—";
+      if (currentMovement) currentMovement.textContent=latest && memberTimelineTrend(latest) ? memberTimelineMovementLabel(movement) : "No comparison yet";
+      renderMemberProgressChart(selected);
+      renderMemberProgressCallouts(selected);
+      renderMemberProgressTestRail();
+      const boundary=document.getElementById("memberProgressBoundary");
+      if (boundary) boundary.textContent=memberTimeline.interpretation_boundary || "Longitudinal movement is descriptive wellness-planning information. It does not establish causation, treatment effect, diagnosis, or clinical efficacy.";
+    }
+    async function loadMemberTimeline(privacyContext=captureMemberPrivacyContext()) {
+      if (!memberIsReady()) return null;
+      try {
+        const response=await fetch(apiUrl("/api/member/timeline"),{
+          headers:{"Accept":"application/json"},
+          credentials:"include"
+        });
+        let data={};
+        try { data=await response.json(); } catch (_) {}
+        assertMemberPrivacyContext(privacyContext);
+        if (memberResponseExpired(response,data)) return null;
+        if (!response.ok || data?.ok===false) throw new Error(data?.message || "Your progress timeline could not be loaded.");
+        memberTimeline=normalizeMemberTimeline(data);
+        renderMemberProgressTimeline();
+        return memberTimeline;
+      } catch (error) {
+        if (error?.memberPrivacyStale) return null;
+        memberTimeline=null;
+        const section=document.getElementById("memberProgressSection");
+        if (section) section.hidden=true;
+        console.warn("The test history loaded, but the longitudinal trend view is temporarily unavailable.",error);
+        return null;
+      }
+    }
+    function setMemberDashboardStatus(message,{error=false,hidden=false}={}) {
+      const status=document.getElementById("memberDashboardStatus");
+      if (!status) return;
+      status.hidden=hidden;
+      status.textContent=message || "";
+      status.classList.toggle("error",Boolean(error));
+    }
+    function addMemberSummaryCard(parent,label,value,detail) {
+      const card=document.createElement("article"); card.className="member-summary-card";
+      const small=document.createElement("small"); small.textContent=label;
+      const strong=document.createElement("strong"); strong.textContent=value;
+      const span=document.createElement("span"); span.textContent=detail;
+      card.append(small,strong,span); parent.appendChild(card);
+    }
+    function recommendedMemberTest() {
+      const inProgress=memberTests.find(test=>!memberTestIsComplete(test) && memberTestStatus(test)!=="cancelled");
+      if (inProgress) return {
+        mode:memberTestHasResumableRun(inProgress) ? "resume" : "continue",
+        test:inProgress,
+        type:memberTestType(inProgress)
+      };
+      if (["baseline","retest","day_90","day_180","annual","ad_hoc"].includes(memberRecommendedTestType)) {
+        return {mode:"create",test:null,type:memberRecommendedTestType==="baseline" ? "baseline" : "retest"};
+      }
+      const baseline=memberTests.find(test=>memberTestType(test)==="baseline" && memberTestIsComplete(test));
+      if (!baseline) return {mode:"create",test:null,type:"baseline"};
+      return {mode:"create",test:null,type:"retest"};
+    }
+    function renderMemberDashboard() {
+      const summary=document.getElementById("memberDashboardSummary");
+      const next=document.getElementById("memberNextTestCard");
+      const historySection=document.getElementById("memberHistorySection");
+      const history=document.getElementById("memberTestHistory");
+      if (!summary || !next || !historySection || !history) return;
+      summary.textContent="";
+      const completed=memberTests.filter(memberTestIsComplete);
+      const latest=completed[0] || memberTests[0] || null;
+      const recommendation=recommendedMemberTest();
+      addMemberSummaryCard(summary,"Tests saved",String(memberTests.length),memberTests.length ? "Connected to this account" : "Your timeline starts with a baseline");
+      addMemberSummaryCard(summary,"Latest result",latest ? memberTestDate(latest) : "Not started",latest ? memberTestTypeLabel(latest) : "No bloodwork saved yet");
+      addMemberSummaryCard(
+        summary,
+        "Next milestone",
+        memberTestTypeLabel(recommendation.type),
+        recommendation.mode==="resume"
+          ? "Check your saved analysis"
+          : recommendation.mode==="continue"
+            ? "Continue your current test"
+            : recommendation.type==="retest"
+              ? "Compare with your previous completed test"
+              : "Build the next point in your timeline"
+      );
+      summary.hidden=false;
+
+      next.textContent="";
+      const copy=document.createElement("div");
+      const eyebrow=document.createElement("div"); eyebrow.className="eyebrow"; eyebrow.textContent=["continue","resume"].includes(recommendation.mode) ? "Continue where you left off" : "Next step";
+      const title=document.createElement("h2"); title.textContent=memberTestTypeLabel(recommendation.type);
+      const description=document.createElement("p");
+      description.textContent=recommendation.mode==="resume"
+        ? "Your analysis run is saved to this account. Check its progress or open the result without uploading the test again."
+        : recommendation.mode==="continue"
+          ? "Your test record is ready. Add or review the bloodwork to continue the analysis."
+        : recommendation.type==="baseline"
+          ? "Establish the first secure point in your Fluids testing timeline."
+          : recommendation.type==="retest"
+            ? "Upload your next panel whenever you test again. Fluids will compare it with your immediately preceding completed test using the actual specimen dates."
+            : "Add another blood test to extend your longitudinal record.";
+      copy.append(eyebrow,title,description);
+      const action=document.createElement("button");
+      action.type="button";
+      action.textContent=recommendation.mode==="resume" ? "Check saved analysis" : recommendation.mode==="continue" ? "Continue this test" : recommendation.type==="baseline" ? "Start my baseline" : "Upload my next retest";
+      action.addEventListener("click",()=>{
+        if (recommendation.mode==="resume") resumeMemberTestRun(recommendation.test,action);
+        else if (recommendation.test) activateMemberTest(recommendation.test);
+        else createMemberTest(recommendation.type);
+      });
+      next.append(copy,action);
+      next.hidden=false;
+
+      history.textContent="";
+      const historyCount=document.getElementById("memberHistoryCount");
+      if (historyCount) historyCount.textContent=`${memberTests.length} test${memberTests.length===1 ? "" : "s"}`;
+      if (!memberTests.length) {
+        const empty=document.createElement("article"); empty.className="member-test-history-card";
+        const emptyCopy=document.createElement("div");
+        const emptyTitle=document.createElement("h3"); emptyTitle.textContent="No tests saved yet";
+        const emptyText=document.createElement("p"); emptyText.textContent="When your baseline is complete, its report and future comparisons will live here.";
+        emptyCopy.append(emptyTitle,emptyText); empty.appendChild(emptyCopy); history.appendChild(empty);
+      } else {
+        memberTests.forEach(test=>{
+          const card=document.createElement("article"); card.className="member-test-history-card";
+          const main=document.createElement("div");
+          const meta=document.createElement("div"); meta.className="member-test-meta";
+          [memberTestTypeLabel(test),memberTestStatus(test).replaceAll("_"," "),memberTestDate(test)].forEach(value=>{
+            const chip=document.createElement("span"); chip.textContent=value; meta.appendChild(chip);
+          });
+          const title=document.createElement("h3"); title.textContent=test?.title || memberTestTypeLabel(test);
+          const detail=document.createElement("p");
+          detail.textContent=memberTestIsComplete(test)
+            ? "Open the saved report and any available before-and-after comparison."
+            : memberTestHasResumableRun(test)
+              ? "This analysis is saved to your account and can be resumed on this device."
+            : "This test is saved to your account and ready to continue.";
+          main.append(meta,title,detail);
+          const button=document.createElement("button"); button.type="button"; button.className="secondary";
+          button.textContent=memberTestIsComplete(test) ? "View result" : memberTestHasResumableRun(test) ? "Check analysis" : "Continue test";
+          button.addEventListener("click",()=>memberTestIsComplete(test)
+            ? openSavedMemberTest(test)
+            : memberTestHasResumableRun(test)
+              ? resumeMemberTestRun(test,button)
+              : activateMemberTest(test));
+          card.append(main,button); history.appendChild(card);
+        });
+      }
+      historySection.hidden=false;
+      setMemberDashboardStatus("",{hidden:true});
+    }
+    async function loadMemberDashboard({show=true}={}) {
+      if (!memberIsReady()) {
+        pendingMemberIntent="dashboard";
+        openMemberAuthModal("dashboard");
+        return [];
+      }
+      const privacyContext=captureMemberPrivacyContext();
+      if (show) showView("member");
+      setMemberDashboardStatus("Loading your secure testing timeline…");
+      try {
+        const response=await fetch(apiUrl("/api/member/tests"),{
+          headers:{"Accept":"application/json"},
+          credentials:"include"
+        });
+        let data={};
+        try { data=await response.json(); } catch (_) {}
+        assertMemberPrivacyContext(privacyContext);
+        if (memberResponseExpired(response,data)) {
+          openMemberAuthModal("dashboard");
+          return [];
+        }
+        if (!response.ok || data?.ok===false) throw new Error(data?.message || "Your test history could not be loaded.");
+        memberTests=sortedMemberTests(data?.tests || data?.items || []);
+        memberRecommendedTestType=String(data?.recommended_test_type || data?.next_test_type || "").toLowerCase().replaceAll("-","_");
+        if (activeMemberTest) {
+          activeMemberTest=memberTests.find(test=>memberTestId(test)===memberTestId(activeMemberTest)) || activeMemberTest;
+        }
+        renderMemberDashboard();
+        renderMemberTestContext();
+        await loadMemberTimeline(privacyContext);
+        return memberTests;
+      } catch (error) {
+        if (error?.memberPrivacyStale) return [];
+        setMemberDashboardStatus(error.message || "Your test history could not be loaded.",{error:true});
+        return [];
+      }
+    }
+    function localIsoDate() {
+      const now=new Date();
+      return new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
+    }
+    function memberCollectionDateValue({required=false}={}) {
+      if (!memberIsReady() || !activeMemberTest) return "";
+      const input=document.getElementById("memberCollectionDate");
+      const value=String(input?.value || activeMemberTest?.collection_date || "");
+      const valid=/^\d{4}-\d{2}-\d{2}$/.test(value) && value<=localIsoDate();
+      if (required && !valid) {
+        showError("Enter the specimen collection date shown on this blood-test report before continuing.");
+        showView("upload");
+        window.setTimeout(()=>{
+          scrollToTarget("memberTestContext");
+          input?.focus({preventScroll:true});
+        },80);
+        return null;
+      }
+      return valid ? value : "";
+    }
+    function renderMemberTestContext() {
+      const context=document.getElementById("memberTestContext");
+      if (!context) return;
+      const visible=Boolean(memberIsReady() && activeMemberTest && memberTestId(activeMemberTest));
+      context.hidden=!visible;
+      if (!visible) return;
+      const type=document.getElementById("memberTestContextType");
+      const id=document.getElementById("memberTestContextId");
+      const collectionDate=document.getElementById("memberCollectionDate");
+      if (type) type.textContent=memberTestTypeLabel(activeMemberTest);
+      if (id) {
+        const previousId=String(activeMemberTest?.previous_test_id || activeMemberTest?.comparison_test_id || "");
+        id.textContent=previousId
+          ? `Test ${memberTestId(activeMemberTest)} · this retest will be compared with ${previousId}.`
+          : `Test ${memberTestId(activeMemberTest)} · reviewed values and results will be saved to this account.`;
+      }
+      if (collectionDate) {
+        collectionDate.max=localIsoDate();
+        if (collectionDate.dataset.testId!==memberTestId(activeMemberTest)) {
+          collectionDate.dataset.testId=memberTestId(activeMemberTest);
+          collectionDate.value=String(activeMemberTest?.collection_date || "");
+        }
+      }
+    }
+    function activateMemberTest(test,{navigate=true}={}) {
+      if (!test || !memberTestId(test)) return;
+      const changingTest=memberTestId(activeMemberTest)!==memberTestId(test);
+      if (changingTest) {
+        clearPendingCustomBlendJob();
+        lastCustomBlendResult=null;
+        currentQuestion=0;
+        clearMemberHealthUi();
+      }
+      activeMemberTest=test;
+      selectedFiles=[];
+      if (pdfInput) pdfInput.value="";
+      const label=document.getElementById("fileLabel");
+      if (label) label.textContent="Drop your blood-test PDF or photos here";
+      extractBtn.disabled=true;
+      renderMemberTestContext();
+      if (navigate) {
+        showView("upload");
+        window.setTimeout(()=>scrollToTarget("uploadView"),140);
+      }
+    }
+    async function createMemberTest(testType) {
+      if (!memberIsReady()) {
+        pendingMemberIntent="upload";
+        openMemberAuthModal("upload");
+        return null;
+      }
+      const privacyContext=captureMemberPrivacyContext();
+      setMemberDashboardStatus(`Creating your ${memberTestTypeLabel(testType).toLowerCase()}…`);
+      showError("");
+      try {
+        const response=await fetch(apiUrl("/api/member/tests"),{
+          method:"POST",
+          headers:memberCsrfHeaders({json:true}),
+          credentials:"include",
+          body:JSON.stringify({test_type:testType,source:"member_upload"})
+        });
+        let data={};
+        try { data=await response.json(); } catch (_) {}
+        assertMemberPrivacyContext(privacyContext);
+        if (memberResponseExpired(response,data)) return null;
+        if (!response.ok || data?.ok===false) throw new Error(data?.message || "The test could not be created.");
+        const test=data?.test || data?.member_test || {
+          test_id:data?.test_id,
+          test_type:testType,
+          status:"ready",
+          created_at:new Date().toISOString()
+        };
+        if (!memberTestId(test)) throw new Error("The test could not be created.");
+        const existingIndex=memberTests.findIndex(item=>memberTestId(item)===memberTestId(test));
+        if (existingIndex>=0) memberTests.splice(existingIndex,1,test); else memberTests.unshift(test);
+        if (memberTestIsComplete(test)) await openSavedMemberTest(test);
+        else if (memberTestHasResumableRun(test)) await resumeMemberTestRun(test);
+        else activateMemberTest(test);
+        return test;
+      } catch (error) {
+        if (error?.memberPrivacyStale) return null;
+        const message=error.message || "The test could not be created.";
+        setMemberDashboardStatus(message,{error:true});
+        showError(message);
+        return null;
+      }
+    }
+    async function startRecommendedMemberTest() {
+      if (!memberIsReady()) return null;
+      const recommendation=recommendedMemberTest();
+      if (recommendation.test) {
+        activateMemberTest(recommendation.test);
+        return recommendation.test;
+      }
+      return createMemberTest(recommendation.type);
+    }
+    async function fetchSavedMemberTest(test) {
+      const testId=memberTestId(test);
+      if (!memberIsReady() || !testId) throw new Error("Sign in to open this saved result.");
+      const privacyContext=captureMemberPrivacyContext();
+      const response=await fetch(apiUrl(`/api/member/tests/${encodeURIComponent(testId)}`),{
+        headers:{"Accept":"application/json"},
+        credentials:"include"
+      });
+      let data={};
+      try { data=await response.json(); } catch (_) {}
+      assertMemberPrivacyContext(privacyContext);
+      if (memberResponseExpired(response,data)) {
+        const error=new Error("Your secure member session expired. Sign in again to view this result.");
+        error.memberSessionExpired=true;
+        throw error;
+      }
+      if (!response.ok || data?.ok===false) throw new Error(data?.message || "This saved result could not be loaded.");
+      const savedTest=data?.test || data?.member_test || test;
+      const result=data?.result || data?.analysis_result || savedTest?.result;
+      const comparison=data?.longitudinal_comparison || savedTest?.longitudinal_comparison || result?.longitudinal_comparison || null;
+      return {test:savedTest,result,comparison};
+    }
+    async function openSavedMemberTest(test) {
+      const privacyContext=captureMemberPrivacyContext();
+      setMemberDashboardStatus("Loading your saved result…");
+      try {
+        const saved=await fetchSavedMemberTest(test);
+        assertMemberPrivacyContext(privacyContext);
+        if (!saved.result || saved.result?.ok===false) throw new Error("This test does not have a completed result yet.");
+        renderResults(saved.result,{source:"history",test:saved.test,comparison:saved.comparison});
+      } catch (error) {
+        if (error?.memberPrivacyStale) return;
+        if (!error?.memberSessionExpired) {
+          setMemberDashboardStatus(error.message || "This saved result could not be loaded.",{error:true});
+        }
+      }
+    }
+    async function completedMemberResultContext(result,test=activeMemberTest) {
+      const fallback={result,test,comparison:result?.longitudinal_comparison || null};
+      if (!memberIsReady() || !memberTestId(test)) return fallback;
+      try {
+        const saved=await fetchSavedMemberTest(test);
+        if (!saved.result || saved.result?.ok===false) return fallback;
+        activeMemberTest=saved.test;
+        return saved;
+      } catch (error) {
+        if (error?.memberSessionExpired) throw error;
+        console.warn("The completed member result was available, but its saved comparison could not be loaded yet.",error);
+        return fallback;
+      }
+    }
+    async function resumeMemberTestRun(test,button=null) {
+      if (!memberIsReady() || !memberTestHasResumableRun(test)) {
+        if (test) activateMemberTest(test);
+        return;
+      }
+      activateMemberTest(test,{navigate:false});
+      rememberPendingCustomBlendJob(test.run_id);
+      setMemberDashboardStatus("Checking your saved analysis…");
+      await resumePendingCustomBlendAnalysis(
+        button || document.getElementById("resumeAnalysisBtn"),
+        "member_dashboard"
+      );
+    }
+    function memberLabAccessReady() {
+      if (memberIsReady()) return true;
+      if (requireMemberAuthForLabs) return false;
+      return !memberSession.authenticated;
+    }
+    async function prepareMemberLabUpload() {
+      if (!memberPortalEnabled) {
+        if (requireMemberAuthForLabs) {
+          showError("Secure member access must be enabled before authenticated lab processing can continue.");
+          return false;
+        }
+        return true;
+      }
+      if (!memberIsReady()) {
+        if (!requireMemberAuthForLabs && !memberSession.authenticated) return true;
+        pendingMemberIntent="upload";
+        openMemberAuthModal("upload");
+        return false;
+      }
+      if (!activeMemberTest) {
+        if (!memberTests.length) await loadMemberDashboard({show:false});
+        await startRecommendedMemberTest();
+      }
+      return Boolean(activeMemberTest);
+    }
+    function initMemberPortal() {
+      const accessButton=document.getElementById("memberAccessButton");
+      if (!memberPortalEnabled) {
+        if (accessButton) accessButton.hidden=true;
+        return Promise.resolve(memberSession);
+      }
+      accessButton?.addEventListener("click",event=>openMemberAuthModal("dashboard",event.currentTarget));
+      document.querySelectorAll("[data-close-member-auth]").forEach(item=>item.addEventListener("click",()=>closeMemberAuthModal()));
+      document.getElementById("memberLoginButton")?.addEventListener("click",()=>startHostedMemberAuth("login"));
+      document.getElementById("memberSignupButton")?.addEventListener("click",()=>startHostedMemberAuth("signup"));
+      document.querySelectorAll("[data-member-login]").forEach(item=>item.addEventListener("click",()=>startHostedMemberAuth("login")));
+      document.getElementById("memberVerificationRefreshButton")?.addEventListener("click",()=>startHostedMemberAuth("login"));
+      document.getElementById("memberConsentForm")?.addEventListener("submit",saveMemberConsents);
+      document.getElementById("memberOpenDashboardButton")?.addEventListener("click",()=>{
+        pendingMemberIntent="";
+        closeMemberAuthModal({restoreFocus:false});
+        loadMemberDashboard({show:true});
+      });
+      document.getElementById("memberLogoutButton")?.addEventListener("click",()=>logoutMember());
+      document.getElementById("memberLogoutAllButton")?.addEventListener("click",()=>logoutMember({allDevices:true}));
+      document.getElementById("memberDashboardLogoutButton")?.addEventListener("click",()=>logoutMember());
+      document.getElementById("memberDashboardRefreshButton")?.addEventListener("click",()=>loadMemberDashboard({show:false}));
+      document.getElementById("memberDashboardAccountButton")?.addEventListener("click",event=>openMemberAuthModal("",event.currentTarget));
+      document.getElementById("memberCollectionDate")?.addEventListener("change",event=>{
+        if (!activeMemberTest) return;
+        const value=String(event.currentTarget.value || "");
+        activeMemberTest={...activeMemberTest,collection_date:value || null};
+        const index=memberTests.findIndex(test=>memberTestId(test)===memberTestId(activeMemberTest));
+        if (index>=0) memberTests.splice(index,1,activeMemberTest);
+        if (value) showError("");
+      });
+      document.getElementById("memberCancelTestButton")?.addEventListener("click",()=>{
+        activeMemberTest=null;
+        selectedFiles=[];
+        pdfInput.value="";
+        extractBtn.disabled=true;
+        document.getElementById("fileLabel").textContent="Drop your blood-test PDF or photos here";
+        renderMemberTestContext();
+        loadMemberDashboard({show:true});
+      });
+      document.addEventListener("keydown",event=>{
+        if (event.key==="Escape") closeMemberAuthModal();
+      });
+      ["pointerdown","keydown","touchstart"].forEach(eventName=>{
+        document.addEventListener(eventName,resetMemberPrivacyIdleLock,{passive:true});
+      });
+      const memberAuthNotice=consumeMemberAuthNotice();
+      pendingMemberIntent=consumeMemberReturnIntent();
+      if (memberAuthNotice && !pendingMemberIntent) pendingMemberIntent="dashboard";
+      syncMemberSessionUi();
+      return checkMemberSession({routeIntent:true}).then(session=>{
+        if (memberAuthNotice && !session.authenticated) {
+          openMemberAuthModal(pendingMemberIntent || "dashboard");
+          setMemberAuthStatus(
+            memberAuthNotice==="verification_required"
+              ? "Verify your email using the message from our authentication service, then return here and sign in."
+              : "Secure sign-in could not be completed. Please try again.",
+            memberAuthNotice!=="verification_required"
+          );
+        }
+        return session;
+      });
     }
     function founderMetricValue(value,digits=3,signed=false) {
       const number=Number(value);
@@ -10041,18 +11914,30 @@
       });
       return clean;
     }
+    const memberAnalyticsMetadataKeys=new Set([
+      "device","referrer_domain","source","mode","member_flow","use_jobs",
+      "runtime_source","resumed","consent_version","cta","target","view",
+      "detail","member_test","stage","status"
+    ]);
+    function memberSafeAnalyticsMetadata(metadata={}) {
+      if (!memberSession.authenticated) return metadata;
+      return Object.fromEntries(
+        Object.entries(metadata || {}).filter(([key])=>memberAnalyticsMetadataKeys.has(String(key || "")))
+      );
+    }
     function trackEvent(eventName, metadata={}) {
       if (!analyticsEndpoint || window.FLUIDS_ANALYTICS_DISABLED === true) return;
+      const eventMetadata={
+        device:analyticsDeviceType(),
+        referrer_domain:analyticsReferrerDomain(),
+        ...metadata
+      };
       const payload = {
         event:eventName,
         session_id:analyticsSessionId,
         source:"web_app",
         path:`${window.location.pathname}${window.location.search}`,
-        metadata:cleanAnalyticsMetadata({
-          device:analyticsDeviceType(),
-          referrer_domain:analyticsReferrerDomain(),
-          ...metadata
-        })
+        metadata:cleanAnalyticsMetadata(memberSafeAnalyticsMetadata(eventMetadata))
       };
       const body = JSON.stringify(payload);
       try {
@@ -10402,8 +12287,9 @@
     }
     function showView(name,{rememberPersonalized=true}={}) {
       const apply=()=>{
-        if (rememberPersonalized && !["standard","discovery"].includes(name)) personalizedView = name;
-        const index = {upload:0,review:1,questionnaire:2,results:3,standard:4,discovery:5}[name];
+        if (rememberPersonalized && !["standard","discovery","member"].includes(name)) personalizedView = name;
+        const index = {upload:0,review:1,questionnaire:2,results:3,standard:4,discovery:5,member:6}[name];
+        if (!Number.isInteger(index)) return;
         viewIds.forEach((id,itemIndex) => document.getElementById(id).classList.toggle("active", itemIndex === index));
         document.getElementById("uploadHero").style.display = name === "upload" ? "grid" : "none";
         const dailyFoundation=document.getElementById("dailyFoundation");
@@ -10422,15 +12308,16 @@
         if (homepageFlowIntro) homepageFlowIntro.style.display = name === "upload" ? "grid" : "none";
         const experienceLab=document.getElementById("experienceLab");
         if (experienceLab) experienceLab.style.display = name === "upload" ? "grid" : "none";
-	        document.getElementById("flowProgress").style.display = ["standard","discovery","results"].includes(name) ? "none" : "";
-	        document.getElementById("wizardStage").style.display = ["standard","discovery","results"].includes(name) ? "none" : "";
+	        document.getElementById("flowProgress").style.display = ["standard","discovery","results","member"].includes(name) ? "none" : "";
+	        document.getElementById("wizardStage").style.display = ["standard","discovery","results","member"].includes(name) ? "none" : "";
         document.querySelectorAll("[data-app-mode]").forEach(item=>{
           const mode = ["standard","discovery"].includes(name) ? name : "personalized";
           item.classList.toggle("active",item.dataset.appMode === mode);
         });
         document.querySelectorAll("[data-flow-step]").forEach((item,itemIndex) => {
-          item.classList.toggle("active", itemIndex === index);
-          item.classList.toggle("done", itemIndex < index);
+          const flowView=index>=0 && index<=3;
+          item.classList.toggle("active", flowView && itemIndex === index);
+          item.classList.toggle("done", flowView && itemIndex < index);
         });
         trackEvent("view_changed",{view:name});
         requestAnimationFrame(resizeVectorMatrices);
@@ -10478,6 +12365,19 @@
       }
     }));
     function startNewPersonalizedAnalysis() {
+      if (memberIsReady()) {
+        clearPendingCustomBlendJob();
+        lastCustomBlendResult=null;
+        selectedFiles=[];
+        currentQuestion=0;
+        if (pdfInput) pdfInput.value="";
+        clearMemberHealthUi();
+        activeMemberTest=null;
+        renderMemberTestContext();
+        trackEvent("new_analysis_started",{source:"member_results",member_flow:true});
+        loadMemberDashboard({show:true});
+        return;
+      }
       clearPendingCustomBlendJob();
       lastCustomBlendResult=null;
       selectedFiles=[];
@@ -10499,6 +12399,8 @@
     document.getElementById("startNewAnalysisBtn")?.addEventListener("click",startNewPersonalizedAnalysis);
     async function startManualLabEntry(trigger) {
       showError("");
+      if (!(await prepareMemberLabUpload())) return;
+      if (activeMemberTest && memberCollectionDateValue({required:true})===null) return;
       if (!Object.keys(specs).length) await loadSpecs();
       renderLabs({});
       document.getElementById("extractMeta").textContent="Manual entry · add the values available on your lab report";
@@ -10512,12 +12414,13 @@
         showError("We could not load the manual lab form. Refresh the page and try again.");
       });
     }));
-    document.querySelectorAll("[data-quick-mode]").forEach(item=>item.addEventListener("click",()=>{
+    document.querySelectorAll("[data-quick-mode]").forEach(item=>item.addEventListener("click",async ()=>{
       const mode=item.dataset.quickMode || "personalized";
       trackEvent("cta_clicked",{cta:"quick_mode",mode});
       if (mode === "standard") loadStandardBlend();
       else if (mode === "discovery") loadV7Discovery();
       else {
+        if (!(await prepareMemberLabUpload())) return;
         showView("upload");
         setTimeout(()=>scrollToTarget("uploadView"),140);
       }
@@ -10570,7 +12473,7 @@
     }
 
     function syncAnalysisConsent() {
-      analyzeBtn.disabled = currentQuestion === 3 && !dataLoopConsent.checked;
+      analyzeBtn.disabled = currentQuestion === 3 && analysisRequiresDataLoopConsent() && !dataLoopConsent.checked;
     }
 
     function showError(message) {
@@ -10610,11 +12513,20 @@
     async function runAnalysisPreflight(payload) {
       const response=await fetch(apiUrl("/api/analysis-preflight"),{
         method:"POST",
-        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        headers:{
+          "Content-Type":"application/json",
+          "Accept":"application/json",
+          ...(activeMemberTest && memberSession.csrf_token ? {"X-CSRF-Token":memberSession.csrf_token} : {})
+        },
         credentials:"include",
         body:JSON.stringify(payload)
       });
       const data=await response.json();
+      if (memberResponseExpired(response,data)) {
+        const error=new Error("Your secure member session expired. Sign in and try again.");
+        error.memberSessionExpired=true;
+        throw error;
+      }
       if (!response.ok || !data.ok) throwAnalysisError(data);
       return data;
     }
@@ -10798,6 +12710,24 @@
     function selectFiles(fileList) {
       const files=Array.from(fileList || []).slice(0,10);
       if (!files.length) return;
+      if (!memberLabAccessReady()) {
+        selectedFiles=[];
+        pdfInput.value="";
+        extractBtn.disabled=true;
+        if (memberPortalEnabled) {
+          pendingMemberIntent="upload";
+          openMemberAuthModal("upload",dropZone);
+        } else {
+          showError("Secure member access must be enabled before authenticated lab processing can continue.");
+        }
+        return;
+      }
+      if (memberPortalEnabled && memberIsReady() && !activeMemberTest) {
+        prepareMemberLabUpload().then(ready=>{
+          if (ready) selectFiles(files);
+        });
+        return;
+      }
       const invalid=files.find(file=>!isSupportedLabFile(file) || file.size > 14*1024*1024);
       if (invalid) {
         selectedFiles=[];
@@ -10905,6 +12835,10 @@
     }
     extractBtn.addEventListener("click", async () => {
       if (!selectedFiles.length) return;
+      if (!(await prepareMemberLabUpload())) return;
+      const privacyContext=captureMemberPrivacyContext();
+      const collectionDate=memberCollectionDateValue({required:Boolean(activeMemberTest)});
+      if (collectionDate===null) return;
       showError(""); extractBtn.disabled = true; setLoading("extractLoader", true);
       trackEvent("pdf_extract_started",{
         file_count:selectedFiles.length,
@@ -10921,11 +12855,19 @@
             headers:{
               "Content-Type": file.type || "application/octet-stream",
               "X-File-Name": encodeURIComponent(file.name),
-              "X-Fluids-Session": analyticsSessionId
+              "X-Fluids-Session": analyticsSessionId,
+              ...(activeMemberTest ? {"X-Fluids-Test-Id":memberTestId(activeMemberTest)} : {}),
+              ...(activeMemberTest && collectionDate ? {"X-Fluids-Collection-Date":collectionDate} : {}),
+              ...(activeMemberTest && memberSession.csrf_token ? {"X-CSRF-Token":memberSession.csrf_token} : {})
             },
+            ...(activeMemberTest ? {credentials:"include"} : {}),
             body:file
           });
           const data = await response.json();
+          assertMemberPrivacyContext(privacyContext);
+          if (memberResponseExpired(response,data)) {
+            throw new Error("Your secure member session expired. Sign in and upload the test again.");
+          }
           if (!response.ok || !data.ok) {
             failures.push(data.message || `${file.name} could not be read.`);
             continue;
@@ -10937,6 +12879,7 @@
             }
           });
         }
+        assertMemberPrivacyContext(privacyContext);
         if (!Object.keys(mergedLabs).length) throw new Error(failures[0] || "No supported lab markers could be read. Try a brighter, straighter photo.");
         renderLabs(mergedLabs);
         const methodLabels={image_ocr:"Photo OCR",local_ocr:"Scanned PDF OCR",embedded_text:"PDF text"};
@@ -10949,12 +12892,17 @@
           file_count:selectedFiles.length,
           files_read:readCount
         });
+        if (activeMemberTest) {
+          selectedFiles=[];
+          pdfInput.value="";
+        }
         showView("review");
       } catch (error) {
+        if (error?.memberPrivacyStale) return;
         trackEvent("pdf_extract_failed",{error:"extract_failed"});
         showError(error.message);
       }
-      finally { extractBtn.disabled = false; setLoading("extractLoader", false); }
+      finally { extractBtn.disabled = !selectedFiles.length; setLoading("extractLoader", false); }
     });
     reviewContinueBtn.addEventListener("click",()=>{
       if (reviewContinueBtn.dataset.reviewMode==="standard") {
@@ -10984,7 +12932,11 @@
       }
     });
     analyzeBtn.addEventListener("click", async () => {
-      if (!dataLoopConsent.checked) {
+      if (!(await prepareMemberLabUpload())) return;
+      const privacyContext=captureMemberPrivacyContext();
+      const collectionDate=memberCollectionDateValue({required:Boolean(activeMemberTest)});
+      if (collectionDate===null) return;
+      if (analysisRequiresDataLoopConsent() && !dataLoopConsent.checked) {
         showError("Please review and accept the model-improvement data consent before generating your blend.");
         dataLoopConsent.focus();
         return;
@@ -10996,7 +12948,13 @@
         analytics_session_id:analyticsSessionId,
         data_loop_consent:true,
         data_loop_consent_version:dataLoopConsentVersion,
-        data_loop_consented_at:new Date().toISOString(),
+        data_loop_consented_at:dataLoopConsent.checked ? new Date().toISOString() : null,
+        ...(memberIsReady() ? {data_loop_consent:Boolean(dataLoopConsent.checked)} : {}),
+        ...(activeMemberTest ? {
+          member_test_id:memberTestId(activeMemberTest),
+          test_id:activeMemberTest ? memberTestId(activeMemberTest) : null,
+          collection_date:collectionDate
+        } : {}),
         age:numberOrNull("age"), sex:document.getElementById("sex").value, bmi:calculatedBmi(),
         race_ethnicity_code:numberOrNull("raceEthnicity"), waist_cm:convertedNumberOrNull("waistInches",2.54), labs,
         kidney_or_potassium_risk:document.getElementById("kidneyRisk").checked,
@@ -11042,6 +13000,7 @@
           scienceRunnerBackendStatus="building biomarker report";
           renderScienceRunnerStep(scienceRunnerStep);
           const preflight=await runAnalysisPreflight(payload);
+          assertMemberPrivacyContext(privacyContext);
           renderAnalysisWaitingRoom(preflight);
           scienceRunnerBackendStatus="testing powder formulas";
           renderScienceRunnerStep(scienceRunnerStep);
@@ -11050,23 +13009,33 @@
             phenoage_available:Boolean(preflight?.age_scores?.scores?.phenoage?.available)
           });
         } catch (preflightError) {
+          if (preflightError?.memberSessionExpired || preflightError?.memberPrivacyStale) throw preflightError;
           scienceRunnerBackendStatus="building full report + formula";
           renderScienceRunnerStep(scienceRunnerStep);
           console.warn("Progressive biomarker report was unavailable; continuing the full analysis.",preflightError);
         }
         const data = await runCustomBlendAnalysis(payload);
+        assertMemberPrivacyContext(privacyContext);
         if (data.app_revision && !String(data.app_revision).includes("product-layer")) {
           console.warn("App revision changed while this page was open.", data.app_revision);
         }
-        renderResults(data);
-        lastCustomBlendResult=data;
-        const firstBlend=(data.blend_options || [])[0] || {};
-        trackEvent("custom_blend_completed",customBlendAnalyticsMetadata(data,firstBlend,{
-          analysis_seconds:Number(data.analysis_seconds) || Number(((performance.now()-analysisStartedAt)/1000).toFixed(1)),
+        const completedContext=await completedMemberResultContext(data,activeMemberTest);
+        assertMemberPrivacyContext(privacyContext);
+        renderResults(completedContext.result,{
+          source:"analysis",
+          test:completedContext.test || data?.member_test || activeMemberTest,
+          comparison:completedContext.comparison
+        });
+        lastCustomBlendResult=completedContext.result;
+        if (memberIsReady() && activeMemberTest) loadMemberDashboard({show:false});
+        const firstBlend=(completedContext.result.blend_options || [])[0] || {};
+        trackEvent("custom_blend_completed",customBlendAnalyticsMetadata(completedContext.result,firstBlend,{
+          analysis_seconds:Number(completedContext.result.analysis_seconds) || Number(((performance.now()-analysisStartedAt)/1000).toFixed(1)),
           lab_count:Object.keys(labs).length,
           runtime_source:useAnalysisJobs ? "job" : "direct"
         }));
       } catch (error) {
+        if (error?.memberPrivacyStale) return;
         if (error && error.analysisPending) {
           trackEvent("custom_blend_still_queued",{
             lab_count:Object.keys(labs).length,
@@ -11085,21 +13054,31 @@
       }
       finally { syncAnalysisConsent(); setLoading("analysisLoader", false); stopScienceRunner(); }
     });
-    document.getElementById("resumeAnalysisBtn")?.addEventListener("click",async event=>{
-      const button=event.currentTarget;
+    async function resumePendingCustomBlendAnalysis(button,source="resume_button") {
+      if (!(await prepareMemberLabUpload())) return;
+      const privacyContext=captureMemberPrivacyContext();
       showError("");
-      button.disabled=true;
+      if (button) button.disabled=true;
       setLoading("analysisLoader",true);
       startScienceRunner();
       try {
         const data=await runCustomBlendAnalysisJob(null);
-        renderResults(data);
-        lastCustomBlendResult=data;
-        const firstBlend=(data.blend_options || [])[0] || {};
-        trackEvent("custom_blend_completed",customBlendAnalyticsMetadata(data,firstBlend,{
-          runtime_source:"resumed_job"
+        assertMemberPrivacyContext(privacyContext);
+        const completedContext=await completedMemberResultContext(data,activeMemberTest);
+        assertMemberPrivacyContext(privacyContext);
+        renderResults(completedContext.result,{
+          source,
+          test:completedContext.test || data?.member_test || activeMemberTest,
+          comparison:completedContext.comparison
+        });
+        lastCustomBlendResult=completedContext.result;
+        if (memberIsReady() && activeMemberTest) loadMemberDashboard({show:false});
+        const firstBlend=(completedContext.result.blend_options || [])[0] || {};
+        trackEvent("custom_blend_completed",customBlendAnalyticsMetadata(completedContext.result,firstBlend,{
+          runtime_source:source
         }));
       } catch (error) {
+        if (error?.memberPrivacyStale) return;
         if (error && error.analysisPending) {
           trackEvent("custom_blend_still_queued",{use_jobs:true,resumed:true});
         } else {
@@ -11107,41 +13086,104 @@
         }
         showError(error.message);
       } finally {
-        button.disabled=false;
+        if (button) button.disabled=false;
         syncPendingAnalysisUi();
         setLoading("analysisLoader",false);
         stopScienceRunner();
       }
+    }
+    document.getElementById("resumeAnalysisBtn")?.addEventListener("click",async event=>{
+      await resumePendingCustomBlendAnalysis(event.currentTarget,"resumed_job");
     });
     async function runCustomBlendAnalysis(payload) {
       if (useAnalysisJobs) return runCustomBlendAnalysisJob(payload);
       const response = await fetch(apiUrl("/api/analyze"), {
         method:"POST",
-        headers:{"Content-Type":"application/json"},
+        headers:{
+          "Content-Type":"application/json",
+          ...(activeMemberTest && memberSession.csrf_token ? {"X-CSRF-Token":memberSession.csrf_token} : {})
+        },
         credentials:"include",
         body:JSON.stringify(payload)
       });
       const data = await response.json();
+      if (memberResponseExpired(response,data)) throw new Error("Your secure member session expired. Sign in and try again.");
+      if (!response.ok && data?.error==="member_test_already_complete" && activeMemberTest) {
+        const saved=await fetchSavedMemberTest(activeMemberTest);
+        if (saved.result?.ok!==false && saved.result) return saved.result;
+      }
       if (!response.ok || !data.ok) throwAnalysisError(data);
       return data;
     }
-    function throwAnalysisError(data) {
+    function throwAnalysisError(data,{terminal=false}={}) {
       const missing = data && data.missing ? ` Missing: ${data.missing.map(k => specs[k]?.label || k).join(", ")}.` : "";
-      throw new Error(((data && data.message) || "Analysis could not be completed.") + missing);
+      const error=new Error(((data && data.message) || "Analysis could not be completed.") + missing);
+      if (terminal) error.analysisTerminal=true;
+      throw error;
+    }
+    function analysisJobIsTerminal(job) {
+      return ["completed","failed","cancelled","timed_out"].includes(String(job?.status || "").toLowerCase());
+    }
+    async function fetchAnalysisJob(jobId) {
+      const response=await fetch(apiUrl(`/api/jobs/${encodeURIComponent(jobId)}`),{
+        headers:{"Accept":"application/json"},
+        credentials:"include"
+      });
+      let job={};
+      try { job=await response.json(); } catch (_) {}
+      if (memberResponseExpired(response,job)) {
+        const error=new Error("Your secure member session expired. Sign in to resume this analysis.");
+        error.memberSessionExpired=true;
+        throw error;
+      }
+      return {response,job};
     }
     async function runCustomBlendAnalysisJob(payload) {
+      const privacyContext=captureMemberPrivacyContext();
       let jobId=storedPendingCustomBlendJobId();
       let pollMs=5000;
+      if (jobId && payload) {
+        try {
+          const prior=await fetchAnalysisJob(jobId);
+          assertMemberPrivacyContext(privacyContext);
+          if (analysisJobIsTerminal(prior.job)) {
+            const completed=String(prior.job.status).toLowerCase()==="completed" && prior.job?.result?.ok;
+            clearPendingCustomBlendJob({retainLast:completed});
+            if (completed) return prior.job.result;
+            jobId="";
+          }
+        } catch (error) {
+          if (error?.memberSessionExpired) throw error;
+          // A transient status failure must not create a second potentially concurrent run.
+        }
+      }
       if (!jobId) {
         if (!payload) throw new Error("No queued analysis was found. Please upload your blood test again.");
         const createResponse = await fetch(apiUrl("/api/jobs/analyze"), {
           method:"POST",
-          headers:{"Content-Type":"application/json","Accept":"application/json"},
+          headers:{
+            "Content-Type":"application/json",
+            "Accept":"application/json",
+            ...(activeMemberTest && memberSession.csrf_token ? {"X-CSRF-Token":memberSession.csrf_token} : {})
+          },
           credentials:"include",
           body:JSON.stringify(payload)
         });
         const created = await createResponse.json();
-        if (!createResponse.ok || !created.ok) throwAnalysisError(created);
+        assertMemberPrivacyContext(privacyContext);
+        if (memberResponseExpired(createResponse,created)) throw new Error("Your secure member session expired. Sign in and try again.");
+        if (!createResponse.ok || !created.ok) {
+          if (created?.error==="member_test_already_complete" && activeMemberTest) {
+            const saved=await fetchSavedMemberTest(activeMemberTest);
+            if (saved.result?.ok!==false && saved.result) {
+              clearPendingCustomBlendJob({retainLast:true});
+              return saved.result;
+            }
+          }
+          if (created?.error!=="member_analysis_in_progress" || !created?.job_id) {
+            throwAnalysisError(created);
+          }
+        }
         jobId=created.job_id;
         pollMs=Math.max(3000,Math.min(5000,Number(created.poll_interval_seconds || 5)*1000));
         rememberPendingCustomBlendJob(jobId);
@@ -11156,27 +13198,25 @@
       let firstCheck=true;
       while (Date.now()<pollDeadline) {
         if (!firstCheck) await wait(pollMs);
+        assertMemberPrivacyContext(privacyContext);
         firstCheck=false;
         try {
-          const statusResponse = await fetch(apiUrl(`/api/jobs/${encodeURIComponent(jobId)}`), {
-            headers:{"Accept":"application/json"},
-            credentials:"include"
-          });
-          const job = await statusResponse.json();
-          if (!statusResponse.ok || !job.ok) throwAnalysisError(job);
-          transientFailures=0;
+          const {response:statusResponse,job}=await fetchAnalysisJob(jobId);
+          assertMemberPrivacyContext(privacyContext);
           updateAnalysisJobReadout(job);
-          if (job.status === "completed") {
-            if (!job.result || !job.result.ok) throwAnalysisError(job.result || job);
+          if (String(job.status).toLowerCase() === "completed") {
             clearPendingCustomBlendJob({retainLast:true});
+            if (!job.result || !job.result.ok) throwAnalysisError(job.result || job);
             return job.result;
           }
-          if (["failed","cancelled","timed_out"].includes(String(job.status))) {
+          if (["failed","cancelled","timed_out"].includes(String(job.status).toLowerCase())) {
             clearPendingCustomBlendJob();
-            throwAnalysisError(job.result || job);
+            throwAnalysisError(job.result?.message ? job.result : job,{terminal:true});
           }
+          if (!statusResponse.ok || !job.ok) throwAnalysisError(job);
+          transientFailures=0;
         } catch (error) {
-          if (error && error.analysisPending) throw error;
+          if (error && (error.analysisPending || error.analysisTerminal || error.memberSessionExpired || error.memberPrivacyStale)) throw error;
           transientFailures+=1;
           if (transientFailures>=3) throw error;
           await wait(pollMs);
@@ -11286,7 +13326,9 @@
       head.append(title,copy); shell.appendChild(head);
       const hero=document.createElement("div"); hero.className="timeline-hero";
       const heroLeft=document.createElement("div");
-      heroLeft.innerHTML=`<small>4-week modeled adjustment</small><strong>${formatTimelineAgeEffect(primary)}</strong>`;
+      const heroLabel=document.createElement("small"); heroLabel.textContent="4-week modeled adjustment";
+      const heroValue=document.createElement("strong"); heroValue.textContent=formatTimelineAgeEffect(primary);
+      heroLeft.append(heroLabel,heroValue);
       const heroRight=document.createElement("span");
       heroRight.textContent=`Full modeled direction: ${formatModeledAgeEffect(effect)} · confirmation window: ${(model.honest_confirmation_window_weeks || [8,12]).join("–")} weeks`;
       hero.append(heroLeft,heroRight); shell.appendChild(hero);
@@ -12026,7 +14068,154 @@
         custom_waitlist_available:true
       }));
     }
-    function renderResults(data) {
+    function longitudinalNumber(value) {
+      return value===null || value===undefined || value==="" ? NaN : Number(value);
+    }
+    function longitudinalValue(value,digits=1) {
+      const number=longitudinalNumber(value);
+      return Number.isFinite(number) ? number.toFixed(digits) : "—";
+    }
+    function longitudinalSignedValue(value,{digits=1,suffix=""}={}) {
+      const number=longitudinalNumber(value);
+      if (!Number.isFinite(number)) return "—";
+      return `${number>0 ? "+" : ""}${number.toFixed(digits)}${suffix}`;
+    }
+    function comparisonMarkerTone(marker) {
+      if (marker?.favorable===true || ["improved","favorable","better"].includes(String(marker?.direction || marker?.status || "").toLowerCase())) return "favorable";
+      if (marker?.favorable===false || ["worsened","caution","attention"].includes(String(marker?.direction || marker?.status || "").toLowerCase())) return "caution";
+      return "";
+    }
+    function comparisonMarkerRows(comparison) {
+      const rows=comparison?.biomarkers || comparison?.marker_changes || comparison?.changes || [];
+      return Array.isArray(rows) ? rows : [];
+    }
+    function comparisonCollectionIntervalDays(comparison,currentTest=null) {
+      const baselineId=String(comparison?.previous_test_id || comparison?.baseline_test_id || "");
+      const followupId=String(comparison?.current_test_id || comparison?.followup_test_id || memberTestId(currentTest));
+      const baselineTest=memberTests.find(test=>memberTestId(test)===baselineId) || comparison?.baseline_test || null;
+      const followupTest=(memberTestId(currentTest)===followupId ? currentTest : null) ||
+        memberTests.find(test=>memberTestId(test)===followupId) || comparison?.followup_test || null;
+      const baselineCollection=String(comparison?.baseline_collection_date || baselineTest?.collection_date || "");
+      const followupCollection=String(comparison?.followup_collection_date || followupTest?.collection_date || "");
+      if (!baselineCollection || !followupCollection) return null;
+      const baselineTime=Date.parse(baselineCollection);
+      const followupTime=Date.parse(followupCollection);
+      if (!Number.isFinite(baselineTime) || !Number.isFinite(followupTime)) return null;
+      return followupTime>=baselineTime
+        ? Math.round((followupTime-baselineTime)/86400000)
+        : null;
+    }
+    function renderLongitudinalComparison(comparison,currentTest=null) {
+      const panel=document.getElementById("longitudinalComparison");
+      const jump=document.getElementById("longitudinalComparisonJump");
+      const summaryGrid=document.getElementById("longitudinalSummaryGrid");
+      const markerList=document.getElementById("longitudinalMarkerList");
+      const empty=document.getElementById("longitudinalEmpty");
+      if (!panel || !summaryGrid || !markerList || !empty) return;
+      const rows=comparisonMarkerRows(comparison);
+      const hasComparison=Boolean(comparison && (
+        comparison.available!==false ||
+        rows.length ||
+        comparison.status ||
+        comparison.biological_age ||
+        Number.isFinite(longitudinalNumber(comparison.biological_age_change))
+      ));
+      panel.hidden=!hasComparison;
+      if (jump) jump.hidden=!hasComparison;
+      summaryGrid.textContent="";
+      markerList.textContent="";
+      empty.hidden=true;
+      empty.textContent="";
+      if (!hasComparison) return;
+      const intro=document.getElementById("longitudinalComparisonIntro");
+      const period=document.getElementById("longitudinalComparisonPeriod");
+      if (intro) intro.textContent=String(
+        comparison.summary_text || comparison.intro || "Your repeat panel is compared with the prior test using matching markers and units."
+      );
+      if (period) period.textContent=String(
+        comparison.period_label || comparison.label || `${comparison.baseline_label || "Baseline"} → ${comparison.current_label || "Retest"}`
+      );
+      const age=comparison.biological_age || comparison.age_change || {};
+      const previousAge=longitudinalNumber(age.previous ?? age.baseline ?? comparison.previous_biological_age);
+      const currentAge=longitudinalNumber(age.current ?? age.retest ?? comparison.current_biological_age);
+      const ageDelta=longitudinalNumber(age.delta ?? comparison.biological_age_change ?? (Number.isFinite(previousAge) && Number.isFinite(currentAge) ? currentAge-previousAge : NaN));
+      const summary=comparison.summary || {};
+      const hasDirectionalSummary=Boolean(
+        Object.prototype.hasOwnProperty.call(summary,"improved") ||
+        Object.prototype.hasOwnProperty.call(comparison,"improved_count") ||
+        rows.some(row=>row?.favorable===true || row?.favorable===false || row?.direction || row?.status)
+      );
+      const improved=Number(summary.improved ?? comparison.improved_count ?? rows.filter(row=>comparisonMarkerTone(row)==="favorable").length);
+      const stable=Number(summary.stable ?? comparison.stable_count ?? rows.filter(row=>["stable","unchanged"].includes(String(row?.direction || row?.status || "").toLowerCase())).length);
+      const attention=Number(summary.needs_attention ?? summary.attention ?? comparison.attention_count ?? rows.filter(row=>comparisonMarkerTone(row)==="caution").length);
+      const cards=[["Biological-age change",longitudinalSignedValue(ageDelta,{digits:1,suffix:" yr"}),Number.isFinite(previousAge) && Number.isFinite(currentAge) ? `${previousAge.toFixed(1)} → ${currentAge.toFixed(1)} yr` : "Comparable age scores required"]];
+      if (hasDirectionalSummary) {
+        cards.push(
+          ["Markers improved",Number.isFinite(improved) ? String(improved) : "—","Favorable measured direction"],
+          ["Stable",Number.isFinite(stable) ? String(stable) : "—","No material status change"],
+          ["Needs attention",Number.isFinite(attention) ? String(attention) : "—","Priorities for the next plan"]
+        );
+      } else {
+        const repeated=Number(comparison.repeated_marker_count ?? rows.length);
+        const collectionInterval=comparisonCollectionIntervalDays(comparison,currentTest);
+        cards.push(
+          ["Repeated markers",Number.isFinite(repeated) ? String(repeated) : "—","Measured in both saved tests"],
+          collectionInterval===null
+            ? ["Collection dates","Not recorded","No specimen interval is inferred from saved-record timestamps"]
+            : ["Collection interval",`${collectionInterval} days`,"Time between recorded specimen collection dates"],
+          ["Formula",comparison?.formula?.changed ? "Updated" : "Unchanged","Based on the newly reviewed panel"]
+        );
+      }
+      cards.forEach(([label,value,detail])=>{
+        const card=document.createElement("article"); card.className="longitudinal-summary-card";
+        const small=document.createElement("small"); small.textContent=label;
+        const strong=document.createElement("strong"); strong.textContent=value;
+        const span=document.createElement("span"); span.textContent=detail;
+        card.append(small,strong,span); summaryGrid.appendChild(card);
+      });
+      rows.slice(0,12).forEach(marker=>{
+        const row=document.createElement("div"); row.className="longitudinal-marker-row";
+        const label=document.createElement("strong"); label.textContent=String(marker.label || marker.name || marker.key || "Marker");
+        const unit=String(marker.unit || "");
+        const previous=marker.previous ?? marker.baseline ?? marker.previous_value;
+        const current=marker.current ?? marker.retest ?? marker.current_value;
+        const delta=marker.delta ?? marker.absolute_change;
+        const previousEl=document.createElement("span"); previousEl.textContent=`Before ${longitudinalValue(previous)}${unit ? ` ${unit}` : ""}`;
+        const currentEl=document.createElement("span"); currentEl.textContent=`Now ${longitudinalValue(current)}${unit ? ` ${unit}` : ""}`;
+        const deltaEl=document.createElement("span"); deltaEl.className=comparisonMarkerTone(marker);
+        deltaEl.textContent=Number.isFinite(longitudinalNumber(delta))
+          ? longitudinalSignedValue(delta,{digits:1,suffix:unit ? ` ${unit}` : ""})
+          : String(marker.change_label || marker.status_transition || "Compared");
+        row.append(label,previousEl,currentEl,deltaEl); markerList.appendChild(row);
+      });
+      if (!rows.length) {
+        empty.hidden=false;
+        empty.textContent=String(
+          comparison.message || comparison.reason || "This test is saved, but there are not enough repeated matching markers for a marker-by-marker comparison yet."
+        );
+      }
+    }
+    function syncResultTestContext(test,comparison) {
+      const type=memberTestType(test || {});
+      const isRetest=["day_90","day90","retest","day_180","annual","ad_hoc"].includes(type) && type!=="baseline";
+      const label=document.getElementById("biomarkerTestLabel");
+      const value=document.getElementById("biomarkerTestType");
+      const trendTitle=document.getElementById("biomarkerTrendTitle");
+      const trendCopy=document.getElementById("biomarkerTrendCopy");
+      if (label) label.textContent="Current test";
+      if (value) value.textContent=isRetest ? memberTestTypeLabel(type).replace(" test","") : "Baseline";
+      if (trendTitle) trendTitle.textContent=isRetest ? "Your testing timeline is growing." : "Your baseline is established.";
+      if (trendCopy) trendCopy.textContent=isRetest
+        ? comparison
+          ? "Matching markers from this test and your prior test are summarized in the progress section above."
+          : "This test is saved to your account. A comparison appears when enough matching markers and units are available."
+        : "Future FLUIDS tests will add change-over-time context here so direction matters more than a single snapshot.";
+    }
+    function renderResults(data,context={}) {
+      const resultTest=context?.test || data?.member_test || null;
+      const longitudinalComparison=context?.comparison || data?.longitudinal_comparison || null;
+      renderLongitudinalComparison(longitudinalComparison,resultTest);
+      syncResultTestContext(resultTest,longitudinalComparison);
       const age = data.biological_age || {ok:false};
       const ageScores = data.age_scores || {};
       const primaryAge = ageScores.primary || {};
@@ -12795,9 +14984,10 @@
       const candidateFormulaCount=Number(personalization.candidate_formula_count ?? data?.blend_options?.length);
       const metricStack=document.createElement("div"); metricStack.className="custom-blend-metric-stack";
       const agePill=document.createElement("div"); agePill.className="custom-blend-pill secondary";
-      agePill.innerHTML=Number.isFinite(candidateFormulaCount)
-        ? `${candidateFormulaCount}<small>Formulas compared</small>`
-        : "V10<small>Personalized reranking</small>";
+      agePill.append(document.createTextNode(Number.isFinite(candidateFormulaCount) ? String(candidateFormulaCount) : "V10"));
+      const agePillLabel=document.createElement("small");
+      agePillLabel.textContent=Number.isFinite(candidateFormulaCount) ? "Formulas compared" : "Personalized reranking";
+      agePill.appendChild(agePillLabel);
       metricStack.append(agePill);
       top.append(copy,metricStack); hero.appendChild(top);
       renderCustomIngredientShowcase(option,hero);
@@ -12812,7 +15002,9 @@
       opportunities.forEach((item,index)=>{
         const row=document.createElement("div"); row.className="hero-vector-row";
         const name=document.createElement("span"); name.className="hero-vector-name";
-        name.innerHTML=`<strong>${nutrientLabel(item.nutrient)}</strong><small>${nutrientCategory(item.nutrient)}</small>`;
+        const nutrientName=document.createElement("strong"); nutrientName.textContent=nutrientLabel(item.nutrient);
+        const nutrientType=document.createElement("small"); nutrientType.textContent=nutrientCategory(item.nutrient);
+        name.append(nutrientName,nutrientType);
         const amount=document.createElement("span"); amount.className="hero-vector-amount"; amount.textContent=formatNutrientAmount(item);
         const track=document.createElement("span"); track.className="hero-vector-track";
         const fill=document.createElement("i"); fill.className="hero-vector-fill"; fill.style.width=`${Math.max(3,shares[index])}%`; track.appendChild(fill);
@@ -12987,7 +15179,9 @@
 	        }
 	        const rows=document.createElement("div"); rows.className="graph-detail-list";
 	        const typeRow=document.createElement("div"); typeRow.className="graph-detail-row";
-	        typeRow.innerHTML=`<span>Type</span><strong>${graphTypeLabels[node.type] || node.type}</strong>`; rows.appendChild(typeRow);
+	        const typeLabel=document.createElement("span"); typeLabel.textContent="Type";
+	        const typeValue=document.createElement("strong"); typeValue.textContent=graphTypeLabels[node.type] || node.type;
+	        typeRow.append(typeLabel,typeValue); rows.appendChild(typeRow);
 	        Object.entries(node.details || {}).slice(0,8).forEach(([key,value])=>{
           const row=document.createElement("div"); row.className="graph-detail-row";
           const label=document.createElement("span"); label.textContent=key.replaceAll("_"," ");
@@ -12996,7 +15190,9 @@
         });
 	        if (connected.length) {
 	          const row=document.createElement("div"); row.className="graph-detail-row";
-	          row.innerHTML=`<span>Connected</span><strong>${connected.map(item=>item.label).join(", ")}</strong>`;
+	          const connectedLabel=document.createElement("span"); connectedLabel.textContent="Connected";
+	          const connectedValue=document.createElement("strong"); connectedValue.textContent=connected.map(item=>item.label).join(", ");
+	          row.append(connectedLabel,connectedValue);
           rows.appendChild(row);
         }
         details.appendChild(rows);
@@ -13130,7 +15326,13 @@
 	        ? customFunctionName(option)
 	        : `Personalized formula option ${optionIndex + 1}`;
 	      const variantLabel=isRecommended ? "Recommended custom blend" : append ? `Formula option ${optionIndex + 1}` : "Formula option";
-	      title.innerHTML=`<div class="eyebrow">${variantLabel}</div><h3>${displayName}</h3><p class="section-copy">${isRecommended ? "Selected after reranking the feasible whole-food formulas against this person’s nutrient vector." : "A distinct whole-food formulation evaluated against the same personalized nutrient target."}</p>`;
+	      const titleEyebrow=document.createElement("div"); titleEyebrow.className="eyebrow"; titleEyebrow.textContent=variantLabel;
+	      const titleHeading=document.createElement("h3"); titleHeading.textContent=displayName;
+	      const titleCopy=document.createElement("p"); titleCopy.className="section-copy";
+	      titleCopy.textContent=isRecommended
+	        ? "Selected after reranking the feasible whole-food formulas against this person’s nutrient vector."
+	        : "A distinct whole-food formulation evaluated against the same personalized nutrient target.";
+	      title.append(titleEyebrow,titleHeading,titleCopy);
 	      const badge=document.createElement("div"); badge.className="score-badge"; badge.textContent=isRecommended ? "Recommended formula" : `Alternative ${optionIndex}`;
 	      head.append(title,badge); card.appendChild(head);
 	      if (founderDemoAuthenticated) {
@@ -13211,7 +15413,9 @@
       dependencies.innerHTML="<strong>Leave-one-out ingredient drivers</strong>";
       (metrics.top_ingredient_dependencies || []).slice(0,5).forEach(item=>{
         const row=document.createElement("div"); row.className="synergy-list-row";
-        row.innerHTML=`<span>${cleanPowderName(item.item)}</span><b>${formatSigned(item.contribution)}</b>`;
+        const ingredient=document.createElement("span"); ingredient.textContent=cleanPowderName(item.item);
+        const contribution=document.createElement("b"); contribution.textContent=formatSigned(item.contribution);
+        row.append(ingredient,contribution);
         dependencies.appendChild(row);
       });
       const pairs=document.createElement("div"); pairs.className="synergy-list";
@@ -13220,7 +15424,9 @@
       if (positivePairs.length) {
         positivePairs.forEach(item=>{
           const row=document.createElement("div"); row.className="synergy-list-row";
-          row.innerHTML=`<span>${String(item.pair).split(" + ").map(cleanPowderName).join(" + ")}</span><b>${formatSigned(item.interaction_lift)}</b>`;
+          const pair=document.createElement("span"); pair.textContent=String(item.pair).split(" + ").map(cleanPowderName).join(" + ");
+          const lift=document.createElement("b"); lift.textContent=formatSigned(item.interaction_lift);
+          row.append(pair,lift);
           pairs.appendChild(row);
         });
       } else {
@@ -13312,7 +15518,9 @@
       formulas.forEach(formula=>{
         const card=document.createElement("div"); card.className="prototype-card";
         const header=document.createElement("div"); header.className="prototype-card-header";
-        header.innerHTML=`<span>${Number(formula.serving_size_g).toFixed(0)} g serving</span><span>% + grams</span>`;
+        const serving=document.createElement("span"); serving.textContent=`${Number(formula.serving_size_g).toFixed(0)} g serving`;
+        const units=document.createElement("span"); units.textContent="% + grams";
+        header.append(serving,units);
         card.appendChild(header);
         (formula.ingredients || []).forEach(ingredient=>{
           const row=document.createElement("div"); row.className="prototype-row";
@@ -13387,7 +15595,9 @@
         const card=document.createElement("div"); card.className="ingredient-role-card";
         const title=document.createElement("strong");
         const pct=Number(ingredient.blend_percent);
-        title.innerHTML=`${ingredient.item}<span>${Number.isFinite(pct) ? pct.toFixed(1) : "—"}%</span>`;
+        title.append(document.createTextNode(String(ingredient.item || "")));
+        const percent=document.createElement("span"); percent.textContent=`${Number.isFinite(pct) ? pct.toFixed(1) : "—"}%`;
+        title.appendChild(percent);
         const copy=document.createElement("p"); copy.textContent=standardIngredientRole(ingredient.item);
         card.append(title,copy); slot.appendChild(card);
       });
@@ -13399,7 +15609,8 @@
       const list=document.createElement("div"); list.className="incidental-list";
       items.forEach(item=>{
         const chip=document.createElement("span"); chip.className="incidental-chip";
-        chip.innerHTML=`<strong>${nutrientLabel(item.nutrient)}</strong> ${formatNutrientAmount(item)}`;
+        const label=document.createElement("strong"); label.textContent=nutrientLabel(item.nutrient);
+        chip.append(label,document.createTextNode(` ${formatNutrientAmount(item)}`));
         list.appendChild(chip);
       });
       section.appendChild(list); parent.appendChild(section);
@@ -14378,7 +16589,9 @@
         const visual=ingredientStyles.get(item.item);
         const chip=document.createElement("span"); chip.className="atom-ingredient-chip"; chip.style.setProperty("--ingredient-color",visual.color);
         const dot=document.createElement("i");
-        const text=document.createElement("span"); text.innerHTML=`${visual.icon} <strong>${shortIngredientName(item.item)}</strong> ${Number(item.blend_percent).toFixed(1)}%`;
+        const text=document.createElement("span"); text.append(document.createTextNode(`${visual.icon} `));
+        const ingredientName=document.createElement("strong"); ingredientName.textContent=shortIngredientName(item.item);
+        text.append(ingredientName,document.createTextNode(` ${Number(item.blend_percent).toFixed(1)}%`));
         chip.append(dot,text); ingredientLegend.appendChild(chip);
       });
       if (ingredientList.length>8) {
@@ -14409,7 +16622,12 @@
         });
         const summary=document.createElement("span"); summary.className="source-summary";
         if (sources.length) {
-          summary.innerHTML=sources.slice(0,3).map(source=>`<b>${Number(source.share_percent).toFixed(0)}%</b> ${shortIngredientName(source.item)}`).join(" · ")+(sources.length>3 ? ` · +${sources.length-3} more` : "");
+          sources.slice(0,3).forEach((source,sourceIndex)=>{
+            if (sourceIndex>0) summary.append(document.createTextNode(" · "));
+            const sourceShare=document.createElement("b"); sourceShare.textContent=`${Number(source.share_percent).toFixed(0)}%`;
+            summary.append(sourceShare,document.createTextNode(` ${shortIngredientName(source.item)}`));
+          });
+          if (sources.length>3) summary.append(document.createTextNode(` · +${sources.length-3} more`));
         } else {
           summary.textContent="Ingredient source profile unavailable";
         }
@@ -14431,7 +16649,9 @@
         const activeSources=new Set((item.ingredient_sources || []).filter(source=>Number(source.share_percent)>=3).map(source=>source.item));
         ingredientNodes.forEach(node=>node.classList.toggle("is-dimmed",activeSources.size>0 && !activeSources.has(node.dataset.ingredient)));
         const primary=(item.ingredient_sources || [])[0];
-        insightCopy.innerHTML=`<strong>${nutrientLabel(item.nutrient)}</strong> target: ${formatNutrientAmount(item)} across this modeled formula.`;
+        insightCopy.textContent="";
+        const insightNutrient=document.createElement("strong"); insightNutrient.textContent=nutrientLabel(item.nutrient);
+        insightCopy.append(insightNutrient,document.createTextNode(` target: ${formatNutrientAmount(item)} across this modeled formula.`));
         insightDetail.textContent=primary ? `${Number(primary.share_percent).toFixed(1)}% from ${shortIngredientName(primary.item)}` : `${shares[index].toFixed(1)}% relative importance`;
       }
       sourceCards.forEach((card,index)=>{
@@ -14996,9 +17216,9 @@
           ? "Save your place for this custom blend."
           : `Join early access for ${blendName}.`;
       if (description) description.textContent=isFoundingMember
-        ? "Your first complete 90-day loop includes a Fluids baseline blood test, 90 Daily Foundation sticks, a personalized nutrition plan, a day-90 retest, and complimentary Daily Hydration mix. Leave your email to join the founding cohort."
+        ? "Your first complete 90-day loop includes a Fluids baseline blood test, 90 Daily Foundation sticks, a personalized nutrition plan, a follow-up retest around day 90, and complimentary Daily Hydration mix. Leave your email to join the founding cohort."
         : isFullLoopMembership
-        ? "The first 90-day loop is $299 per month for three months ($897 total). It includes a Fluids baseline blood test, 90 Daily Foundation sticks, and a day-90 retest. Leave your email and we will confirm testing availability and fulfillment before payment."
+        ? "The first 90-day loop is $299 per month for three months ($897 total). It includes a Fluids baseline blood test, 90 Daily Foundation sticks, and a follow-up retest around day 90. Leave your email and we will confirm testing availability and fulfillment before payment."
         : isDailyFoundation
           ? "The first $89 box includes 30 Daily Foundation sticks. Leave your email and we will confirm timing and fulfillment before payment."
           : isCustom
@@ -15015,7 +17235,7 @@
       }
       if (status) status.textContent="";
       if (mailLink) {
-        mailLink.href="mailto:jakepittman2@gmail.com";
+        mailLink.href=`mailto:${publicContactEmail}`;
         mailLink.classList.remove("active");
       }
       modal.dataset.intent=interestType;
@@ -15067,7 +17287,7 @@
         "",
         "Please keep me posted when this product becomes available."
       ].filter(Boolean).join("\n");
-      return `mailto:jakepittman2@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      return `mailto:${publicContactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     }
     async function submitWaitlistLead(event) {
       event.preventDefault();
@@ -15204,6 +17424,17 @@
       const trigger=event.target.closest?.("[data-open-waitlist]");
       if (!trigger) return;
       event.preventDefault();
+      const interestType=String(trigger.dataset.interestType || "");
+      if (memberPortalEnabled && ["full_loop_membership_reservation","founding_member_signup"].includes(interestType)) {
+        pendingMemberIntent="full_loop";
+        if (memberIsReady()) {
+          pendingMemberIntent="";
+          loadMemberDashboard({show:true});
+        } else {
+          openMemberAuthModal("full_loop",trigger);
+        }
+        return;
+      }
       openWaitlistModalFromTrigger(trigger);
     });
     document.querySelectorAll("[data-close-waitlist]").forEach(item=>{
@@ -15443,7 +17674,10 @@
         button.className=`discovery-tab${index===0 ? " active" : ""}`;
         const rank=formula.v6_sanity_score?.rank_by_v6;
         const v6=Number(formula.v6_sanity_score?.v6_population_objective);
-        button.innerHTML=`<strong>${formula.scenario_name || `Formula ${index+1}`}</strong><span>${rank ? `V6 rank ${rank}` : "V7 discovery"} · ${Number.isFinite(v6) ? `${scoreText(v6)} V6 objective` : scoreText(formula.score?.objective)}</span>`;
+        const name=document.createElement("strong"); name.textContent=formula.scenario_name || `Formula ${index+1}`;
+        const detail=document.createElement("span");
+        detail.textContent=`${rank ? `V6 rank ${rank}` : "V7 discovery"} · ${Number.isFinite(v6) ? `${scoreText(v6)} V6 objective` : scoreText(formula.score?.objective)}`;
+        button.append(name,detail);
         button.addEventListener("click",()=>{
           tabs.querySelectorAll(".discovery-tab").forEach(item=>item.classList.remove("active"));
           button.classList.add("active");
@@ -15997,7 +18231,10 @@
       const flagshipCard=document.createElement("div"); flagshipCard.className="builder-comparison-card";
       const rewardDelta=Number(flagship.reward_delta);
       const coverageDelta=Number(flagship.coverage_delta);
-      flagshipCard.innerHTML=`<strong>Vs flagship standard</strong><span>${Number.isFinite(rewardDelta) ? `${rewardDelta>=0?"+":""}${rewardDelta.toFixed(3)} reward` : "— reward"} · ${Number.isFinite(coverageDelta) ? `${coverageDelta>=0?"+":""}${(coverageDelta*100).toFixed(1)} coverage pts` : "— coverage"}</span>`;
+      const flagshipTitle=document.createElement("strong"); flagshipTitle.textContent="Vs flagship standard";
+      const flagshipDetail=document.createElement("span");
+      flagshipDetail.textContent=`${Number.isFinite(rewardDelta) ? `${rewardDelta>=0?"+":""}${rewardDelta.toFixed(3)} reward` : "— reward"} · ${Number.isFinite(coverageDelta) ? `${coverageDelta>=0?"+":""}${(coverageDelta*100).toFixed(1)} coverage pts` : "— coverage"}`;
+      flagshipCard.append(flagshipTitle,flagshipDetail);
       comparisons.appendChild(flagshipCard);
       (data.benchmark?.closest_nutrient_vectors || []).slice(0,2).forEach(item=>{
         const card=document.createElement("div"); card.className="builder-comparison-card";
@@ -16059,7 +18296,8 @@
         const fallback=document.createElement("div"); fallback.className="incidental-list";
         (data.top_nutrient_increments || []).slice(0,8).forEach(item=>{
           const chip=document.createElement("span"); chip.className="incidental-chip";
-          chip.innerHTML=`<strong>${nutrientLabel(item.nutrient)}</strong> ${formatNutrientAmount(item)}`;
+          const label=document.createElement("strong"); label.textContent=nutrientLabel(item.nutrient);
+          chip.append(label,document.createTextNode(` ${formatNutrientAmount(item)}`));
           fallback.appendChild(chip);
         });
         vector.appendChild(fallback);
@@ -16187,13 +18425,22 @@
     initHomeVectorMatrix();
     loadHomeFunctionMenu().catch(() => {});
     initFounderAccess();
-    syncPendingAnalysisUi();
-    if (storedPendingCustomBlendJobId()) {
+    const restorePendingAnalysisUi=()=>{
+      syncPendingAnalysisUi();
+      if (!storedPendingCustomBlendJobId()) return;
+      if (requireMemberAuthForLabs && !memberIsReady()) {
+        pendingMemberIntent="upload";
+        openMemberAuthModal("upload");
+        return;
+      }
       personalizedView="questionnaire";
       showView("questionnaire");
       showQuestion(3);
       showError("Your custom blend is still processing. Tap ‘Check queued result’ to continue watching it without uploading again.");
-    }
+    };
+    const memberPortalInitialization=initMemberPortal();
+    if (memberPortalEnabled) memberPortalInitialization.finally(restorePendingAnalysisUi);
+    else restorePendingAnalysisUi();
     loadSpecs().catch(error => console.warn("Lab schema unavailable until the custom blend API is reachable.",error));
   </script>
 </body>
