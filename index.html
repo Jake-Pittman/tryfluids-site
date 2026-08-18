@@ -8567,6 +8567,7 @@
     .member-auth-panel-state[hidden],
     .member-dashboard-state[hidden],
     .member-dashboard-status[hidden],
+    .member-app-navigation[hidden],
     .member-test-context[hidden],
     #memberProgressSection[hidden],
     .longitudinal-comparison[hidden],
@@ -8697,6 +8698,28 @@
     .member-session-identity strong { display:block; }
     .member-session-identity small { color:var(--muted); }
     .member-session-identity strong { margin-top:5px; overflow-wrap:anywhere; }
+    .member-app-navigation {
+      position:sticky;
+      top:12px;
+      z-index:35;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      margin:18px 0;
+      padding:12px 14px 12px 18px;
+      border:1px solid rgba(138,11,47,.16);
+      border-radius:20px;
+      background:rgba(255,250,244,.94);
+      box-shadow:0 14px 40px rgba(61,18,34,.12);
+      backdrop-filter:blur(18px);
+    }
+    .member-app-navigation-brand small,
+    .member-app-navigation-brand strong { display:block; }
+    .member-app-navigation-brand small { color:#8f1637; font-size:.58rem; font-weight:900; letter-spacing:.1em; text-transform:uppercase; }
+    .member-app-navigation-brand strong { margin-top:3px; font-family:var(--display-font); font-size:1.18rem; font-weight:500; }
+    .member-app-navigation-links { display:flex; flex-wrap:wrap; justify-content:flex-end; gap:8px; }
+    .member-app-navigation-links button { min-width:auto; padding:9px 12px; box-shadow:none; font-size:.65rem; }
     .member-dashboard {
       margin-top:28px;
       padding:clamp(20px,4vw,42px);
@@ -8716,6 +8739,57 @@
       background:#fff;
     }
     .member-dashboard-status.error { color:var(--danger); border-color:rgba(179,54,72,.28); }
+    .member-overview-grid {
+      display:grid;
+      grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+      gap:14px;
+      margin-top:22px;
+    }
+    .member-overview-card {
+      min-width:0;
+      padding:clamp(20px,3vw,30px);
+      border:1px solid rgba(138,11,47,.14);
+      border-radius:26px;
+      background:rgba(255,255,255,.88);
+    }
+    .member-overview-card h2 {
+      margin:7px 0 9px;
+      font-family:var(--display-font);
+      font-size:clamp(1.8rem,3vw,2.65rem);
+      font-weight:500;
+      letter-spacing:-.03em;
+    }
+    .member-overview-card p { margin:0; color:var(--muted); line-height:1.55; }
+    .member-current-blend-card {
+      color:#fff9f2;
+      border-color:rgba(255,255,255,.12);
+      background:
+        radial-gradient(circle at 88% 8%,rgba(180,232,226,.18),transparent 34%),
+        linear-gradient(145deg,#35101f,#71132f 62%,#982941);
+    }
+    .member-current-blend-card .eyebrow { color:#b8ebe5; }
+    .member-current-blend-card p { color:rgba(255,249,242,.72); }
+    .member-overview-card-footer {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-top:24px;
+    }
+    .member-overview-card-footer span { color:rgba(255,249,242,.64); font-size:.66rem; line-height:1.4; }
+    .member-current-blend-card .secondary { color:#3c1724; border-color:#fff9f2; background:#fff9f2; }
+    .member-blueprint-highlights { display:flex; flex-wrap:wrap; gap:8px; margin-top:20px; }
+    .member-blueprint-highlight {
+      display:grid;
+      gap:3px;
+      min-width:130px;
+      padding:10px 12px;
+      border:1px solid rgba(138,11,47,.12);
+      border-radius:15px;
+      background:#fff7f1;
+    }
+    .member-blueprint-highlight strong { font-size:.72rem; }
+    .member-blueprint-highlight span { color:var(--muted); font-size:.59rem; text-transform:capitalize; }
     .member-dashboard-summary {
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
@@ -8968,6 +9042,15 @@
       background:#fff;
       font:inherit;
     }
+    .member-collection-date span {
+      max-width:250px;
+      color:#7d6670;
+      font-size:.58rem;
+      font-weight:600;
+      line-height:1.4;
+      text-transform:none;
+      letter-spacing:0;
+    }
     .longitudinal-comparison {
       margin:0 0 18px;
       padding:clamp(20px,4vw,36px);
@@ -8995,11 +9078,16 @@
     .longitudinal-empty { margin-top:18px; padding:16px; border:1px solid rgba(255,255,255,.16); border-radius:17px; color:rgba(255,249,242,.76); }
     @media (max-width:760px) {
       .member-auth-dialog { padding:22px; border-radius:24px; }
+      .member-app-navigation { position:static; display:grid; }
+      .member-app-navigation-links { display:grid; grid-template-columns:1fr 1fr; }
+      .member-app-navigation-links button { width:100%; }
       .member-dashboard-head,
       .member-test-context,
       .longitudinal-comparison-head,
       .member-progress-head { display:grid; }
       .member-dashboard-summary { grid-template-columns:1fr; }
+      .member-overview-grid { grid-template-columns:1fr; }
+      .member-overview-card-footer { align-items:flex-start; flex-direction:column; }
       .member-next-test-card,
       .member-test-history-card { grid-template-columns:1fr; }
       .member-dashboard-actions button,
@@ -9379,27 +9467,42 @@
     </div>
     <div class="notice error" id="globalError"></div>
 
+    <nav class="member-app-navigation" id="memberAppNavigation" aria-label="Member dashboard" hidden>
+      <div class="member-app-navigation-brand">
+        <small>Fluids member</small>
+        <strong>Your health hub</strong>
+      </div>
+      <div class="member-app-navigation-links">
+        <button type="button" class="secondary" data-member-destination="overview">Overview</button>
+        <button type="button" class="secondary" data-member-destination="blueprint">Nutrient blueprint</button>
+        <button type="button" class="secondary" data-member-destination="tests">Test history</button>
+        <button type="button" data-member-destination="add-labs">Add new labs</button>
+      </div>
+    </nav>
+
+    <section class="member-test-context" id="memberTestContext" aria-live="polite" hidden>
+      <div>
+        <small>Saving securely to your member account</small>
+        <strong id="memberTestContextType">Baseline test</strong>
+        <span id="memberTestContextId">Your reviewed values and result will be attached to this test.</span>
+      </div>
+      <label class="member-collection-date" for="memberCollectionDate">
+        Specimen collection date
+        <input type="date" id="memberCollectionDate" autocomplete="off" aria-describedby="memberCollectionDateHint">
+        <span id="memberCollectionDateHint">We’ll look for this date in your report. Confirm or correct it before analysis.</span>
+      </label>
+      <button type="button" class="secondary" id="memberCancelTestButton">Back to dashboard</button>
+    </section>
+
     <div class="wizard-stage" id="wizardStage">
       <main class="panel section app-view active upload-panel" id="uploadView">
         <div class="section-head">
-          <div><h2>Build your personalized blend</h2><p class="section-copy">Upload a blood-test PDF or clear photos of a printed report, or enter the values yourself. We turn the markers you confirm into a drinkable nutrition plan.</p></div>
+          <div><h2 id="uploadViewTitle">Build your personalized blend</h2><p class="section-copy" id="uploadViewCopy">Upload a blood-test PDF or clear photos of a printed report, or enter the values yourself. We turn the markers you confirm into a drinkable nutrition plan.</p></div>
           <div class="upload-start-actions">
             <button id="extractBtn" disabled>Analyze uploaded labs</button>
             <button type="button" class="secondary" data-manual-labs data-manual-source="upload_panel">Enter manually</button>
           </div>
         </div>
-        <section class="member-test-context" id="memberTestContext" aria-live="polite" hidden>
-          <div>
-            <small>Saving securely to your member account</small>
-            <strong id="memberTestContextType">Baseline test</strong>
-            <span id="memberTestContextId">Your reviewed values and result will be attached to this test.</span>
-          </div>
-          <label class="member-collection-date" for="memberCollectionDate">
-            Specimen collection date
-            <input type="date" id="memberCollectionDate" autocomplete="off">
-          </label>
-          <button type="button" class="secondary" id="memberCancelTestButton">Back to dashboard</button>
-        </section>
         <label class="drop" id="dropZone" for="pdfInput">
           <input id="pdfInput" type="file" accept="application/pdf,image/jpeg,image/png,.pdf,.jpg,.jpeg,.png" multiple>
           <strong id="fileLabel">Drop your blood-test PDF or photos here</strong>
@@ -9811,16 +9914,34 @@
       <header class="member-dashboard-head">
         <div>
           <div class="eyebrow">Your Fluids membership</div>
-          <h1 id="memberDashboardTitle">Your results timeline.</h1>
+          <h1 id="memberDashboardTitle">Your health dashboard.</h1>
           <p id="memberDashboardEmail">Sign in to securely load your saved tests.</p>
         </div>
         <div class="member-dashboard-actions">
+          <button type="button" id="memberDashboardAddLabsButton">Add new labs</button>
           <button type="button" class="secondary" id="memberDashboardRefreshButton">Refresh</button>
           <button type="button" class="secondary" id="memberDashboardAccountButton">Account</button>
           <button type="button" class="secondary" id="memberDashboardLogoutButton">Sign out</button>
         </div>
       </header>
       <div class="member-dashboard-status" id="memberDashboardStatus" role="status" aria-live="polite">Loading your member timeline…</div>
+      <section class="member-overview-grid member-dashboard-state" id="memberOverviewSection" aria-label="Current member overview" hidden>
+        <article class="member-overview-card member-current-blend-card">
+          <div class="eyebrow">Your current blend</div>
+          <h2 id="memberCurrentBlendName">Your first blend starts with your baseline.</h2>
+          <p id="memberCurrentBlendSummary">Add bloodwork to build the nutrient direction attached to your membership.</p>
+          <div class="member-overview-card-footer">
+            <span id="memberCurrentBlendStatus">No completed result yet</span>
+            <button type="button" class="secondary" id="memberOpenLatestResultButton">Start baseline</button>
+          </div>
+        </article>
+        <article class="member-overview-card member-blueprint-card" id="memberBlueprintCard">
+          <div class="eyebrow">Your nutrient blueprint</div>
+          <h2>The priorities behind your daily blend.</h2>
+          <p id="memberBlueprintSummary">Once your baseline is reviewed, your highest-priority nutrient directions will live here.</p>
+          <div class="member-blueprint-highlights" id="memberBlueprintHighlights"></div>
+        </article>
+      </section>
       <div class="member-dashboard-summary member-dashboard-state" id="memberDashboardSummary" hidden></div>
       <article class="member-next-test-card member-dashboard-state" id="memberNextTestCard" hidden></article>
       <section class="member-progress-panel member-dashboard-state" id="memberProgressSection" aria-labelledby="memberProgressTitle" hidden>
@@ -10237,6 +10358,9 @@
     let memberTimelineMetricKey="phenoage";
     let memberRecommendedTestType="";
     let activeMemberTest=null;
+    let memberLatestSavedResult=null;
+    let memberAppWorkspaceActive=false;
+    let currentAppViewName="upload";
     let pendingMemberIntent="";
     let lastMemberAccessTrigger=null;
     let founderDemoAuthenticated = false;
@@ -10577,12 +10701,10 @@
       pendingMemberIntent="";
       if (!intent) return;
       closeMemberAuthModal({restoreFocus:false});
-      if (intent==="upload") {
-        await loadMemberDashboard({show:false});
-        await startRecommendedMemberTest();
-        return;
-      }
       await loadMemberDashboard({show:true});
+      if (intent==="upload") {
+        window.setTimeout(()=>scrollToTarget("memberNextTestCard"),140);
+      }
     }
     async function checkMemberSession({routeIntent=true}={}) {
       if (!memberPortalEnabled) return memberSession;
@@ -10734,6 +10856,8 @@
       memberTimelineMetricKey="phenoage";
       memberRecommendedTestType="";
       activeMemberTest=null;
+      memberLatestSavedResult=null;
+      memberAppWorkspaceActive=false;
       selectedFiles=[];
       lastCustomBlendResult=null;
       lastCustomBlendJobId="";
@@ -10743,10 +10867,12 @@
       const history=document.getElementById("memberTestHistory");
       const summary=document.getElementById("memberDashboardSummary");
       const next=document.getElementById("memberNextTestCard");
+      const overview=document.getElementById("memberOverviewSection");
       const progress=document.getElementById("memberProgressSection");
       if (history) history.textContent="";
       if (summary) { summary.textContent=""; summary.hidden=true; }
       if (next) { next.textContent=""; next.hidden=true; }
+      if (overview) overview.hidden=true;
       if (progress) progress.hidden=true;
       ["memberProgressOverview","memberProgressMetrics","memberProgressChart","memberProgressCallouts","memberProgressTestRail"].forEach(id=>{
         const element=document.getElementById(id);
@@ -11159,6 +11285,72 @@
       if (!baseline) return {mode:"create",test:null,type:"baseline"};
       return {mode:"create",test:null,type:"retest"};
     }
+    function memberBlueprintRows(result) {
+      const rows=biomarkerTargetNutrientVector(result);
+      if (rows.length) return rows;
+      const option=(result?.blend_options || [])[0] || {};
+      return normalizePositiveNutrientVector(option?.nutrient_opportunities || []);
+    }
+    function renderMemberOverview(saved=null) {
+      const section=document.getElementById("memberOverviewSection");
+      const blendName=document.getElementById("memberCurrentBlendName");
+      const blendSummary=document.getElementById("memberCurrentBlendSummary");
+      const blendStatus=document.getElementById("memberCurrentBlendStatus");
+      const resultButton=document.getElementById("memberOpenLatestResultButton");
+      const blueprintSummary=document.getElementById("memberBlueprintSummary");
+      const highlights=document.getElementById("memberBlueprintHighlights");
+      if (!section || !blendName || !blendSummary || !blendStatus || !resultButton || !blueprintSummary || !highlights) return;
+      highlights.textContent="";
+      const result=saved?.result && saved.result?.ok!==false ? saved.result : null;
+      const test=saved?.test || null;
+      const option=(result?.blend_options || [])[0] || null;
+      const vector=result ? memberBlueprintRows(result) : [];
+      if (!result) {
+        blendName.textContent="Your first blend starts with your baseline.";
+        blendSummary.textContent="Add bloodwork to build the nutrient direction attached to your membership.";
+        blendStatus.textContent="No completed result yet";
+        resultButton.textContent="Start baseline";
+        blueprintSummary.textContent="Once your baseline is reviewed, your highest-priority nutrient directions will live here.";
+      } else {
+        blendName.textContent=customFunctionName(option) || option?.name || option?.formula_name || "Your personalized Fluids blend";
+        blendSummary.textContent=String(
+          option?.function_summary || option?.function_description ||
+          "Your current daily blend is connected to the nutrient priorities derived from your reviewed bloodwork."
+        );
+        blendStatus.textContent=`Built from ${memberTestDate(test)}`;
+        resultButton.textContent="Open full result";
+        blueprintSummary.textContent=vector.length
+          ? `Your latest result identifies ${vector.length} positive nutrient direction${vector.length===1 ? "" : "s"}. The leading priorities are shown below.`
+          : "Your complete saved report contains the biomarker context and formula details behind this blend.";
+        vector.slice(0,6).forEach(item=>{
+          const chip=document.createElement("div"); chip.className="member-blueprint-highlight";
+          const name=document.createElement("strong"); name.textContent=nutrientLabel(item?.nutrient || item?.label || item?.name || "Nutrient");
+          const direction=document.createElement("span"); direction.textContent=String(item?.direction || item?.action || "increase").replaceAll("_"," ");
+          chip.append(name,direction); highlights.appendChild(chip);
+        });
+      }
+      section.hidden=false;
+    }
+    async function loadMemberLatestOverview(privacyContext) {
+      const latest=memberTests.find(memberTestIsComplete) || null;
+      memberLatestSavedResult=null;
+      renderMemberOverview(null);
+      if (!latest) return null;
+      const blendStatus=document.getElementById("memberCurrentBlendStatus");
+      if (blendStatus) blendStatus.textContent="Loading your current blueprint…";
+      try {
+        const saved=await fetchSavedMemberTest(latest);
+        assertMemberPrivacyContext(privacyContext);
+        if (!saved.result || saved.result?.ok===false) return null;
+        memberLatestSavedResult=saved;
+        renderMemberOverview(saved);
+        return saved;
+      } catch (error) {
+        if (error?.memberPrivacyStale) return null;
+        if (blendStatus) blendStatus.textContent="The saved report is temporarily unavailable";
+        return null;
+      }
+    }
     function renderMemberDashboard() {
       const summary=document.getElementById("memberDashboardSummary");
       const next=document.getElementById("memberNextTestCard");
@@ -11202,7 +11394,7 @@
       copy.append(eyebrow,title,description);
       const action=document.createElement("button");
       action.type="button";
-      action.textContent=recommendation.mode==="resume" ? "Check saved analysis" : recommendation.mode==="continue" ? "Continue this test" : recommendation.type==="baseline" ? "Start my baseline" : "Upload my next retest";
+      action.textContent=recommendation.mode==="resume" ? "Check saved analysis" : recommendation.mode==="continue" ? "Continue this test" : recommendation.type==="baseline" ? "Add baseline labs" : "Add new labs";
       action.addEventListener("click",()=>{
         if (recommendation.mode==="resume") resumeMemberTestRun(recommendation.test,action);
         else if (recommendation.test) activateMemberTest(recommendation.test);
@@ -11256,6 +11448,7 @@
         return [];
       }
       const privacyContext=captureMemberPrivacyContext();
+      memberAppWorkspaceActive=true;
       if (show) showView("member");
       setMemberDashboardStatus("Loading your secure testing timeline…");
       try {
@@ -11278,7 +11471,10 @@
         }
         renderMemberDashboard();
         renderMemberTestContext();
-        await loadMemberTimeline(privacyContext);
+        await Promise.all([
+          loadMemberTimeline(privacyContext),
+          loadMemberLatestOverview(privacyContext)
+        ]);
         return memberTests;
       } catch (error) {
         if (error?.memberPrivacyStale) return [];
@@ -11290,11 +11486,35 @@
       const now=new Date();
       return new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
     }
+    function validReportCollectionDate(value) {
+      const date=String(value || "");
+      return /^\d{4}-\d{2}-\d{2}$/.test(date) && date>="1900-01-01" && date<=localIsoDate();
+    }
+    function applyExtractedMemberCollectionDates(values) {
+      if (!memberIsReady() || !activeMemberTest) return;
+      const dates=Array.from(new Set((values || []).map(value=>String(value || "")).filter(validReportCollectionDate)));
+      const input=document.getElementById("memberCollectionDate");
+      const hint=document.getElementById("memberCollectionDateHint");
+      if (!input || !hint) return;
+      if (dates.length===1) {
+        input.value=dates[0];
+        activeMemberTest={...activeMemberTest,collection_date:dates[0]};
+        const index=memberTests.findIndex(test=>memberTestId(test)===memberTestId(activeMemberTest));
+        if (index>=0) memberTests.splice(index,1,activeMemberTest);
+        hint.textContent="Found in your report. Confirm or correct this specimen collection date before analysis.";
+      } else if (dates.length>1) {
+        input.value="";
+        activeMemberTest={...activeMemberTest,collection_date:null};
+        hint.textContent="The uploaded reports contain different specimen dates. Choose the date for this test before analysis.";
+      } else if (!validReportCollectionDate(input.value)) {
+        hint.textContent="We couldn’t confidently find the specimen date. Enter the collection date shown on your report before analysis.";
+      }
+    }
     function memberCollectionDateValue({required=false}={}) {
       if (!memberIsReady() || !activeMemberTest) return "";
       const input=document.getElementById("memberCollectionDate");
       const value=String(input?.value || activeMemberTest?.collection_date || "");
-      const valid=/^\d{4}-\d{2}-\d{2}$/.test(value) && value<=localIsoDate();
+      const valid=validReportCollectionDate(value);
       if (required && !valid) {
         showError("Enter the specimen collection date shown on this blood-test report before continuing.");
         showView("upload");
@@ -11309,8 +11529,17 @@
     function renderMemberTestContext() {
       const context=document.getElementById("memberTestContext");
       if (!context) return;
-      const visible=Boolean(memberIsReady() && activeMemberTest && memberTestId(activeMemberTest));
+      const visible=Boolean(
+        memberIsReady() && memberAppWorkspaceActive && activeMemberTest && memberTestId(activeMemberTest) &&
+        ["upload","review","questionnaire"].includes(currentAppViewName)
+      );
       context.hidden=!visible;
+      const uploadTitle=document.getElementById("uploadViewTitle");
+      const uploadCopy=document.getElementById("uploadViewCopy");
+      if (uploadTitle) uploadTitle.textContent=visible ? "Add labs to your member record" : "Build your personalized blend";
+      if (uploadCopy) uploadCopy.textContent=visible
+        ? "Upload a blood-test PDF or clear report photos. We’ll extract the markers and specimen date for you to review before anything is added to your longitudinal record."
+        : "Upload a blood-test PDF or clear photos of a printed report, or enter the values yourself. We turn the markers you confirm into a drinkable nutrition plan.";
       if (!visible) return;
       const type=document.getElementById("memberTestContextType");
       const id=document.getElementById("memberTestContextId");
@@ -11327,6 +11556,10 @@
         if (collectionDate.dataset.testId!==memberTestId(activeMemberTest)) {
           collectionDate.dataset.testId=memberTestId(activeMemberTest);
           collectionDate.value=String(activeMemberTest?.collection_date || "");
+          const hint=document.getElementById("memberCollectionDateHint");
+          if (hint) hint.textContent=collectionDate.value
+            ? "Confirm this is the specimen collection date shown on your report. You can correct it before analysis."
+            : "We’ll look for this date in your report. Confirm or correct it before analysis.";
         }
       }
     }
@@ -11340,6 +11573,7 @@
         clearMemberHealthUi();
       }
       activeMemberTest=test;
+      memberAppWorkspaceActive=true;
       selectedFiles=[];
       if (pdfInput) pdfInput.value="";
       const label=document.getElementById("fileLabel");
@@ -11348,7 +11582,7 @@
       renderMemberTestContext();
       if (navigate) {
         showView("upload");
-        window.setTimeout(()=>scrollToTarget("uploadView"),140);
+        window.setTimeout(()=>window.scrollTo({top:0,behavior:"smooth"}),140);
       }
     }
     async function createMemberTest(testType) {
@@ -11431,6 +11665,8 @@
         const saved=await fetchSavedMemberTest(test);
         assertMemberPrivacyContext(privacyContext);
         if (!saved.result || saved.result?.ok===false) throw new Error("This test does not have a completed result yet.");
+        activeMemberTest=saved.test || test;
+        memberAppWorkspaceActive=true;
         renderResults(saved.result,{source:"history",test:saved.test,comparison:saved.comparison});
       } catch (error) {
         if (error?.memberPrivacyStale) return;
@@ -11523,12 +11759,40 @@
       document.getElementById("memberDashboardLogoutButton")?.addEventListener("click",()=>logoutMember());
       document.getElementById("memberDashboardRefreshButton")?.addEventListener("click",()=>loadMemberDashboard({show:false}));
       document.getElementById("memberDashboardAccountButton")?.addEventListener("click",event=>openMemberAuthModal("",event.currentTarget));
+      document.getElementById("memberDashboardAddLabsButton")?.addEventListener("click",()=>startRecommendedMemberTest());
+      document.getElementById("memberOpenLatestResultButton")?.addEventListener("click",()=>{
+        if (memberLatestSavedResult?.result) {
+          activeMemberTest=memberLatestSavedResult.test || activeMemberTest;
+          memberAppWorkspaceActive=true;
+          renderResults(memberLatestSavedResult.result,{
+            source:"member_dashboard",
+            test:memberLatestSavedResult.test,
+            comparison:memberLatestSavedResult.comparison
+          });
+          return;
+        }
+        startRecommendedMemberTest();
+      });
+      document.querySelectorAll("[data-member-destination]").forEach(item=>item.addEventListener("click",async ()=>{
+        const destination=String(item.dataset.memberDestination || "overview");
+        if (destination==="add-labs") {
+          await startRecommendedMemberTest();
+          return;
+        }
+        await loadMemberDashboard({show:true});
+        const target={overview:"memberDashboard",blueprint:"memberBlueprintCard",tests:"memberHistorySection"}[destination] || "memberDashboard";
+        window.setTimeout(()=>scrollToTarget(target),120);
+      }));
       document.getElementById("memberCollectionDate")?.addEventListener("change",event=>{
         if (!activeMemberTest) return;
         const value=String(event.currentTarget.value || "");
         activeMemberTest={...activeMemberTest,collection_date:value || null};
         const index=memberTests.findIndex(test=>memberTestId(test)===memberTestId(activeMemberTest));
         if (index>=0) memberTests.splice(index,1,activeMemberTest);
+        const hint=document.getElementById("memberCollectionDateHint");
+        if (hint) hint.textContent=value
+          ? "Confirm this is the specimen collection date shown on your report. You can correct it before analysis."
+          : "We couldn’t confirm a date automatically. Enter the specimen collection date shown on the report.";
         if (value) showError("");
       });
       document.getElementById("memberCancelTestButton")?.addEventListener("click",()=>{
@@ -12348,31 +12612,46 @@
       setTimeout(snap,720);
       setTimeout(snap,1400);
     }
+    function syncMemberAppNavigation(name,privateMemberView) {
+      const navigation=document.getElementById("memberAppNavigation");
+      if (navigation) navigation.hidden=!privateMemberView;
+      document.body.classList.toggle("member-app-mode",Boolean(privateMemberView));
+      if (name==="member") renderMemberTestContext();
+    }
     function showView(name,{rememberPersonalized=true}={}) {
       const apply=()=>{
+        currentAppViewName=name;
+        if (name==="member") memberAppWorkspaceActive=true;
         if (rememberPersonalized && !["standard","discovery","member"].includes(name)) personalizedView = name;
         const index = {upload:0,review:1,questionnaire:2,results:3,standard:4,discovery:5,member:6}[name];
         if (!Number.isInteger(index)) return;
+        const privateMemberView=Boolean(
+          memberIsReady() && memberAppWorkspaceActive &&
+          ["upload","review","questionnaire","results","member"].includes(name)
+        );
+        const publicHomepage=name==="upload" && !privateMemberView;
         viewIds.forEach((id,itemIndex) => document.getElementById(id).classList.toggle("active", itemIndex === index));
-        document.getElementById("uploadHero").style.display = name === "upload" ? "grid" : "none";
+        document.getElementById("uploadHero").style.display = publicHomepage ? "grid" : "none";
         const dailyFoundation=document.getElementById("dailyFoundation");
-        if (dailyFoundation) dailyFoundation.style.display = name === "upload" ? "grid" : "none";
+        if (dailyFoundation) dailyFoundation.style.display = publicHomepage ? "grid" : "none";
         const fullStackExperience=document.getElementById("fullStackExperience");
-        if (fullStackExperience) fullStackExperience.style.display = name === "upload" ? "block" : "none";
+        if (fullStackExperience) fullStackExperience.style.display = publicHomepage ? "block" : "none";
         const membershipSystem=document.getElementById("membershipSystem");
-        if (membershipSystem) membershipSystem.style.display = name === "upload" ? "block" : "none";
+        if (membershipSystem) membershipSystem.style.display = publicHomepage ? "block" : "none";
         const consumerLanding=document.getElementById("consumerLanding");
-        if (consumerLanding) consumerLanding.style.display = name === "upload" ? "grid" : "none";
+        if (consumerLanding) consumerLanding.style.display = publicHomepage ? "grid" : "none";
         const vectorStory=document.getElementById("vectorStory");
-        if (vectorStory) vectorStory.style.display = name === "upload" ? "grid" : "none";
+        if (vectorStory) vectorStory.style.display = publicHomepage ? "grid" : "none";
         const homeFunctionMenu=document.getElementById("homeFunctionMenu");
-        if (homeFunctionMenu) homeFunctionMenu.style.display = name === "upload" ? "grid" : "none";
+        if (homeFunctionMenu) homeFunctionMenu.style.display = publicHomepage ? "grid" : "none";
         const homepageFlowIntro=document.getElementById("homepageFlowIntro");
-        if (homepageFlowIntro) homepageFlowIntro.style.display = name === "upload" ? "grid" : "none";
+        if (homepageFlowIntro) homepageFlowIntro.style.display = publicHomepage ? "grid" : "none";
         const experienceLab=document.getElementById("experienceLab");
-        if (experienceLab) experienceLab.style.display = name === "upload" ? "grid" : "none";
-	        document.getElementById("flowProgress").style.display = ["standard","discovery","results","member"].includes(name) ? "none" : "";
+        if (experienceLab) experienceLab.style.display = publicHomepage ? "grid" : "none";
+	        document.getElementById("flowProgress").style.display = ["standard","discovery","results","member"].includes(name) || privateMemberView ? "none" : "";
 	        document.getElementById("wizardStage").style.display = ["standard","discovery","results","member"].includes(name) ? "none" : "";
+        syncMemberAppNavigation(name,privateMemberView);
+        renderMemberTestContext();
         document.querySelectorAll("[data-app-mode]").forEach(item=>{
           const mode = ["standard","discovery"].includes(name) ? name : "personalized";
           item.classList.toggle("active",item.dataset.appMode === mode);
@@ -12405,6 +12684,7 @@
       });
     }
     function showHomepageThenScroll(targetId,mode,control) {
+      memberAppWorkspaceActive=false;
       showView("upload",{rememberPersonalized:mode === "personalized"});
       setHeaderMode(mode);
       window.setTimeout(()=>{
@@ -12485,7 +12765,10 @@
       else {
         if (!(await prepareMemberLabUpload())) return;
         showView("upload");
-        setTimeout(()=>scrollToTarget("uploadView"),140);
+        setTimeout(()=>{
+          if (activeMemberTest) window.scrollTo({top:0,behavior:"smooth"});
+          else scrollToTarget("uploadView");
+        },140);
       }
     }));
     function scrollToTarget(targetId, control) {
@@ -12900,8 +13183,7 @@
       if (!selectedFiles.length) return;
       if (!(await prepareMemberLabUpload())) return;
       const privacyContext=captureMemberPrivacyContext();
-      const collectionDate=memberCollectionDateValue({required:Boolean(activeMemberTest)});
-      if (collectionDate===null) return;
+      const collectionDate=memberCollectionDateValue({required:false});
       showError(""); extractBtn.disabled = true; setLoading("extractLoader", true);
       trackEvent("pdf_extract_started",{
         file_count:selectedFiles.length,
@@ -12912,6 +13194,7 @@
         const mergedLabs={};
         const methods=new Set();
         const failures=[];
+        const extractedCollectionDates=[];
         for (const file of selectedFiles) {
           const response = await fetch(apiUrl("/api/extract"), {
             method:"POST",
@@ -12936,6 +13219,9 @@
             continue;
           }
           methods.add(data.method || "unknown");
+          if (validReportCollectionDate(data.collection_date)) {
+            extractedCollectionDates.push(String(data.collection_date));
+          }
           Object.entries(data.labs || {}).forEach(([key,lab])=>{
             if (!mergedLabs[key] || Number(lab.confidence || 0) > Number(mergedLabs[key].confidence || 0)) {
               mergedLabs[key]=lab;
@@ -12944,6 +13230,7 @@
         }
         assertMemberPrivacyContext(privacyContext);
         if (!Object.keys(mergedLabs).length) throw new Error(failures[0] || "No supported lab markers could be read. Try a brighter, straighter photo.");
+        applyExtractedMemberCollectionDates(extractedCollectionDates);
         renderLabs(mergedLabs);
         const methodLabels={image_ocr:"Photo OCR",local_ocr:"Scanned PDF OCR",embedded_text:"PDF text"};
         const methodText=Array.from(methods).map(method=>methodLabels[method] || "Document OCR").join(" + ");
