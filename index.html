@@ -7876,6 +7876,37 @@
       padding:14px 18px;
       white-space:nowrap;
     }
+    .member-returning-access {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      gap:16px;
+      align-items:center;
+      margin-top:12px;
+      padding:15px 18px;
+      border:1px solid rgba(138,11,47,.18);
+      border-radius:20px;
+      background:linear-gradient(135deg,#4a1025,#751237);
+      color:#fff9f2;
+      box-shadow:0 16px 36px rgba(73,16,32,.12);
+    }
+    .member-returning-copy { display:grid;gap:3px; }
+    .member-returning-copy span {
+      color:#efd39e;
+      font-size:.61rem;
+      font-weight:900;
+      letter-spacing:.13em;
+      text-transform:uppercase;
+    }
+    .member-returning-copy strong { font-size:.92rem;line-height:1.25; }
+    .member-returning-copy small { color:rgba(255,249,242,.74);font-size:.69rem;line-height:1.4; }
+    .member-returning-access button {
+      min-height:48px;
+      padding:12px 17px;
+      border:1px solid rgba(255,255,255,.22);
+      background:#fff9f2;
+      color:#5b0c2a;
+      white-space:nowrap;
+    }
     .consumer-proof-row .founding-member-bonus {
       border-color:rgba(175,129,50,.25);
       background:linear-gradient(135deg,#fff9e8,#f7e5bc);
@@ -8518,6 +8549,8 @@
       .full-loop-path { grid-template-columns:1fr; }
       .founding-member-offer { grid-template-columns:1fr; }
       .founding-member-offer button { width:100%;white-space:normal; }
+      .member-returning-access { grid-template-columns:1fr; }
+      .member-returning-access button { width:100%;white-space:normal; }
       .upload-start-actions { width:100%; display:grid; }
       .upload-start-actions button { width:100%; }
       .upload-panel .section-head { grid-template-columns:1fr; }
@@ -8538,7 +8571,8 @@
     #memberProgressSection[hidden],
     .longitudinal-comparison[hidden],
     #longitudinalComparisonJump[hidden],
-    #memberAccessButton[hidden] { display:none !important; }
+    #memberAccessButton[hidden],
+    #memberHeroAccessButton[hidden] { display:none !important; }
     body.member-auth-modal-open { overflow:hidden; }
     .member-auth-modal {
       position:fixed;
@@ -8994,7 +9028,7 @@
         </nav>
         <div class="app-pill">Daily drink mix</div>
         <div class="privacy">● Encrypted analysis</div>
-        <button type="button" class="founder-access-button member-access-button" id="memberAccessButton" hidden>Member sign in</button>
+        <button type="button" class="founder-access-button member-access-button" id="memberAccessButton" hidden>Member login</button>
         <button type="button" class="founder-access-button" id="founderAccessButton">Founder login</button>
       </div>
     </header>
@@ -9010,6 +9044,14 @@
             <small>Founding members receive complimentary Daily Hydration mix with their first complete 90-day loop.</small>
           </div>
           <button type="button" data-open-waitlist data-interest-type="founding_member_signup" data-interest-source="homepage_hero" data-blend-id="founding_membership" data-blend-name="Fluids Founding Membership">Sign up as a founding member</button>
+        </div>
+        <div class="member-returning-access" aria-label="Returning Fluids member access">
+          <div class="member-returning-copy">
+            <span>Already a member?</span>
+            <strong>Return to your saved bloodwork results and testing timeline.</strong>
+            <small>Your baseline, recommendations, and future retest comparisons stay connected to your secure account.</small>
+          </div>
+          <button type="button" id="memberHeroAccessButton" hidden>Member login</button>
         </div>
         <div class="consumer-hero-actions">
           <button type="button" class="secondary" data-quick-mode="upload">Use labs I already have</button>
@@ -9029,8 +9071,8 @@
             <h2>Information becomes action. Action becomes learning.</h2>
           </div>
           <div class="full-loop-hero-visual">
-            <img class="collection" src="/assets/fluids/fluids-at-home-collection-device-cream.png" alt="Fluids-branded blood collection device">
-            <img class="product" src="/assets/fluids/daily_foundation_stick_glass_v2.png" alt="Fluids Daily Foundation stick pack and prepared drink">
+            <img class="collection" src="/assets/fluids/fluids-at-home-collection-device-cream.png?v=20260817-live-assets" alt="Fluids-branded blood collection device">
+            <img class="product" src="/assets/fluids/daily_foundation_stick_glass_v2.png?v=20260817-live-assets" alt="Fluids Daily Foundation stick pack and prepared drink">
           </div>
           <div class="full-loop-path" aria-label="Membership sequence">
             <span>01 · Establish your baseline</span>
@@ -9042,7 +9084,7 @@
     </section>
     <section class="daily-foundation-feature" id="dailyFoundation" aria-labelledby="dailyFoundationTitle">
       <div class="daily-foundation-visual">
-        <img src="/assets/fluids/daily_foundation_stick_glass_v2.png" alt="Fluids Daily Foundation stick pack beside a prepared drink">
+        <img src="/assets/fluids/daily_foundation_stick_glass_v2.png?v=20260817-live-assets" alt="Fluids Daily Foundation stick pack beside a prepared drink">
         <span>Broad-fit daily whole-food nutrition</span>
       </div>
       <div class="daily-foundation-copy">
@@ -9178,7 +9220,7 @@
       </div>
       <div class="membership-grid">
         <article class="membership-card featured">
-          <div class="membership-card-media"><img src="/assets/fluids/fluids-at-home-collection-device-cream.png" alt="FLUIDS-branded blood collection device included with Full Loop Membership"></div>
+          <div class="membership-card-media"><img src="/assets/fluids/fluids-at-home-collection-device-cream.png?v=20260817-live-assets" alt="FLUIDS-branded blood collection device included with Full Loop Membership"></div>
           <div class="eyebrow">Full Loop Membership</div>
           <h3>Your complete 90-day plan</h3>
           <p>A blood test, personalized nutrition plan, daily product, and measured follow-up in one connected experience.</p>
@@ -9650,7 +9692,7 @@
               <div class="results-commerce-meta"><span>$299/month</span><span>3 months</span><span>$897 total</span></div>
               <button type="button" data-open-waitlist data-interest-type="full_loop_membership_reservation" data-interest-source="results_full_loop" data-blend-id="full_loop_membership" data-blend-name="Full Loop Membership" data-product-price="$299/month · 3 months">Start my Full Loop</button>
             </div>
-            <div class="results-commerce-product"><img src="/assets/fluids/fluids-at-home-collection-device-cream.png" alt="Fluids blood collection device included with Full Loop Membership"></div>
+            <div class="results-commerce-product"><img src="/assets/fluids/fluids-at-home-collection-device-cream.png?v=20260817-live-assets" alt="Fluids blood collection device included with Full Loop Membership"></div>
           </article>
           <article class="results-commerce-card">
             <div>
@@ -9769,7 +9811,7 @@
       <header class="member-dashboard-head">
         <div>
           <div class="eyebrow">Your Fluids membership</div>
-          <h1 id="memberDashboardTitle">Your testing timeline.</h1>
+          <h1 id="memberDashboardTitle">Your results timeline.</h1>
           <p id="memberDashboardEmail">Sign in to securely load your saved tests.</p>
         </div>
         <div class="member-dashboard-actions">
@@ -9823,7 +9865,7 @@
           <p class="lead" id="standardDescription">Loading the population formulation…</p>
         </div>
         <div class="standard-product-visual" aria-hidden="true">
-          <img src="/assets/fluids/fluids_box_3d_transparent.png" alt="">
+          <img src="/assets/fluids/fluids_box_3d_transparent.png?v=20260817-live-assets" alt="">
         </div>
         <div class="standard-seal">
           <div><strong id="standardCoverageSeal">—</strong><span>modeled positive coverage</span></div>
@@ -10058,7 +10100,7 @@
 
         <div class="member-auth-panel-state" id="memberSignedOutPanel" hidden>
           <div class="member-auth-actions">
-            <button type="button" id="memberLoginButton">Sign in</button>
+            <button type="button" id="memberLoginButton">Member login</button>
             <button type="button" class="secondary" id="memberSignupButton">Create an account</button>
           </div>
           <div class="member-auth-assurance"><strong>Email + password are handled by our hosted authentication service.</strong> Fluids receives a secure session cookie; this page never receives, logs, or stores your password.</div>
@@ -10096,7 +10138,7 @@
         <div class="member-auth-panel-state" id="memberSessionPanel" hidden>
           <div class="member-session-identity"><small>Signed in securely</small><strong id="memberSessionEmail">Member account</strong></div>
           <div class="member-session-actions">
-            <button type="button" id="memberOpenDashboardButton">Open my dashboard</button>
+            <button type="button" id="memberOpenDashboardButton">View my results</button>
             <button type="button" class="secondary" id="memberLogoutButton">Sign out</button>
             <button type="button" class="secondary" id="memberLogoutAllButton">Sign out all devices</button>
           </div>
@@ -10387,10 +10429,22 @@
         accessButton.textContent=memberSession.status==="checking"
           ? "Checking account…"
           : memberSession.authenticated
-            ? "My account"
-            : "Member sign in";
+            ? "My results"
+            : "Member login";
         accessButton.classList.toggle("active",memberSession.authenticated);
         accessButton.setAttribute("aria-pressed",String(memberSession.authenticated));
+      }
+      const heroAccessButton=document.getElementById("memberHeroAccessButton");
+      if (heroAccessButton) {
+        heroAccessButton.hidden=!memberPortalEnabled;
+        heroAccessButton.disabled=memberSession.status==="checking";
+        heroAccessButton.textContent=memberSession.status==="checking"
+          ? "Checking account…"
+          : memberIsReady()
+            ? "View my results"
+            : memberSession.authenticated
+              ? "Finish account setup"
+              : "Member login";
       }
       const email=memberEmail();
       const sessionEmail=document.getElementById("memberSessionEmail");
@@ -11439,11 +11493,20 @@
     }
     function initMemberPortal() {
       const accessButton=document.getElementById("memberAccessButton");
+      const heroAccessButton=document.getElementById("memberHeroAccessButton");
       if (!memberPortalEnabled) {
         if (accessButton) accessButton.hidden=true;
+        if (heroAccessButton) heroAccessButton.hidden=true;
         return Promise.resolve(memberSession);
       }
       accessButton?.addEventListener("click",event=>openMemberAuthModal("dashboard",event.currentTarget));
+      heroAccessButton?.addEventListener("click",event=>{
+        if (memberIsReady()) {
+          loadMemberDashboard({show:true});
+          return;
+        }
+        openMemberAuthModal("dashboard",event.currentTarget);
+      });
       document.querySelectorAll("[data-close-member-auth]").forEach(item=>item.addEventListener("click",()=>closeMemberAuthModal()));
       document.getElementById("memberLoginButton")?.addEventListener("click",()=>startHostedMemberAuth("login"));
       document.getElementById("memberSignupButton")?.addEventListener("click",()=>startHostedMemberAuth("signup"));
