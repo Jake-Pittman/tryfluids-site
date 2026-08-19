@@ -247,7 +247,7 @@
     label { display:block; font-size:.78rem; font-weight:800; margin-bottom:7px; }
     input, select {
       width:100%; border:1px solid var(--line); background:white; border-radius:12px;
-      padding:11px 12px; color:var(--ink); font:inherit; outline:none;
+      min-width:0; box-sizing:border-box; padding:11px 12px; color:var(--ink); font:inherit; outline:none;
     }
     input:focus, select:focus { border-color:var(--leaf); box-shadow:0 0 0 3px rgba(13,105,117,.13); }
     .check { display:flex; gap:9px; align-items:flex-start; padding:12px 0; color:var(--muted); font-size:.84rem; line-height:1.4; }
@@ -1036,7 +1036,7 @@
     .step.active,.step.done { opacity:1; }
     .step.active { background:#fff; }
     .step.done .step-num { background:var(--leaf); }
-    .question-tabs { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:4px 0 22px; }
+    .question-tabs { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin:4px 0 22px; }
     .question-tab { background:#e3edef; color:var(--muted); box-shadow:none; font-size:.78rem; padding:10px; }
     .question-tab.active { background:var(--ink); color:white; }
     .question-progress { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0 0 12px; color:var(--muted); font-size:.76rem; font-weight:800; }
@@ -1446,6 +1446,7 @@
       .hero-side { border-left:0; border-top:1px solid rgba(8,47,59,.14); }
       .portfolio-nav { position:static; grid-template-columns:repeat(2,1fr); }
       .form-grid { grid-template-columns:1fr; }
+      .question-page .context-grid { grid-template-columns:1fr; }
       .lab-table th:nth-child(4), .lab-table td:nth-child(4) { display:none; }
       .shell { width:min(100% - 20px, 1180px); }
       header { margin:0; padding:14px 0; }
@@ -9518,12 +9519,13 @@
 
       <aside class="panel section app-view" id="questionnaireView">
         <div class="section-head"><div><h2>Personalize your recommendation</h2><p class="section-copy">A few short sections help tailor the nutrient direction and custom blend.</p></div></div>
-        <div class="question-progress"><span id="questionProgressText">Section 1 of 4</span><span id="questionProgressHint">Basics</span></div>
+        <div class="question-progress"><span id="questionProgressText">Section 1 of 5</span><span id="questionProgressHint">Basics</span></div>
         <div class="question-tabs">
           <button type="button" class="question-tab active" data-question-tab="0">Basics</button>
           <button type="button" class="question-tab" data-question-tab="1">Lifestyle</button>
           <button type="button" class="question-tab" data-question-tab="2">Nutrition</button>
-          <button type="button" class="question-tab" data-question-tab="3">Health</button>
+          <button type="button" class="question-tab" data-question-tab="3">Priorities</button>
+          <button type="button" class="question-tab" data-question-tab="4">Health</button>
         </div>
         <div class="question-page active" data-question-page="0"><div class="form-grid">
           <div><label for="age">Chronological age</label><small class="field-help">Your age on the day of the blood draw; it anchors the biological-age comparison.</small><input id="age" type="number" min="20" max="100" value="40"></div>
@@ -9570,11 +9572,24 @@
             <div><label for="ultraProcessedMeals">Ultra-processed meals/week</label><small class="field-help">Estimate meals built mostly from packaged fast food, frozen entrées, or highly processed snacks.</small><input id="ultraProcessedMeals" type="number" min="0" max="100" step=".5"></div>
           </div>
           <div><label for="dietaryPattern">Dietary pattern</label><small class="field-help">Choose the option that best describes how you usually eat; it does not need to be perfect.</small><select id="dietaryPattern"><option value="">Not specified</option><option>Mediterranean-style</option><option>Plant-forward</option><option>Vegetarian</option><option>Vegan</option><option>Low carbohydrate</option><option>Ketogenic</option><option>Mixed / omnivorous</option></select></div>
-          <div><label for="dietaryRestrictions">Dietary restrictions</label><small class="field-help">List medically advised, religious, or personal restrictions the formula should respect.</small><input id="dietaryRestrictions" maxlength="300" placeholder="e.g. low sodium"></div>
-          <div><label for="foodAllergies">Food allergies</label><small class="field-help">List known food allergies or ingredients you must avoid. Do not list mild preferences here.</small><input id="foodAllergies" maxlength="300" placeholder="e.g. berry allergy"></div>
-          <div><label for="primaryGoal">Primary goal</label><small class="field-help">Choose the outcome you care about most so your nutrition plan can frame its priorities clearly.</small><select id="primaryGoal"><option value="">Choose your primary goal</option><option value="healthy aging and longevity">Healthy aging and longevity</option><option value="metabolic health and blood sugar">Metabolic health and blood sugar</option><option value="heart health and cholesterol">Heart health and cholesterol</option><option value="inflammation immunity and recovery">Inflammation, immunity, and recovery</option><option value="energy fitness and performance">Energy, fitness, and performance</option><option value="hydration and electrolyte balance">Hydration and electrolyte balance</option><option value="digestive health">Digestive health</option><option value="general wellness and daily nutrition">General wellness and daily nutrition</option></select></div>
+          <div><label for="dietaryRestrictions">Dietary restrictions</label><small class="field-help">List medically advised, religious, or personal restrictions for nutrition-plan filtering and formula review. This is not automatic formula clearance.</small><input id="dietaryRestrictions" maxlength="300" placeholder="e.g. low sodium"></div>
+          <div><label for="foodAllergies">Food allergies</label><small class="field-help">List known food allergies or ingredients you must avoid. A custom powder still requires ingredient-level allergen review before use.</small><input id="foodAllergies" maxlength="300" placeholder="e.g. berry allergy"></div>
         </details>
         <details open class="question-page" data-question-page="3">
+          <summary>Your priorities</summary>
+          <p class="section-copy">Your labs and safety checks decide what is eligible. These answers are recorded before you see a recommendation so we can evaluate a transparent preference policy later.</p>
+          <div class="context-grid">
+            <div><label for="primaryOutcome">If all choices are safe, what result matters most?</label><small class="field-help">Choose “Let my labs set the priorities” if you do not want to add an outcome preference. Blood pressure is not a current optimization target.</small><select id="primaryOutcome"><option value="">Let my labs set the priorities</option><option value="healthy_aging">Healthy aging</option><option value="glucose">Blood sugar</option><option value="lipids">Cholesterol and lipids</option><option value="inflammation">Inflammation and recovery</option><option value="liver">Liver markers</option></select></div>
+            <div><label for="secondaryOutcome">Is there a second result you care about?</label><small class="field-help">Optional. This is retained separately from the outcome prediction model.</small><select id="secondaryOutcome"><option value="">No secondary outcome</option><option value="healthy_aging">Healthy aging</option><option value="glucose">Blood sugar</option><option value="lipids">Cholesterol and lipids</option><option value="inflammation">Inflammation and recovery</option><option value="liver">Liver markers</option></select></div>
+            <div><label for="preferenceTradeoff">If predicted benefits conflict, what should a future policy favor?</label><small class="field-help">This is captured for evaluation only today; it does not change the current formula ranking.</small><select id="preferenceTradeoff"><option value="balanced_safe_benefit">Choose the best balanced safe improvement</option><option value="avoid_any_modeled_worsening">Avoid predicted worsening in any tracked priority</option><option value="favor_primary_with_small_tradeoff">Favor my primary outcome when other predicted tradeoffs stay small</option></select></div>
+            <div><label for="preferenceTieBreaker">When two blends are similarly strong, what should break the tie?</label><small class="field-help">Convenience can only be considered among safety-cleared formulas with meaningfully similar predicted benefit.</small><select id="preferenceTieBreaker"><option value="broadest_benefit">Broadest predicted benefit</option><option value="primary_outcome">Strongest fit for my primary outcome</option><option value="simplest_formula">Simplest daily formula</option></select></div>
+            <div><label for="experienceGoal">Optional daily-experience goal</label><small class="field-help">Energy, hydration, and digestive comfort are recorded for adherence research, not treated as validated biomarker outcomes.</small><select id="experienceGoal"><option value="none">No separate experience goal</option><option value="energy_performance">Energy, fitness, and performance</option><option value="hydration_routine">Hydration and electrolyte routine</option><option value="digestive_comfort">Digestive comfort</option><option value="general_wellness">General wellness and daily nutrition</option></select></div>
+            <div><label for="flavorPreference">Flavor preference</label><small class="field-help">Optional product preference. It cannot make an unsafe or unsuitable ingredient eligible.</small><select id="flavorPreference"><option value="no_preference">No flavor preference</option><option value="citrus_tart">Citrus / tart</option><option value="berry_fruity">Berry / fruity</option><option value="mild_neutral">Mild / neutral</option><option value="earthy_green">Earthy / green</option></select></div>
+          </div>
+          <div class="inline-help"><strong>Current boundary:</strong> these answers do not enter V10, do not change predicted outcomes, and cannot override medication context, dose limits, kidney/pregnancy safeguards, or any other implemented safety rule. Recording preferences is not permission to use them for research or model training; that requires separate model-improvement consent. Allergen and ingredient restrictions still require separate formula review. Today these answers do not change the recommendation or plan content.</div>
+          <label class="check"><input id="preferenceConfirmed" type="checkbox"><span><strong>I reviewed these priority answers.</strong><small class="check-help">Record these answers as my deliberate pre-recommendation preference profile, including “no preference” choices.</small></span></label>
+        </details>
+        <details open class="question-page" data-question-page="4">
           <summary>Conditions, medications, and supplements</summary>
           <div class="context-grid">
             <div><label for="prescriptionCount">Prescription count</label><small class="field-help">Number of prescription medications you currently take regularly; different doses of one medication count once.</small><input id="prescriptionCount" type="number" min="0" max="50"></div>
@@ -10309,10 +10324,14 @@
     const questionBack = document.getElementById("questionBack");
     const questionNext = document.getElementById("questionNext");
     let specs = {};
+    let preferenceContractReady = false;
     let customBlendMinimum = {minimum_core_markers:7,total_core_markers:9,maximum_imputed_core_markers:2,core_markers:[]};
     let selectedFiles = [];
     let currentQuestion = 0;
     const dataLoopConsentVersion = "2026-07-29-v1";
+    const preferenceProfileVersion = "fluids-preference-profile/1";
+    const preferenceInstrumentVersion = "fluids-priorities-questionnaire/1";
+    const preferencePolicyVersion = "fluids-preference-policy/capture-only-1";
     const viewIds = ["uploadView","reviewView","questionnaireView","results","standardView","discoveryView","memberDashboard"];
     let standardBlendLoaded = false;
     let homeFunctionMenuLoaded = false;
@@ -11571,6 +11590,8 @@
         lastCustomBlendResult=null;
         currentQuestion=0;
         clearMemberHealthUi();
+        const preferenceConfirmed=document.getElementById("preferenceConfirmed");
+        if (preferenceConfirmed) preferenceConfirmed.checked=false;
       }
       activeMemberTest=test;
       memberAppWorkspaceActive=true;
@@ -12224,7 +12245,11 @@
         const lowerKey=String(key || "").toLowerCase();
         if (
           !key ||
-          ["email","phone","name","labs","lab_values"].includes(lowerKey) ||
+          [
+            "email","phone","name","labs","lab_values","preference_profile",
+            "primary_outcome","secondary_outcome","tradeoff_policy","tie_breaker",
+            "experience_goal","flavor_preference"
+          ].includes(lowerKey) ||
           /file_name|filename|pdf_text|raw/i.test(key)
         ) return;
         if (value === undefined) return;
@@ -12708,6 +12733,8 @@
       }
     }));
     function startNewPersonalizedAnalysis() {
+      const preferenceConfirmed=document.getElementById("preferenceConfirmed");
+      if (preferenceConfirmed) preferenceConfirmed.checked=false;
       if (memberIsReady()) {
         clearPendingCustomBlendJob();
         lastCustomBlendResult=null;
@@ -12785,15 +12812,15 @@
       scrollToTarget(item.dataset.scrollTarget,item);
     }));
     function showQuestion(index) {
-      currentQuestion = Math.max(0,Math.min(3,index));
-      const labels=["Basics","Lifestyle","Nutrition","Health"];
+      currentQuestion = Math.max(0,Math.min(4,index));
+      const labels=["Basics","Lifestyle","Nutrition","Priorities","Health"];
       document.querySelectorAll("[data-question-page]").forEach(item => item.classList.toggle("active", Number(item.dataset.questionPage) === currentQuestion));
       document.querySelectorAll("[data-question-tab]").forEach(item => item.classList.toggle("active", Number(item.dataset.questionTab) === currentQuestion));
-      document.getElementById("questionProgressText").textContent=`Section ${currentQuestion + 1} of 4`;
+      document.getElementById("questionProgressText").textContent=`Section ${currentQuestion + 1} of 5`;
       document.getElementById("questionProgressHint").textContent=labels[currentQuestion];
       questionBack.textContent = currentQuestion === 0 ? "Back to labs" : "Back";
-      questionNext.style.display = currentQuestion === 3 ? "none" : "inline-block";
-      analyzeBtn.style.display = currentQuestion === 3 ? "inline-block" : "none";
+      questionNext.style.display = currentQuestion === 4 ? "none" : "inline-block";
+      analyzeBtn.style.display = currentQuestion === 4 ? "inline-block" : "none";
       syncAnalysisConsent();
       if (!analyticsSeenQuestionSections.has(currentQuestion)) {
         analyticsSeenQuestionSections.add(currentQuestion);
@@ -12819,7 +12846,7 @@
     }
 
     function syncAnalysisConsent() {
-      analyzeBtn.disabled = currentQuestion === 3 && analysisRequiresDataLoopConsent() && !dataLoopConsent.checked;
+      analyzeBtn.disabled = currentQuestion === 4 && analysisRequiresDataLoopConsent() && !dataLoopConsent.checked;
     }
 
     function showError(message) {
@@ -13048,6 +13075,61 @@
       const value=numberOrNull(id);
       return value===null ? null : Number((value*multiplier).toFixed(4));
     }
+    function preferenceProfilePayload() {
+      const primaryOutcome=document.getElementById("primaryOutcome").value || null;
+      return {
+        schema_version:preferenceProfileVersion,
+        instrument_version:preferenceInstrumentVersion,
+        response_status:document.getElementById("preferenceConfirmed").checked ? "user_confirmed" : "default_unconfirmed",
+        priority_mode:primaryOutcome ? "labs_plus_goal" : "labs_only",
+        primary_outcome:primaryOutcome,
+        secondary_outcome:document.getElementById("secondaryOutcome").value || null,
+        tradeoff_policy:document.getElementById("preferenceTradeoff").value,
+        tie_breaker:document.getElementById("preferenceTieBreaker").value,
+        experience_goal:document.getElementById("experienceGoal").value,
+        flavor_preference:document.getElementById("flavorPreference").value
+      };
+    }
+    function preferencePlanGoalLabel(profile) {
+      const primary=document.getElementById("primaryOutcome");
+      if (profile.primary_outcome) return primary.selectedOptions[0]?.textContent?.trim() || "";
+      const experience=document.getElementById("experienceGoal");
+      if (profile.experience_goal!=="none") return experience.selectedOptions[0]?.textContent?.trim() || "";
+      return "";
+    }
+    function syncSecondaryOutcomeOptions() {
+      const primary=document.getElementById("primaryOutcome");
+      const secondary=document.getElementById("secondaryOutcome");
+      if (!primary || !secondary) return;
+      const hasPrimary=Boolean(primary.value);
+      secondary.disabled=!hasPrimary;
+      if (!hasPrimary) secondary.value="";
+      Array.from(secondary.options).forEach(option=>{
+        option.disabled=!hasPrimary || (Boolean(option.value) && option.value===primary.value);
+      });
+      if (secondary.value && secondary.value===primary.value) secondary.value="";
+      const favorPrimary=document.querySelector('#preferenceTradeoff option[value="favor_primary_with_small_tradeoff"]');
+      const primaryTie=document.querySelector('#preferenceTieBreaker option[value="primary_outcome"]');
+      if (favorPrimary) favorPrimary.disabled=!hasPrimary;
+      if (primaryTie) primaryTie.disabled=!hasPrimary;
+      const tradeoff=document.getElementById("preferenceTradeoff");
+      const tieBreaker=document.getElementById("preferenceTieBreaker");
+      if (!hasPrimary && tradeoff?.value==="favor_primary_with_small_tradeoff") tradeoff.value="balanced_safe_benefit";
+      if (!hasPrimary && tieBreaker?.value==="primary_outcome") tieBreaker.value="broadest_benefit";
+    }
+    document.getElementById("primaryOutcome")?.addEventListener("change",syncSecondaryOutcomeOptions);
+    [
+      "primaryOutcome",
+      "secondaryOutcome",
+      "preferenceTradeoff",
+      "preferenceTieBreaker",
+      "experienceGoal",
+      "flavorPreference"
+    ].forEach(id=>document.getElementById(id)?.addEventListener("change",()=>{
+      const confirmation=document.getElementById("preferenceConfirmed");
+      if (confirmation) confirmation.checked=false;
+    }));
+    syncSecondaryOutcomeOptions();
     function isSupportedLabFile(file) {
       const name=(file?.name || "").toLowerCase();
       return ["application/pdf","image/jpeg","image/png"].includes(file?.type) ||
@@ -13100,10 +13182,31 @@
     dropZone.addEventListener("drop", e => selectFiles(e.dataTransfer.files));
 
     async function loadSpecs() {
-      const response = await fetch(apiUrl("/api/specs"));
+      preferenceContractReady=false;
+      const contractQuery=encodeURIComponent(preferenceInstrumentVersion);
+      const response = await fetch(
+        apiUrl(`/api/specs?preference_contract=${contractQuery}`),
+        {cache:"no-store"}
+      );
       const data = await response.json();
       customBlendMinimum = data.custom_blend_minimum || customBlendMinimum;
+      if (!data.preference_profile) {
+        throw new Error("The preference questionnaire is unavailable. Refresh after the app update is complete.");
+      }
+      if (
+        data.preference_profile.schema_version !== preferenceProfileVersion ||
+        data.preference_profile.instrument_version !== preferenceInstrumentVersion ||
+        data.preference_profile.current_policy_version !== preferencePolicyVersion ||
+        data.preference_profile.boundaries?.outcome_prediction_input !== false ||
+        data.preference_profile.boundaries?.may_override_safety !== false ||
+        data.preference_profile.boundaries?.current_formula_routing_effect !== false ||
+        data.preference_profile.boundaries?.training_use_requires_data_loop_consent !== true ||
+        data.preference_profile.boundaries?.current_plan_effect !== "none"
+      ) {
+        throw new Error("The preference questionnaire changed. Refresh the page before continuing.");
+      }
       data.labs.forEach(item => specs[item.key] = item);
+      preferenceContractReady=true;
     }
     function renderLabs(extracted) {
       const body = document.getElementById("labRows"); body.textContent = "";
@@ -13286,9 +13389,27 @@
       const privacyContext=captureMemberPrivacyContext();
       const collectionDate=memberCollectionDateValue({required:Boolean(activeMemberTest)});
       if (collectionDate===null) return;
+      if (!preferenceContractReady) {
+        showQuestion(3);
+        showError("The current priorities contract is unavailable. Refresh the page before generating your blend.");
+        return;
+      }
       if (analysisRequiresDataLoopConsent() && !dataLoopConsent.checked) {
         showError("Please review and accept the model-improvement data consent before generating your blend.");
         dataLoopConsent.focus();
+        return;
+      }
+      const preferenceProfile=preferenceProfilePayload();
+      if (preferenceProfile.response_status!=="user_confirmed") {
+        showQuestion(3);
+        showError("Review the Priorities section and confirm the answers before generating your blend.");
+        document.getElementById("preferenceConfirmed").focus();
+        return;
+      }
+      if (preferenceProfile.secondary_outcome && preferenceProfile.secondary_outcome===preferenceProfile.primary_outcome) {
+        showQuestion(3);
+        showError("Choose a different secondary outcome, or leave it blank.");
+        document.getElementById("secondaryOutcome").focus();
         return;
       }
       showError(""); analyzeBtn.disabled = true; setLoading("analysisLoader", true);
@@ -13325,7 +13446,8 @@
         dietary_pattern:document.getElementById("dietaryPattern").value,
         dietary_restrictions:document.getElementById("dietaryRestrictions").value,
         food_allergies:document.getElementById("foodAllergies").value,
-        primary_goal:document.getElementById("primaryGoal").value,
+        primary_goal:preferencePlanGoalLabel(preferenceProfile),
+        preference_profile:preferenceProfile,
         current_smoker:document.getElementById("currentSmoker").checked,
         former_smoker:document.getElementById("formerSmoker").checked,
         diagnosed_diabetes:document.getElementById("diagnosedDiabetes").checked,
@@ -18785,7 +18907,7 @@
       }
       personalizedView="questionnaire";
       showView("questionnaire");
-      showQuestion(3);
+      showQuestion(4);
       showError("Your custom blend is still processing. Tap ‘Check queued result’ to continue watching it without uploading again.");
     };
     const memberPortalInitialization=initMemberPortal();
