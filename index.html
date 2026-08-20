@@ -11212,6 +11212,124 @@
         .forEach(item=>series.push({...item,key:String(item.key || ""),label:String(item.label || item.key || "Marker"),series_type:"biomarker"}));
       return series;
     }
+    function memberTimelineKdmScoreFromResult(result) {
+      const score=result?.age_scores?.scores?.bioage || result?.age_scores?.scores?.kdm_bioage;
+      if (!score || score.available===false || score.ok===false) return null;
+      const value=memberTimelineNumeric(score.age_years ?? score.biological_age);
+      if (value===null) return null;
+      const observedModelMarkers=[...new Set(
+        (Array.isArray(score.observed_model_markers) ? score.observed_model_markers : [])
+          .map(item=>String(item || "").trim().toLowerCase().replace(/[\s-]+/g,"_"))
+          .filter(item=>/^[a-z0-9_]{1,80}$/.test(item))
+      )].sort();
+      return {
+        value,
+        chronological_age:memberTimelineNumeric(score.chronological_age),
+        status:String(score.status || "partial_measured"),
+        status_label:String(score.status_label || "Available"),
+        observed_marker_count:memberTimelineNumeric(score.observed_marker_count) ?? observedModelMarkers.length,
+        minimum_marker_count:memberTimelineNumeric(score.minimum_marker_count),
+        observed_model_markers:observedModelMarkers,
+        marker_signature:observedModelMarkers.length ? observedModelMarkers.join("|") : "",
+        basis:String(score.basis || "")
+      };
+    }
+    function memberTimelineKdmTrend(previous,current) {
+      if (!previous) return null;
+      const delta=current.value-previous.value;
+      const tolerance=Math.max(1e-9,Math.max(Math.abs(previous.value),Math.abs(current.value))*1e-6);
+      const movement=Math.abs(delta)<=tolerance ? "stable" : delta>0 ? "increase" : "decrease";
+      const matchedMarkerSet=Boolean(previous.marker_signature && current.marker_signature && previous.marker_signature===current.marker_signature);
+      const completeScores=previous.status==="measured" && current.status==="measured";
+      const comparable=matchedMarkerSet || completeScores;
+      return {
+        previous_test_id:previous.test_id,
+        delta,
+        percent_change:previous.value!==0 ? delta/Math.abs(previous.value)*100 : null,
+        movement,
+        comparable,
+        interpretation:comparable
+          ? movement==="decrease" ? "progression" : movement==="increase" ? "regression" : "neutral"
+          : "not_comparable",
+        interpretation_basis:comparable ? "lower_kdm_style_age_is_preferred" : "kdm_measured_marker_set_changed",
+        interpretation_text:comparable
+          ? ""
+          : "The measured-marker set changed, so these KDM-style estimates are shown without interpreting the difference as longitudinal change."
+      };
+    }
+    async function enrichMemberTimelineWithKdm(timeline,privacyContext) {
+      if (!timeline || timeline?.kdm_bioage_series?.points?.length) return timeline;
+      const tests=Array.isArray(timeline.tests) ? timeline.tests : [];
+      const scored=await Promise.all(tests.map(async test=>{
+        const testId=String(test?.test_id || "");
+        if (!testId) return null;
+        try {
+          const response=await fetch(apiUrl(`/api/member/tests/${encodeURIComponent(testId)}`),{
+            headers:{"Accept":"application/json"},
+            credentials:"include"
+          });
+          let data={};
+          try { data=await response.json(); } catch (_) {}
+          assertMemberPrivacyContext(privacyContext);
+          if (!response.ok || data?.ok===false) return null;
+          const score=memberTimelineKdmScoreFromResult(data?.result);
+          return score ? {test,score} : null;
+        } catch (error) {
+          if (error?.memberPrivacyStale) throw error;
+          return null;
+        }
+      }));
+      assertMemberPrivacyContext(privacyContext);
+      const points=[];
+      scored.filter(Boolean).forEach(({test,score})=>{
+        const previous=points.at(-1) || null;
+        const point={
+          test_id:String(test.test_id),
+          date:test.collection_date || null,
+          value:score.value,
+          unit:"years",
+          status:score.status,
+          status_label:score.status_label,
+          chronological_age:score.chronological_age,
+          observed_marker_count:score.observed_marker_count,
+          minimum_marker_count:score.minimum_marker_count,
+          observed_model_markers:score.observed_model_markers,
+          marker_signature:score.marker_signature,
+          basis:score.basis,
+          trend_from_prior:null
+        };
+        point.trend_from_prior=memberTimelineKdmTrend(previous,point);
+        points.push(point);
+        test.kdm_bioage=score.value;
+        test.kdm_bioage_years=score.value;
+        test.kdm_bioage_status=score.status;
+        test.kdm_bioage_observed_marker_count=score.observed_marker_count;
+      });
+      timeline.kdm_bioage_series={
+        key:"kdm_bioage",
+        label:"KDM-style BioAge",
+        unit:"years",
+        directionality:"lower_is_preferred",
+        score_type:"exploratory_age_estimate",
+        comparison_requirement:"same_measured_marker_set",
+        points
+      };
+      const latest=points.at(-1);
+      const latestTrend=memberTimelineTrend(latest);
+      if (latestTrend) {
+        timeline.current_vs_previous={
+          ...(timeline.current_vs_previous || {}),
+          kdm_bioage_change:latestTrend.comparable ? latestTrend.delta : null,
+          kdm_bioage:{
+            delta:latestTrend.comparable ? latestTrend.delta : null,
+            comparable:latestTrend.comparable,
+            interpretation:latestTrend.interpretation,
+            interpretation_text:latestTrend.interpretation_text || null
+          }
+        };
+      }
+      return timeline;
+    }
     function memberTimelineNumeric(value) {
       if (value===null || value===undefined || value==="") return null;
       const number=Number(value);
@@ -11271,7 +11389,7 @@
       if (points.length>1 && latestTrend?.comparable===false) {
         detail="Latest estimate · measured-marker set changed";
       } else if (comparisonDelta!==null) {
-        detail=`${comparisonDelta>0 ? "+" : ""}${comparisonDelta.toFixed(1)} yr vs the preceding test`;
+        detail=`${comparisonDelta>0 ? "+" : ""}${comparisonDelta.toFixed(1)} yr vs the previous comparable score`;
       } else if (points.length>1) {
         detail="Comparable age scores required for change";
       }
@@ -11569,6 +11687,8 @@
         if (memberResponseExpired(response,data)) return null;
         if (!response.ok || data?.ok===false) throw new Error(data?.message || "Your progress timeline could not be loaded.");
         memberTimeline=normalizeMemberTimeline(data);
+        await enrichMemberTimelineWithKdm(memberTimeline,privacyContext);
+        assertMemberPrivacyContext(privacyContext);
         renderMemberProgressTimeline();
         return memberTimeline;
       } catch (error) {
