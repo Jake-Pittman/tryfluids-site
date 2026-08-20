@@ -8739,7 +8739,7 @@
       color:var(--muted);
       background:#fff;
     }
-    .member-dashboard-status.error { color:var(--danger); border-color:rgba(179,54,72,.28); }
+    .member-dashboard-status.error { display:block; color:var(--danger); border-color:rgba(179,54,72,.28); }
     .member-overview-grid {
       display:grid;
       grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
@@ -10411,12 +10411,17 @@
       if (!memberSession.authenticated) return null;
       return {generation:memberPrivacyGeneration,identity:memberIdentityKey()};
     }
+    function memberPrivacyContextIsCurrent(context) {
+      return Boolean(
+        context &&
+        memberSession.authenticated &&
+        context.generation===memberPrivacyGeneration &&
+        context.identity===memberIdentityKey()
+      );
+    }
     function assertMemberPrivacyContext(context) {
       if (!context) return;
-      const current=memberSession.authenticated &&
-        context.generation===memberPrivacyGeneration &&
-        context.identity===memberIdentityKey();
-      if (current) return;
+      if (memberPrivacyContextIsCurrent(context)) return;
       const error=new Error("This private response belongs to a member session that is no longer active.");
       error.memberPrivacyStale=true;
       throw error;
@@ -11447,6 +11452,9 @@
       const highlights=document.getElementById("memberBlueprintHighlights");
       if (!section || !blendName || !blendSummary || !blendStatus || !resultButton || !blueprintSummary || !highlights) return;
       highlights.textContent="";
+      resultButton.disabled=false;
+      resultButton.removeAttribute("aria-busy");
+      resultButton.removeAttribute("title");
       const result=saved?.result && saved.result?.ok!==false ? saved.result : null;
       const test=saved?.test || null;
       const option=(result?.blend_options || [])[0] || null;
@@ -11483,17 +11491,33 @@
       renderMemberOverview(null);
       if (!latest) return null;
       const blendStatus=document.getElementById("memberCurrentBlendStatus");
+      const resultButton=document.getElementById("memberOpenLatestResultButton");
       if (blendStatus) blendStatus.textContent="Loading your current blueprint…";
+      if (resultButton) {
+        resultButton.disabled=true;
+        resultButton.textContent="Loading result…";
+        resultButton.setAttribute("aria-busy","true");
+      }
       try {
         const saved=await fetchSavedMemberTest(latest);
         assertMemberPrivacyContext(privacyContext);
-        if (!saved.result || saved.result?.ok===false) return null;
+        if (!saved.result || saved.result?.ok===false) throw new Error("This test does not have a completed result yet.");
         memberLatestSavedResult=saved;
         renderMemberOverview(saved);
         return saved;
       } catch (error) {
-        if (error?.memberPrivacyStale) return null;
+        if (
+          error?.memberPrivacyStale ||
+          error?.memberSessionExpired ||
+          !memberPrivacyContextIsCurrent(privacyContext)
+        ) return null;
         if (blendStatus) blendStatus.textContent="The saved report is temporarily unavailable";
+        if (resultButton?.isConnected) {
+          resultButton.disabled=false;
+          resultButton.removeAttribute("aria-busy");
+          resultButton.textContent="Retry loading result";
+          resultButton.title=error.message || "This saved result could not be loaded.";
+        }
         return null;
       }
     }
@@ -11577,7 +11601,7 @@
           const button=document.createElement("button"); button.type="button"; button.className="secondary";
           button.textContent=memberTestIsComplete(test) ? "View result" : memberTestHasResumableRun(test) ? "Check analysis" : "Continue test";
           button.addEventListener("click",()=>memberTestIsComplete(test)
-            ? openSavedMemberTest(test)
+            ? openSavedMemberTest(test,button)
             : memberTestHasResumableRun(test)
               ? resumeMemberTestRun(test,button)
               : activateMemberTest(test));
@@ -11888,8 +11912,16 @@
       const comparison=data?.longitudinal_comparison || savedTest?.longitudinal_comparison || result?.longitudinal_comparison || null;
       return {test:savedTest,result,comparison};
     }
-    async function openSavedMemberTest(test) {
+    async function openSavedMemberTest(test,button=null) {
       const privacyContext=captureMemberPrivacyContext();
+      const defaultButtonText=button?.textContent || "View result";
+      let buttonFailed=false;
+      if (button) {
+        button.disabled=true;
+        button.textContent="Opening…";
+        button.setAttribute("aria-busy","true");
+        button.removeAttribute("title");
+      }
       setMemberDashboardStatus("Loading your saved result…");
       try {
         const saved=await fetchSavedMemberTest(test);
@@ -11901,9 +11933,21 @@
         renderResults(saved.result,{source:"history",test:saved.test,comparison:saved.comparison});
         writeMemberRoute("results",{historyMode:"push"});
       } catch (error) {
-        if (error?.memberPrivacyStale) return;
+        if (error?.memberPrivacyStale || !memberPrivacyContextIsCurrent(privacyContext)) return;
         if (!error?.memberSessionExpired) {
-          setMemberDashboardStatus(error.message || "This saved result could not be loaded.",{error:true});
+          const message=error.message || "This saved result could not be loaded.";
+          buttonFailed=true;
+          setMemberDashboardStatus(message,{error:true});
+          if (button?.isConnected) {
+            button.textContent="Couldn’t open · retry";
+            button.title=message;
+          }
+        }
+      } finally {
+        if (memberPrivacyContextIsCurrent(privacyContext) && button?.isConnected) {
+          button.disabled=false;
+          button.removeAttribute("aria-busy");
+          if (!buttonFailed) button.textContent=defaultButtonText;
         }
       }
     }
@@ -12030,9 +12074,14 @@
       document.getElementById("memberDashboardAccountButton")?.addEventListener("click",event=>openMemberAuthModal("",event.currentTarget));
       document.getElementById("memberDashboardAddLabsButton")?.addEventListener("click",()=>showMemberView("add-labs"));
       document.getElementById("memberResultsDashboardButton")?.addEventListener("click",()=>showMemberView("overview"));
-      document.getElementById("memberOpenLatestResultButton")?.addEventListener("click",()=>{
+      document.getElementById("memberOpenLatestResultButton")?.addEventListener("click",event=>{
         if (memberLatestSavedResult?.result) {
           showMemberView("results",{saved:memberLatestSavedResult});
+          return;
+        }
+        const latest=memberTests.find(memberTestIsComplete) || null;
+        if (latest) {
+          openSavedMemberTest(latest,event.currentTarget);
           return;
         }
         showMemberView("add-labs");
