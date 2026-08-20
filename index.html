@@ -9703,6 +9703,7 @@
         <div><div class="eyebrow">Personalized nutrition vector</div><h2>Your personalized nutrient blueprint.</h2></div>
         <div class="results-head-actions">
           <p class="section-copy" id="recommendationStatus"></p>
+          <button type="button" class="secondary" id="memberResultsDashboardButton" hidden>Back to dashboard</button>
           <button type="button" class="secondary" id="startNewAnalysisBtn">Start a new analysis</button>
         </div>
       </div>
@@ -10380,6 +10381,8 @@
     let memberLatestSavedResult=null;
     let memberAppWorkspaceActive=false;
     let currentAppViewName="upload";
+    const memberAnalysisOperations=new Set();
+    let memberRouteRestoreScheduled=false;
     let pendingMemberIntent="";
     let lastMemberAccessTrigger=null;
     let founderDemoAuthenticated = false;
@@ -10389,11 +10392,20 @@
     let memberPrivacyIdleTimer=null;
     let memberPrivacyGeneration=0;
     const memberPrivacyIdleMs=15*60*1000;
+    const memberJobStatusTimeoutMs=15*1000;
+    const memberRouteHashes=Object.freeze({
+      overview:"#member/overview",
+      blueprint:"#member/blueprint",
+      tests:"#member/tests",
+      "add-labs":"#member/add-labs",
+      results:"#member/results"
+    });
     function memberIdentityKey(session=memberSession) {
       return String(session?.member?.member_id || session?.member?.id || session?.email || session?.member?.email || "").trim();
     }
     function invalidateMemberPrivacyContext() {
       memberPrivacyGeneration=(memberPrivacyGeneration+1)%Number.MAX_SAFE_INTEGER;
+      clearMemberAnalysisOperations();
     }
     function captureMemberPrivacyContext() {
       if (!memberSession.authenticated) return null;
@@ -10449,6 +10461,7 @@
       const button=document.getElementById("resumeAnalysisBtn");
       if (!button) return;
       button.hidden=!storedPendingCustomBlendJobId();
+      button.disabled=memberAnalysisOperations.size>0;
     }
     let lastCustomBlendJobId = storedPendingCustomBlendJobId();
     let lastCustomBlendResult = null;
@@ -10469,6 +10482,48 @@
         memberSession.consents_complete
       );
     }
+    function memberRouteFromLocation() {
+      const hash=String(window.location.hash || "").toLowerCase();
+      return Object.entries(memberRouteHashes).find(([,value])=>value===hash)?.[0] || "";
+    }
+    function writeMemberRoute(route,{historyMode="push"}={}) {
+      const hash=memberRouteHashes[route];
+      if (!hash || !["push","replace"].includes(historyMode)) return;
+      if (String(window.location.hash || "").toLowerCase()===hash) return;
+      const url=new URL(window.location.href);
+      url.hash=hash;
+      const method=historyMode==="replace" ? "replaceState" : "pushState";
+      window.history[method]({fluids_member_route:route},"",`${url.pathname}${url.search}${url.hash}`);
+    }
+    function clearMemberRoute({historyMode="replace"}={}) {
+      if (!memberRouteFromLocation()) return;
+      const url=new URL(window.location.href);
+      url.hash="";
+      const method=historyMode==="push" ? "pushState" : "replaceState";
+      window.history[method](null,"",`${url.pathname}${url.search}`);
+    }
+    function beginMemberAnalysisOperation() {
+      const token=Symbol("member-analysis-operation");
+      memberAnalysisOperations.add(token);
+      if (analyzeBtn) analyzeBtn.disabled=true;
+      if (memberPrivacyIdleTimer!==null) window.clearTimeout(memberPrivacyIdleTimer);
+      memberPrivacyIdleTimer=null;
+      syncPendingAnalysisUi();
+      return token;
+    }
+    function endMemberAnalysisOperation(token) {
+      const removed=memberAnalysisOperations.delete(token);
+      syncPendingAnalysisUi();
+      if (!removed || memberAnalysisOperations.size>0) return false;
+      resetMemberPrivacyIdleLock();
+      return true;
+    }
+    function clearMemberAnalysisOperations() {
+      memberAnalysisOperations.clear();
+      if (memberPrivacyIdleTimer!==null) window.clearTimeout(memberPrivacyIdleTimer);
+      memberPrivacyIdleTimer=null;
+      syncPendingAnalysisUi();
+    }
     function emptyMemberSession(status="ready") {
       return {status,authenticated:false,verified:false,consents_complete:false,member:null,csrf_token:"",session_expires_at:"",idle_expires_at:"",consent_version:""};
     }
@@ -10479,11 +10534,15 @@
       memberPrivacyIdleTimer=null;
     }
     function expireMemberSession(message="Your secure member session expired. Sign in again to view health information.") {
+      const recoveryRoute=memberRouteFromLocation() || (storedPendingCustomBlendJobId() ? "add-labs" : "overview");
       clearMemberSessionExpiryTimer();
       memberSession=emptyMemberSession();
-      clearMemberPrivateState({navigate:true});
+      clearMemberPrivateState({navigate:false,preservePendingJob:true,preserveMemberRoute:true});
       syncMemberSessionUi();
       setMemberAuthStatus(message,true);
+      pendingMemberIntent=recoveryRoute==="add-labs" ? "upload" : "dashboard";
+      writeMemberRoute(recoveryRoute,{historyMode:"replace"});
+      openMemberAuthModal(pendingMemberIntent);
     }
     function scheduleMemberSessionExpiry() {
       clearMemberSessionExpiryTimer();
@@ -10504,7 +10563,7 @@
     function resetMemberPrivacyIdleLock() {
       if (memberPrivacyIdleTimer!==null) window.clearTimeout(memberPrivacyIdleTimer);
       memberPrivacyIdleTimer=null;
-      if (!memberSession.authenticated) return;
+      if (!memberSession.authenticated || memberAnalysisOperations.size>0) return;
       memberPrivacyIdleTimer=window.setTimeout(()=>{
         if (memberSession.authenticated) {
           expireMemberSession("Your member view was locked after 15 minutes of inactivity. Sign in again to view health information.");
@@ -10718,12 +10777,14 @@
       if (!memberIsReady()) return;
       const intent=pendingMemberIntent || "";
       pendingMemberIntent="";
-      if (!intent) return;
+      const explicitRoute=memberRouteFromLocation();
+      if (!intent && !explicitRoute) return;
       closeMemberAuthModal({restoreFocus:false});
-      await loadMemberDashboard({show:true});
-      if (intent==="upload") {
-        window.setTimeout(()=>scrollToTarget("memberNextTestCard"),140);
+      if (explicitRoute) {
+        await showMemberView(explicitRoute,{historyMode:"replace"});
+        return;
       }
+      await showMemberView(intent==="upload" ? "add-labs" : "overview",{historyMode:"replace"});
     }
     async function checkMemberSession({routeIntent=true}={}) {
       if (!memberPortalEnabled) return memberSession;
@@ -10751,15 +10812,30 @@
         const pendingBelongsElsewhere=Boolean(
           nextSession.authenticated && storedPendingCustomBlendJobId() && pendingOwner!==nextIdentity
         );
-        if (identityChanged || pendingBelongsElsewhere || (!nextSession.authenticated && hadMemberState)) {
+        if (identityChanged || pendingBelongsElsewhere) {
           clearMemberPrivateState({navigate:true});
+        }
+        else if (!nextSession.authenticated && hadMemberState) {
+          const preservePendingJob=Boolean(existingPendingOwner && storedPendingCustomBlendJobId());
+          clearMemberPrivateState({
+            navigate:!preservePendingJob && !memberRouteFromLocation(),
+            preservePendingJob,
+            preserveMemberRoute:Boolean(memberRouteFromLocation())
+          });
         }
         memberSession=nextSession;
         setMemberAuthStatus("");
       } catch (error) {
         if (privacyGenerationAtStart!==memberPrivacyGeneration) return memberSession;
         memberSession=emptyMemberSession();
-        if (hadMemberState) clearMemberPrivateState({navigate:true});
+        if (hadMemberState) {
+          const preservePendingJob=Boolean(existingPendingOwner && storedPendingCustomBlendJobId());
+          clearMemberPrivateState({
+            navigate:!preservePendingJob && !memberRouteFromLocation(),
+            preservePendingJob,
+            preserveMemberRoute:Boolean(memberRouteFromLocation())
+          });
+        }
         setMemberAuthStatus("Member sign-in is temporarily unavailable. The public Fluids experience is still available.",true);
       }
       syncMemberSessionUi();
@@ -10868,8 +10944,54 @@
       showError("");
       updateCalculatedBmiReadout();
     }
-    function clearMemberPrivateState({navigate=true}={}) {
+    function clearMemberDashboardPrivateUi() {
+      const textValues={
+        memberDashboardEmail:"Sign in to securely load your saved tests.",
+        memberDashboardStatus:"",
+        memberCurrentBlendName:"",
+        memberCurrentBlendSummary:"",
+        memberCurrentBlendStatus:"",
+        memberBlueprintSummary:"",
+        memberBlueprintHighlights:"",
+        memberProgressMetricType:"",
+        memberProgressMetricTitle:"",
+        memberProgressMetricSubtitle:"",
+        memberProgressCurrentValue:"",
+        memberProgressCurrentMovement:"",
+        memberProgressChartEmpty:"",
+        memberProgressBoundary:"",
+        memberHistoryCount:"",
+        memberTestContextType:"",
+        memberTestContextId:"",
+        memberCollectionDateHint:""
+      };
+      Object.entries(textValues).forEach(([id,value])=>{
+        const element=document.getElementById(id);
+        if (element) element.textContent=value;
+      });
+      const latestResultButton=document.getElementById("memberOpenLatestResultButton");
+      const sessionEmail=document.getElementById("memberSessionEmail");
+      if (latestResultButton) latestResultButton.textContent="Start baseline";
+      if (sessionEmail) sessionEmail.textContent="Member account";
+      [
+        "memberServiceProcessingConsent",
+        "memberLongitudinalStorageConsent",
+        "memberModelImprovementConsent"
+      ].forEach(id=>{
+        const field=document.getElementById(id);
+        if (field) field.checked=false;
+      });
+      const context=document.getElementById("memberTestContext");
+      const chart=document.getElementById("memberProgressChart");
+      const chartEmpty=document.getElementById("memberProgressChartEmpty");
+      if (context) context.hidden=true;
+      if (chart) { chart.textContent=""; chart.hidden=false; }
+      if (chartEmpty) chartEmpty.hidden=true;
+    }
+    function clearMemberPrivateState({navigate=true,preservePendingJob=false,preserveMemberRoute=false}={}) {
       invalidateMemberPrivacyContext();
+      setLoading("analysisLoader",false);
+      stopScienceRunner();
       memberTests=[];
       memberTimeline=null;
       memberTimelineMetricKey="phenoage";
@@ -10879,8 +11001,11 @@
       memberAppWorkspaceActive=false;
       selectedFiles=[];
       lastCustomBlendResult=null;
-      lastCustomBlendJobId="";
-      clearPendingCustomBlendJob();
+      if (preservePendingJob) lastCustomBlendJobId=storedPendingCustomBlendJobId();
+      else {
+        lastCustomBlendJobId="";
+        clearPendingCustomBlendJob();
+      }
       personalizedView="upload";
       if (pdfInput) pdfInput.value="";
       const history=document.getElementById("memberTestHistory");
@@ -10898,9 +11023,11 @@
         if (element) element.textContent="";
       });
       document.getElementById("memberHistorySection")?.setAttribute("hidden","");
+      clearMemberDashboardPrivateUi();
       clearMemberHealthUi();
       renderMemberTestContext();
       renderLongitudinalComparison(null);
+      if (!preserveMemberRoute) clearMemberRoute({historyMode:"replace"});
       if (navigate) showView("upload");
     }
     async function logoutMember({allDevices=false}={}) {
@@ -11501,6 +11628,83 @@
         return [];
       }
     }
+    async function showMemberView(route,{historyMode="push",saved=null}={}) {
+      const requested=Object.prototype.hasOwnProperty.call(memberRouteHashes,route) ? route : "overview";
+      if (!memberIsReady()) {
+        pendingMemberIntent=requested==="add-labs" ? "upload" : "dashboard";
+        writeMemberRoute(requested,{historyMode});
+        openMemberAuthModal(pendingMemberIntent);
+        return false;
+      }
+      if (requested==="add-labs") {
+        await loadMemberDashboard({show:false});
+        const pendingJobId=storedPendingCustomBlendJobId();
+        const linkedPendingTest=pendingJobId
+          ? memberTests.find(test=>String(test?.run_id || "")===pendingJobId)
+          : null;
+        let test=linkedPendingTest || null;
+        if (linkedPendingTest) {
+          activateMemberTest(linkedPendingTest,{navigate:false,preservePendingJob:true});
+          personalizedView="questionnaire";
+          showView("questionnaire");
+          showQuestion(4);
+          showError("Your custom blend is still processing. Tap ‘Check queued result’ to continue watching it without uploading again.");
+        }
+        else test=await startRecommendedMemberTest();
+        if (!test) {
+          await loadMemberDashboard({show:true});
+          writeMemberRoute("overview",{historyMode:"replace"});
+          return false;
+        }
+        writeMemberRoute("add-labs",{historyMode});
+        return true;
+      }
+      if (requested==="results") {
+        if (!saved?.result) {
+          await loadMemberDashboard({show:false});
+          saved=memberLatestSavedResult;
+        }
+        if (saved?.result && saved.result?.ok!==false) {
+          activeMemberTest=saved.test || activeMemberTest;
+          memberLatestSavedResult=saved;
+          memberAppWorkspaceActive=true;
+          renderResults(saved.result,{
+            source:"member_route",
+            test:saved.test,
+            comparison:saved.comparison
+          });
+          writeMemberRoute("results",{historyMode});
+          return true;
+        }
+        await loadMemberDashboard({show:true});
+        writeMemberRoute("overview",{historyMode:"replace"});
+        return false;
+      }
+      await loadMemberDashboard({show:true});
+      writeMemberRoute(requested,{historyMode});
+      const target={blueprint:"memberBlueprintCard",tests:"memberHistorySection"}[requested];
+      if (target) window.setTimeout(()=>scrollToTarget(target),120);
+      return true;
+    }
+    async function restoreMemberRouteFromLocation({allowPublicFallback=false}={}) {
+      const route=memberRouteFromLocation();
+      if (route) return showMemberView(route,{historyMode:null});
+      if (allowPublicFallback && memberAppWorkspaceActive) {
+        memberAppWorkspaceActive=false;
+        showView("upload");
+      }
+      return false;
+    }
+    function scheduleMemberRouteRestore() {
+      if (memberRouteRestoreScheduled) return;
+      memberRouteRestoreScheduled=true;
+      window.setTimeout(()=>{
+        memberRouteRestoreScheduled=false;
+        restoreMemberRouteFromLocation({allowPublicFallback:true}).catch(error=>{
+          if (!error?.memberPrivacyStale) setMemberAuthStatus(error?.message || "Your member destination could not be opened.",true);
+        });
+      },0);
+    }
     function localIsoDate() {
       const now=new Date();
       return new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);
@@ -11582,11 +11786,15 @@
         }
       }
     }
-    function activateMemberTest(test,{navigate=true}={}) {
+    function activateMemberTest(test,{navigate=true,preservePendingJob=false}={}) {
       if (!test || !memberTestId(test)) return;
       const changingTest=memberTestId(activeMemberTest)!==memberTestId(test);
       if (changingTest) {
-        clearPendingCustomBlendJob();
+        const storedJobId=storedPendingCustomBlendJobId();
+        const activatingStoredJob=Boolean(
+          preservePendingJob && storedJobId && String(test?.run_id || "")===storedJobId
+        );
+        if (!activatingStoredJob) clearPendingCustomBlendJob();
         lastCustomBlendResult=null;
         currentQuestion=0;
         clearMemberHealthUi();
@@ -11603,6 +11811,7 @@
       renderMemberTestContext();
       if (navigate) {
         showView("upload");
+        writeMemberRoute("add-labs",{historyMode:"push"});
         window.setTimeout(()=>window.scrollTo({top:0,behavior:"smooth"}),140);
       }
     }
@@ -11688,7 +11897,9 @@
         if (!saved.result || saved.result?.ok===false) throw new Error("This test does not have a completed result yet.");
         activeMemberTest=saved.test || test;
         memberAppWorkspaceActive=true;
+        memberLatestSavedResult=saved;
         renderResults(saved.result,{source:"history",test:saved.test,comparison:saved.comparison});
+        writeMemberRoute("results",{historyMode:"push"});
       } catch (error) {
         if (error?.memberPrivacyStale) return;
         if (!error?.memberSessionExpired) {
@@ -11705,10 +11916,43 @@
         activeMemberTest=saved.test;
         return saved;
       } catch (error) {
-        if (error?.memberSessionExpired) throw error;
+        if (error?.memberSessionExpired || error?.memberPrivacyStale) throw error;
         console.warn("The completed member result was available, but its saved comparison could not be loaded yet.",error);
         return fallback;
       }
+    }
+    function markMemberTestCompleted(test) {
+      if (!test || !memberTestId(test)) return test;
+      const completed={
+        ...test,
+        status:"complete",
+        result_available:true,
+        run_status:"completed"
+      };
+      const index=memberTests.findIndex(item=>memberTestId(item)===memberTestId(completed));
+      if (index>=0) memberTests.splice(index,1,completed); else memberTests.unshift(completed);
+      activeMemberTest=completed;
+      return completed;
+    }
+    async function presentCompletedMemberAnalysis(data,source,privacyContext) {
+      const completedContext=await completedMemberResultContext(data,activeMemberTest);
+      if (privacyContext) assertMemberPrivacyContext(privacyContext);
+      const completedTest=markMemberTestCompleted(completedContext.test || data?.member_test || activeMemberTest);
+      const saved={
+        result:completedContext.result,
+        test:completedTest,
+        comparison:completedContext.comparison
+      };
+      memberLatestSavedResult=saved;
+      lastCustomBlendResult=saved.result;
+      renderResults(saved.result,{source,test:saved.test,comparison:saved.comparison});
+      if (memberIsReady() && completedTest) {
+        writeMemberRoute("results",{historyMode:"replace"});
+        await loadMemberDashboard({show:false});
+        if (privacyContext) assertMemberPrivacyContext(privacyContext);
+        if (!memberLatestSavedResult?.result) memberLatestSavedResult=saved;
+      }
+      return saved;
     }
     async function resumeMemberTestRun(test,button=null) {
       if (!memberIsReady() || !memberTestHasResumableRun(test)) {
@@ -11717,6 +11961,10 @@
       }
       activateMemberTest(test,{navigate:false});
       rememberPendingCustomBlendJob(test.run_id);
+      personalizedView="questionnaire";
+      showView("questionnaire");
+      showQuestion(4);
+      writeMemberRoute("add-labs",{historyMode:"push"});
       setMemberDashboardStatus("Checking your saved analysis…");
       await resumePendingCustomBlendAnalysis(
         button || document.getElementById("resumeAnalysisBtn"),
@@ -11759,7 +12007,7 @@
       accessButton?.addEventListener("click",event=>openMemberAuthModal("dashboard",event.currentTarget));
       heroAccessButton?.addEventListener("click",event=>{
         if (memberIsReady()) {
-          loadMemberDashboard({show:true});
+          showMemberView("overview");
           return;
         }
         openMemberAuthModal("dashboard",event.currentTarget);
@@ -11773,36 +12021,25 @@
       document.getElementById("memberOpenDashboardButton")?.addEventListener("click",()=>{
         pendingMemberIntent="";
         closeMemberAuthModal({restoreFocus:false});
-        loadMemberDashboard({show:true});
+        showMemberView("overview");
       });
       document.getElementById("memberLogoutButton")?.addEventListener("click",()=>logoutMember());
       document.getElementById("memberLogoutAllButton")?.addEventListener("click",()=>logoutMember({allDevices:true}));
       document.getElementById("memberDashboardLogoutButton")?.addEventListener("click",()=>logoutMember());
       document.getElementById("memberDashboardRefreshButton")?.addEventListener("click",()=>loadMemberDashboard({show:false}));
       document.getElementById("memberDashboardAccountButton")?.addEventListener("click",event=>openMemberAuthModal("",event.currentTarget));
-      document.getElementById("memberDashboardAddLabsButton")?.addEventListener("click",()=>startRecommendedMemberTest());
+      document.getElementById("memberDashboardAddLabsButton")?.addEventListener("click",()=>showMemberView("add-labs"));
+      document.getElementById("memberResultsDashboardButton")?.addEventListener("click",()=>showMemberView("overview"));
       document.getElementById("memberOpenLatestResultButton")?.addEventListener("click",()=>{
         if (memberLatestSavedResult?.result) {
-          activeMemberTest=memberLatestSavedResult.test || activeMemberTest;
-          memberAppWorkspaceActive=true;
-          renderResults(memberLatestSavedResult.result,{
-            source:"member_dashboard",
-            test:memberLatestSavedResult.test,
-            comparison:memberLatestSavedResult.comparison
-          });
+          showMemberView("results",{saved:memberLatestSavedResult});
           return;
         }
-        startRecommendedMemberTest();
+        showMemberView("add-labs");
       });
       document.querySelectorAll("[data-member-destination]").forEach(item=>item.addEventListener("click",async ()=>{
         const destination=String(item.dataset.memberDestination || "overview");
-        if (destination==="add-labs") {
-          await startRecommendedMemberTest();
-          return;
-        }
-        await loadMemberDashboard({show:true});
-        const target={overview:"memberDashboard",blueprint:"memberBlueprintCard",tests:"memberHistorySection"}[destination] || "memberDashboard";
-        window.setTimeout(()=>scrollToTarget(target),120);
+        await showMemberView(destination);
       }));
       document.getElementById("memberCollectionDate")?.addEventListener("change",event=>{
         if (!activeMemberTest) return;
@@ -11823,7 +12060,7 @@
         extractBtn.disabled=true;
         document.getElementById("fileLabel").textContent="Drop your blood-test PDF or photos here";
         renderMemberTestContext();
-        loadMemberDashboard({show:true});
+        showMemberView("overview");
       });
       document.addEventListener("keydown",event=>{
         if (event.key==="Escape") closeMemberAuthModal();
@@ -11831,8 +12068,11 @@
       ["pointerdown","keydown","touchstart"].forEach(eventName=>{
         document.addEventListener(eventName,resetMemberPrivacyIdleLock,{passive:true});
       });
+      window.addEventListener("popstate",scheduleMemberRouteRestore);
+      window.addEventListener("hashchange",scheduleMemberRouteRestore);
       const memberAuthNotice=consumeMemberAuthNotice();
       pendingMemberIntent=consumeMemberReturnIntent();
+      if (memberRouteFromLocation() && !pendingMemberIntent) pendingMemberIntent="dashboard";
       if (memberAuthNotice && !pendingMemberIntent) pendingMemberIntent="dashboard";
       syncMemberSessionUi();
       return checkMemberSession({routeIntent:true}).then(session=>{
@@ -12640,6 +12880,8 @@
     function syncMemberAppNavigation(name,privateMemberView) {
       const navigation=document.getElementById("memberAppNavigation");
       if (navigation) navigation.hidden=!privateMemberView;
+      const dashboardButton=document.getElementById("memberResultsDashboardButton");
+      if (dashboardButton) dashboardButton.hidden=!(privateMemberView && name==="results");
       document.body.classList.toggle("member-app-mode",Boolean(privateMemberView));
       if (name==="member") renderMemberTestContext();
     }
@@ -12710,6 +12952,7 @@
     }
     function showHomepageThenScroll(targetId,mode,control) {
       memberAppWorkspaceActive=false;
+      clearMemberRoute({historyMode:"push"});
       showView("upload",{rememberPersonalized:mode === "personalized"});
       setHeaderMode(mode);
       window.setTimeout(()=>{
@@ -12745,7 +12988,7 @@
         activeMemberTest=null;
         renderMemberTestContext();
         trackEvent("new_analysis_started",{source:"member_results",member_flow:true});
-        loadMemberDashboard({show:true});
+        showMemberView("overview");
         return;
       }
       clearPendingCustomBlendJob();
@@ -13413,6 +13656,7 @@
         return;
       }
       showError(""); analyzeBtn.disabled = true; setLoading("analysisLoader", true);
+      const analysisOperation=beginMemberAnalysisOperation();
       const labs = {}; fieldOrder.forEach(key => { const input = document.getElementById(`lab-${key}`); if (input && input.value !== "") labs[key] = Number(input.value); });
       const analysisStartedAt = performance.now();
       const payload = {
@@ -13491,15 +13735,8 @@
         if (data.app_revision && !String(data.app_revision).includes("product-layer")) {
           console.warn("App revision changed while this page was open.", data.app_revision);
         }
-        const completedContext=await completedMemberResultContext(data,activeMemberTest);
+        const completedContext=await presentCompletedMemberAnalysis(data,"analysis",privacyContext);
         assertMemberPrivacyContext(privacyContext);
-        renderResults(completedContext.result,{
-          source:"analysis",
-          test:completedContext.test || data?.member_test || activeMemberTest,
-          comparison:completedContext.comparison
-        });
-        lastCustomBlendResult=completedContext.result;
-        if (memberIsReady() && activeMemberTest) loadMemberDashboard({show:false});
         const firstBlend=(completedContext.result.blend_options || [])[0] || {};
         trackEvent("custom_blend_completed",customBlendAnalyticsMetadata(completedContext.result,firstBlend,{
           analysis_seconds:Number(completedContext.result.analysis_seconds) || Number(((performance.now()-analysisStartedAt)/1000).toFixed(1)),
@@ -13524,7 +13761,13 @@
         });
         showError(error.message); window.scrollTo({top:0,behavior:"smooth"});
       }
-      finally { syncAnalysisConsent(); setLoading("analysisLoader", false); stopScienceRunner(); }
+      finally {
+        if (endMemberAnalysisOperation(analysisOperation)) {
+          syncAnalysisConsent();
+          setLoading("analysisLoader", false);
+          stopScienceRunner();
+        }
+      }
     });
     async function resumePendingCustomBlendAnalysis(button,source="resume_button") {
       if (!(await prepareMemberLabUpload())) return;
@@ -13532,19 +13775,13 @@
       showError("");
       if (button) button.disabled=true;
       setLoading("analysisLoader",true);
+      const analysisOperation=beginMemberAnalysisOperation();
       startScienceRunner();
       try {
         const data=await runCustomBlendAnalysisJob(null);
         assertMemberPrivacyContext(privacyContext);
-        const completedContext=await completedMemberResultContext(data,activeMemberTest);
+        const completedContext=await presentCompletedMemberAnalysis(data,source,privacyContext);
         assertMemberPrivacyContext(privacyContext);
-        renderResults(completedContext.result,{
-          source,
-          test:completedContext.test || data?.member_test || activeMemberTest,
-          comparison:completedContext.comparison
-        });
-        lastCustomBlendResult=completedContext.result;
-        if (memberIsReady() && activeMemberTest) loadMemberDashboard({show:false});
         const firstBlend=(completedContext.result.blend_options || [])[0] || {};
         trackEvent("custom_blend_completed",customBlendAnalyticsMetadata(completedContext.result,firstBlend,{
           runtime_source:source
@@ -13558,10 +13795,13 @@
         }
         showError(error.message);
       } finally {
-        if (button) button.disabled=false;
-        syncPendingAnalysisUi();
-        setLoading("analysisLoader",false);
-        stopScienceRunner();
+        if (endMemberAnalysisOperation(analysisOperation)) {
+          if (button) button.disabled=false;
+          syncAnalysisConsent();
+          syncPendingAnalysisUi();
+          setLoading("analysisLoader",false);
+          stopScienceRunner();
+        }
       }
     }
     document.getElementById("resumeAnalysisBtn")?.addEventListener("click",async event=>{
@@ -13597,10 +13837,18 @@
       return ["completed","failed","cancelled","timed_out"].includes(String(job?.status || "").toLowerCase());
     }
     async function fetchAnalysisJob(jobId) {
-      const response=await fetch(apiUrl(`/api/jobs/${encodeURIComponent(jobId)}`),{
-        headers:{"Accept":"application/json"},
-        credentials:"include"
-      });
+      const controller=new AbortController();
+      const timeout=window.setTimeout(()=>controller.abort(),memberJobStatusTimeoutMs);
+      let response;
+      try {
+        response=await fetch(apiUrl(`/api/jobs/${encodeURIComponent(jobId)}`),{
+          headers:{"Accept":"application/json"},
+          credentials:"include",
+          signal:controller.signal
+        });
+      } finally {
+        window.clearTimeout(timeout);
+      }
       let job={};
       try { job=await response.json(); } catch (_) {}
       if (memberResponseExpired(response,job)) {
@@ -17901,7 +18149,7 @@
         pendingMemberIntent="full_loop";
         if (memberIsReady()) {
           pendingMemberIntent="";
-          loadMemberDashboard({show:true});
+          showMemberView("overview");
         } else {
           openMemberAuthModal("full_loop",trigger);
         }
@@ -18897,22 +19145,41 @@
     initHomeVectorMatrix();
     loadHomeFunctionMenu().catch(() => {});
     initFounderAccess();
-    const restorePendingAnalysisUi=()=>{
+    const restorePendingAnalysisUi=async ()=>{
       syncPendingAnalysisUi();
-      if (!storedPendingCustomBlendJobId()) return;
-      if (requireMemberAuthForLabs && !memberIsReady()) {
+      if (memberRouteFromLocation()) return;
+      const pendingJobId=storedPendingCustomBlendJobId();
+      if (!pendingJobId) return;
+      const pendingOwner=storedPendingCustomBlendJobOwner();
+      if ((pendingOwner || requireMemberAuthForLabs) && !memberIsReady()) {
         pendingMemberIntent="upload";
+        writeMemberRoute("add-labs",{historyMode:"replace"});
         openMemberAuthModal("upload");
         return;
+      }
+      if (memberIsReady()) {
+        if (pendingOwner && pendingOwner!==memberIdentityKey()) {
+          clearPendingCustomBlendJob();
+          return;
+        }
+        await loadMemberDashboard({show:false});
+        const linkedTest=memberTests.find(test=>String(test?.run_id || "")===pendingJobId);
+        if (!linkedTest) {
+          await showMemberView("overview",{historyMode:"replace"});
+          setMemberDashboardStatus("Your queued analysis is still saved, but its test link is not available yet. Refresh in a moment.",{error:true});
+          return;
+        }
+        activateMemberTest(linkedTest,{navigate:false,preservePendingJob:true});
       }
       personalizedView="questionnaire";
       showView("questionnaire");
       showQuestion(4);
+      if (memberIsReady()) writeMemberRoute("add-labs",{historyMode:"replace"});
       showError("Your custom blend is still processing. Tap ‘Check queued result’ to continue watching it without uploading again.");
     };
     const memberPortalInitialization=initMemberPortal();
-    if (memberPortalEnabled) memberPortalInitialization.finally(restorePendingAnalysisUi);
-    else restorePendingAnalysisUi();
+    if (memberPortalEnabled) memberPortalInitialization.finally(()=>restorePendingAnalysisUi().catch(error=>console.warn("Queued analysis recovery is temporarily unavailable.",error)));
+    else restorePendingAnalysisUi().catch(error=>console.warn("Queued analysis recovery is temporarily unavailable.",error));
     loadSpecs().catch(error => console.warn("Lab schema unavailable until the custom blend API is reachable.",error));
   </script>
 </body>
