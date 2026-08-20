@@ -8822,9 +8822,22 @@
       border-radius:30px;
       color:#fff9f2;
       background:
-        radial-gradient(circle at 82% 8%,rgba(127,209,211,.16),transparent 34%),
-        linear-gradient(145deg,#132a35,#173743 58%,#3b2430);
+        radial-gradient(circle at 82% 8%,rgba(127,209,211,.19),transparent 34%),
+        linear-gradient(145deg,#102b36,#153b47 60%,#302431);
       box-shadow:0 24px 70px rgba(27,35,40,.16);
+    }
+    .member-progress-head,
+    .member-progress-chart-head {
+      position:static;
+      z-index:auto;
+      margin:0;
+      padding:0;
+      border:0;
+      border-radius:0;
+      color:inherit;
+      background:transparent;
+      box-shadow:none;
+      backdrop-filter:none;
     }
     .member-progress-head {
       display:grid;
@@ -8839,42 +8852,42 @@
       font-weight:500;
       letter-spacing:-.035em;
     }
-    .member-progress-head p { margin:0; color:rgba(255,249,242,.7); line-height:1.55; }
+    .member-progress-head p { max-width:880px; margin:0; color:rgba(255,249,242,.88); line-height:1.6; }
     .member-progress-definition {
       padding:14px 16px;
-      border:1px solid rgba(255,255,255,.13);
+      border:1px solid rgba(255,255,255,.2);
       border-radius:18px;
-      color:rgba(255,249,242,.72);
-      background:rgba(255,255,255,.07);
-      font-size:.68rem;
-      line-height:1.5;
+      color:rgba(255,249,242,.88);
+      background:rgba(255,255,255,.1);
+      font-size:.71rem;
+      line-height:1.55;
     }
     .member-progress-overview {
       display:grid;
-      grid-template-columns:repeat(4,minmax(0,1fr));
+      grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
       gap:10px;
       margin-top:22px;
     }
     .member-progress-stat {
       min-width:0;
       padding:14px;
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.17);
       border-radius:17px;
-      background:rgba(255,255,255,.07);
+      background:rgba(255,255,255,.09);
     }
     .member-progress-stat small,
     .member-progress-stat strong,
     .member-progress-stat span { display:block; }
-    .member-progress-stat small { color:rgba(255,249,242,.58); font-size:.58rem; font-weight:900; letter-spacing:.09em; text-transform:uppercase; }
+    .member-progress-stat small { color:#a9e2df; font-size:.58rem; font-weight:900; letter-spacing:.09em; text-transform:uppercase; }
     .member-progress-stat strong { margin-top:7px; font-family:var(--display-font); font-size:1.55rem; font-weight:500; }
-    .member-progress-stat span { margin-top:4px; color:rgba(255,249,242,.64); font-size:.62rem; line-height:1.4; }
+    .member-progress-stat span { margin-top:4px; color:rgba(255,249,242,.82); font-size:.64rem; line-height:1.45; }
     .member-progress-metrics {
       display:flex;
+      flex-wrap:wrap;
       gap:8px;
       margin-top:22px;
       padding-bottom:4px;
-      overflow-x:auto;
-      scrollbar-width:thin;
+      overflow:visible;
     }
     .member-progress-metric {
       flex:0 0 auto;
@@ -8882,23 +8895,37 @@
       padding:8px 12px;
       border:1px solid rgba(255,255,255,.14);
       border-radius:999px;
-      color:rgba(255,249,242,.74);
-      background:rgba(255,255,255,.06);
+      color:rgba(255,249,242,.86);
+      background:rgba(255,255,255,.08);
       box-shadow:none;
       font-size:.63rem;
       font-weight:850;
+    }
+    .member-progress-metric[data-series-type="age_score"] {
+      border-color:rgba(241,203,132,.42);
+      background:rgba(211,173,97,.12);
     }
     .member-progress-metric[aria-pressed="true"] {
       color:#18333e;
       border-color:#a8e7e4;
       background:#b8ece8;
     }
+    .member-progress-metric[data-score-key="phenoage"][aria-pressed="true"] {
+      color:#57172d;
+      border-color:#efbed0;
+      background:#f4d9e2;
+    }
+    .member-progress-metric[data-score-key="kdm_bioage"][aria-pressed="true"] {
+      color:#4f3212;
+      border-color:#f1d395;
+      background:#f5dfa9;
+    }
     .member-progress-chart-card {
       margin-top:12px;
       padding:18px;
-      border:1px solid rgba(255,255,255,.13);
+      border:1px solid rgba(255,255,255,.18);
       border-radius:24px;
-      background:rgba(6,26,36,.34);
+      background:rgba(4,24,33,.48);
     }
     .member-progress-chart-head {
       display:flex;
@@ -8909,31 +8936,59 @@
     .member-progress-chart-head small,
     .member-progress-chart-head strong,
     .member-progress-chart-head span { display:block; }
-    .member-progress-chart-head small { color:#9edfdc; font-size:.58rem; font-weight:900; letter-spacing:.09em; text-transform:uppercase; }
+    .member-progress-chart-head small { color:#a9e2df; font-size:.58rem; font-weight:900; letter-spacing:.09em; text-transform:uppercase; }
     .member-progress-chart-head strong { margin-top:5px; font-family:var(--display-font); font-size:1.7rem; font-weight:500; }
-    .member-progress-chart-head span { color:rgba(255,249,242,.65); font-size:.64rem; }
-    .member-progress-current { text-align:right; }
+    .member-progress-chart-head span { max-width:740px; margin-top:4px; color:rgba(255,249,242,.82); font-size:.65rem; line-height:1.45; }
+    .member-progress-current {
+      min-width:185px;
+      padding:11px 13px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:15px;
+      text-align:right;
+      background:rgba(255,255,255,.07);
+    }
     .member-progress-current strong { font-size:1.5rem; }
-    .member-progress-chart-scroll { margin-top:12px; overflow-x:auto; }
+    .member-progress-chart-scroll {
+      margin-top:14px;
+      overflow-x:auto;
+      border:1px solid rgba(255,255,255,.09);
+      border-radius:18px;
+      background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+    }
     .member-progress-chart {
       display:block;
       width:100%;
       min-width:620px;
       height:auto;
     }
-    .member-progress-chart .grid-line { stroke:rgba(255,255,255,.11); stroke-width:1; }
-    .member-progress-chart .target-band { fill:rgba(126,218,211,.12); }
+    .member-progress-chart .grid-line { stroke:rgba(255,255,255,.18); stroke-width:1; }
+    .member-progress-chart .target-band { fill:rgba(126,218,211,.15); }
     .member-progress-chart .trend-line { fill:none; stroke:#b3ebe7; stroke-width:4; stroke-linecap:round; stroke-linejoin:round; }
+    .member-progress-chart .trend-line.not-comparable { stroke:rgba(255,249,242,.42); stroke-width:2; stroke-dasharray:7 7; }
+    .member-progress-chart[data-series-key="phenoage"] .trend-line:not(.not-comparable) { stroke:#ef9fba; }
+    .member-progress-chart[data-series-key="kdm_bioage"] .trend-line:not(.not-comparable) { stroke:#eac77e; }
     .member-progress-chart .trend-point { fill:#fff9f2; stroke:#71d1d0; stroke-width:4; }
+    .member-progress-chart[data-series-key="phenoage"] .trend-point { stroke:#ef9fba; }
+    .member-progress-chart[data-series-key="kdm_bioage"] .trend-point { stroke:#eac77e; }
+    .member-progress-chart .reference-line { fill:none; stroke:rgba(255,249,242,.52); stroke-width:2; stroke-dasharray:8 7; }
+    .member-progress-chart .reference-label { fill:rgba(255,249,242,.76); font-size:11px; font-weight:750; text-anchor:end; }
     .member-progress-chart .point-label { fill:rgba(255,249,242,.86); font-size:14px; font-weight:800; text-anchor:middle; }
-    .member-progress-chart .date-label { fill:rgba(255,249,242,.56); font-size:11px; text-anchor:middle; }
-    .member-progress-chart .axis-label { fill:rgba(255,249,242,.52); font-size:11px; }
+    .member-progress-chart .date-label { fill:rgba(255,249,242,.78); font-size:11px; text-anchor:middle; }
+    .member-progress-chart .axis-label { fill:rgba(255,249,242,.72); font-size:11px; }
+    .member-progress-legend { display:flex; flex-wrap:wrap; gap:10px 16px; margin-top:11px; color:rgba(255,249,242,.8); font-size:.61rem; }
+    .member-progress-legend[hidden] { display:none; }
+    .member-progress-legend span { display:inline-flex; align-items:center; gap:7px; }
+    .member-progress-legend i { display:inline-block; width:20px; height:3px; border-radius:999px; background:#b3ebe7; }
+    .member-progress-legend .phenoage i { background:#ef9fba; }
+    .member-progress-legend .kdm i { background:#eac77e; }
+    .member-progress-legend .chronological i { height:0; border-top:2px dashed rgba(255,249,242,.7); background:transparent; }
+    .member-progress-legend .target i { height:9px; background:rgba(126,218,211,.28); }
     .member-progress-chart-empty {
       margin-top:14px;
       padding:18px;
       border:1px dashed rgba(255,255,255,.17);
       border-radius:17px;
-      color:rgba(255,249,242,.68);
+      color:rgba(255,249,242,.84);
       font-size:.7rem;
     }
     .member-progress-callouts {
@@ -8998,11 +9053,15 @@
     .member-progress-test-node span { display:block; }
     .member-progress-test-node strong { color:#fff9f2; font-size:.72rem; }
     .member-progress-test-node span { margin-top:3px; }
+    .member-progress-test-node .member-progress-test-score { color:rgba(255,249,242,.9); }
+    .member-progress-test-node .member-progress-test-score.kdm { color:#f0d69b; }
     .member-progress-boundary {
       margin:18px 0 0;
-      color:rgba(255,249,242,.54);
-      font-size:.59rem;
-      line-height:1.45;
+      padding-top:14px;
+      border-top:1px solid rgba(255,255,255,.12);
+      color:rgba(255,249,242,.75);
+      font-size:.61rem;
+      line-height:1.5;
     }
     .member-history-head { display:flex; justify-content:space-between; gap:16px; align-items:end; margin:28px 0 12px; }
     .member-history-head h2 { margin:4px 0 0; font-family:var(--display-font); font-size:2rem; font-weight:500; }
@@ -9098,9 +9157,10 @@
       .longitudinal-marker-row { grid-template-columns:1fr 1fr; }
       .longitudinal-marker-row strong { grid-column:1 / -1; }
       .member-progress-overview { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .member-progress-metrics { flex-wrap:nowrap; overflow-x:auto; scrollbar-width:thin; }
       .member-progress-callouts { grid-template-columns:1fr; }
       .member-progress-chart-head { display:grid; }
-      .member-progress-current { text-align:left; }
+      .member-progress-current { min-width:0; text-align:left; }
     }
   </style>
 </head>
@@ -9964,10 +10024,10 @@
         <header class="member-progress-head">
           <div>
             <div class="eyebrow" style="color:#9fe3df">Your longitudinal record</div>
-            <h2 id="memberProgressTitle">See the whole trajectory.</h2>
-            <p>Your newest report compares with the previous test in detail. This view keeps every completed test visible so you can follow the longer pattern.</p>
+            <h2 id="memberProgressTitle">See what changed over time.</h2>
+            <p>Choose PhenoAge, KDM-style BioAge, or any tracked biomarker. Every completed test stays visible so you can inspect the values, timing, and longer pattern without collapsing different measures into one score.</p>
           </div>
-          <div class="member-progress-definition"><strong>How movement is labeled:</strong> progression means a targeted marker moved toward its Fluids model target band; regression means it moved away. Context-dependent markers are described only as increased, decreased, or stable.</div>
+          <div class="member-progress-definition"><strong>How to read this view:</strong> age algorithms are kept separate and compared only when the underlying score is comparable. For targeted biomarkers, “toward target” means movement toward the Fluids planning band. Neither label proves a product effect.</div>
         </header>
         <div class="member-progress-overview" id="memberProgressOverview"></div>
         <nav class="member-progress-metrics" id="memberProgressMetrics" aria-label="Choose a longitudinal marker"></nav>
@@ -9979,6 +10039,7 @@
           <div class="member-progress-chart-scroll">
             <svg class="member-progress-chart" id="memberProgressChart" viewBox="0 0 820 300" role="img" aria-labelledby="memberProgressMetricTitle memberProgressMetricSubtitle"></svg>
           </div>
+          <div class="member-progress-legend" id="memberProgressLegend" hidden></div>
           <div class="member-progress-chart-empty" id="memberProgressChartEmpty" hidden></div>
         </article>
         <div class="member-progress-callouts" id="memberProgressCallouts"></div>
@@ -11023,10 +11084,11 @@
       if (next) { next.textContent=""; next.hidden=true; }
       if (overview) overview.hidden=true;
       if (progress) progress.hidden=true;
-      ["memberProgressOverview","memberProgressMetrics","memberProgressChart","memberProgressCallouts","memberProgressTestRail"].forEach(id=>{
+      ["memberProgressOverview","memberProgressMetrics","memberProgressChart","memberProgressLegend","memberProgressCallouts","memberProgressTestRail"].forEach(id=>{
         const element=document.getElementById(id);
         if (element) element.textContent="";
       });
+      document.getElementById("memberProgressLegend")?.setAttribute("hidden","");
       document.getElementById("memberHistorySection")?.setAttribute("hidden","");
       clearMemberDashboardPrivateUi();
       clearMemberHealthUi();
@@ -11119,6 +11181,7 @@
       return {
         tests:Array.isArray(value.tests) ? value.tests : [],
         phenoage_series:value.phenoage_series && typeof value.phenoage_series==="object" ? value.phenoage_series : null,
+        kdm_bioage_series:value.kdm_bioage_series && typeof value.kdm_bioage_series==="object" ? value.kdm_bioage_series : null,
         marker_series:Array.isArray(value.marker_series) ? value.marker_series : [],
         adjacent_comparisons:Array.isArray(value.adjacent_comparisons) ? value.adjacent_comparisons : [],
         current_vs_previous:value.current_vs_previous && typeof value.current_vs_previous==="object" ? value.current_vs_previous : null,
@@ -11131,7 +11194,11 @@
       const series=[];
       const phenoage=memberTimeline.phenoage_series;
       if (phenoage && Array.isArray(phenoage.points) && phenoage.points.length) {
-        series.push({...phenoage,key:String(phenoage.key || "phenoage"),label:String(phenoage.label || "PhenoAge"),series_type:"biological_age",targeted_ever:true});
+        series.push({...phenoage,key:String(phenoage.key || "phenoage"),label:String(phenoage.label || "PhenoAge"),series_type:"age_score",score_key:"phenoage"});
+      }
+      const kdmBioAge=memberTimeline.kdm_bioage_series;
+      if (kdmBioAge && Array.isArray(kdmBioAge.points) && kdmBioAge.points.length) {
+        series.push({...kdmBioAge,key:String(kdmBioAge.key || "kdm_bioage"),label:String(kdmBioAge.label || "KDM-style BioAge"),series_type:"age_score",score_key:"kdm_bioage"});
       }
       memberTimeline.marker_series
         .filter(item=>item && Array.isArray(item.points) && item.points.length)
@@ -11175,6 +11242,7 @@
         measured_increase:"Measured increase",
         measured_decrease:"Measured decrease",
         measured_stable:"Measured stable",
+        not_comparable:"Shown without change interpretation",
         lower:"Lower than prior test",
         higher:"Higher than prior test",
         stable:"Stable vs prior test"
@@ -11194,6 +11262,21 @@
       const span=document.createElement("span"); span.textContent=detail;
       card.append(small,strong,span); parent.appendChild(card);
     }
+    function memberTimelineAppendAgeStat(parent,label,series,comparisonDelta) {
+      const latest=memberTimelineLatestPoint(series);
+      if (!latest) return;
+      const points=Array.isArray(series?.points) ? series.points : [];
+      const latestTrend=memberTimelineTrend(latest);
+      let detail="Baseline · change appears after a comparable retest";
+      if (points.length>1 && latestTrend?.comparable===false) {
+        detail="Latest estimate · measured-marker set changed";
+      } else if (comparisonDelta!==null) {
+        detail=`${comparisonDelta>0 ? "+" : ""}${comparisonDelta.toFixed(1)} yr vs the preceding test`;
+      } else if (points.length>1) {
+        detail="Comparable age scores required for change";
+      }
+      memberTimelineAppendStat(parent,label,memberTimelineValue(latest.value,latest.unit || series?.unit),detail);
+    }
     function memberTimelineSpanDays(tests) {
       const dated=(tests || []).map(test=>Date.parse(String(test?.collection_date || ""))).filter(Number.isFinite);
       if (dated.length<2) return null;
@@ -11204,11 +11287,32 @@
       Object.entries(attributes).forEach(([key,value])=>node.setAttribute(key,String(value)));
       return node;
     }
+    function renderMemberProgressLegend(series,{hasChronological=false,hasTarget=false}={}) {
+      const legend=document.getElementById("memberProgressLegend");
+      if (!legend) return;
+      legend.textContent="";
+      if (!series) {
+        legend.hidden=true;
+        return;
+      }
+      const add=(label,className)=>{
+        const item=document.createElement("span");
+        item.className=className;
+        const swatch=document.createElement("i"); swatch.setAttribute("aria-hidden","true");
+        const copy=document.createElement("b"); copy.textContent=label;
+        item.append(swatch,copy); legend.appendChild(item);
+      };
+      add(series.label || "Recorded value",series.key==="phenoage" ? "phenoage" : series.key==="kdm_bioage" ? "kdm" : "recorded");
+      if (hasChronological) add("Chronological age reference","chronological");
+      if (hasTarget) add("Fluids planning range","target");
+      legend.hidden=false;
+    }
     function renderMemberProgressChart(series) {
       const svg=document.getElementById("memberProgressChart");
       const empty=document.getElementById("memberProgressChartEmpty");
       if (!svg || !empty) return;
       svg.textContent="";
+      svg.dataset.seriesKey=String(series?.key || "");
       const rawPoints=Array.isArray(series?.points) ? series.points : [];
       const points=rawPoints
         .map((point,index)=>({...point,_index:index,_value:memberTimelineNumeric(point?.value),_time:Date.parse(String(point?.date || ""))}))
@@ -11217,6 +11321,7 @@
         svg.hidden=true;
         empty.hidden=false;
         empty.textContent="No comparable values are available for this marker yet.";
+        renderMemberProgressLegend(null);
         return;
       }
       svg.hidden=false;
@@ -11227,7 +11332,10 @@
       const margin={left:56,right:28,top:42,bottom:58};
       const targetLows=points.map(point=>memberTimelineNumeric(point.target_low)).filter(value=>value!==null);
       const targetHighs=points.map(point=>memberTimelineNumeric(point.target_high)).filter(value=>value!==null);
-      const domainValues=points.map(point=>point._value).concat(targetLows,targetHighs);
+      const chronologicalValues=series?.series_type==="age_score"
+        ? points.map(point=>memberTimelineNumeric(point.chronological_age)).filter(value=>value!==null)
+        : [];
+      const domainValues=points.map(point=>point._value).concat(targetLows,targetHighs,chronologicalValues);
       let minimum=Math.min(...domainValues);
       let maximum=Math.max(...domainValues);
       const rawRange=Math.max(maximum-minimum,Math.abs(maximum)*.05,1e-6);
@@ -11262,12 +11370,39 @@
         svg.appendChild(memberTimelineSvg("rect",{x:margin.left,y:top,width:width-margin.left-margin.right,height:Math.max(bottom-top,2),rx:8,class:"target-band"}));
       }
       const coordinates=points.map((point,index)=>({point,x:x(point,index),y:y(point._value)}));
-      if (coordinates.length>1) {
-        const polyline=memberTimelineSvg("polyline",{points:coordinates.map(item=>`${item.x},${item.y}`).join(" "),class:"trend-line"});
-        svg.appendChild(polyline);
+      if (chronologicalValues.length) {
+        const referenceCoordinates=coordinates
+          .map(({point,x:pointX})=>{
+            const value=memberTimelineNumeric(point.chronological_age);
+            return value===null ? null : {x:pointX,y:y(value),value};
+          })
+          .filter(Boolean);
+        if (referenceCoordinates.length===1) {
+          const reference=referenceCoordinates[0];
+          svg.appendChild(memberTimelineSvg("line",{x1:margin.left,y1:reference.y,x2:width-margin.right,y2:reference.y,class:"reference-line"}));
+          const label=memberTimelineSvg("text",{x:width-margin.right,y:Math.max(reference.y-8,16),class:"reference-label"});
+          label.textContent=`Chronological age ${memberTimelineValue(reference.value,"")}`;
+          svg.appendChild(label);
+        } else if (referenceCoordinates.length>1) {
+          const reference=memberTimelineSvg("polyline",{points:referenceCoordinates.map(item=>`${item.x},${item.y}`).join(" "),class:"reference-line"});
+          svg.appendChild(reference);
+          const last=referenceCoordinates.at(-1);
+          const label=memberTimelineSvg("text",{x:last.x,y:Math.max(last.y-8,16),class:"reference-label"});
+          label.textContent="Chronological age";
+          svg.appendChild(label);
+        }
+      }
+      for (let index=1;index<coordinates.length;index+=1) {
+        const previous=coordinates[index-1];
+        const current=coordinates[index];
+        const nonComparable=memberTimelineTrend(current.point)?.comparable===false;
+        svg.appendChild(memberTimelineSvg("line",{
+          x1:previous.x,y1:previous.y,x2:current.x,y2:current.y,
+          class:`trend-line${nonComparable ? " not-comparable" : ""}`
+        }));
       }
       coordinates.forEach(({point,x:pointX,y:pointY},index)=>{
-        const circle=memberTimelineSvg("circle",{cx:pointX,cy:pointY,r:7,class:"trend-point",tabindex:0});
+        const circle=memberTimelineSvg("circle",{cx:pointX,cy:pointY,r:7,class:"trend-point",tabindex:0,"aria-label":`${memberTimelineShortDate(point.date,index)} ${memberTimelineValue(point._value,point.unit || series.unit)}`});
         const title=memberTimelineSvg("title");
         title.textContent=`${memberTimelineShortDate(point.date,index)}: ${memberTimelineValue(point._value,point.unit || series.unit)}`;
         circle.appendChild(title);
@@ -11278,6 +11413,10 @@
         const dateLabel=memberTimelineSvg("text",{x:pointX,y:height-20,class:"date-label"});
         dateLabel.textContent=memberTimelineShortDate(point.date,index);
         svg.appendChild(dateLabel);
+      });
+      renderMemberProgressLegend(series,{
+        hasChronological:Boolean(chronologicalValues.length),
+        hasTarget:currentTargetLow!==null && currentTargetHigh!==null
       });
     }
     function renderMemberProgressCallouts(series) {
@@ -11318,10 +11457,24 @@
         const node=document.createElement("article"); node.className="member-progress-test-node";
         const title=document.createElement("strong"); title.textContent=index===0 ? "Baseline" : `Follow-up ${index}`;
         const date=document.createElement("span"); date.textContent=memberTimelineShortDate(test?.collection_date,index);
-        const age=memberTimelineNumeric(test?.phenoage ?? test?.phenoage_years);
-        const detail=document.createElement("span");
-        detail.textContent=age!==null ? `PhenoAge ${memberTimelineValue(age,"yr")}` : String(test?.blend_name || "Completed test");
-        node.append(title,date,detail); rail.appendChild(node);
+        const phenoAge=memberTimelineNumeric(test?.phenoage ?? test?.phenoage_years);
+        const kdmBioAge=memberTimelineNumeric(test?.kdm_bioage ?? test?.kdm_bioage_years);
+        node.append(title,date);
+        if (phenoAge!==null) {
+          const detail=document.createElement("span"); detail.className="member-progress-test-score";
+          detail.textContent=`PhenoAge ${memberTimelineValue(phenoAge,"yr")}`;
+          node.appendChild(detail);
+        }
+        if (kdmBioAge!==null) {
+          const detail=document.createElement("span"); detail.className="member-progress-test-score kdm";
+          detail.textContent=`KDM-style ${memberTimelineValue(kdmBioAge,"yr")}`;
+          node.appendChild(detail);
+        }
+        if (phenoAge===null && kdmBioAge===null) {
+          const detail=document.createElement("span"); detail.textContent=String(test?.blend_name || "Completed test");
+          node.appendChild(detail);
+        }
+        rail.appendChild(node);
       });
     }
     function renderMemberProgressTimeline() {
@@ -11342,11 +11495,13 @@
       }).filter(Boolean);
       const spanDays=memberTimelineSpanDays(tests);
       const currentComparison=memberTimeline.current_vs_previous;
-      const ageDelta=memberTimelineNumeric(currentComparison?.biological_age_change ?? currentComparison?.biological_age?.delta);
+      const phenoAgeDelta=memberTimelineNumeric(currentComparison?.biological_age_change ?? currentComparison?.biological_age?.delta);
+      const kdmBioAgeDelta=memberTimelineNumeric(currentComparison?.kdm_bioage_change ?? currentComparison?.kdm_bioage?.delta);
       memberTimelineAppendStat(overview,"Completed tests",String(tests.length),"Every saved point in this member timeline");
       memberTimelineAppendStat(overview,"Observed span",spanDays===null ? "Baseline" : `${spanDays} days`,spanDays===null ? "A second test starts the trend" : "Based on specimen collection dates");
       memberTimelineAppendStat(overview,"Toward target",String(latestMovements.filter(value=>value==="progression").length),"Targeted markers vs the preceding test");
-      memberTimelineAppendStat(overview,"Latest PhenoAge change",ageDelta===null ? "—" : `${ageDelta>0 ? "+" : ""}${ageDelta.toFixed(1)} yr`,ageDelta===null ? "Comparable age scores required" : "Newest completed test vs previous");
+      memberTimelineAppendAgeStat(overview,"PhenoAge",memberTimeline.phenoage_series,phenoAgeDelta);
+      memberTimelineAppendAgeStat(overview,"KDM-style BioAge",memberTimeline.kdm_bioage_series,kdmBioAgeDelta);
       if (!series.some(item=>item.key===memberTimelineMetricKey)) {
         memberTimelineMetricKey=series.find(item=>item.key==="phenoage")?.key || series.find(item=>item.targeted_ever)?.key || series[0]?.key || "";
       }
@@ -11354,8 +11509,10 @@
         const button=document.createElement("button");
         button.type="button";
         button.className="member-progress-metric";
+        button.dataset.seriesType=String(item.series_type || "biomarker");
+        button.dataset.scoreKey=String(item.score_key || "");
         button.setAttribute("aria-pressed",String(item.key===memberTimelineMetricKey));
-        button.textContent=item.series_type==="biological_age" ? item.label : `${item.label}${item.targeted_ever ? " · targeted" : ""}`;
+        button.textContent=item.series_type==="age_score" ? item.label : `${item.label}${item.targeted_ever ? " · targeted" : ""}`;
         button.addEventListener("click",()=>{
           memberTimelineMetricKey=item.key;
           renderMemberProgressTimeline();
@@ -11369,15 +11526,30 @@
       const currentValue=document.getElementById("memberProgressCurrentValue");
       const currentMovement=document.getElementById("memberProgressCurrentMovement");
       if (title) title.textContent=selected?.label || "Longitudinal marker";
-      if (type) type.textContent=selected?.series_type==="biological_age" ? "Biological-age trajectory" : selected?.targeted_ever ? "Biomarker-derived target" : "Tracked biomarker";
-      if (subtitle) subtitle.textContent=selected?.directionality==="target_band"
-        ? "The shaded band is the Fluids wellness-planning target range, not a diagnostic interval."
-        : "Values are shown in specimen-date order without assuming every increase or decrease is favorable.";
+      if (type) type.textContent=selected?.key==="phenoage"
+        ? "Published age algorithm"
+        : selected?.key==="kdm_bioage"
+          ? "Exploratory age estimate"
+          : selected?.targeted_ever ? "Biomarker-derived target" : "Tracked biomarker";
+      if (subtitle) subtitle.textContent=selected?.key==="phenoage"
+        ? "PhenoAge is shown separately from the KDM-style estimate, with chronological age as a visual reference."
+        : selected?.key==="kdm_bioage"
+          ? "Calculated from available measured biomarkers using a KDM-style calibration. Change is interpreted only when the measured-marker set matches."
+          : selected?.directionality==="target_band"
+            ? "The shaded band is the Fluids wellness-planning target range, not a diagnostic interval."
+            : "Values are shown in specimen-date order without assuming every increase or decrease is favorable.";
       const latest=memberTimelineLatestPoint(selected);
       const latestTrend=memberTimelineTrend(latest);
       const movement=memberTimelineMovement(latestTrend?.interpretation || latestTrend?.movement);
       if (currentValue) currentValue.textContent=latest ? memberTimelineValue(latest.value,latest.unit || selected?.unit) : "—";
-      if (currentMovement) currentMovement.textContent=latest && memberTimelineTrend(latest) ? memberTimelineMovementLabel(movement) : "No comparison yet";
+      if (currentMovement) {
+        const markerCount=memberTimelineNumeric(latest?.observed_marker_count);
+        currentMovement.textContent=latest && latestTrend
+          ? memberTimelineMovementLabel(movement)
+          : selected?.key==="kdm_bioage" && markerCount!==null
+            ? `Baseline · ${markerCount} measured age-model markers`
+            : "Baseline · no comparison yet";
+      }
       renderMemberProgressChart(selected);
       renderMemberProgressCallouts(selected);
       renderMemberProgressTestRail();
